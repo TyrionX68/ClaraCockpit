@@ -1,4 +1,4 @@
 import ClaraDashboard from './
-  Clara Dashboard.vue
+  ClaraDashboard.vue
 
 export default router
