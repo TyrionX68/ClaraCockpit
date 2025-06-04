@@ -1,5 +1,5 @@
 import { createRouter, createWebHistory } from 'vue-router'
-import ClaraDashboard from './ ClaraDashboard.vue'
+import ClaraDashboard from './ClaraDashboard.vue'
 
 const routes = [
   {
