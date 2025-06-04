@@ -1,3 +1,4 @@
+import router from './router.js
 import { createApp } from 'vue'
 import ClaraDashboard from './ClaraDashboard.vue'
 
