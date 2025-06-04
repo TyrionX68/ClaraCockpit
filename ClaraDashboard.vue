@@ -1,4 +1,4 @@
-<!-- src/components/ClaraDashboard.vue -->
+<!-- ClaraDashboard.vue -->
 <template>
   <section class="dashboard">
     <h1>Willkommen zurück, TyrionX</h1>
