@@ -1,5 +1,5 @@
-import router from './router.js
 import { createApp } from 'vue'
-import ClaraDashboard from './ClaraDashboard.vue'
+import App from './App.vue'
+import router from './router.js'
 
-createApp(ClaraDashboard).mount('#app')
+createApp(App).use(router).mount('#app')
