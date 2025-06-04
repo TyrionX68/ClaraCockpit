@@ -1,5 +1,19 @@
-import { createApp } from 'vue'
-import App from './App.vue'
-import router from './router.js'
+import { createApp } from 'vue';
+import App from './App.vue';
+import { createRouter, createWebHistory } from 'vue-router';
+import ClaraDashboard from './ClaraDashboard.vue';
 
-createApp(App).use(router).mount('#app')
+const routes = [
+  {
+    path: '/',
+    name: 'Dashboard',
+    component: ClaraDashboard,
+  },
+];
+
+const router = createRouter({
+  history: createWebHistory(),
+  routes,
+});
+
+createApp(App).use(router).mount('#app');
