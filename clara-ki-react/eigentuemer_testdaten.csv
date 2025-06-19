@@ -1,0 +1,6 @@
+Name,Vorname,Email,Telefon,Adresse,AnzahlEinheiten,MonatlicheMiete,PortfolioWert,Status,KundeSeit,Objekte
+Torsten Hiss,Torsten,torsten.hiss@email.de,+49 621 123456,"Mannheim, Deutschland",8,8500.00,1850000.00,Aktiv,2018,"Nadlerstraße 10, Pfalzstraße 1"
+Uwe Scheerer,Uwe,uwe.scheerer@email.de,+49 621 234567,"Mannheim, Deutschland",6,6200.00,1420000.00,Aktiv,2019,"Pfalzstraße 1, Rheinallee 5"
+HM Projektmanagement GmbH,HM Projektmanagement,info@hm-projekt.de,+49 621 345678,"Mannheim, Deutschland",18,22500.00,4200000.00,Aktiv,2020,"Industriestraße 35"
+Pro Estate Verwaltung,Pro Estate,kontakt@pro-estate.de,+49 621 456789,"Mannheim, Deutschland",12,15800.00,2950000.00,Aktiv,2021,"Bahnhofstraße 22, Marktplatz 8"
+

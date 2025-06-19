@@ -1,0 +1,649 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Clara360 Banking - WebForm Integration</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .container {
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            padding: 40px;
+            max-width: 600px;
+            width: 100%;
+            text-align: center;
+        }
+
+        .logo {
+            font-size: 2.5rem;
+            font-weight: bold;
+            color: #4299E1;
+            margin-bottom: 10px;
+        }
+
+        .subtitle {
+            color: #666;
+            margin-bottom: 30px;
+            font-size: 1.1rem;
+        }
+
+        .step-indicator {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 40px;
+        }
+
+        .step {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: #e2e8f0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 10px;
+            font-weight: bold;
+            color: #666;
+            position: relative;
+        }
+
+        .step.active {
+            background: #4299E1;
+            color: white;
+        }
+
+        .step.completed {
+            background: #48bb78;
+            color: white;
+        }
+
+        .step::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 100%;
+            width: 20px;
+            height: 2px;
+            background: #e2e8f0;
+            transform: translateY(-50%);
+        }
+
+        .step:last-child::after {
+            display: none;
+        }
+
+        .form-section {
+            margin-bottom: 30px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+            text-align: left;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #2d3748;
+        }
+
+        input, select {
+            width: 100%;
+            padding: 12px 16px;
+            border: 2px solid #e2e8f0;
+            border-radius: 10px;
+            font-size: 16px;
+            transition: border-color 0.3s ease;
+        }
+
+        input:focus, select:focus {
+            outline: none;
+            border-color: #4299E1;
+        }
+
+        .checkbox-group {
+            display: flex;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+
+        .checkbox-group input[type="checkbox"] {
+            width: auto;
+            margin-right: 10px;
+        }
+
+        .btn {
+            background: linear-gradient(135deg, #4299E1, #3182ce);
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 10px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin: 10px;
+            min-width: 150px;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(66, 153, 225, 0.3);
+        }
+
+        .btn:disabled {
+            background: #a0aec0;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+
+        .btn-secondary {
+            background: #e2e8f0;
+            color: #2d3748;
+        }
+
+        .btn-secondary:hover {
+            background: #cbd5e0;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .status-message {
+            padding: 15px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            font-weight: 500;
+        }
+
+        .status-success {
+            background: #f0fff4;
+            color: #22543d;
+            border: 1px solid #9ae6b4;
+        }
+
+        .status-error {
+            background: #fed7d7;
+            color: #742a2a;
+            border: 1px solid #feb2b2;
+        }
+
+        .status-info {
+            background: #ebf8ff;
+            color: #2a4365;
+            border: 1px solid #90cdf4;
+        }
+
+        .webform-iframe {
+            width: 100%;
+            height: 600px;
+            border: none;
+            border-radius: 10px;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .loading {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 3px solid #f3f3f3;
+            border-top: 3px solid #4299E1;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin-right: 10px;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        .bank-search {
+            position: relative;
+        }
+
+        .bank-suggestions {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            right: 0;
+            background: white;
+            border: 1px solid #e2e8f0;
+            border-radius: 10px;
+            max-height: 200px;
+            overflow-y: auto;
+            z-index: 1000;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .bank-suggestion {
+            padding: 12px 16px;
+            cursor: pointer;
+            border-bottom: 1px solid #f7fafc;
+        }
+
+        .bank-suggestion:hover {
+            background: #f7fafc;
+        }
+
+        .bank-suggestion:last-child {
+            border-bottom: none;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 20px;
+                margin: 10px;
+            }
+            
+            .step-indicator {
+                flex-wrap: wrap;
+            }
+            
+            .step {
+                margin: 5px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="logo">Clara360</div>
+        <div class="subtitle">Sichere Banking-Integration mit FinAPI</div>
+
+        <!-- Step Indicator -->
+        <div class="step-indicator">
+            <div class="step active" id="step1">1</div>
+            <div class="step" id="step2">2</div>
+            <div class="step" id="step3">3</div>
+            <div class="step" id="step4">4</div>
+        </div>
+
+        <!-- Status Messages -->
+        <div id="statusMessage" class="hidden"></div>
+
+        <!-- Step 1: Bank Selection -->
+        <div id="bankSelection" class="form-section">
+            <h2>Schritt 1: Bank auswählen</h2>
+            <div class="form-group">
+                <label for="bankSearch">Bank suchen:</label>
+                <div class="bank-search">
+                    <input type="text" id="bankSearch" placeholder="z.B. Sparkasse, Deutsche Bank, Volksbank..." />
+                    <div id="bankSuggestions" class="bank-suggestions hidden"></div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label>Kontotypen:</label>
+                <div class="checkbox-group">
+                    <input type="checkbox" id="checking" value="CHECKING" checked>
+                    <label for="checking">Girokonto</label>
+                </div>
+                <div class="checkbox-group">
+                    <input type="checkbox" id="savings" value="SAVINGS" checked>
+                    <label for="savings">Sparkonto</label>
+                </div>
+            </div>
+            <button class="btn" onclick="createWebForm()">
+                <span id="createBtnText">WebForm erstellen</span>
+                <span id="createBtnLoading" class="loading hidden"></span>
+            </button>
+        </div>
+
+        <!-- Step 2: WebForm Display -->
+        <div id="webFormDisplay" class="form-section hidden">
+            <h2>Schritt 2: Banking-Anmeldung</h2>
+            <p>Melden Sie sich sicher bei Ihrer Bank an:</p>
+            <iframe id="webFormIframe" class="webform-iframe"></iframe>
+            <button class="btn btn-secondary" onclick="checkWebFormStatus()">Status prüfen</button>
+        </div>
+
+        <!-- Step 3: Connection Status -->
+        <div id="connectionStatus" class="form-section hidden">
+            <h2>Schritt 3: Verbindungsstatus</h2>
+            <div id="connectionDetails"></div>
+            <button class="btn" onclick="loadAccounts()">Konten laden</button>
+        </div>
+
+        <!-- Step 4: Account Overview -->
+        <div id="accountOverview" class="form-section hidden">
+            <h2>Schritt 4: Kontenübersicht</h2>
+            <div id="accountsList"></div>
+            <button class="btn" onclick="loadTransactions()">Transaktionen laden</button>
+        </div>
+
+        <!-- Reset Button -->
+        <button class="btn btn-secondary" onclick="resetProcess()" style="margin-top: 20px;">Neu starten</button>
+    </div>
+
+    <script>
+        // Global variables
+        let currentStep = 1;
+        let selectedBank = null;
+        let webFormId = null;
+        let bankConnectionId = null;
+        let searchTimeout = null;
+
+        // API Base URL
+        const API_BASE = 'https://psd2.clara360.de/api';
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', function() {
+            setupBankSearch();
+        });
+
+        // Bank Search Setup
+        function setupBankSearch() {
+            const bankSearch = document.getElementById('bankSearch');
+            const bankSuggestions = document.getElementById('bankSuggestions');
+
+            bankSearch.addEventListener('input', function() {
+                const query = this.value.trim();
+                
+                clearTimeout(searchTimeout);
+                
+                if (query.length < 2) {
+                    bankSuggestions.classList.add('hidden');
+                    return;
+                }
+
+                searchTimeout = setTimeout(() => {
+                    searchBanks(query);
+                }, 300);
+            });
+
+            // Hide suggestions when clicking outside
+            document.addEventListener('click', function(e) {
+                if (!e.target.closest('.bank-search')) {
+                    bankSuggestions.classList.add('hidden');
+                }
+            });
+        }
+
+        // Search Banks via FinAPI
+        async function searchBanks(query) {
+            try {
+                const response = await fetch(`${API_BASE}/search-institutions?query=${encodeURIComponent(query)}`);
+                const data = await response.json();
+
+                if (data.institutions && data.institutions.length > 0) {
+                    displayBankSuggestions(data.institutions);
+                } else {
+                    hideBankSuggestions();
+                }
+            } catch (error) {
+                console.error('Bank search error:', error);
+                showStatus('Fehler bei der Banksuche', 'error');
+            }
+        }
+
+        // Display Bank Suggestions
+        function displayBankSuggestions(banks) {
+            const bankSuggestions = document.getElementById('bankSuggestions');
+            
+            bankSuggestions.innerHTML = banks.slice(0, 5).map(bank => 
+                `<div class="bank-suggestion" onclick="selectBank('${bank.id}', '${bank.name}')">
+                    <strong>${bank.name}</strong><br>
+                    <small>${bank.blz || ''}</small>
+                </div>`
+            ).join('');
+            
+            bankSuggestions.classList.remove('hidden');
+        }
+
+        // Hide Bank Suggestions
+        function hideBankSuggestions() {
+            document.getElementById('bankSuggestions').classList.add('hidden');
+        }
+
+        // Select Bank
+        function selectBank(bankId, bankName) {
+            selectedBank = { id: bankId, name: bankName };
+            document.getElementById('bankSearch').value = bankName;
+            hideBankSuggestions();
+            showStatus(`Bank ausgewählt: ${bankName}`, 'success');
+        }
+
+        // Create WebForm
+        async function createWebForm() {
+            if (!selectedBank) {
+                showStatus('Bitte wählen Sie zuerst eine Bank aus', 'error');
+                return;
+            }
+
+            const accountTypes = [];
+            if (document.getElementById('checking').checked) accountTypes.push('CHECKING');
+            if (document.getElementById('savings').checked) accountTypes.push('SAVINGS');
+
+            if (accountTypes.length === 0) {
+                showStatus('Bitte wählen Sie mindestens einen Kontotyp aus', 'error');
+                return;
+            }
+
+            setLoading(true);
+
+            try {
+                const response = await fetch(`${API_BASE}/webforms/bank-connection-import`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        accountTypes: accountTypes,
+                        redirectUri: 'https://clara360.de/webform/callback',
+                        callbackUrl: 'https://clara360.de/api/webform-finished'
+                    })
+                });
+
+                const data = await response.json();
+
+                if (data.url && data.formId) {
+                    webFormId = data.formId;
+                    showWebForm(data.url);
+                    showStatus('WebForm erfolgreich erstellt', 'success');
+                    nextStep();
+                } else {
+                    throw new Error(data.message || 'WebForm-Erstellung fehlgeschlagen');
+                }
+            } catch (error) {
+                console.error('WebForm creation error:', error);
+                showStatus('Fehler bei der WebForm-Erstellung: ' + error.message, 'error');
+            } finally {
+                setLoading(false);
+            }
+        }
+
+        // Show WebForm
+        function showWebForm(url) {
+            const iframe = document.getElementById('webFormIframe');
+            iframe.src = url;
+            
+            // Listen for iframe messages
+            window.addEventListener('message', function(event) {
+                if (event.data && event.data.type === 'webform-completed') {
+                    bankConnectionId = event.data.bankConnectionId;
+                    nextStep();
+                    showStatus('Banking-Verbindung erfolgreich hergestellt', 'success');
+                }
+            });
+        }
+
+        // Check WebForm Status
+        async function checkWebFormStatus() {
+            if (!webFormId) {
+                showStatus('Keine WebForm-ID verfügbar', 'error');
+                return;
+            }
+
+            try {
+                const response = await fetch(`${API_BASE}/webforms/${webFormId}/status`);
+                const data = await response.json();
+
+                if (data.status === 'COMPLETED' && data.bankConnectionId) {
+                    bankConnectionId = data.bankConnectionId;
+                    nextStep();
+                    showStatus('Banking-Verbindung erfolgreich hergestellt', 'success');
+                } else {
+                    showStatus(`WebForm Status: ${data.status}`, 'info');
+                }
+            } catch (error) {
+                console.error('Status check error:', error);
+                showStatus('Fehler bei der Statusprüfung', 'error');
+            }
+        }
+
+        // Load Accounts
+        async function loadAccounts() {
+            if (!bankConnectionId) {
+                showStatus('Keine Bank-Verbindung verfügbar', 'error');
+                return;
+            }
+
+            try {
+                const response = await fetch(`${API_BASE}/accounts`);
+                const data = await response.json();
+
+                if (data.accounts && data.accounts.length > 0) {
+                    displayAccounts(data.accounts);
+                    nextStep();
+                    showStatus(`${data.accounts.length} Konten geladen`, 'success');
+                } else {
+                    showStatus('Keine Konten gefunden', 'info');
+                }
+            } catch (error) {
+                console.error('Accounts loading error:', error);
+                showStatus('Fehler beim Laden der Konten', 'error');
+            }
+        }
+
+        // Display Accounts
+        function displayAccounts(accounts) {
+            const accountsList = document.getElementById('accountsList');
+            
+            accountsList.innerHTML = accounts.map(account => 
+                `<div style="background: #f7fafc; padding: 15px; border-radius: 10px; margin-bottom: 10px;">
+                    <strong>${account.accountName || 'Konto'}</strong><br>
+                    <small>IBAN: ${account.iban || 'N/A'}</small><br>
+                    <small>Saldo: ${account.balance ? account.balance.toFixed(2) + ' €' : 'N/A'}</small>
+                </div>`
+            ).join('');
+        }
+
+        // Load Transactions
+        async function loadTransactions() {
+            try {
+                const response = await fetch(`${API_BASE}/transactions`);
+                const data = await response.json();
+
+                if (data.transactions && data.transactions.length > 0) {
+                    showStatus(`${data.transactions.length} Transaktionen geladen`, 'success');
+                } else {
+                    showStatus('Keine Transaktionen gefunden', 'info');
+                }
+            } catch (error) {
+                console.error('Transactions loading error:', error);
+                showStatus('Fehler beim Laden der Transaktionen', 'error');
+            }
+        }
+
+        // Navigation Functions
+        function nextStep() {
+            if (currentStep < 4) {
+                // Hide current step
+                document.getElementById(getStepElementId(currentStep)).classList.add('hidden');
+                
+                // Mark current step as completed
+                document.getElementById(`step${currentStep}`).classList.add('completed');
+                document.getElementById(`step${currentStep}`).classList.remove('active');
+                
+                // Move to next step
+                currentStep++;
+                
+                // Show next step
+                document.getElementById(getStepElementId(currentStep)).classList.remove('hidden');
+                
+                // Mark next step as active
+                document.getElementById(`step${currentStep}`).classList.add('active');
+            }
+        }
+
+        function getStepElementId(step) {
+            const stepElements = {
+                1: 'bankSelection',
+                2: 'webFormDisplay',
+                3: 'connectionStatus',
+                4: 'accountOverview'
+            };
+            return stepElements[step];
+        }
+
+        // Reset Process
+        function resetProcess() {
+            currentStep = 1;
+            selectedBank = null;
+            webFormId = null;
+            bankConnectionId = null;
+
+            // Reset UI
+            document.querySelectorAll('.form-section').forEach(section => {
+                section.classList.add('hidden');
+            });
+            document.getElementById('bankSelection').classList.remove('hidden');
+
+            document.querySelectorAll('.step').forEach(step => {
+                step.classList.remove('active', 'completed');
+            });
+            document.getElementById('step1').classList.add('active');
+
+            document.getElementById('bankSearch').value = '';
+            document.getElementById('statusMessage').classList.add('hidden');
+            hideBankSuggestions();
+        }
+
+        // Utility Functions
+        function showStatus(message, type) {
+            const statusMessage = document.getElementById('statusMessage');
+            statusMessage.className = `status-message status-${type}`;
+            statusMessage.textContent = message;
+            statusMessage.classList.remove('hidden');
+        }
+
+        function setLoading(loading) {
+            const btnText = document.getElementById('createBtnText');
+            const btnLoading = document.getElementById('createBtnLoading');
+            const btn = btnText.parentElement;
+
+            if (loading) {
+                btnText.classList.add('hidden');
+                btnLoading.classList.remove('hidden');
+                btn.disabled = true;
+            } else {
+                btnText.classList.remove('hidden');
+                btnLoading.classList.add('hidden');
+                btn.disabled = false;
+            }
+        }
+    </script>
+</body>
+</html>
+

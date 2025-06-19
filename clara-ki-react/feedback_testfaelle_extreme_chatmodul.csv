@@ -1,0 +1,11 @@
+Abfragetyp,Beispielabfrage,Erwartetes Ergebnis,Tatsächliches Ergebnis,Bewertung (1-5),Anmerkungen/Verbesserungsvorschläge
+Mieterrückstand,Wie hoch ist der Rückstand von Mieter Bauer im März?,300 €,,,Standardfall für einen vollständigen Monat
+Mahnstufen-Übersicht,Zeige mir alle Mieter mit Mahnstufe 3,"Mieter X, Y",,,Grenzfall bei Mahnstufen-Zuweisung
+Historische Entwicklung,Wie hat sich der Rückstand von Mieter Schulz in den letzten 6 Monaten entwickelt?,Kontinuierlicher Anstieg um je 100 €,,,Test auf vollständige Monatsabdeckung
+Vergleich,Wer hat aktuell den höchsten Rückstand?,Mieter A mit 1.200 €,,,Ranking-Logik prüfen
+Rückstand nach Zeitraum,Wie hoch war der Rückstand von Mieterin König von Januar bis März?,900 €,,,Summenlogik prüfen
+Warnhinweis,Gibt es veraltete Daten bei Mieter Hahn?,Letzter Eintrag älter als 90 Tage,,,Verlässlichkeit der Warnlogik
+Mehrparameterabfrage,Zeige alle Mieter mit Mahnstufe 2 und Rückstand > 500 €,"Mieter Z, Mieter B",,,Parameterverknüpfung validieren
+Überzahlung/Fehlbetrag,Warum ist der Rückstand von Mieterin Schwarz negativ?,Überzahlung von 100 € erkannt,,,Negativsaldo korrekt darstellen
+FIFO-Prüfung,Wie wurde die Teilzahlung von 150 € im April aufgeteilt?,"April 100 €, März 50 €",,,FIFO-Mechanik testen
+Sonderfall unvollständige Daten,Wie hoch ist der Rückstand von Mieterin Maier im Februar?,Warnung: Sollmiete fehlt,,,Fehlende Daten intelligent erkennen

@@ -1,0 +1,4 @@
+mandant_id,mandant_name,objekt_id,objekt_name,einheit_id,einheit_name,benutzer_email,rolle,registriert_am,aktiv,initial_passwort
+M001,Schneider GmbH,O100,Berlin-Mitte,E101,WE 1. OG links,admin@schneider.de,Admin,2024-07-01,True,init1234
+M002,Eigentümergemeinschaft Auguststraße,O200,Dresden-Auguststr.,E201,GE EG,kontakt@eg-august.de,Report-Nutzer,2024-07-01,True,august2024
+M003,Müller Family Office,O300,München-Rosenheim,E301,WE DG rechts,verwaltung@muellerfo.de,Sachbearbeiter,2024-07-01,False,mueller2024

@@ -1,0 +1,36 @@
+{
+  "name": "clara360-finapi-backend",
+  "version": "3.0.0",
+  "description": "Clara360 FinAPI Real Integration Backend - NO MOCK DATA",
+  "main": "finapi_backend_real_integration.js",
+  "scripts": {
+    "start": "node finapi_backend_real_integration.js",
+    "dev": "nodemon finapi_backend_real_integration.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "dependencies": {
+    "@azure/msal-node": "^3.6.0",
+    "@microsoft/microsoft-graph-client": "^3.0.7",
+    "axios": "^1.10.0",
+    "cors": "^2.8.5",
+    "crypto": "^1.0.1",
+    "dotenv": "^16.5.0",
+    "express": "^4.21.2",
+    "node-fetch": "^2.7.0"
+  },
+  "devDependencies": {
+    "nodemon": "^3.0.1"
+  },
+  "keywords": [
+    "finapi",
+    "psd2",
+    "banking",
+    "clara360",
+    "real-integration"
+  ],
+  "author": "Clara360 Team",
+  "license": "ISC",
+  "engines": {
+    "node": ">=14.0.0"
+  }
+}

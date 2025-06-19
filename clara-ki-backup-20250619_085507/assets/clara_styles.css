@@ -1,0 +1,242 @@
+/**
+ * clara_styles.css
+ * Styling für Clara KI Chat-Interface
+ * Kompatibel mit TyrionX UI
+ */
+
+/* Chat-Container */
+.clara-chat-interface {
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  background: white;
+  height: 500px;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+/* Chat-Nachrichten-Bereich */
+.chat-messages {
+  flex: 1;
+  padding: 20px;
+  overflow-y: auto;
+  border-bottom: 1px solid #eee;
+  scroll-behavior: smooth;
+}
+
+/* Nachrichten-Styling */
+.message {
+  margin-bottom: 10px;
+  padding: 10px;
+  border-radius: 8px;
+  max-width: 80%;
+  word-wrap: break-word;
+  line-height: 1.4;
+}
+
+/* Benutzer-Nachrichten */
+.user-message {
+  background: #007bff;
+  color: white;
+  margin-left: auto;
+  border-radius: 18px 18px 4px 18px;
+  box-shadow: 0 1px 2px rgba(0,0,0,0.1);
+}
+
+/* Clara-Nachrichten */
+.clara-message {
+  background: #f8f9fa;
+  color: #333;
+  border: 1px solid #dee2e6;
+  border-radius: 18px 18px 18px 4px;
+  box-shadow: 0 1px 2px rgba(0,0,0,0.05);
+}
+
+/* Fehler-Nachrichten */
+.clara-message.error {
+  background: #fff3cd;
+  border-color: #ffeeba;
+  color: #856404;
+}
+
+/* Thinking-Indikator */
+.thinking-indicator {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  padding: 4px;
+}
+
+.thinking-indicator .dot {
+  width: 8px;
+  height: 8px;
+  background-color: #007bff;
+  border-radius: 50%;
+  opacity: 0.6;
+  animation: pulse 1.5s infinite ease-in-out;
+}
+
+.thinking-indicator .dot:nth-child(2) {
+  animation-delay: 0.2s;
+}
+
+.thinking-indicator .dot:nth-child(3) {
+  animation-delay: 0.4s;
+}
+
+@keyframes pulse {
+  0%, 100% {
+    transform: scale(0.8);
+    opacity: 0.6;
+  }
+  50% {
+    transform: scale(1.2);
+    opacity: 1;
+  }
+}
+
+/* Chat-Input-Container */
+.chat-input-container {
+  padding: 20px;
+  display: flex;
+  gap: 10px;
+  background: #f8f9fa;
+  border-radius: 0 0 8px 8px;
+}
+
+/* Chat-Input */
+#chat-input {
+  flex: 1;
+  padding: 10px 15px;
+  border: 1px solid #ddd;
+  border-radius: 20px;
+  font-size: 14px;
+  outline: none;
+  transition: border-color 0.3s ease;
+}
+
+#chat-input:focus {
+  border-color: #007bff;
+  box-shadow: 0 0 0 2px rgba(0,123,255,0.25);
+}
+
+/* Senden-Button */
+#send-button {
+  padding: 10px 20px;
+  background: #007bff;
+  color: white;
+  border: none;
+  border-radius: 20px;
+  cursor: pointer;
+  font-weight: 500;
+  transition: background-color 0.3s ease;
+}
+
+#send-button:hover {
+  background: #0056b3;
+}
+
+#send-button:active {
+  transform: scale(0.98);
+}
+
+/* Voice-Button */
+.clara-voice-button {
+  position: absolute;
+  bottom: 20px;
+  right: 80px;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: #007bff;
+  color: white;
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+  transition: all 0.3s ease;
+}
+
+.clara-voice-button:hover {
+  background: #0056b3;
+  transform: scale(1.05);
+}
+
+.clara-voice-button.active {
+  background: #dc3545;
+  animation: pulse-recording 1.5s infinite;
+}
+
+@keyframes pulse-recording {
+  0%, 100% {
+    box-shadow: 0 0 0 0 rgba(220, 53, 69, 0.7);
+  }
+  50% {
+    box-shadow: 0 0 0 10px rgba(220, 53, 69, 0);
+  }
+}
+
+/* Konfidenz-Indikator */
+.confidence-indicator {
+  font-size: 12px;
+  color: #6c757d;
+  margin-top: 5px;
+  text-align: right;
+  font-style: italic;
+}
+
+/* Vorschläge */
+.clara-suggestions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 16px;
+  margin-bottom: 16px;
+}
+
+.clara-suggestion-chip {
+  background: #e0f2fe;
+  border: 1px solid #7dd3fc;
+  border-radius: 16px;
+  padding: 6px 12px;
+  font-size: 14px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.clara-suggestion-chip:hover {
+  background: #bae6fd;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .clara-chat-interface {
+    height: 400px;
+  }
+  
+  .message {
+    max-width: 90%;
+  }
+  
+  .chat-input-container {
+    padding: 15px;
+  }
+  
+  #chat-input {
+    padding: 8px 12px;
+  }
+  
+  #send-button {
+    padding: 8px 15px;
+  }
+  
+  .clara-voice-button {
+    width: 36px;
+    height: 36px;
+    right: 70px;
+  }
+}
+

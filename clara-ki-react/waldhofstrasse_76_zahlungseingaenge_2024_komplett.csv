@@ -1,0 +1,98 @@
+Datum,VertragID,Mieter,Einheit,Sollmiete,Eingegangen,Differenz,Status,Zahlungsart,Verwendungszweck
+2024-01-15,V-001,Vaida Pastarnokaite,Café (Erdgeschoss),2050.00,2050.00,0.00,Pünktlich,Überweisung,Miete Januar 2024
+2024-01-15,V-002,Prajwal Chiradoni,1. OG Wohnung,1300.00,1300.00,0.00,Pünktlich,Überweisung,Miete Januar 2024
+2024-01-15,V-003,Mohamad Rizki Nurdena,3. OG Links,445.00,445.00,0.00,Pünktlich,Überweisung,Miete Januar 2024
+2024-01-15,V-004,Naser Alsoliman,1. OG Mitte,620.00,620.00,0.00,Pünktlich,Überweisung,Miete Januar 2024
+2024-01-15,V-005,Andreas Reimer,2. OG Rechts,440.00,440.00,0.00,Pünktlich,Überweisung,Miete Januar 2024
+2024-01-15,V-006,Gilles Peuziat,2. OG Links (WG-Zimmer),440.00,440.00,0.00,Pünktlich,Überweisung,Miete Januar 2024
+2024-01-15,V-007,Angile Ahmad,4. Stock,735.00,735.00,0.00,Pünktlich,Überweisung,Miete Januar 2024
+2024-01-15,V-008,Daniel Gungor,Dachgeschoss,465.00,465.00,0.00,Pünktlich,Überweisung,Miete Januar 2024
+2024-02-15,V-001,Vaida Pastarnokaite,Café (Erdgeschoss),2050.00,2050.00,0.00,Pünktlich,Überweisung,Miete Februar 2024
+2024-02-15,V-002,Prajwal Chiradoni,1. OG Wohnung,1300.00,1300.00,0.00,Pünktlich,Überweisung,Miete Februar 2024
+2024-02-15,V-003,Mohamad Rizki Nurdena,3. OG Links,445.00,445.00,0.00,Pünktlich,Überweisung,Miete Februar 2024
+2024-02-15,V-004,Naser Alsoliman,1. OG Mitte,620.00,620.00,0.00,Pünktlich,Überweisung,Miete Februar 2024
+2024-02-15,V-005,Andreas Reimer,2. OG Rechts,440.00,440.00,0.00,Pünktlich,Überweisung,Miete Februar 2024
+2024-02-15,V-006,Gilles Peuziat,2. OG Links (WG-Zimmer),440.00,440.00,0.00,Pünktlich,Überweisung,Miete Februar 2024
+2024-02-15,V-007,Angile Ahmad,4. Stock,735.00,735.00,0.00,Pünktlich,Überweisung,Miete Februar 2024
+2024-02-15,V-008,Daniel Gungor,Dachgeschoss,465.00,465.00,0.00,Pünktlich,Überweisung,Miete Februar 2024
+2024-03-15,V-001,Vaida Pastarnokaite,Café (Erdgeschoss),2050.00,2050.00,0.00,Pünktlich,Überweisung,Miete März 2024
+2024-03-15,V-002,Prajwal Chiradoni,1. OG Wohnung,1300.00,1300.00,0.00,Pünktlich,Überweisung,Miete März 2024
+2024-03-15,V-003,Mohamad Rizki Nurdena,3. OG Links,445.00,445.00,0.00,Pünktlich,Überweisung,Miete März 2024
+2024-03-15,V-004,Naser Alsoliman,1. OG Mitte,620.00,620.00,0.00,Pünktlich,Überweisung,Miete März 2024
+2024-03-15,V-005,Andreas Reimer,2. OG Rechts,440.00,440.00,0.00,Pünktlich,Überweisung,Miete März 2024
+2024-03-15,V-006,Gilles Peuziat,2. OG Links (WG-Zimmer),440.00,440.00,0.00,Pünktlich,Überweisung,Miete März 2024
+2024-03-15,V-007,Angile Ahmad,4. Stock,735.00,735.00,0.00,Pünktlich,Überweisung,Miete März 2024
+2024-03-15,V-008,Daniel Gungor,Dachgeschoss,465.00,465.00,0.00,Pünktlich,Überweisung,Miete März 2024
+2024-04-15,V-001,Vaida Pastarnokaite,Café (Erdgeschoss),2050.00,2050.00,0.00,Pünktlich,Überweisung,Miete April 2024
+2024-04-15,V-002,Prajwal Chiradoni,1. OG Wohnung,1300.00,1300.00,0.00,Pünktlich,Überweisung,Miete April 2024
+2024-04-15,V-003,Mohamad Rizki Nurdena,3. OG Links,445.00,445.00,0.00,Pünktlich,Überweisung,Miete April 2024
+2024-04-15,V-004,Naser Alsoliman,1. OG Mitte,620.00,620.00,0.00,Pünktlich,Überweisung,Miete April 2024
+2024-04-15,V-005,Andreas Reimer,2. OG Rechts,440.00,440.00,0.00,Pünktlich,Überweisung,Miete April 2024
+2024-04-15,V-006,Gilles Peuziat,2. OG Links (WG-Zimmer),440.00,440.00,0.00,Pünktlich,Überweisung,Miete April 2024
+2024-04-15,V-007,Angile Ahmad,4. Stock,735.00,735.00,0.00,Pünktlich,Überweisung,Miete April 2024
+2024-04-15,V-008,Daniel Gungor,Dachgeschoss,465.00,465.00,0.00,Pünktlich,Überweisung,Miete April 2024
+2024-05-15,V-001,Vaida Pastarnokaite,Café (Erdgeschoss),2050.00,2050.00,0.00,Pünktlich,Überweisung,Miete Mai 2024
+2024-05-15,V-002,Prajwal Chiradoni,1. OG Wohnung,1300.00,1300.00,0.00,Pünktlich,Überweisung,Miete Mai 2024
+2024-05-15,V-003,Mohamad Rizki Nurdena,3. OG Links,445.00,445.00,0.00,Pünktlich,Überweisung,Miete Mai 2024
+2024-05-15,V-004,Naser Alsoliman,1. OG Mitte,620.00,620.00,0.00,Pünktlich,Überweisung,Miete Mai 2024
+2024-05-15,V-005,Andreas Reimer,2. OG Rechts,440.00,440.00,0.00,Pünktlich,Überweisung,Miete Mai 2024
+2024-05-15,V-006,Gilles Peuziat,2. OG Links (WG-Zimmer),440.00,440.00,0.00,Pünktlich,Überweisung,Miete Mai 2024
+2024-05-15,V-007,Angile Ahmad,4. Stock,735.00,735.00,0.00,Pünktlich,Überweisung,Miete Mai 2024
+2024-05-15,V-008,Daniel Gungor,Dachgeschoss,465.00,465.00,0.00,Pünktlich,Überweisung,Miete Mai 2024
+2024-06-15,V-001,Vaida Pastarnokaite,Café (Erdgeschoss),2050.00,2050.00,0.00,Pünktlich,Überweisung,Miete Juni 2024
+2024-06-15,V-002,Prajwal Chiradoni,1. OG Wohnung,1300.00,1300.00,0.00,Pünktlich,Überweisung,Miete Juni 2024
+2024-06-15,V-003,Mohamad Rizki Nurdena,3. OG Links,445.00,445.00,0.00,Pünktlich,Überweisung,Miete Juni 2024
+2024-06-15,V-004,Naser Alsoliman,1. OG Mitte,620.00,620.00,0.00,Pünktlich,Überweisung,Miete Juni 2024
+2024-06-15,V-005,Andreas Reimer,2. OG Rechts,440.00,440.00,0.00,Pünktlich,Überweisung,Miete Juni 2024
+2024-06-15,V-006,Gilles Peuziat,2. OG Links (WG-Zimmer),440.00,440.00,0.00,Pünktlich,Überweisung,Miete Juni 2024
+2024-06-15,V-007,Angile Ahmad,4. Stock,735.00,735.00,0.00,Pünktlich,Überweisung,Miete Juni 2024
+2024-06-15,V-008,Daniel Gungor,Dachgeschoss,465.00,465.00,0.00,Pünktlich,Überweisung,Miete Juni 2024
+2024-07-15,V-001,Vaida Pastarnokaite,Café (Erdgeschoss),2050.00,2050.00,0.00,Pünktlich,Überweisung,Miete Juli 2024
+2024-07-15,V-002,Prajwal Chiradoni,1. OG Wohnung,1300.00,1300.00,0.00,Pünktlich,Überweisung,Miete Juli 2024
+2024-07-15,V-003,Mohamad Rizki Nurdena,3. OG Links,445.00,445.00,0.00,Pünktlich,Überweisung,Miete Juli 2024
+2024-07-15,V-004,Naser Alsoliman,1. OG Mitte,620.00,620.00,0.00,Pünktlich,Überweisung,Miete Juli 2024
+2024-07-15,V-005,Andreas Reimer,2. OG Rechts,440.00,440.00,0.00,Pünktlich,Überweisung,Miete Juli 2024
+2024-07-15,V-006,Gilles Peuziat,2. OG Links (WG-Zimmer),440.00,440.00,0.00,Pünktlich,Überweisung,Miete Juli 2024
+2024-07-15,V-007,Angile Ahmad,4. Stock,735.00,735.00,0.00,Pünktlich,Überweisung,Miete Juli 2024
+2024-07-15,V-008,Daniel Gungor,Dachgeschoss,465.00,465.00,0.00,Pünktlich,Überweisung,Miete Juli 2024
+2024-08-15,V-001,Vaida Pastarnokaite,Café (Erdgeschoss),2050.00,2050.00,0.00,Pünktlich,Überweisung,Miete August 2024
+2024-08-15,V-002,Prajwal Chiradoni,1. OG Wohnung,1300.00,1300.00,0.00,Pünktlich,Überweisung,Miete August 2024
+2024-08-15,V-003,Mohamad Rizki Nurdena,3. OG Links,445.00,445.00,0.00,Pünktlich,Überweisung,Miete August 2024
+2024-08-15,V-004,Naser Alsoliman,1. OG Mitte,620.00,620.00,0.00,Pünktlich,Überweisung,Miete August 2024
+2024-08-15,V-005,Andreas Reimer,2. OG Rechts,440.00,440.00,0.00,Pünktlich,Überweisung,Miete August 2024
+2024-08-15,V-006,Gilles Peuziat,2. OG Links (WG-Zimmer),440.00,440.00,0.00,Pünktlich,Überweisung,Miete August 2024
+2024-08-15,V-007,Angile Ahmad,4. Stock,735.00,735.00,0.00,Pünktlich,Überweisung,Miete August 2024
+2024-08-15,V-008,Daniel Gungor,Dachgeschoss,465.00,465.00,0.00,Pünktlich,Überweisung,Miete August 2024
+2024-09-15,V-001,Vaida Pastarnokaite,Café (Erdgeschoss),2050.00,2050.00,0.00,Pünktlich,Überweisung,Miete September 2024
+2024-09-15,V-002,Prajwal Chiradoni,1. OG Wohnung,1300.00,1300.00,0.00,Pünktlich,Überweisung,Miete September 2024
+2024-09-15,V-003,Mohamad Rizki Nurdena,3. OG Links,445.00,445.00,0.00,Pünktlich,Überweisung,Miete September 2024
+2024-09-15,V-004,Naser Alsoliman,1. OG Mitte,620.00,620.00,0.00,Pünktlich,Überweisung,Miete September 2024
+2024-09-15,V-005,Andreas Reimer,2. OG Rechts,440.00,440.00,0.00,Pünktlich,Überweisung,Miete September 2024
+2024-09-15,V-006,Gilles Peuziat,2. OG Links (WG-Zimmer),440.00,440.00,0.00,Pünktlich,Überweisung,Miete September 2024
+2024-09-15,V-007,Angile Ahmad,4. Stock,735.00,735.00,0.00,Pünktlich,Überweisung,Miete September 2024
+2024-09-15,V-008,Daniel Gungor,Dachgeschoss,465.00,465.00,0.00,Pünktlich,Überweisung,Miete September 2024
+2024-10-15,V-001,Vaida Pastarnokaite,Café (Erdgeschoss),2050.00,2050.00,0.00,Pünktlich,Überweisung,Miete Oktober 2024
+2024-10-15,V-002,Prajwal Chiradoni,1. OG Wohnung,1300.00,1300.00,0.00,Pünktlich,Überweisung,Miete Oktober 2024
+2024-10-15,V-003,Mohamad Rizki Nurdena,3. OG Links,445.00,445.00,0.00,Pünktlich,Überweisung,Miete Oktober 2024
+2024-10-15,V-004,Naser Alsoliman,1. OG Mitte,620.00,620.00,0.00,Pünktlich,Überweisung,Miete Oktober 2024
+2024-10-15,V-005,Andreas Reimer,2. OG Rechts,440.00,440.00,0.00,Pünktlich,Überweisung,Miete Oktober 2024
+2024-10-15,V-006,Gilles Peuziat,2. OG Links (WG-Zimmer),440.00,440.00,0.00,Pünktlich,Überweisung,Miete Oktober 2024
+2024-10-15,V-007,Angile Ahmad,4. Stock,735.00,735.00,0.00,Pünktlich,Überweisung,Miete Oktober 2024
+2024-10-15,V-008,Daniel Gungor,Dachgeschoss,465.00,465.00,0.00,Pünktlich,Überweisung,Miete Oktober 2024
+2024-11-15,V-001,Vaida Pastarnokaite,Café (Erdgeschoss),2050.00,2050.00,0.00,Pünktlich,Überweisung,Miete November 2024
+2024-11-15,V-002,Prajwal Chiradoni,1. OG Wohnung,1300.00,1300.00,0.00,Pünktlich,Überweisung,Miete November 2024
+2024-11-25,V-003,Mohamad Rizki Nurdena,3. OG Links,445.00,445.00,0.00,Verspätet,Überweisung,Miete November 2024 - 10 Tage verspätet
+2024-11-15,V-004,Naser Alsoliman,1. OG Mitte,620.00,620.00,0.00,Pünktlich,Überweisung,Miete November 2024
+2024-11-15,V-005,Andreas Reimer,2. OG Rechts,440.00,440.00,0.00,Pünktlich,Überweisung,Miete November 2024
+2024-11-15,V-006,Gilles Peuziat,2. OG Links (WG-Zimmer),440.00,440.00,0.00,Pünktlich,Überweisung,Miete November 2024
+2024-11-15,V-007,Angile Ahmad,4. Stock,735.00,735.00,0.00,Pünktlich,Überweisung,Miete November 2024
+2024-11-15,V-008,Daniel Gungor,Dachgeschoss,465.00,465.00,0.00,Pünktlich,Überweisung,Miete November 2024
+2024-12-15,V-001,Vaida Pastarnokaite,Café (Erdgeschoss),2050.00,2050.00,0.00,Pünktlich,Überweisung,Miete Dezember 2024
+2024-12-15,V-002,Prajwal Chiradoni,1. OG Wohnung,1300.00,1300.00,0.00,Pünktlich,Überweisung,Miete Dezember 2024
+2024-12-15,V-003,Mohamad Rizki Nurdena,3. OG Links,445.00,0.00,-445.00,Ausfall,Keine Zahlung,Miete Dezember 2024 - Zahlungsausfall
+2024-12-15,V-004,Naser Alsoliman,1. OG Mitte,620.00,620.00,0.00,Pünktlich,Überweisung,Miete Dezember 2024
+2024-12-15,V-005,Andreas Reimer,2. OG Rechts,440.00,440.00,0.00,Pünktlich,Überweisung,Miete Dezember 2024
+2024-12-15,V-006,Gilles Peuziat,2. OG Links (WG-Zimmer),440.00,440.00,0.00,Pünktlich,Überweisung,Miete Dezember 2024
+2024-12-15,V-007,Angile Ahmad,4. Stock,735.00,735.00,0.00,Pünktlich,Überweisung,Miete Dezember 2024
+2024-12-28,V-008,Daniel Gungor,Dachgeschoss,465.00,300.00,-165.00,Teilzahlung,Überweisung,Miete Dezember 2024 - Teilzahlung wegen Jobverlust
+

@@ -1,0 +1,118 @@
+{
+  "ui": {
+    "greeting": "Willkommen zurück! Clara steht bereit.",
+    "fallback": "Hallo, wie kann ich dir helfen?",
+    "offline": "Clara ist im Ruhemodus – bitte aktualisieren.",
+    "insight_intro": "Ich habe 3 relevante Hinweise für dich zusammengestellt."
+  },
+  "responses": [
+    {
+      "intent": "miete",
+      "match": [
+        "miete",
+        "einnahmen",
+        "monatsmiete",
+        "mieteinnahmen"
+      ],
+      "response": "Du hast diesen Monat 8.760 € Miete eingenommen bei 14 Verträgen. Das entspricht einer Steigerung von 2,4% gegenüber dem Vormonat."
+    },
+    {
+      "intent": "rückstand",
+      "match": [
+        "rückstand",
+        "offen",
+        "nicht gezahlt",
+        "rückstände",
+        "ausstehend"
+      ],
+      "response": "Ein Mieter steht aktuell mit 1.200 € im Rückstand. Eine automatische Mahnung wurde bereits versendet."
+    },
+    {
+      "intent": "wartung",
+      "match": [
+        "wartung",
+        "heizung",
+        "reparatur",
+        "heizkosten",
+        "heizungsanlage"
+      ],
+      "response": "Wartung der Heizungsanlage empfohlen. Die Heizkosten sind in den letzten 3 Monaten um 15% gestiegen. Potenzielle Einsparung: 200€/Monat."
+    },
+    {
+      "intent": "cashflow",
+      "match": [
+        "cashflow",
+        "liquidität",
+        "vorschau",
+        "finanzen",
+        "geld"
+      ],
+      "response": "Dein aktueller Cashflow beträgt +7.560 € für diesen Monat. Prognostizierter Cashflow für die nächsten 6 Monate: +37.260 € (Konfidenz: 94%)."
+    },
+    {
+      "intent": "rendite",
+      "match": [
+        "rendite",
+        "ertrag",
+        "gewinn",
+        "performance",
+        "roi"
+      ],
+      "response": "Deine aktuelle Rendite liegt bei 8,6% - das ist 2,1% über dem Marktdurchschnitt. Sehr gute Performance für dein Portfolio!"
+    },
+    {
+      "intent": "objekte",
+      "match": [
+        "objekte",
+        "immobilien",
+        "wohnungen",
+        "häuser"
+      ],
+      "response": "Du verwaltest aktuell 14 Mieteinheiten mit einer Vollvermietung von 100%. Durchschnittliche Mietdauer: 3,2 Jahre."
+    },
+    {
+      "intent": "steuer",
+      "match": [
+        "steuer",
+        "steuern",
+        "abschreibung",
+        "optimierung"
+      ],
+      "response": "Steueroptimierungspotenzial identifiziert: 2.400€ jährliche Einsparung durch verbesserte Abschreibungsstrategien möglich."
+    },
+    {
+      "intent": "begrüßung",
+      "match": [
+        "hallo",
+        "hi",
+        "guten tag",
+        "moin",
+        "servus"
+      ],
+      "response": "Hallo! Ich bin Clara, deine KI-Assistentin für die Immobilienverwaltung. Wie kann ich dir heute helfen?"
+    },
+    {
+      "intent": "hilfe",
+      "match": [
+        "hilfe",
+        "helfen",
+        "unterstützen",
+        "funktionen",
+        "was kannst du"
+      ],
+      "response": "Ich kann dir bei folgenden Themen helfen: Mieteinnahmen, Rückstände, Wartungsplanung, Cashflow-Analyse, Renditeberechnung, Objektübersicht und Steueroptimierung. Was möchtest du wissen?"
+    },
+    {
+      "intent": "danke",
+      "match": [
+        "danke",
+        "vielen dank",
+        "super",
+        "toll",
+        "perfekt"
+      ],
+      "response": "Gerne! Ich freue mich, wenn ich helfen konnte. Hast du noch weitere Fragen zu deinen Immobilien?"
+    }
+  ]
+}
+

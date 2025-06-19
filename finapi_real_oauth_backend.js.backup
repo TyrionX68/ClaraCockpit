@@ -1,0 +1,347 @@
+// Real FinAPI OAuth Backend Implementation
+// NO MOCKUPS - REAL PRODUCTION ENDPOINTS
+
+const express = require('express');
+const cors = require('cors');
+const fetch = require('node-fetch');
+const fs = require('fs');
+const path = require('path');
+
+// Load environment variables
+require('dotenv').config();
+
+const app = express();
+const PORT = 3001;
+
+// CORS configuration for real production
+app.use(cors({
+  origin: ['https://clara360.de', 'http://localhost:3000'],
+  credentials: true
+}));
+
+app.use(express.json());
+
+// FinAPI Configuration - REAL CREDENTIALS
+const FINAPI_CONFIG = {
+  baseUrl: 'https://api.finapi.io',
+  clientId: process.env.FINAPI_CLIENT_ID,
+  clientSecret: process.env.FINAPI_CLIENT_SECRET,
+  redirectUri: 'https://clara360.de/api/finapi/callback'
+};
+
+console.log('🔐 FinAPI Real OAuth Backend starting...');
+console.log('📍 Base URL:', FINAPI_CONFIG.baseUrl);
+console.log('🔑 Client ID:', FINAPI_CONFIG.clientId ? 'Loaded' : 'Missing');
+console.log('🔐 Client Secret:', FINAPI_CONFIG.clientSecret ? 'Loaded' : 'Missing');
+
+// Get FinAPI access token for backend operations
+async function getFinAPIAccessToken() {
+  try {
+    const response = await fetch(`${FINAPI_CONFIG.baseUrl}/api/v2/oauth/token`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded'
+      },
+      body: new URLSearchParams({
+        grant_type: 'client_credentials',
+        client_id: FINAPI_CONFIG.clientId,
+        client_secret: FINAPI_CONFIG.clientSecret,
+        scope: 'ALL_ACCOUNTS'
+      })
+    });
+
+    if (!response.ok) {
+      throw new Error(`Token request failed: ${response.status}`);
+    }
+
+    const data = await response.json();
+    console.log('✅ FinAPI access token obtained');
+    return data.access_token;
+  } catch (error) {
+    console.error('❌ Failed to get FinAPI access token:', error);
+    throw error;
+  }
+}
+
+// REAL ENDPOINT: Search banks via FinAPI
+app.post('/api/finapi/institutions/search', async (req, res) => {
+  console.log('🔍 Real bank search request:', req.body);
+  
+  try {
+    const { search, limit = 10 } = req.body;
+    
+    if (!search || search.length < 3) {
+      return res.status(400).json({
+        error: 'Search query must be at least 3 characters'
+      });
+    }
+
+    const accessToken = await getFinAPIAccessToken();
+    
+    const response = await fetch(`${FINAPI_CONFIG.baseUrl}/api/v2/institutions`, {
+      method: 'GET',
+      headers: {
+        'Authorization': `Bearer ${accessToken}`,
+        'Content-Type': 'application/json'
+      }
+    });
+
+    if (!response.ok) {
+      throw new Error(`Institution search failed: ${response.status}`);
+    }
+
+    const data = await response.json();
+    
+    // Filter institutions by search term
+    const filteredInstitutions = data.institutions?.filter(inst => 
+      inst.name.toLowerCase().includes(search.toLowerCase()) ||
+      (inst.blz && inst.blz.includes(search)) ||
+      (inst.bic && inst.bic.toLowerCase().includes(search.toLowerCase()))
+    ).slice(0, limit) || [];
+
+    console.log(`✅ Found ${filteredInstitutions.length} institutions for "${search}"`);
+    
+    res.json({
+      institutions: filteredInstitutions,
+      total: filteredInstitutions.length
+    });
+
+  } catch (error) {
+    console.error('❌ Institution search error:', error);
+    res.status(500).json({
+      error: 'Failed to search institutions',
+      details: error.message
+    });
+  }
+});
+
+// REAL ENDPOINT: Start OAuth flow
+app.post('/api/finapi/oauth/start', async (req, res) => {
+  console.log('🚀 Starting real OAuth flow:', req.body);
+  
+  try {
+    const { bankId, state } = req.body;
+    
+    // Build OAuth URL
+    const oauthUrl = new URL(`${FINAPI_CONFIG.baseUrl}/oauth/authorize`);
+    oauthUrl.searchParams.set('client_id', FINAPI_CONFIG.clientId);
+    oauthUrl.searchParams.set('redirect_uri', FINAPI_CONFIG.redirectUri);
+    oauthUrl.searchParams.set('response_type', 'code');
+    oauthUrl.searchParams.set('scope', 'ALL_ACCOUNTS');
+    oauthUrl.searchParams.set('state', state);
+    
+    if (bankId) {
+      oauthUrl.searchParams.set('bank_id', bankId);
+    }
+
+    console.log('🔗 OAuth URL generated:', oauthUrl.toString());
+    
+    res.json({
+      success: true,
+      redirectUrl: oauthUrl.toString()
+    });
+
+  } catch (error) {
+    console.error('❌ OAuth start error:', error);
+    res.status(500).json({
+      error: 'Failed to start OAuth flow',
+      details: error.message
+    });
+  }
+});
+
+// REAL ENDPOINT: Handle OAuth callback
+app.get('/api/finapi/callback', async (req, res) => {
+  console.log('📞 OAuth callback received:', req.query);
+  
+  try {
+    const { code, state, error } = req.query;
+    
+    if (error) {
+      console.error('❌ OAuth error:', error);
+      return res.redirect(`https://clara360.de/banking?error=${encodeURIComponent(error)}`);
+    }
+    
+    if (!code) {
+      console.error('❌ No authorization code received');
+      return res.redirect('https://clara360.de/banking?error=no_code');
+    }
+
+    console.log('✅ Authorization code received, exchanging for token...');
+    
+    // Exchange code for token
+    const tokenResponse = await fetch(`${FINAPI_CONFIG.baseUrl}/api/v2/oauth/token`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded'
+      },
+      body: new URLSearchParams({
+        grant_type: 'authorization_code',
+        client_id: FINAPI_CONFIG.clientId,
+        client_secret: FINAPI_CONFIG.clientSecret,
+        code: code,
+        redirect_uri: FINAPI_CONFIG.redirectUri
+      })
+    });
+
+    if (!tokenResponse.ok) {
+      const errorData = await tokenResponse.text();
+      console.error('❌ Token exchange failed:', errorData);
+      return res.redirect(`https://clara360.de/banking?error=token_exchange_failed`);
+    }
+
+    const tokenData = await tokenResponse.json();
+    console.log('✅ Token exchange successful');
+
+    // Store token securely
+    const tokenFile = '/tokens/finapi_user_token.json';
+    const tokenInfo = {
+      access_token: tokenData.access_token,
+      refresh_token: tokenData.refresh_token,
+      expires_at: Date.now() + (tokenData.expires_in * 1000),
+      created_at: new Date().toISOString(),
+      state: state
+    };
+
+    // Ensure tokens directory exists
+    const tokensDir = path.dirname(tokenFile);
+    if (!fs.existsSync(tokensDir)) {
+      fs.mkdirSync(tokensDir, { recursive: true });
+    }
+
+    fs.writeFileSync(tokenFile, JSON.stringify(tokenInfo, null, 2));
+    console.log('💾 User token stored successfully');
+
+    // Redirect back to banking page with success
+    res.redirect('https://clara360.de/banking?success=bank_connected');
+
+  } catch (error) {
+    console.error('❌ OAuth callback error:', error);
+    res.redirect(`https://clara360.de/banking?error=${encodeURIComponent(error.message)}`);
+  }
+});
+
+// REAL ENDPOINT: Get user accounts
+app.get('/api/finapi/accounts', async (req, res) => {
+  console.log('📊 Fetching user accounts...');
+  
+  try {
+    const tokenFile = '/tokens/finapi_user_token.json';
+    
+    if (!fs.existsSync(tokenFile)) {
+      return res.status(401).json({
+        error: 'No user token found. Please connect your bank first.'
+      });
+    }
+
+    const tokenInfo = JSON.parse(fs.readFileSync(tokenFile, 'utf8'));
+    
+    // Check if token is expired
+    if (Date.now() > tokenInfo.expires_at) {
+      return res.status(401).json({
+        error: 'Token expired. Please reconnect your bank.'
+      });
+    }
+
+    // Fetch accounts from FinAPI
+    const accountsResponse = await fetch(`${FINAPI_CONFIG.baseUrl}/api/v2/accounts`, {
+      headers: {
+        'Authorization': `Bearer ${tokenInfo.access_token}`,
+        'Content-Type': 'application/json'
+      }
+    });
+
+    if (!accountsResponse.ok) {
+      throw new Error(`Accounts fetch failed: ${accountsResponse.status}`);
+    }
+
+    const accountsData = await accountsResponse.json();
+    console.log(`✅ Retrieved ${accountsData.accounts?.length || 0} accounts`);
+
+    res.json(accountsData);
+
+  } catch (error) {
+    console.error('❌ Accounts fetch error:', error);
+    res.status(500).json({
+      error: 'Failed to fetch accounts',
+      details: error.message
+    });
+  }
+});
+
+// REAL ENDPOINT: Get transactions
+app.get('/api/finapi/transactions', async (req, res) => {
+  console.log('💳 Fetching user transactions...');
+  
+  try {
+    const tokenFile = '/tokens/finapi_user_token.json';
+    
+    if (!fs.existsSync(tokenFile)) {
+      return res.status(401).json({
+        error: 'No user token found. Please connect your bank first.'
+      });
+    }
+
+    const tokenInfo = JSON.parse(fs.readFileSync(tokenFile, 'utf8'));
+    
+    // Check if token is expired
+    if (Date.now() > tokenInfo.expires_at) {
+      return res.status(401).json({
+        error: 'Token expired. Please reconnect your bank.'
+      });
+    }
+
+    // Fetch transactions from FinAPI
+    const transactionsResponse = await fetch(`${FINAPI_CONFIG.baseUrl}/api/v2/transactions`, {
+      headers: {
+        'Authorization': `Bearer ${tokenInfo.access_token}`,
+        'Content-Type': 'application/json'
+      }
+    });
+
+    if (!transactionsResponse.ok) {
+      throw new Error(`Transactions fetch failed: ${transactionsResponse.status}`);
+    }
+
+    const transactionsData = await transactionsResponse.json();
+    console.log(`✅ Retrieved ${transactionsData.transactions?.length || 0} transactions`);
+
+    res.json(transactionsData);
+
+  } catch (error) {
+    console.error('❌ Transactions fetch error:', error);
+    res.status(500).json({
+      error: 'Failed to fetch transactions',
+      details: error.message
+    });
+  }
+});
+
+// Health check endpoint
+app.get('/api/finapi/health', (req, res) => {
+  res.json({
+    status: 'healthy',
+    service: 'FinAPI Real OAuth Backend',
+    timestamp: new Date().toISOString(),
+    config: {
+      baseUrl: FINAPI_CONFIG.baseUrl,
+      clientIdConfigured: !!FINAPI_CONFIG.clientId,
+      clientSecretConfigured: !!FINAPI_CONFIG.clientSecret
+    }
+  });
+});
+
+// Start server
+app.listen(PORT, '0.0.0.0', () => {
+  console.log(`🚀 FinAPI Real OAuth Backend running on port ${PORT}`);
+  console.log('🔗 Available endpoints:');
+  console.log('  POST /api/finapi/institutions/search');
+  console.log('  POST /api/finapi/oauth/start');
+  console.log('  GET  /api/finapi/callback');
+  console.log('  GET  /api/finapi/accounts');
+  console.log('  GET  /api/finapi/transactions');
+  console.log('  GET  /api/finapi/health');
+});
+
+module.exports = app;
+

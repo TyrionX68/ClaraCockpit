@@ -1,0 +1,4 @@
+🏦 Clara360 Banking API Proxy läuft auf Port 3001
+📡 Health Check: http://localhost:3001/api/health
+🔗 Banking Data: http://localhost:3001/api/banking/data
+🛑 Banking API Proxy wird beendet...

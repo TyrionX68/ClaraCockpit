@@ -1,0 +1,66 @@
+🚀 FinAPI Real OAuth Backend v2.2 - Proxy Enhanced running on port 3001
+📍 Health check: http://localhost:3001/api/finapi/health
+🔒 Secure Proxy Routes:
+   - Institution Search: http://localhost:3001/api/search-institutions
+   - OAuth Initiation: http://localhost:3001/api/initiate-oauth
+🛡️ Protected Legacy Routes (API-Key required):
+   - Institution Search: http://localhost:3001/api/finapi/institutions/search
+   - OAuth Initiation: http://localhost:3001/api/finapi/oauth/initiate
+📝 Audit logging active: finapi_audit.log
+[2025-06-15T20:02:14.153Z] [INFO] Request-ID: 1750017734153-g55zyewsn - GET /api/banking/data - User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/132.0.0.0 Safari/537.36
+[2025-06-15T20:03:13.351Z] [INFO] Request-ID: 1750017793351-bdd905o1c - GET /api/search-institutions?query=sparkasse - User-Agent: curl/7.81.0
+[2025-06-15T20:03:13.352Z] [INFO] Request-ID: 1750017793351-bdd905o1c - Proxy institution search requested: { query: 'sparkasse' }
+[2025-06-15T20:03:13.352Z] [INFO] Request-ID: 1750017793351-bdd905o1c - Proxy institution search successful - Found 2 institutions
+[2025-06-15T20:03:14.149Z] [INFO] Request-ID: 1750017794149-ofq3mqbeu - GET /api/banking/data - User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/132.0.0.0 Safari/537.36
+[2025-06-15T20:03:20.007Z] [INFO] Request-ID: 1750017800007-zrm5qvs8x - POST /api/initiate-oauth - User-Agent: curl/7.81.0
+[2025-06-15T20:03:20.008Z] [INFO] Request-ID: 1750017800007-zrm5qvs8x - Proxy OAuth initiation requested: { bankId: 277672, bankName: 'Sparkasse Köln/Bonn' }
+[2025-06-15T20:03:20.008Z] [INFO] Request-ID: 1750017800007-zrm5qvs8x - Proxy OAuth initiation successful - Generated OAuth URL for bank Sparkasse Köln/Bonn
+[2025-06-15T20:04:14.150Z] [INFO] Request-ID: 1750017854150-jqsp60zko - GET /api/banking/data - User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/132.0.0.0 Safari/537.36
+[2025-06-15T20:05:01.516Z] [INFO] Request-ID: 1750017901516-owr8kevfx - GET /api/finapi/health - User-Agent: curl/7.81.0
+[2025-06-15T20:05:01.516Z] [INFO] Request-ID: 1750017901516-owr8kevfx - Health check successful
+[2025-06-15T20:05:14.149Z] [INFO] Request-ID: 1750017914149-68n2dkped - GET /api/banking/data - User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/132.0.0.0 Safari/537.36
+[2025-06-15T20:06:14.149Z] [INFO] Request-ID: 1750017974149-78pcm4l0h - GET /api/banking/data - User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/132.0.0.0 Safari/537.36
+[2025-06-15T20:07:14.150Z] [INFO] Request-ID: 1750018034150-eiifnxab7 - GET /api/banking/data - User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/132.0.0.0 Safari/537.36
+[2025-06-15T20:08:14.150Z] [INFO] Request-ID: 1750018094150-y6n7lkh8h - GET /api/banking/data - User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/132.0.0.0 Safari/537.36
+[2025-06-15T20:09:14.150Z] [INFO] Request-ID: 1750018154150-l23uqx93d - GET /api/banking/data - User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/132.0.0.0 Safari/537.36
+[2025-06-15T20:10:01.588Z] [INFO] Request-ID: 1750018201588-flevfu9wn - GET /api/finapi/health - User-Agent: curl/7.81.0
+[2025-06-15T20:10:01.589Z] [INFO] Request-ID: 1750018201588-flevfu9wn - Health check successful
+[2025-06-15T20:10:14.150Z] [INFO] Request-ID: 1750018214150-lx1p8xns0 - GET /api/banking/data - User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/132.0.0.0 Safari/537.36
+[2025-06-15T20:11:14.151Z] [INFO] Request-ID: 1750018274151-gabq5k2gn - GET /api/banking/data - User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/132.0.0.0 Safari/537.36
+[2025-06-15T20:12:14.151Z] [INFO] Request-ID: 1750018334151-w0ca7vpwv - GET /api/banking/data - User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/132.0.0.0 Safari/537.36
+[2025-06-15T20:13:14.154Z] [INFO] Request-ID: 1750018394154-9pob3hkww - GET /api/banking/data - User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/132.0.0.0 Safari/537.36
+[2025-06-15T20:14:14.154Z] [INFO] Request-ID: 1750018454154-bnw4k5bge - GET /api/banking/data - User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/132.0.0.0 Safari/537.36
+[2025-06-15T20:15:01.657Z] [INFO] Request-ID: 1750018501657-s07qhz9kd - GET /api/finapi/health - User-Agent: curl/7.81.0
+[2025-06-15T20:15:01.657Z] [INFO] Request-ID: 1750018501657-s07qhz9kd - Health check successful
+[2025-06-15T20:15:14.154Z] [INFO] Request-ID: 1750018514154-tlj5dh25u - GET /api/banking/data - User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/132.0.0.0 Safari/537.36
+[2025-06-15T20:16:14.151Z] [INFO] Request-ID: 1750018574151-1pqz2web9 - GET /api/banking/data - User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/132.0.0.0 Safari/537.36
+[2025-06-15T20:17:14.151Z] [INFO] Request-ID: 1750018634151-80uqt1m50 - GET /api/banking/data - User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/132.0.0.0 Safari/537.36
+[2025-06-15T20:18:07.708Z] [INFO] Request-ID: 1750018687708-7lqa4de3b - GET /api/search-institutions?query=Spa - User-Agent: Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/137.0.0.0 Mobile Safari/537.36
+[2025-06-15T20:18:07.709Z] [INFO] Request-ID: 1750018687708-7lqa4de3b - Proxy institution search requested: { query: 'Spa' }
+[2025-06-15T20:18:07.709Z] [INFO] Request-ID: 1750018687708-7lqa4de3b - Proxy institution search successful - Found 2 institutions
+[2025-06-15T20:18:13.343Z] [INFO] Request-ID: 1750018693343-o4ujcjwok - GET /api/search-institutions?query=Sparkasse - User-Agent: Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/137.0.0.0 Mobile Safari/537.36
+[2025-06-15T20:18:13.343Z] [INFO] Request-ID: 1750018693343-o4ujcjwok - Proxy institution search requested: { query: 'Sparkasse' }
+[2025-06-15T20:18:13.343Z] [INFO] Request-ID: 1750018693343-o4ujcjwok - Proxy institution search successful - Found 2 institutions
+[2025-06-15T20:18:14.151Z] [INFO] Request-ID: 1750018694151-hp3q8wz4x - GET /api/banking/data - User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/132.0.0.0 Safari/537.36
+[2025-06-15T20:18:14.276Z] [INFO] Request-ID: 1750018694276-t5x9x9ahb - GET /api/search-institutions?query=Sparkasse%20rhe - User-Agent: Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/137.0.0.0 Mobile Safari/537.36
+[2025-06-15T20:18:14.276Z] [INFO] Request-ID: 1750018694276-t5x9x9ahb - Proxy institution search requested: { query: 'Sparkasse rhe' }
+[2025-06-15T20:18:14.276Z] [INFO] Request-ID: 1750018694276-t5x9x9ahb - Proxy institution search successful - Found 0 institutions
+[2025-06-15T20:18:22.064Z] [INFO] Request-ID: 1750018702064-eimdapblu - GET /api/search-institutions?query=Sparkasse - User-Agent: Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/137.0.0.0 Mobile Safari/537.36
+[2025-06-15T20:18:22.065Z] [INFO] Request-ID: 1750018702064-eimdapblu - Proxy institution search requested: { query: 'Sparkasse' }
+[2025-06-15T20:18:22.065Z] [INFO] Request-ID: 1750018702064-eimdapblu - Proxy institution search successful - Found 2 institutions
+[2025-06-15T20:20:01.738Z] [INFO] Request-ID: 1750018801738-2p31ggzkq - GET /api/finapi/health - User-Agent: curl/7.81.0
+[2025-06-15T20:20:01.738Z] [INFO] Request-ID: 1750018801738-2p31ggzkq - Health check successful
+[2025-06-15T20:20:17.238Z] [INFO] Request-ID: 1750018817238-2qd9gvhu6 - GET /api/search-institutions?query=Rhein-Neckar - User-Agent: curl/7.81.0
+[2025-06-15T20:20:17.238Z] [INFO] Request-ID: 1750018817238-2qd9gvhu6 - Proxy institution search requested: { query: 'Rhein-Neckar' }
+[2025-06-15T20:20:17.238Z] [INFO] Request-ID: 1750018817238-2qd9gvhu6 - Proxy institution search successful - Found 0 institutions
+[2025-06-15T20:20:24.085Z] [INFO] Request-ID: 1750018824085-j69ghdwaq - GET /api/search-institutions?query=sparkasse - User-Agent: curl/7.81.0
+[2025-06-15T20:20:24.086Z] [INFO] Request-ID: 1750018824085-j69ghdwaq - Proxy institution search requested: { query: 'sparkasse' }
+[2025-06-15T20:20:24.086Z] [INFO] Request-ID: 1750018824085-j69ghdwaq - Proxy institution search successful - Found 2 institutions
+[2025-06-15T20:20:26.573Z] [INFO] Request-ID: 1750018826573-82vgazezl - GET /api/banking/data - User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/132.0.0.0 Safari/537.36
+[2025-06-15T20:21:14.150Z] [INFO] Request-ID: 1750018874150-g9ugwes6y - GET /api/banking/data - User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/132.0.0.0 Safari/537.36
+[2025-06-15T20:22:14.150Z] [INFO] Request-ID: 1750018934150-jxulggbq8 - GET /api/banking/data - User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/132.0.0.0 Safari/537.36
+[2025-06-15T20:23:14.149Z] [INFO] Request-ID: 1750018994149-27i6eixq6 - GET /api/banking/data - User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/132.0.0.0 Safari/537.36
+[2025-06-15T20:24:14.149Z] [INFO] Request-ID: 1750019054149-cpgbn3ezu - GET /api/banking/data - User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/132.0.0.0 Safari/537.36
+[2025-06-15T20:25:01.811Z] [INFO] Request-ID: 1750019101811-gvhpexg1r - GET /api/finapi/health - User-Agent: curl/7.81.0
+[2025-06-15T20:25:01.811Z] [INFO] Request-ID: 1750019101811-gvhpexg1r - Health check successful
+[2025-06-15T20:25:14.149Z] [INFO] Request-ID: 1750019114149-tk0fw9znb - GET /api/banking/data - User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/132.0.0.0 Safari/537.36

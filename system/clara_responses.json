@@ -1,0 +1,39 @@
+{
+  "responses": {
+    "miete": {
+      "keywords": ["miete", "mieteinnahmen", "einnahmen", "mieter"],
+      "answer": "Du hast im Juni 8.760 € Mieteinnahmen erzielt. Das entspricht einer Steigerung von 2,4% gegenüber dem Vormonat.",
+      "confidence": 0.95
+    },
+    "rückstand": {
+      "keywords": ["rückstand", "rückstände", "ausstehend", "schulden"],
+      "answer": "Aktuell hat 1 Mieter einen Rückstand von 1.200 €. Eine automatische Mahnung wurde bereits versendet.",
+      "confidence": 0.90
+    },
+    "heizung": {
+      "keywords": ["heizung", "heizkosten", "wartung", "heizungsanlage"],
+      "answer": "Die Heizkosten sind in den letzten 3 Monaten um 15% gestiegen. Ich empfehle eine Wartung der Heizungsanlage mit potentieller Einsparung von 200€/Monat.",
+      "confidence": 0.85
+    },
+    "cashflow": {
+      "keywords": ["cashflow", "liquidität", "finanzen", "geld"],
+      "answer": "Dein aktueller Cashflow beträgt +7.560 € für diesen Monat. Prognose für die nächsten 6 Monate: +37.260 € (Konfidenz: 94%).",
+      "confidence": 0.92
+    },
+    "rendite": {
+      "keywords": ["rendite", "ertrag", "gewinn", "performance"],
+      "answer": "Deine aktuelle Rendite liegt bei 8,6% - das ist 2,1% über dem Marktdurchschnitt. Sehr gute Performance!",
+      "confidence": 0.88
+    },
+    "default": {
+      "keywords": [],
+      "answer": "Das schaue ich mir für dich an. Kannst du spezifischer werden? Ich kann dir zu Mieten, Rückständen, Heizkosten, Cashflow oder Rendite helfen.",
+      "confidence": 0.50
+    }
+  },
+  "metadata": {
+    "last_updated": "2025-06-17T08:45:00Z",
+    "version": "1.0",
+    "total_responses": 6
+  }
+}

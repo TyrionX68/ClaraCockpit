@@ -1,0 +1,3 @@
+EigentuemerID,Name,Vorname,Nachname,Email,Telefon,Adresse,Objekte,AnzahlEinheiten,MonatlicheMiete,PortfolioWert,Status,Verwalter,Notizen
+EIG-001,Torsten Hiss,Torsten,Hiss,torsten.hiss@email.de,+49 621 123456,Mannheim,"NadlerstraÃŸe 10, PfalzstraÃŸe 1",11,11550.0,2079000.0,Aktiv,Clara Hausverwaltung,Haupteigentümer der Mannheimer Objekte
+EIG-002,Uwe Scheerer,Uwe,Scheerer,uwe.scheerer@email.de,+49 621 234567,Mannheim,"SophienstraÃŸe 15, WilhelmstraÃŸe 26",10,9765.0,1757700.0,Aktiv,Clara Hausverwaltung,Co-Eigentümer der Mannheimer Objekte

@@ -1,0 +1,33 @@
+nohup: ignoring input
+🚀 Clara360 FinAPI Backend v3.0 (REAL INTEGRATION) running on port 3001
+📊 FinAPI Base URL: https://api.finapi.io/api/v2
+🔑 Client ID configured: true
+⚡ Ready for REAL FinAPI integration - NO MOCK DATA
+[2025-06-15T22:16:58.523Z] Request-ID: 1750025818523-0m0qakan2 – Endpoint: /api/health
+[2025-06-15T22:17:36.020Z] Request-ID: 1750025856020-mxaj2vlqv – Endpoint: /api/search-institutions
+FinAPI Access Token Error: FetchError: request to https://api.finapi.io/api/v2/oauth/token failed, reason: getaddrinfo ENOTFOUND api.finapi.io
+    at ClientRequest.<anonymous> (/var/www/clara360/node_modules/node-fetch/lib/index.js:1501:11)
+    at ClientRequest.emit (node:events:524:28)
+    at emitErrorEvent (node:_http_client:101:11)
+    at TLSSocket.socketErrorListener (node:_http_client:504:5)
+    at TLSSocket.emit (node:events:524:28)
+    at emitErrorNT (node:internal/streams/destroy:169:8)
+    at emitErrorCloseNT (node:internal/streams/destroy:128:3)
+    at process.processTicksAndRejections (node:internal/process/task_queues:82:21) {
+  type: 'system',
+  errno: 'ENOTFOUND',
+  code: 'ENOTFOUND'
+}
+[2025-06-15T22:17:36.117Z] FinAPI Search Error: FetchError: request to https://api.finapi.io/api/v2/oauth/token failed, reason: getaddrinfo ENOTFOUND api.finapi.io
+    at ClientRequest.<anonymous> (/var/www/clara360/node_modules/node-fetch/lib/index.js:1501:11)
+    at ClientRequest.emit (node:events:524:28)
+    at emitErrorEvent (node:_http_client:101:11)
+    at TLSSocket.socketErrorListener (node:_http_client:504:5)
+    at TLSSocket.emit (node:events:524:28)
+    at emitErrorNT (node:internal/streams/destroy:169:8)
+    at emitErrorCloseNT (node:internal/streams/destroy:128:3)
+    at process.processTicksAndRejections (node:internal/process/task_queues:82:21) {
+  type: 'system',
+  errno: 'ENOTFOUND',
+  code: 'ENOTFOUND'
+}

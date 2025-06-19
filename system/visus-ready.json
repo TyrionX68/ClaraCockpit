@@ -1,0 +1,23 @@
+{
+  "ui_state": {
+    "visus_ready": true,
+    "components_loaded": true,
+    "banking_integration_visible": true,
+    "kpi_dashboard_active": true,
+    "timestamp": "2025-06-16T13:30:00.000Z"
+  },
+  "property_object": "Waldhofstraße",
+  "user_identity": "hiss@clara360.de",
+  "integration_status": "UI_UNLOCKED_FOR_VISUAL_VERIFICATION",
+  "clickable_elements": [
+    "bank_search_field",
+    "account_type_selection",
+    "connection_button",
+    "kpi_dashboard",
+    "refresh_button"
+  ],
+  "ready_for_testing": true,
+  "live_mode_available": true,
+  "message": "UI ist jetzt sichtbar und klickbar für TyrionX Sichtprüfung"
+}
+
