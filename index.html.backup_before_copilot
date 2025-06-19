@@ -25,7 +25,6 @@
     <script src="/system/banking_modal_integration.js"></script>
     <script src="/system/kpi_dom_value_patch.js"></script>
     <script src="/system/clara_insights_popup_v1.js"></script>
-    <script src="/system/clara_dummy_cleanup_copilot.js"></script>
     
     <!-- Clara KI Blue Initialization -->
     <script src="/assets/components/clara-ki-init-blue.js"></script>
