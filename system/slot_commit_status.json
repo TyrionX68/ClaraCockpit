@@ -1,0 +1,13 @@
+{
+  "slot_id": "banking-modal-v2.5",
+  "deployed_by": "manus-a@system",
+  "commit_timestamp": "2025-06-14T17:39:00Z",
+  "files_updated": [
+    "/var/www/clara360/system/banking_modal_integration.v2.5.js",
+    "/var/www/clara360/index.html"
+  ],
+  "dom_verified": true,
+  "button_visible": true,
+  "manifest_status": "loaded"
+}
+

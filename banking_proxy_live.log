@@ -1,0 +1,252 @@
+🏦 Clara360 Banking API Proxy läuft auf Port 3001
+📡 Health Check: http://localhost:3001/api/health
+🔗 Banking Data: http://localhost:3001/api/banking/data
+🏛️ FinAPI Status: http://localhost:3001/api/finapi/status
+🌐 FinAPI Base URL: https://api.finapi.io
+🔐 FinAPI-Authentifizierung gestartet...
+DEBUG - CLIENT_ID: 74cf44b1-730c-4316-9b2c-34fd53bce7d2
+DEBUG - CLIENT_SECRET: [HIDDEN]
+📡 Sende OAuth-Request an FinAPI...
+✅ FinAPI-Token erhalten
+💾 Token gespeichert in: /var/www/clara360/tokens/finapi.json
+⚠️ FinAPI-Fehler, verwende Mock-Daten: fetch failed
+⚠️ FinAPI-Fehler, verwende Mock-Daten: fetch failed
+⚠️ FinAPI-Fehler, verwende Mock-Daten: fetch failed
+⚠️ FinAPI-Fehler, verwende Mock-Daten: fetch failed
+⚠️ FinAPI-Fehler, verwende Mock-Daten: fetch failed
+⚠️ FinAPI-Fehler, verwende Mock-Daten: fetch failed
+⚠️ FinAPI-Fehler, verwende Mock-Daten: fetch failed
+⚠️ FinAPI-Fehler, verwende Mock-Daten: fetch failed
+⚠️ FinAPI-Fehler, verwende Mock-Daten: fetch failed
+🔄 Token läuft ab, erneuere...
+❌ Token-Generierung fehlgeschlagen: ReferenceError: FINAPI_CLIENT_ID is not defined
+    at generateNewToken (/var/www/clara360/clara360_banking_proxy_live.js:68:20)
+    at refreshTokenIfNeeded (/var/www/clara360/clara360_banking_proxy_live.js:53:18)
+    at async makeFinAPIRequest (/var/www/clara360/clara360_banking_proxy_live.js:99:17)
+    at async Promise.all (index 0)
+    at async /var/www/clara360/clara360_banking_proxy_live.js:371:48
+⚠️ FinAPI-Fehler, verwende Mock-Daten: Kein gültiges Token verfügbar
+🔄 Token läuft ab, erneuere...
+❌ Token-Generierung fehlgeschlagen: ReferenceError: FINAPI_CLIENT_ID is not defined
+    at generateNewToken (/var/www/clara360/clara360_banking_proxy_live.js:68:20)
+    at refreshTokenIfNeeded (/var/www/clara360/clara360_banking_proxy_live.js:53:18)
+    at async makeFinAPIRequest (/var/www/clara360/clara360_banking_proxy_live.js:99:17)
+    at async Promise.all (index 1)
+🔄 Token läuft ab, erneuere...
+❌ Token-Generierung fehlgeschlagen: ReferenceError: FINAPI_CLIENT_ID is not defined
+    at generateNewToken (/var/www/clara360/clara360_banking_proxy_live.js:68:20)
+    at refreshTokenIfNeeded (/var/www/clara360/clara360_banking_proxy_live.js:53:18)
+    at async makeFinAPIRequest (/var/www/clara360/clara360_banking_proxy_live.js:99:17)
+    at async /var/www/clara360/clara360_banking_proxy_live.js:446:9
+🔄 Token läuft ab, erneuere...
+❌ Token-Generierung fehlgeschlagen: ReferenceError: FINAPI_CLIENT_ID is not defined
+    at generateNewToken (/var/www/clara360/clara360_banking_proxy_live.js:68:20)
+    at refreshTokenIfNeeded (/var/www/clara360/clara360_banking_proxy_live.js:53:18)
+    at async makeFinAPIRequest (/var/www/clara360/clara360_banking_proxy_live.js:99:17)
+    at async Promise.all (index 0)
+    at async /var/www/clara360/clara360_banking_proxy_live.js:371:48
+⚠️ FinAPI-Fehler, verwende Mock-Daten: Kein gültiges Token verfügbar
+🔄 Token läuft ab, erneuere...
+❌ Token-Generierung fehlgeschlagen: ReferenceError: FINAPI_CLIENT_ID is not defined
+    at generateNewToken (/var/www/clara360/clara360_banking_proxy_live.js:68:20)
+    at refreshTokenIfNeeded (/var/www/clara360/clara360_banking_proxy_live.js:53:18)
+    at async makeFinAPIRequest (/var/www/clara360/clara360_banking_proxy_live.js:99:17)
+    at async Promise.all (index 1)
+🔄 Token läuft ab, erneuere...
+❌ Token-Generierung fehlgeschlagen: ReferenceError: FINAPI_CLIENT_ID is not defined
+    at generateNewToken (/var/www/clara360/clara360_banking_proxy_live.js:68:20)
+    at refreshTokenIfNeeded (/var/www/clara360/clara360_banking_proxy_live.js:53:18)
+    at async makeFinAPIRequest (/var/www/clara360/clara360_banking_proxy_live.js:99:17)
+    at async /var/www/clara360/clara360_banking_proxy_live.js:446:9
+🔄 Token läuft ab, erneuere...
+❌ Token-Generierung fehlgeschlagen: ReferenceError: FINAPI_CLIENT_ID is not defined
+    at generateNewToken (/var/www/clara360/clara360_banking_proxy_live.js:68:20)
+    at refreshTokenIfNeeded (/var/www/clara360/clara360_banking_proxy_live.js:53:18)
+    at async makeFinAPIRequest (/var/www/clara360/clara360_banking_proxy_live.js:99:17)
+    at async Promise.all (index 0)
+    at async /var/www/clara360/clara360_banking_proxy_live.js:371:48
+⚠️ FinAPI-Fehler, verwende Mock-Daten: Kein gültiges Token verfügbar
+🔄 Token läuft ab, erneuere...
+❌ Token-Generierung fehlgeschlagen: ReferenceError: FINAPI_CLIENT_ID is not defined
+    at generateNewToken (/var/www/clara360/clara360_banking_proxy_live.js:68:20)
+    at refreshTokenIfNeeded (/var/www/clara360/clara360_banking_proxy_live.js:53:18)
+    at async makeFinAPIRequest (/var/www/clara360/clara360_banking_proxy_live.js:99:17)
+    at async Promise.all (index 1)
+🔄 Token läuft ab, erneuere...
+❌ Token-Generierung fehlgeschlagen: ReferenceError: FINAPI_CLIENT_ID is not defined
+    at generateNewToken (/var/www/clara360/clara360_banking_proxy_live.js:68:20)
+    at refreshTokenIfNeeded (/var/www/clara360/clara360_banking_proxy_live.js:53:18)
+    at async makeFinAPIRequest (/var/www/clara360/clara360_banking_proxy_live.js:99:17)
+    at async Promise.all (index 0)
+    at async /var/www/clara360/clara360_banking_proxy_live.js:371:48
+⚠️ FinAPI-Fehler, verwende Mock-Daten: Kein gültiges Token verfügbar
+🔄 Token läuft ab, erneuere...
+❌ Token-Generierung fehlgeschlagen: ReferenceError: FINAPI_CLIENT_ID is not defined
+    at generateNewToken (/var/www/clara360/clara360_banking_proxy_live.js:68:20)
+    at refreshTokenIfNeeded (/var/www/clara360/clara360_banking_proxy_live.js:53:18)
+    at async makeFinAPIRequest (/var/www/clara360/clara360_banking_proxy_live.js:99:17)
+    at async Promise.all (index 1)
+🔄 Token läuft ab, erneuere...
+❌ Token-Generierung fehlgeschlagen: ReferenceError: FINAPI_CLIENT_ID is not defined
+    at generateNewToken (/var/www/clara360/clara360_banking_proxy_live.js:68:20)
+    at refreshTokenIfNeeded (/var/www/clara360/clara360_banking_proxy_live.js:53:18)
+    at async makeFinAPIRequest (/var/www/clara360/clara360_banking_proxy_live.js:99:17)
+    at async Promise.all (index 0)
+    at async /var/www/clara360/clara360_banking_proxy_live.js:371:48
+⚠️ FinAPI-Fehler, verwende Mock-Daten: Kein gültiges Token verfügbar
+🔄 Token läuft ab, erneuere...
+❌ Token-Generierung fehlgeschlagen: ReferenceError: FINAPI_CLIENT_ID is not defined
+    at generateNewToken (/var/www/clara360/clara360_banking_proxy_live.js:68:20)
+    at refreshTokenIfNeeded (/var/www/clara360/clara360_banking_proxy_live.js:53:18)
+    at async makeFinAPIRequest (/var/www/clara360/clara360_banking_proxy_live.js:99:17)
+    at async Promise.all (index 1)
+🔄 Token läuft ab, erneuere...
+❌ Token-Generierung fehlgeschlagen: ReferenceError: FINAPI_CLIENT_ID is not defined
+    at generateNewToken (/var/www/clara360/clara360_banking_proxy_live.js:68:20)
+    at refreshTokenIfNeeded (/var/www/clara360/clara360_banking_proxy_live.js:53:18)
+    at async makeFinAPIRequest (/var/www/clara360/clara360_banking_proxy_live.js:99:17)
+    at async Promise.all (index 0)
+    at async /var/www/clara360/clara360_banking_proxy_live.js:371:48
+⚠️ FinAPI-Fehler, verwende Mock-Daten: Kein gültiges Token verfügbar
+🔄 Token läuft ab, erneuere...
+❌ Token-Generierung fehlgeschlagen: ReferenceError: FINAPI_CLIENT_ID is not defined
+    at generateNewToken (/var/www/clara360/clara360_banking_proxy_live.js:68:20)
+    at refreshTokenIfNeeded (/var/www/clara360/clara360_banking_proxy_live.js:53:18)
+    at async makeFinAPIRequest (/var/www/clara360/clara360_banking_proxy_live.js:99:17)
+    at async Promise.all (index 1)
+🔄 Token läuft ab, erneuere...
+❌ Token-Generierung fehlgeschlagen: ReferenceError: FINAPI_CLIENT_ID is not defined
+    at generateNewToken (/var/www/clara360/clara360_banking_proxy_live.js:68:20)
+    at refreshTokenIfNeeded (/var/www/clara360/clara360_banking_proxy_live.js:53:18)
+    at async makeFinAPIRequest (/var/www/clara360/clara360_banking_proxy_live.js:99:17)
+    at async /var/www/clara360/clara360_banking_proxy_live.js:446:9
+🔄 Token läuft ab, erneuere...
+❌ Token-Generierung fehlgeschlagen: ReferenceError: FINAPI_CLIENT_ID is not defined
+    at generateNewToken (/var/www/clara360/clara360_banking_proxy_live.js:68:20)
+    at refreshTokenIfNeeded (/var/www/clara360/clara360_banking_proxy_live.js:53:18)
+    at async makeFinAPIRequest (/var/www/clara360/clara360_banking_proxy_live.js:99:17)
+    at async Promise.all (index 0)
+    at async /var/www/clara360/clara360_banking_proxy_live.js:371:48
+⚠️ FinAPI-Fehler, verwende Mock-Daten: Kein gültiges Token verfügbar
+🔄 Token läuft ab, erneuere...
+❌ Token-Generierung fehlgeschlagen: ReferenceError: FINAPI_CLIENT_ID is not defined
+    at generateNewToken (/var/www/clara360/clara360_banking_proxy_live.js:68:20)
+    at refreshTokenIfNeeded (/var/www/clara360/clara360_banking_proxy_live.js:53:18)
+    at async makeFinAPIRequest (/var/www/clara360/clara360_banking_proxy_live.js:99:17)
+    at async Promise.all (index 1)
+🔐 FinAPI-Authentifizierung gestartet...
+DEBUG - CLIENT_ID: 74cf44b1-730c-4316-9b2c-34fd53bce7d2
+DEBUG - CLIENT_SECRET: [HIDDEN]
+📡 Sende OAuth-Request an FinAPI...
+✅ FinAPI-Token erhalten
+💾 Token gespeichert in: /var/www/clara360/tokens/finapi.json
+⚠️ FinAPI-Fehler, verwende Mock-Daten: fetch failed
+⚠️ FinAPI-Fehler, verwende Mock-Daten: fetch failed
+⚠️ FinAPI-Fehler, verwende Mock-Daten: fetch failed
+⚠️ FinAPI-Fehler, verwende Mock-Daten: fetch failed
+⚠️ FinAPI-Fehler, verwende Mock-Daten: fetch failed
+⚠️ FinAPI-Fehler, verwende Mock-Daten: fetch failed
+⚠️ FinAPI-Fehler, verwende Mock-Daten: fetch failed
+⚠️ FinAPI-Fehler, verwende Mock-Daten: fetch failed
+⚠️ FinAPI-Fehler, verwende Mock-Daten: fetch failed
+⚠️ FinAPI-Fehler, verwende Mock-Daten: fetch failed
+⚠️ FinAPI-Fehler, verwende Mock-Daten: fetch failed
+⚠️ FinAPI-Fehler, verwende Mock-Daten: fetch failed
+⚠️ FinAPI-Fehler, verwende Mock-Daten: fetch failed
+⚠️ FinAPI-Fehler, verwende Mock-Daten: fetch failed
+⚠️ FinAPI-Fehler, verwende Mock-Daten: fetch failed
+⚠️ FinAPI-Fehler, verwende Mock-Daten: fetch failed
+⚠️ FinAPI-Fehler, verwende Mock-Daten: fetch failed
+⚠️ FinAPI-Fehler, verwende Mock-Daten: fetch failed
+🔐 FinAPI-Authentifizierung gestartet...
+DEBUG - CLIENT_ID: 74cf44b1-730c-4316-9b2c-34fd53bce7d2
+DEBUG - CLIENT_SECRET: [HIDDEN]
+📡 Sende OAuth-Request an FinAPI...
+✅ FinAPI-Token erhalten
+💾 Token gespeichert in: /var/www/clara360/tokens/finapi.json
+⚠️ FinAPI-Fehler, verwende Mock-Daten: fetch failed
+🔐 FinAPI-Authentifizierung gestartet...
+DEBUG - CLIENT_ID: 74cf44b1-730c-4316-9b2c-34fd53bce7d2
+DEBUG - CLIENT_SECRET: [HIDDEN]
+📡 Sende OAuth-Request an FinAPI...
+✅ FinAPI-Token erhalten
+💾 Token gespeichert in: /var/www/clara360/tokens/finapi.json
+⚠️ FinAPI-Fehler, verwende Mock-Daten: fetch failed
+⚠️ FinAPI-Fehler, verwende Mock-Daten: fetch failed
+⚠️ FinAPI-Fehler, verwende Mock-Daten: fetch failed
+⚠️ FinAPI-Fehler, verwende Mock-Daten: fetch failed
+⚠️ FinAPI-Fehler, verwende Mock-Daten: fetch failed
+⚠️ FinAPI-Fehler, verwende Mock-Daten: fetch failed
+⚠️ FinAPI-Fehler, verwende Mock-Daten: fetch failed
+⚠️ FinAPI-Fehler, verwende Mock-Daten: fetch failed
+⚠️ FinAPI-Fehler, verwende Mock-Daten: fetch failed
+⚠️ FinAPI-Fehler, verwende Mock-Daten: fetch failed
+⚠️ FinAPI-Fehler, verwende Mock-Daten: fetch failed
+⚠️ FinAPI-Fehler, verwende Mock-Daten: fetch failed
+⚠️ FinAPI-Fehler, verwende Mock-Daten: fetch failed
+⚠️ FinAPI-Fehler, verwende Mock-Daten: fetch failed
+⚠️ FinAPI-Fehler, verwende Mock-Daten: fetch failed
+⚠️ FinAPI-Fehler, verwende Mock-Daten: fetch failed
+⚠️ FinAPI-Fehler, verwende Mock-Daten: fetch failed
+⚠️ FinAPI-Fehler, verwende Mock-Daten: fetch failed
+⚠️ FinAPI-Fehler, verwende Mock-Daten: fetch failed
+🔐 FinAPI-Authentifizierung gestartet...
+DEBUG - CLIENT_ID: 74cf44b1-730c-4316-9b2c-34fd53bce7d2
+DEBUG - CLIENT_SECRET: [HIDDEN]
+📡 Sende OAuth-Request an FinAPI...
+✅ FinAPI-Token erhalten
+💾 Token gespeichert in: /var/www/clara360/tokens/finapi.json
+⚠️ FinAPI-Fehler, verwende Mock-Daten: fetch failed
+⚠️ FinAPI-Fehler, verwende Mock-Daten: fetch failed
+🔄 Token läuft ab, erneuere...
+❌ Token-Generierung fehlgeschlagen: ReferenceError: FINAPI_CLIENT_ID is not defined
+    at generateNewToken (/var/www/clara360/clara360_banking_proxy_live.js:68:20)
+    at refreshTokenIfNeeded (/var/www/clara360/clara360_banking_proxy_live.js:53:18)
+    at async makeFinAPIRequest (/var/www/clara360/clara360_banking_proxy_live.js:99:17)
+    at async Promise.all (index 0)
+    at async /var/www/clara360/clara360_banking_proxy_live.js:371:48
+⚠️ FinAPI-Fehler, verwende Mock-Daten: Kein gültiges Token verfügbar
+🔄 Token läuft ab, erneuere...
+❌ Token-Generierung fehlgeschlagen: ReferenceError: FINAPI_CLIENT_ID is not defined
+    at generateNewToken (/var/www/clara360/clara360_banking_proxy_live.js:68:20)
+    at refreshTokenIfNeeded (/var/www/clara360/clara360_banking_proxy_live.js:53:18)
+    at async makeFinAPIRequest (/var/www/clara360/clara360_banking_proxy_live.js:99:17)
+    at async Promise.all (index 1)
+🔄 Token läuft ab, erneuere...
+❌ Token-Generierung fehlgeschlagen: ReferenceError: FINAPI_CLIENT_ID is not defined
+    at generateNewToken (/var/www/clara360/clara360_banking_proxy_live.js:68:20)
+    at refreshTokenIfNeeded (/var/www/clara360/clara360_banking_proxy_live.js:53:18)
+    at async makeFinAPIRequest (/var/www/clara360/clara360_banking_proxy_live.js:99:17)
+    at async Promise.all (index 0)
+    at async /var/www/clara360/clara360_banking_proxy_live.js:371:48
+⚠️ FinAPI-Fehler, verwende Mock-Daten: Kein gültiges Token verfügbar
+🔄 Token läuft ab, erneuere...
+❌ Token-Generierung fehlgeschlagen: ReferenceError: FINAPI_CLIENT_ID is not defined
+    at generateNewToken (/var/www/clara360/clara360_banking_proxy_live.js:68:20)
+    at refreshTokenIfNeeded (/var/www/clara360/clara360_banking_proxy_live.js:53:18)
+    at async makeFinAPIRequest (/var/www/clara360/clara360_banking_proxy_live.js:99:17)
+    at async Promise.all (index 1)
+🔐 FinAPI-Authentifizierung gestartet...
+DEBUG - CLIENT_ID: 74cf44b1-730c-4316-9b2c-34fd53bce7d2
+DEBUG - CLIENT_SECRET: [HIDDEN]
+📡 Sende OAuth-Request an FinAPI...
+✅ FinAPI-Token erhalten
+💾 Token gespeichert in: /var/www/clara360/tokens/finapi.json
+⚠️ FinAPI-Fehler, verwende Mock-Daten: fetch failed
+🔐 FinAPI-Authentifizierung gestartet...
+DEBUG - CLIENT_ID: 74cf44b1-730c-4316-9b2c-34fd53bce7d2
+DEBUG - CLIENT_SECRET: [HIDDEN]
+📡 Sende OAuth-Request an FinAPI...
+✅ FinAPI-Token erhalten
+💾 Token gespeichert in: /var/www/clara360/tokens/finapi.json
+⚠️ FinAPI-Fehler, verwende Mock-Daten: fetch failed
+⚠️ FinAPI-Fehler, verwende Mock-Daten: fetch failed
+⚠️ FinAPI-Fehler, verwende Mock-Daten: fetch failed
+⚠️ FinAPI-Fehler, verwende Mock-Daten: fetch failed
+⚠️ FinAPI-Fehler, verwende Mock-Daten: fetch failed
+⚠️ FinAPI-Fehler, verwende Mock-Daten: fetch failed
+⚠️ FinAPI-Fehler, verwende Mock-Daten: fetch failed
+⚠️ FinAPI-Fehler, verwende Mock-Daten: fetch failed
+⚠️ FinAPI-Fehler, verwende Mock-Daten: fetch failed
+⚠️ FinAPI-Fehler, verwende Mock-Daten: fetch failed
+⚠️ FinAPI-Fehler, verwende Mock-Daten: fetch failed

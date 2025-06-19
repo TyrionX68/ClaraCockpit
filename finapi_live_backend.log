@@ -1,0 +1,17 @@
+nohup: ignoring input
+🔐 Testing SANDBOX FinAPI token acquisition...
+🔄 Requesting new SANDBOX FinAPI access token...
+✅ SANDBOX FinAPI access token obtained successfully
+✅ SANDBOX FinAPI token test successful
+🏦 Testing banks endpoint for Waldhofstraße...
+✅ Using cached access token
+✅ Banks endpoint working - 0 suitable banks for Waldhofstraße
+🚀 Clara360 FinAPI Live System running on port 3006
+🏘️ Property Object: Waldhofstraße
+🌍 Environment: SANDBOX
+👤 User Identity: hiss@clara360.de
+🏦 FinAPI Base URL: https://sandbox.finapi.io/api/v2
+🔒 Selective Banking: DISABLED
+📊 Mock Data: DISABLED
+📂 Log Directory: /var/log/clara360/finapi
+⚡ Ready for Waldhofstraße banking integration

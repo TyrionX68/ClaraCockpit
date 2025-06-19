@@ -1,0 +1,35 @@
+{
+  "name": "clara360-frontend",
+  "version": "3.0.0",
+  "description": "Clara360 Frontend with React + Vite Build System",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "backend": "node finapi_backend_real_integration.js"
+  },
+  "dependencies": {
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "lucide-react": "^0.263.1"
+  },
+  "devDependencies": {
+    "@types/react": "^18.2.15",
+    "@types/react-dom": "^18.2.7",
+    "@vitejs/plugin-react": "^4.0.3",
+    "vite": "^4.4.5"
+  },
+  "keywords": [
+    "react",
+    "vite",
+    "clara360",
+    "frontend",
+    "hausverwaltung"
+  ],
+  "author": "Clara360 Team",
+  "license": "ISC",
+  "engines": {
+    "node": ">=14.0.0"
+  }
+}

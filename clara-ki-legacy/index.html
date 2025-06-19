@@ -1,0 +1,169 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/clara-ki/assets/vite-4a748afd.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Clara360 - KI Chat</title>
+    
+    <link rel="stylesheet" href="/clara-ki/assets/index-3df8890d.css">
+    <style>
+      body {
+        margin: 0;
+        padding: 0;
+        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
+        background: #f5f5f5;
+      }
+      #clara-root {
+        width: 100%;
+        height: 100vh;
+        display: flex;
+        flex-direction: column;
+      }
+      .clara-chat-container {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 20px;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="clara-root">
+      <div class="clara-chat-container">
+        <h1>Clara360 KI-Chat</h1>
+        <div id="clara-chat-panel"></div>
+      </div>
+    </div>
+    
+    <!-- Clara Intelligence Engine -->
+    <script src="/clara-ki/training_registry.json" type="application/json" id="training-data"></script>
+    <script src="/clara-ki/ClaraIntelligenceEngine.js"></script>
+    
+    <!-- Clara360 VPS Integration Scripts -->
+    <script src="/system/banking_modal_integration.js"></script>
+    <script src="/system/kpi_dom_value_patch.js"></script>
+    <script src="/system/clara_insights_popup_v1.js"></script>
+    <script src="/system/clara_chat_json_engine.js" defer></script>
+    
+    <script>
+      // Clara KI Panel Initialisierung
+      document.addEventListener('DOMContentLoaded', function() {
+        console.log('🧠 Clara KI Panel wird initialisiert...');
+        
+        // Warte auf Clara Intelligence Engine
+        setTimeout(() => {
+          if (typeof addBankingButton === 'function') {
+            addBankingButton();
+          }
+          
+          // Initialisiere Clara Chat
+          const chatPanel = document.getElementById('clara-chat-panel');
+          if (chatPanel) {
+            chatPanel.innerHTML = `
+              <div class="clara-chat-interface">
+                <div class="chat-messages" id="chat-messages"></div>
+                <div class="chat-input-container">
+                  <input type="text" id="chat-input" placeholder="Fragen Sie Clara..." />
+                  <button id="send-button">Senden</button>
+                </div>
+              </div>
+            `;
+            
+            // Chat-Funktionalität
+            const chatInput = document.getElementById('chat-input');
+            const sendButton = document.getElementById('send-button');
+            const chatMessages = document.getElementById('chat-messages');
+            
+            function sendMessage() {
+              const message = chatInput.value.trim();
+              if (message) {
+                // User-Nachricht anzeigen
+                const userMsg = document.createElement('div');
+                userMsg.className = 'message user-message';
+                userMsg.textContent = message;
+                chatMessages.appendChild(userMsg);
+                
+                // Clara-Antwort simulieren
+                setTimeout(() => {
+                  const claraMsg = document.createElement('div');
+                  claraMsg.className = 'message clara-message';
+                  claraMsg.textContent = 'Clara: Ich verarbeite Ihre Anfrage...';
+                  chatMessages.appendChild(claraMsg);
+                  chatMessages.scrollTop = chatMessages.scrollHeight;
+                }, 500);
+                
+                chatInput.value = '';
+                chatMessages.scrollTop = chatMessages.scrollHeight;
+              }
+            }
+            
+            sendButton.addEventListener('click', sendMessage);
+            chatInput.addEventListener('keypress', function(e) {
+              if (e.key === 'Enter') {
+                sendMessage();
+              }
+            });
+          }
+        }, 2000);
+      });
+    </script>
+    
+    <style>
+      .clara-chat-interface {
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        background: white;
+        height: 500px;
+        display: flex;
+        flex-direction: column;
+      }
+      .chat-messages {
+        flex: 1;
+        padding: 20px;
+        overflow-y: auto;
+        border-bottom: 1px solid #eee;
+      }
+      .message {
+        margin-bottom: 10px;
+        padding: 10px;
+        border-radius: 8px;
+        max-width: 80%;
+      }
+      .user-message {
+        background: #007bff;
+        color: white;
+        margin-left: auto;
+      }
+      .clara-message {
+        background: #f8f9fa;
+        color: #333;
+        border: 1px solid #dee2e6;
+      }
+      .chat-input-container {
+        padding: 20px;
+        display: flex;
+        gap: 10px;
+      }
+      #chat-input {
+        flex: 1;
+        padding: 10px;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+      }
+      #send-button {
+        padding: 10px 20px;
+        background: #007bff;
+        color: white;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+      }
+      #send-button:hover {
+        background: #0056b3;
+      }
+    </style>
+  </body>
+</html>

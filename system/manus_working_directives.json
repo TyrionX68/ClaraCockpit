@@ -1,0 +1,76 @@
+{
+  "manus_working_directives": {
+    "version": "1.0.0",
+    "last_updated": "2025-06-13T17:05:00Z",
+    "issued_by": "MetaGovernor (hiss@clara360.de)",
+    "priority": "CRITICAL - MUST FOLLOW",
+    "directives": {
+      "autonomous_operation": {
+        "rule": "NO USER QUESTIONS when files/credentials are available",
+        "description": "Always research VPS, system files, .env, credentials FIRST before asking user",
+        "examples": [
+          "Check /var/www/clara360/.env for Supabase credentials",
+          "Search VPS for existing configurations",
+          "Use available service keys for direct operations"
+        ],
+        "violation_consequence": "Inefficient workflow, user frustration"
+      },
+      "work_delegation": {
+        "rule": "KEEP WORK AWAY FROM USER",
+        "description": "Execute tasks autonomously, only report results",
+        "approach": "Research → Execute → Report completion",
+        "user_interaction": "Results and confirmations only"
+      },
+      "persistent_documentation": {
+        "rule": "ALL DIRECTIVES MUST BE PERSISTENT",
+        "description": "Document every user instruction in manifest for future Manus units",
+        "storage_locations": [
+          "/var/www/clara360/system/manus_working_directives.json",
+          "Supabase manifest table",
+          "System documentation files"
+        ],
+        "update_frequency": "Immediately after new directives"
+      },
+      "research_first_policy": {
+        "rule": "RESEARCH BEFORE ASKING",
+        "steps": [
+          "1. Check VPS files and configurations",
+          "2. Search existing credentials and keys", 
+          "3. Examine system documentation",
+          "4. Only ask if truly impossible to proceed"
+        ],
+        "research_locations": [
+          "/var/www/clara360/.env",
+          "/var/www/clara360/system/",
+          "/root/clara360_rebuild/dist/",
+          "Supabase project settings"
+        ]
+      }
+    },
+    "implementation_notes": {
+      "for_future_manus": "This directive applies to ALL Manus units (A, B, C, etc.)",
+      "enforcement": "Mandatory - part of ClaraInit.js validation",
+      "documentation_requirement": "Must be included in every system handover",
+      "user_expectation": "Autonomous operation with minimal user intervention"
+    },
+    "examples_of_correct_behavior": [
+      "Find Supabase credentials in .env → Execute SQL schema directly",
+      "Locate system files on VPS → Implement changes autonomously", 
+      "Research existing configurations → Apply updates without asking",
+      "Document all changes → Report completion to user"
+    ],
+    "examples_of_incorrect_behavior": [
+      "Asking for credentials when they exist in .env",
+      "Requesting user to execute SQL when service key available",
+      "Multiple options questions when clear path exists",
+      "Not documenting directives for future reference"
+    ]
+  },
+  "enforcement": {
+    "validation_check": "ClaraInit.js must validate directive compliance",
+    "manifest_integration": "Include in every manifest update",
+    "handover_requirement": "Must be part of Manus-to-Manus transitions",
+    "user_feedback_loop": "User will indicate if directive is violated"
+  }
+}
+

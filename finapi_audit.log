@@ -1,0 +1,220 @@
+[2025-06-15T17:46:14.199Z] [INFO] Request-ID: 1750009574198-azqbibe9f – Endpoint: /api/banking/data – Request started - Method: GET, IP: 127.0.0.1
+[2025-06-15T17:46:33.786Z] [INFO] Request-ID: 1750009593786-kksfwdt7l – Endpoint: /api/finapi/health – Request started - Method: HEAD, IP: 127.0.0.1
+[2025-06-15T17:46:33.786Z] [INFO] Request-ID: 1750009593786-kksfwdt7l – Endpoint: /api/finapi/health – Health check requested - Status: healthy
+[2025-06-15T17:46:39.068Z] [INFO] Request-ID: 1750009599068-93ebhlwa1 – Endpoint: /api/finapi/health – Request started - Method: GET, IP: 127.0.0.1
+[2025-06-15T17:46:39.068Z] [INFO] Request-ID: 1750009599068-93ebhlwa1 – Endpoint: /api/finapi/health – Health check requested - Status: healthy
+[2025-06-15T17:47:14.195Z] [INFO] Request-ID: 1750009634195-wxtolio66 – Endpoint: /api/banking/data – Request started - Method: GET, IP: 127.0.0.1
+[2025-06-15T17:48:14.196Z] [INFO] Request-ID: 1750009694195-uxycla23g – Endpoint: /api/banking/data – Request started - Method: GET, IP: 127.0.0.1
+[2025-06-15T17:49:13.544Z] [INFO] Request-ID: 1750009753544-yegl1mj4a – Endpoint: /api/finapi/health – Request started - Method: GET, IP: 127.0.0.1
+[2025-06-15T17:49:13.545Z] [INFO] Request-ID: 1750009753544-yegl1mj4a – Endpoint: /api/finapi/health – Health check requested - Status: healthy
+[2025-06-15T17:49:14.194Z] [INFO] Request-ID: 1750009754194-9v4s6zn03 – Endpoint: /api/banking/data – Request started - Method: GET, IP: 127.0.0.1
+[2025-06-15T17:50:01.451Z] [INFO] Request-ID: 1750009801451-42nbp1n2h – Endpoint: /api/finapi/health – Request started - Method: GET, IP: 127.0.0.1
+[2025-06-15T17:50:01.451Z] [INFO] Request-ID: 1750009801451-42nbp1n2h – Endpoint: /api/finapi/health – Health check requested - Status: healthy
+[2025-06-15T17:50:14.194Z] [INFO] Request-ID: 1750009814194-gxa78ez37 – Endpoint: /api/banking/data – Request started - Method: GET, IP: 127.0.0.1
+[2025-06-15T17:51:14.194Z] [INFO] Request-ID: 1750009874194-xymw2t88r – Endpoint: /api/banking/data – Request started - Method: GET, IP: 127.0.0.1
+[2025-06-15T17:52:14.194Z] [INFO] Request-ID: 1750009934193-svtwej0ft – Endpoint: /api/banking/data – Request started - Method: GET, IP: 127.0.0.1
+[2025-06-15T17:53:14.194Z] [INFO] Request-ID: 1750009994194-xpg73kpj4 – Endpoint: /api/banking/data – Request started - Method: GET, IP: 127.0.0.1
+[2025-06-15T17:54:14.194Z] [INFO] Request-ID: 1750010054193-i781hiiys – Endpoint: /api/banking/data – Request started - Method: GET, IP: 127.0.0.1
+[2025-06-15T17:55:01.522Z] [INFO] Request-ID: 1750010101522-oczt2x1de – Endpoint: /api/finapi/health – Request started - Method: GET, IP: 127.0.0.1
+[2025-06-15T17:55:01.522Z] [INFO] Request-ID: 1750010101522-oczt2x1de – Endpoint: /api/finapi/health – Health check requested - Status: healthy
+[2025-06-15T17:55:14.193Z] [INFO] Request-ID: 1750010114193-o5lhmc3bt – Endpoint: /api/banking/data – Request started - Method: GET, IP: 127.0.0.1
+[2025-06-15T17:56:14.193Z] [INFO] Request-ID: 1750010174193-on4svpdug – Endpoint: /api/banking/data – Request started - Method: GET, IP: 127.0.0.1
+[2025-06-15T17:57:14.193Z] [INFO] Request-ID: 1750010234193-9s8kbs4ff – Endpoint: /api/banking/data – Request started - Method: GET, IP: 127.0.0.1
+[2025-06-15T17:58:14.193Z] [INFO] Request-ID: 1750010294193-p1seftsiz – Endpoint: /api/banking/data – Request started - Method: GET, IP: 127.0.0.1
+[2025-06-15T17:59:14.193Z] [INFO] Request-ID: 1750010354193-miqdxu1ep – Endpoint: /api/banking/data – Request started - Method: GET, IP: 127.0.0.1
+[2025-06-15T18:00:01.615Z] [INFO] Request-ID: 1750010401615-o0rh6yoe8 – Endpoint: /api/finapi/health – Request started - Method: GET, IP: 127.0.0.1
+[2025-06-15T18:00:01.615Z] [INFO] Request-ID: 1750010401615-o0rh6yoe8 – Endpoint: /api/finapi/health – Health check requested - Status: healthy
+[2025-06-15T18:00:14.193Z] [INFO] Request-ID: 1750010414193-6qkvm51ge – Endpoint: /api/banking/data – Request started - Method: GET, IP: 127.0.0.1
+[2025-06-15T18:01:14.192Z] [INFO] Request-ID: 1750010474192-iuxk0lsd5 – Endpoint: /api/banking/data – Request started - Method: GET, IP: 127.0.0.1
+[2025-06-15T18:02:14.193Z] [INFO] Request-ID: 1750010534193-90oarp10y – Endpoint: /api/banking/data – Request started - Method: GET, IP: 127.0.0.1
+[2025-06-15T18:03:14.192Z] [INFO] Request-ID: 1750010594192-lof38dp36 – Endpoint: /api/banking/data – Request started - Method: GET, IP: 127.0.0.1
+[2025-06-15T18:04:14.193Z] [INFO] Request-ID: 1750010654193-vrgyho5eb – Endpoint: /api/banking/data – Request started - Method: GET, IP: 127.0.0.1
+[2025-06-15T18:05:01.705Z] [INFO] Request-ID: 1750010701705-na5ixctxk – Endpoint: /api/finapi/health – Request started - Method: GET, IP: 127.0.0.1
+[2025-06-15T18:05:01.706Z] [INFO] Request-ID: 1750010701705-na5ixctxk – Endpoint: /api/finapi/health – Health check requested - Status: healthy
+[2025-06-15T18:05:14.439Z] [INFO] Request-ID: 1750010714439-694lcudbx – Endpoint: /api/banking/data – Request started - Method: GET, IP: 127.0.0.1
+[2025-06-15T18:06:14.192Z] [INFO] Request-ID: 1750010774192-phatw490c – Endpoint: /api/banking/data – Request started - Method: GET, IP: 127.0.0.1
+[2025-06-15T18:07:14.192Z] [INFO] Request-ID: 1750010834192-cxbpxjf3c – Endpoint: /api/banking/data – Request started - Method: GET, IP: 127.0.0.1
+[2025-06-15T18:08:14.192Z] [INFO] Request-ID: 1750010894192-vz735bo8j – Endpoint: /api/banking/data – Request started - Method: GET, IP: 127.0.0.1
+[2025-06-15T18:09:14.192Z] [INFO] Request-ID: 1750010954192-8nzrycou8 – Endpoint: /api/banking/data – Request started - Method: GET, IP: 127.0.0.1
+[2025-06-15T18:10:01.801Z] [INFO] Request-ID: 1750011001801-ot1m2ppgo – Endpoint: /api/finapi/health – Request started - Method: GET, IP: 127.0.0.1
+[2025-06-15T18:10:01.801Z] [INFO] Request-ID: 1750011001801-ot1m2ppgo – Endpoint: /api/finapi/health – Health check requested - Status: healthy
+[2025-06-15T18:10:14.193Z] [INFO] Request-ID: 1750011014193-c687xx2ko – Endpoint: /api/banking/data – Request started - Method: GET, IP: 127.0.0.1
+[2025-06-15T18:11:14.192Z] [INFO] Request-ID: 1750011074192-rnu59qnob – Endpoint: /api/banking/data – Request started - Method: GET, IP: 127.0.0.1
+[2025-06-15T18:12:14.192Z] [INFO] Request-ID: 1750011134192-8x0tl0b1f – Endpoint: /api/banking/data – Request started - Method: GET, IP: 127.0.0.1
+[2025-06-15T18:13:14.190Z] [INFO] Request-ID: 1750011194190-nwrjvabnn – Endpoint: /api/banking/data – Request started - Method: GET, IP: 127.0.0.1
+[2025-06-15T18:14:14.192Z] [INFO] Request-ID: 1750011254191-tfiqzgg8x – Endpoint: /api/banking/data – Request started - Method: GET, IP: 127.0.0.1
+[2025-06-15T18:15:01.875Z] [INFO] Request-ID: 1750011301875-jkm4qr7c0 – Endpoint: /api/finapi/health – Request started - Method: GET, IP: 127.0.0.1
+[2025-06-15T18:15:01.875Z] [INFO] Request-ID: 1750011301875-jkm4qr7c0 – Endpoint: /api/finapi/health – Health check requested - Status: healthy
+[2025-06-15T18:15:14.191Z] [INFO] Request-ID: 1750011314191-qn610tkwo – Endpoint: /api/banking/data – Request started - Method: GET, IP: 127.0.0.1
+[2025-06-15T18:16:14.191Z] [INFO] Request-ID: 1750011374191-muxu8bfc4 – Endpoint: /api/banking/data – Request started - Method: GET, IP: 127.0.0.1
+[2025-06-15T18:17:14.192Z] [INFO] Request-ID: 1750011434192-qij2zowcd – Endpoint: /api/banking/data – Request started - Method: GET, IP: 127.0.0.1
+[2025-06-15T18:18:14.191Z] [INFO] Request-ID: 1750011494191-y5oin7n2z – Endpoint: /api/banking/data – Request started - Method: GET, IP: 127.0.0.1
+[2025-06-15T18:19:14.191Z] [INFO] Request-ID: 1750011554191-29vwda207 – Endpoint: /api/banking/data – Request started - Method: GET, IP: 127.0.0.1
+[2025-06-15T18:20:01.952Z] [INFO] Request-ID: 1750011601952-c4ppwd080 – Endpoint: /api/finapi/health – Request started - Method: GET, IP: 127.0.0.1
+[2025-06-15T18:20:01.952Z] [INFO] Request-ID: 1750011601952-c4ppwd080 – Endpoint: /api/finapi/health – Health check requested - Status: healthy
+[2025-06-15T18:25:02.025Z] [INFO] Request-ID: 1750011902025-cyioqt6ps – Endpoint: /api/finapi/health – Request started - Method: GET, IP: 127.0.0.1
+[2025-06-15T18:25:02.025Z] [INFO] Request-ID: 1750011902025-cyioqt6ps – Endpoint: /api/finapi/health – Health check requested - Status: healthy
+[2025-06-15T18:30:01.092Z] [INFO] Request-ID: 1750012201092-nfemysmn5 – Endpoint: /api/finapi/health – Request started - Method: GET, IP: 127.0.0.1
+[2025-06-15T18:30:01.092Z] [INFO] Request-ID: 1750012201092-nfemysmn5 – Endpoint: /api/finapi/health – Health check requested - Status: healthy
+[2025-06-15T18:35:01.176Z] [INFO] Request-ID: 1750012501175-pr5zxclng – Endpoint: /api/finapi/health – Request started - Method: GET, IP: 127.0.0.1
+[2025-06-15T18:35:01.176Z] [INFO] Request-ID: 1750012501175-pr5zxclng – Endpoint: /api/finapi/health – Health check requested - Status: healthy
+[2025-06-15T18:40:01.240Z] [INFO] Request-ID: 1750012801240-jbfxgtul6 – Endpoint: /api/finapi/health – Request started - Method: GET, IP: 127.0.0.1
+[2025-06-15T18:40:01.240Z] [INFO] Request-ID: 1750012801240-jbfxgtul6 – Endpoint: /api/finapi/health – Health check requested - Status: healthy
+[2025-06-15T18:45:01.307Z] [INFO] Request-ID: 1750013101307-m9pz0vaxt – Endpoint: /api/finapi/health – Request started - Method: GET, IP: 127.0.0.1
+[2025-06-15T18:45:01.307Z] [INFO] Request-ID: 1750013101307-m9pz0vaxt – Endpoint: /api/finapi/health – Health check requested - Status: healthy
+[2025-06-15T18:49:08.065Z] [INFO] Request-ID: 1750013348065-31o03s6wd – Endpoint: /api/banking/data – Request started - Method: GET, IP: 127.0.0.1
+[2025-06-15T18:49:08.101Z] [INFO] Request-ID: 1750013348101-dz2f4nqkg – Endpoint: /api/banking/data – Request started - Method: GET, IP: 127.0.0.1
+[2025-06-15T18:49:08.129Z] [INFO] Request-ID: 1750013348129-d1l9g37id – Endpoint: /api/banking/data – Request started - Method: GET, IP: 127.0.0.1
+[2025-06-15T18:49:08.159Z] [INFO] Request-ID: 1750013348159-4yiwdlcv4 – Endpoint: /api/banking/data – Request started - Method: GET, IP: 127.0.0.1
+[2025-06-15T18:49:58.223Z] [INFO] Request-ID: 1750013398223-gu1mh9svk – Endpoint: /api/banking/data – Request started - Method: GET, IP: 127.0.0.1
+[2025-06-15T18:49:58.264Z] [INFO] Request-ID: 1750013398264-mz1npkfkj – Endpoint: /api/banking/data – Request started - Method: GET, IP: 127.0.0.1
+[2025-06-15T18:49:58.302Z] [INFO] Request-ID: 1750013398302-yarvc24zf – Endpoint: /api/banking/data – Request started - Method: GET, IP: 127.0.0.1
+[2025-06-15T18:49:58.333Z] [INFO] Request-ID: 1750013398333-iy9x9p0aw – Endpoint: /api/banking/data – Request started - Method: GET, IP: 127.0.0.1
+[2025-06-15T18:50:01.377Z] [INFO] Request-ID: 1750013401377-mzb5vbla1 – Endpoint: /api/finapi/health – Request started - Method: GET, IP: 127.0.0.1
+[2025-06-15T18:50:01.378Z] [INFO] Request-ID: 1750013401377-mzb5vbla1 – Endpoint: /api/finapi/health – Health check requested - Status: healthy
+[2025-06-15T18:50:35.493Z] [INFO] Request-ID: 1750013435493-pyu071542 – Endpoint: /api/banking/data – Request started - Method: GET, IP: 127.0.0.1
+[2025-06-15T18:50:58.308Z] [INFO] Request-ID: 1750013458308-2puk8gy1g – Endpoint: /api/banking/data – Request started - Method: GET, IP: 127.0.0.1
+[2025-06-15T18:50:58.423Z] [INFO] Request-ID: 1750013458423-yml5g1jyz – Endpoint: /api/banking/data – Request started - Method: GET, IP: 127.0.0.1
+[2025-06-15T18:50:58.474Z] [INFO] Request-ID: 1750013458474-3e760pm13 – Endpoint: /api/banking/data – Request started - Method: GET, IP: 127.0.0.1
+[2025-06-15T18:50:58.528Z] [INFO] Request-ID: 1750013458528-j5nrdijp8 – Endpoint: /api/banking/data – Request started - Method: GET, IP: 127.0.0.1
+[2025-06-15T18:51:14.148Z] [INFO] Request-ID: 1750013474148-8xu8dnura – Endpoint: /api/banking/data – Request started - Method: GET, IP: 127.0.0.1
+[2025-06-15T18:51:58.267Z] [INFO] Request-ID: 1750013518267-osouft0ed – Endpoint: /api/banking/data – Request started - Method: GET, IP: 127.0.0.1
+[2025-06-15T18:51:58.315Z] [INFO] Request-ID: 1750013518315-s5a5re4be – Endpoint: /api/banking/data – Request started - Method: GET, IP: 127.0.0.1
+[2025-06-15T18:51:58.460Z] [INFO] Request-ID: 1750013518460-y6tu1nttc – Endpoint: /api/banking/data – Request started - Method: GET, IP: 127.0.0.1
+[2025-06-15T18:51:58.494Z] [INFO] Request-ID: 1750013518494-cetsm96ph – Endpoint: /api/banking/data – Request started - Method: GET, IP: 127.0.0.1
+[2025-06-15T18:52:14.148Z] [INFO] Request-ID: 1750013534148-533bjjtg0 – Endpoint: /api/banking/data – Request started - Method: GET, IP: 127.0.0.1
+[2025-06-15T18:53:14.391Z] [INFO] Request-ID: 1750013594390-tcfnk0ahw – Endpoint: /api/banking/data – Request started - Method: GET, IP: 127.0.0.1
+[2025-06-15T18:54:14.148Z] [INFO] Request-ID: 1750013654148-00vjvegoe – Endpoint: /api/banking/data – Request started - Method: GET, IP: 127.0.0.1
+[2025-06-15T18:55:01.447Z] [INFO] Request-ID: 1750013701447-0z96wg18m – Endpoint: /api/finapi/health – Request started - Method: GET, IP: 127.0.0.1
+[2025-06-15T18:55:01.447Z] [INFO] Request-ID: 1750013701447-0z96wg18m – Endpoint: /api/finapi/health – Health check requested - Status: healthy
+[2025-06-15T18:55:14.148Z] [INFO] Request-ID: 1750013714148-dydh7q0yb – Endpoint: /api/banking/data – Request started - Method: GET, IP: 127.0.0.1
+[2025-06-15T18:56:14.148Z] [INFO] Request-ID: 1750013774148-wtpig3btp – Endpoint: /api/banking/data – Request started - Method: GET, IP: 127.0.0.1
+[2025-06-15T18:57:14.149Z] [INFO] Request-ID: 1750013834149-8ftunp2h4 – Endpoint: /api/banking/data – Request started - Method: GET, IP: 127.0.0.1
+[2025-06-15T18:58:14.149Z] [INFO] Request-ID: 1750013894149-vomxqq7sq – Endpoint: /api/banking/data – Request started - Method: GET, IP: 127.0.0.1
+[2025-06-15T18:59:14.149Z] [INFO] Request-ID: 1750013954149-pxj18svsn – Endpoint: /api/banking/data – Request started - Method: GET, IP: 127.0.0.1
+[2025-06-15T19:00:00.362Z] [INFO] Request-ID: 1750014000362-tp99o6s9r – Endpoint: /api/finapi/health – Request started - Method: GET, IP: 127.0.0.1
+[2025-06-15T19:00:00.363Z] [INFO] Request-ID: 1750014000362-tp99o6s9r – Endpoint: /api/finapi/health – Health check requested - Status: healthy
+[2025-06-15T19:00:01.540Z] [INFO] Request-ID: 1750014001540-jeye24668 – Endpoint: /api/finapi/health – Request started - Method: GET, IP: 127.0.0.1
+[2025-06-15T19:00:01.540Z] [INFO] Request-ID: 1750014001540-jeye24668 – Endpoint: /api/finapi/health – Health check requested - Status: healthy
+[2025-06-15T19:00:14.416Z] [INFO] Request-ID: 1750014014416-zz63pslbe – Endpoint: /api/banking/data – Request started - Method: GET, IP: 127.0.0.1
+[2025-06-15T19:01:14.149Z] [INFO] Request-ID: 1750014074149-ekahsases – Endpoint: /api/banking/data – Request started - Method: GET, IP: 127.0.0.1
+[2025-06-15T19:02:14.150Z] [INFO] Request-ID: 1750014134150-sdm9zquw5 – Endpoint: /api/banking/data – Request started - Method: GET, IP: 127.0.0.1
+[2025-06-15T19:03:14.149Z] [INFO] Request-ID: 1750014194149-4uyhunfj8 – Endpoint: /api/banking/data – Request started - Method: GET, IP: 127.0.0.1
+[2025-06-15T19:04:14.150Z] [INFO] Request-ID: 1750014254150-f0f38wway – Endpoint: /api/banking/data – Request started - Method: GET, IP: 127.0.0.1
+[2025-06-15T19:05:01.607Z] [INFO] Request-ID: 1750014301607-a72ukjfr0 – Endpoint: /api/finapi/health – Request started - Method: GET, IP: 127.0.0.1
+[2025-06-15T19:05:01.608Z] [INFO] Request-ID: 1750014301607-a72ukjfr0 – Endpoint: /api/finapi/health – Health check requested - Status: healthy
+[2025-06-15T19:05:14.150Z] [INFO] Request-ID: 1750014314150-o8kvzik50 – Endpoint: /api/banking/data – Request started - Method: GET, IP: 127.0.0.1
+[2025-06-15T19:06:14.151Z] [INFO] Request-ID: 1750014374150-4zgww47ku – Endpoint: /api/banking/data – Request started - Method: GET, IP: 127.0.0.1
+[2025-06-15T19:07:14.150Z] [INFO] Request-ID: 1750014434150-vn8qckmdb – Endpoint: /api/banking/data – Request started - Method: GET, IP: 127.0.0.1
+[2025-06-15T19:08:14.150Z] [INFO] Request-ID: 1750014494150-1p318zw3p – Endpoint: /api/banking/data – Request started - Method: GET, IP: 127.0.0.1
+[2025-06-15T19:09:14.151Z] [INFO] Request-ID: 1750014554151-l0oyz356i – Endpoint: /api/banking/data – Request started - Method: GET, IP: 127.0.0.1
+[2025-06-15T19:10:01.681Z] [INFO] Request-ID: 1750014601681-7rpllint2 – Endpoint: /api/finapi/health – Request started - Method: GET, IP: 127.0.0.1
+[2025-06-15T19:10:01.682Z] [INFO] Request-ID: 1750014601681-7rpllint2 – Endpoint: /api/finapi/health – Health check requested - Status: healthy
+[2025-06-15T19:10:14.153Z] [INFO] Request-ID: 1750014614153-x4aj2cqv5 – Endpoint: /api/banking/data – Request started - Method: GET, IP: 127.0.0.1
+[2025-06-15T19:11:14.150Z] [INFO] Request-ID: 1750014674150-hegn1qtut – Endpoint: /api/banking/data – Request started - Method: GET, IP: 127.0.0.1
+[2025-06-15T19:12:14.154Z] [INFO] Request-ID: 1750014734154-od2oaiiyl – Endpoint: /api/banking/data – Request started - Method: GET, IP: 127.0.0.1
+[2025-06-15T19:13:14.151Z] [INFO] Request-ID: 1750014794151-9cgfivgr4 – Endpoint: /api/banking/data – Request started - Method: GET, IP: 127.0.0.1
+[2025-06-15T19:14:14.151Z] [INFO] Request-ID: 1750014854151-fenov0nq5 – Endpoint: /api/banking/data – Request started - Method: GET, IP: 127.0.0.1
+[2025-06-15T19:15:01.758Z] [INFO] Request-ID: 1750014901758-kgdwjn05u – Endpoint: /api/finapi/health – Request started - Method: GET, IP: 127.0.0.1
+[2025-06-15T19:15:01.758Z] [INFO] Request-ID: 1750014901758-kgdwjn05u – Endpoint: /api/finapi/health – Health check requested - Status: healthy
+[2025-06-15T19:15:14.151Z] [INFO] Request-ID: 1750014914151-esg57mvwt – Endpoint: /api/banking/data – Request started - Method: GET, IP: 127.0.0.1
+[2025-06-15T19:16:14.152Z] [INFO] Request-ID: 1750014974152-s6ciql2ny – Endpoint: /api/banking/data – Request started - Method: GET, IP: 127.0.0.1
+[2025-06-15T19:17:14.151Z] [INFO] Request-ID: 1750015034151-wxwvji5am – Endpoint: /api/banking/data – Request started - Method: GET, IP: 127.0.0.1
+[2025-06-15T19:18:14.151Z] [INFO] Request-ID: 1750015094151-h9k27tneo – Endpoint: /api/banking/data – Request started - Method: GET, IP: 127.0.0.1
+[2025-06-15T19:19:14.151Z] [INFO] Request-ID: 1750015154151-dx8t9v4so – Endpoint: /api/banking/data – Request started - Method: GET, IP: 127.0.0.1
+[2025-06-15T19:20:01.833Z] [INFO] Request-ID: 1750015201833-ex0ro43uh – Endpoint: /api/finapi/health – Request started - Method: GET, IP: 127.0.0.1
+[2025-06-15T19:20:01.834Z] [INFO] Request-ID: 1750015201833-ex0ro43uh – Endpoint: /api/finapi/health – Health check requested - Status: healthy
+[2025-06-15T19:20:14.151Z] [INFO] Request-ID: 1750015214151-6pmz8mrfy – Endpoint: /api/banking/data – Request started - Method: GET, IP: 127.0.0.1
+[2025-06-15T19:21:14.151Z] [INFO] Request-ID: 1750015274151-n0qd5t7b9 – Endpoint: /api/banking/data – Request started - Method: GET, IP: 127.0.0.1
+[2025-06-15T19:22:14.151Z] [INFO] Request-ID: 1750015334151-rx9cvicpt – Endpoint: /api/banking/data – Request started - Method: GET, IP: 127.0.0.1
+[2025-06-15T19:23:14.151Z] [INFO] Request-ID: 1750015394151-sw311vf6z – Endpoint: /api/banking/data – Request started - Method: GET, IP: 127.0.0.1
+[2025-06-15T19:24:14.152Z] [INFO] Request-ID: 1750015454152-vgr3jj64b – Endpoint: /api/banking/data – Request started - Method: GET, IP: 127.0.0.1
+[2025-06-15T19:25:01.925Z] [INFO] Request-ID: 1750015501925-96dhdsvxh – Endpoint: /api/finapi/health – Request started - Method: GET, IP: 127.0.0.1
+[2025-06-15T19:25:01.926Z] [INFO] Request-ID: 1750015501925-96dhdsvxh – Endpoint: /api/finapi/health – Health check requested - Status: healthy
+[2025-06-15T19:25:14.152Z] [INFO] Request-ID: 1750015514152-naecr9m9x – Endpoint: /api/banking/data – Request started - Method: GET, IP: 127.0.0.1
+[2025-06-15T19:26:14.152Z] [INFO] Request-ID: 1750015574152-t9uuhs278 – Endpoint: /api/banking/data – Request started - Method: GET, IP: 127.0.0.1
+[2025-06-15T19:27:14.151Z] [INFO] Request-ID: 1750015634151-67q6p5eu3 – Endpoint: /api/banking/data – Request started - Method: GET, IP: 127.0.0.1
+[2025-06-15T19:28:14.152Z] [INFO] Request-ID: 1750015694152-mcfic4cx3 – Endpoint: /api/banking/data – Request started - Method: GET, IP: 127.0.0.1
+[2025-06-15T19:29:14.151Z] [INFO] Request-ID: 1750015754151-bk9cu1paz – Endpoint: /api/banking/data – Request started - Method: GET, IP: 127.0.0.1
+[2025-06-15T19:30:02.005Z] [INFO] Request-ID: 1750015802005-v4gj7y7uh – Endpoint: /api/finapi/health – Request started - Method: GET, IP: 127.0.0.1
+[2025-06-15T19:30:02.005Z] [INFO] Request-ID: 1750015802005-v4gj7y7uh – Endpoint: /api/finapi/health – Health check requested - Status: healthy
+[2025-06-15T19:30:14.151Z] [INFO] Request-ID: 1750015814151-3r3gl9rh3 – Endpoint: /api/banking/data – Request started - Method: GET, IP: 127.0.0.1
+[2025-06-15T19:31:14.152Z] [INFO] Request-ID: 1750015874152-snmpkngge – Endpoint: /api/banking/data – Request started - Method: GET, IP: 127.0.0.1
+[2025-06-15T19:32:14.151Z] [INFO] Request-ID: 1750015934151-y1ml5u3yx – Endpoint: /api/banking/data – Request started - Method: GET, IP: 127.0.0.1
+[2025-06-15T19:33:14.150Z] [INFO] Request-ID: 1750015994150-u0h6jrt6j – Endpoint: /api/banking/data – Request started - Method: GET, IP: 127.0.0.1
+[2025-06-15T19:33:42.880Z] [INFO] Request-ID: 1750016022880-3pt31dyb3 – Endpoint: /api/finapi/institutions/search?query=sparkasse – Request started - Method: GET, IP: 127.0.0.1
+[2025-06-15T19:33:42.881Z] [SECURITY] Request-ID: 1750016022880-3pt31dyb3 – Endpoint: /api/finapi/institutions/search?query=sparkasse – API access denied - Invalid or missing API key
+[2025-06-15T19:33:48.006Z] [INFO] Request-ID: 1750016028006-x5jw2tirr – Endpoint: /api/finapi/institutions/search?query=sparkasse – Request started - Method: GET, IP: 127.0.0.1
+[2025-06-15T19:33:48.007Z] [SECURITY] Request-ID: 1750016028006-x5jw2tirr – Endpoint: /api/finapi/institutions/search?query=sparkasse – API access granted - Valid API key
+[2025-06-15T19:33:48.007Z] [INFO] Request-ID: 1750016028006-x5jw2tirr – Endpoint: /api/finapi/institutions/search?query=sparkasse – Institution search requested: { query: 'sparkasse' }
+[2025-06-15T19:33:48.007Z] [INFO] Request-ID: 1750016028006-x5jw2tirr – Endpoint: /api/finapi/institutions/search?query=sparkasse – Found 1 institutions for query: sparkasse
+[2025-06-15T19:34:14.154Z] [INFO] Request-ID: 1750016054154-a0zq0k6k0 – Endpoint: /api/banking/data – Request started - Method: GET, IP: 127.0.0.1
+[2025-06-15T19:35:01.078Z] [INFO] Request-ID: 1750016101078-e843btx4v – Endpoint: /api/finapi/health – Request started - Method: GET, IP: 127.0.0.1
+[2025-06-15T19:35:01.079Z] [INFO] Request-ID: 1750016101078-e843btx4v – Endpoint: /api/finapi/health – Health check requested - Status: healthy
+[2025-06-15T19:35:14.151Z] [INFO] Request-ID: 1750016114151-r01w1xhyr – Endpoint: /api/banking/data – Request started - Method: GET, IP: 127.0.0.1
+[2025-06-15T19:36:14.150Z] [INFO] Request-ID: 1750016174150-k4lt7jxnm – Endpoint: /api/banking/data – Request started - Method: GET, IP: 127.0.0.1
+[2025-06-15T19:37:14.150Z] [INFO] Request-ID: 1750016234150-l5b1e5nos – Endpoint: /api/banking/data – Request started - Method: GET, IP: 127.0.0.1
+[2025-06-15T19:38:14.151Z] [INFO] Request-ID: 1750016294151-k50mhuttt – Endpoint: /api/banking/data – Request started - Method: GET, IP: 127.0.0.1
+[2025-06-15T19:39:14.150Z] [INFO] Request-ID: 1750016354150-j6k0x36yi – Endpoint: /api/banking/data – Request started - Method: GET, IP: 127.0.0.1
+[2025-06-15T19:40:01.165Z] [INFO] Request-ID: 1750016401165-r17u4mxy0 – Endpoint: /api/finapi/health – Request started - Method: GET, IP: 127.0.0.1
+[2025-06-15T19:40:01.165Z] [INFO] Request-ID: 1750016401165-r17u4mxy0 – Endpoint: /api/finapi/health – Health check requested - Status: healthy
+[2025-06-15T19:40:14.150Z] [INFO] Request-ID: 1750016414150-8npljwsmt – Endpoint: /api/banking/data – Request started - Method: GET, IP: 127.0.0.1
+[2025-06-15T19:41:14.149Z] [INFO] Request-ID: 1750016474149-6lg0g0j2j – Endpoint: /api/banking/data – Request started - Method: GET, IP: 127.0.0.1
+[2025-06-15T19:42:14.149Z] [INFO] Request-ID: 1750016534149-8v3sohmy9 – Endpoint: /api/banking/data – Request started - Method: GET, IP: 127.0.0.1
+[2025-06-15T20:02:14.153Z] [INFO] Request-ID: 1750017734153-g55zyewsn - GET /api/banking/data - User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/132.0.0.0 Safari/537.36
+[2025-06-15T20:03:13.351Z] [INFO] Request-ID: 1750017793351-bdd905o1c - GET /api/search-institutions?query=sparkasse - User-Agent: curl/7.81.0
+[2025-06-15T20:03:13.352Z] [INFO] Request-ID: 1750017793351-bdd905o1c - Proxy institution search requested: { query: 'sparkasse' }
+[2025-06-15T20:03:13.352Z] [INFO] Request-ID: 1750017793351-bdd905o1c - Proxy institution search successful - Found 2 institutions
+[2025-06-15T20:03:14.149Z] [INFO] Request-ID: 1750017794149-ofq3mqbeu - GET /api/banking/data - User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/132.0.0.0 Safari/537.36
+[2025-06-15T20:03:20.007Z] [INFO] Request-ID: 1750017800007-zrm5qvs8x - POST /api/initiate-oauth - User-Agent: curl/7.81.0
+[2025-06-15T20:03:20.008Z] [INFO] Request-ID: 1750017800007-zrm5qvs8x - Proxy OAuth initiation requested: { bankId: 277672, bankName: 'Sparkasse Köln/Bonn' }
+[2025-06-15T20:03:20.008Z] [INFO] Request-ID: 1750017800007-zrm5qvs8x - Proxy OAuth initiation successful - Generated OAuth URL for bank Sparkasse Köln/Bonn
+[2025-06-15T20:04:14.150Z] [INFO] Request-ID: 1750017854150-jqsp60zko - GET /api/banking/data - User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/132.0.0.0 Safari/537.36
+[2025-06-15T20:05:01.516Z] [INFO] Request-ID: 1750017901516-owr8kevfx - GET /api/finapi/health - User-Agent: curl/7.81.0
+[2025-06-15T20:05:01.516Z] [INFO] Request-ID: 1750017901516-owr8kevfx - Health check successful
+[2025-06-15T20:05:14.149Z] [INFO] Request-ID: 1750017914149-68n2dkped - GET /api/banking/data - User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/132.0.0.0 Safari/537.36
+[2025-06-15T20:06:14.149Z] [INFO] Request-ID: 1750017974149-78pcm4l0h - GET /api/banking/data - User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/132.0.0.0 Safari/537.36
+[2025-06-15T20:07:14.150Z] [INFO] Request-ID: 1750018034150-eiifnxab7 - GET /api/banking/data - User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/132.0.0.0 Safari/537.36
+[2025-06-15T20:08:14.150Z] [INFO] Request-ID: 1750018094150-y6n7lkh8h - GET /api/banking/data - User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/132.0.0.0 Safari/537.36
+[2025-06-15T20:09:14.150Z] [INFO] Request-ID: 1750018154150-l23uqx93d - GET /api/banking/data - User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/132.0.0.0 Safari/537.36
+[2025-06-15T20:10:01.588Z] [INFO] Request-ID: 1750018201588-flevfu9wn - GET /api/finapi/health - User-Agent: curl/7.81.0
+[2025-06-15T20:10:01.589Z] [INFO] Request-ID: 1750018201588-flevfu9wn - Health check successful
+[2025-06-15T20:10:14.150Z] [INFO] Request-ID: 1750018214150-lx1p8xns0 - GET /api/banking/data - User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/132.0.0.0 Safari/537.36
+[2025-06-15T20:11:14.151Z] [INFO] Request-ID: 1750018274151-gabq5k2gn - GET /api/banking/data - User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/132.0.0.0 Safari/537.36
+[2025-06-15T20:12:14.151Z] [INFO] Request-ID: 1750018334151-w0ca7vpwv - GET /api/banking/data - User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/132.0.0.0 Safari/537.36
+[2025-06-15T20:13:14.154Z] [INFO] Request-ID: 1750018394154-9pob3hkww - GET /api/banking/data - User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/132.0.0.0 Safari/537.36
+[2025-06-15T20:14:14.154Z] [INFO] Request-ID: 1750018454154-bnw4k5bge - GET /api/banking/data - User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/132.0.0.0 Safari/537.36
+[2025-06-15T20:15:01.657Z] [INFO] Request-ID: 1750018501657-s07qhz9kd - GET /api/finapi/health - User-Agent: curl/7.81.0
+[2025-06-15T20:15:01.657Z] [INFO] Request-ID: 1750018501657-s07qhz9kd - Health check successful
+[2025-06-15T20:15:14.154Z] [INFO] Request-ID: 1750018514154-tlj5dh25u - GET /api/banking/data - User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/132.0.0.0 Safari/537.36
+[2025-06-15T20:16:14.151Z] [INFO] Request-ID: 1750018574151-1pqz2web9 - GET /api/banking/data - User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/132.0.0.0 Safari/537.36
+[2025-06-15T20:17:14.151Z] [INFO] Request-ID: 1750018634151-80uqt1m50 - GET /api/banking/data - User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/132.0.0.0 Safari/537.36
+[2025-06-15T20:18:07.708Z] [INFO] Request-ID: 1750018687708-7lqa4de3b - GET /api/search-institutions?query=Spa - User-Agent: Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/137.0.0.0 Mobile Safari/537.36
+[2025-06-15T20:18:07.709Z] [INFO] Request-ID: 1750018687708-7lqa4de3b - Proxy institution search requested: { query: 'Spa' }
+[2025-06-15T20:18:07.709Z] [INFO] Request-ID: 1750018687708-7lqa4de3b - Proxy institution search successful - Found 2 institutions
+[2025-06-15T20:18:13.343Z] [INFO] Request-ID: 1750018693343-o4ujcjwok - GET /api/search-institutions?query=Sparkasse - User-Agent: Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/137.0.0.0 Mobile Safari/537.36
+[2025-06-15T20:18:13.343Z] [INFO] Request-ID: 1750018693343-o4ujcjwok - Proxy institution search requested: { query: 'Sparkasse' }
+[2025-06-15T20:18:13.343Z] [INFO] Request-ID: 1750018693343-o4ujcjwok - Proxy institution search successful - Found 2 institutions
+[2025-06-15T20:18:14.151Z] [INFO] Request-ID: 1750018694151-hp3q8wz4x - GET /api/banking/data - User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/132.0.0.0 Safari/537.36
+[2025-06-15T20:18:14.276Z] [INFO] Request-ID: 1750018694276-t5x9x9ahb - GET /api/search-institutions?query=Sparkasse%20rhe - User-Agent: Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/137.0.0.0 Mobile Safari/537.36
+[2025-06-15T20:18:14.276Z] [INFO] Request-ID: 1750018694276-t5x9x9ahb - Proxy institution search requested: { query: 'Sparkasse rhe' }
+[2025-06-15T20:18:14.276Z] [INFO] Request-ID: 1750018694276-t5x9x9ahb - Proxy institution search successful - Found 0 institutions
+[2025-06-15T20:18:22.064Z] [INFO] Request-ID: 1750018702064-eimdapblu - GET /api/search-institutions?query=Sparkasse - User-Agent: Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/137.0.0.0 Mobile Safari/537.36
+[2025-06-15T20:18:22.065Z] [INFO] Request-ID: 1750018702064-eimdapblu - Proxy institution search requested: { query: 'Sparkasse' }
+[2025-06-15T20:18:22.065Z] [INFO] Request-ID: 1750018702064-eimdapblu - Proxy institution search successful - Found 2 institutions
+[2025-06-15T20:20:01.738Z] [INFO] Request-ID: 1750018801738-2p31ggzkq - GET /api/finapi/health - User-Agent: curl/7.81.0
+[2025-06-15T20:20:01.738Z] [INFO] Request-ID: 1750018801738-2p31ggzkq - Health check successful
+[2025-06-15T20:20:17.238Z] [INFO] Request-ID: 1750018817238-2qd9gvhu6 - GET /api/search-institutions?query=Rhein-Neckar - User-Agent: curl/7.81.0
+[2025-06-15T20:20:17.238Z] [INFO] Request-ID: 1750018817238-2qd9gvhu6 - Proxy institution search requested: { query: 'Rhein-Neckar' }
+[2025-06-15T20:20:17.238Z] [INFO] Request-ID: 1750018817238-2qd9gvhu6 - Proxy institution search successful - Found 0 institutions
+[2025-06-15T20:20:24.085Z] [INFO] Request-ID: 1750018824085-j69ghdwaq - GET /api/search-institutions?query=sparkasse - User-Agent: curl/7.81.0
+[2025-06-15T20:20:24.086Z] [INFO] Request-ID: 1750018824085-j69ghdwaq - Proxy institution search requested: { query: 'sparkasse' }
+[2025-06-15T20:20:24.086Z] [INFO] Request-ID: 1750018824085-j69ghdwaq - Proxy institution search successful - Found 2 institutions
+[2025-06-15T20:20:26.573Z] [INFO] Request-ID: 1750018826573-82vgazezl - GET /api/banking/data - User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/132.0.0.0 Safari/537.36
+[2025-06-15T20:21:14.150Z] [INFO] Request-ID: 1750018874150-g9ugwes6y - GET /api/banking/data - User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/132.0.0.0 Safari/537.36
+[2025-06-15T20:22:14.150Z] [INFO] Request-ID: 1750018934150-jxulggbq8 - GET /api/banking/data - User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/132.0.0.0 Safari/537.36
+[2025-06-15T20:23:14.149Z] [INFO] Request-ID: 1750018994149-27i6eixq6 - GET /api/banking/data - User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/132.0.0.0 Safari/537.36
+[2025-06-15T20:24:14.149Z] [INFO] Request-ID: 1750019054149-cpgbn3ezu - GET /api/banking/data - User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/132.0.0.0 Safari/537.36
+[2025-06-15T20:25:01.811Z] [INFO] Request-ID: 1750019101811-gvhpexg1r - GET /api/finapi/health - User-Agent: curl/7.81.0
+[2025-06-15T20:25:01.811Z] [INFO] Request-ID: 1750019101811-gvhpexg1r - Health check successful
+[2025-06-15T20:25:14.149Z] [INFO] Request-ID: 1750019114149-tk0fw9znb - GET /api/banking/data - User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/132.0.0.0 Safari/537.36

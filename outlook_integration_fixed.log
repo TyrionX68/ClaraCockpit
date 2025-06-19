@@ -1,0 +1,14 @@
+🚀 Clara360 Outlook Integration Server running on port 3002
+📧 Azure Tenant: 057f40eb-fe82-43ba-9204-85b106bafaf0
+🔑 Client ID: a0093b1c-b628-4a47-996b-76ae7b8b4f0f
+⚡ Ready to process email requests
+🔄 Requesting new access token...
+❌ Error getting access token: {
+  error: 'invalid_request',
+  error_description: "AADSTS90002: Tenant '057f40eb-fe82-43ba-9204-85b106bafaf0' not found. Check to make sure you have the correct tenant ID and are signing into the correct cloud. Check with your subscription administrator, this may happen if there are no active subscriptions for the tenant. Trace ID: 0e5c1858-2adf-4ac9-a911-6dbbf1c24600 Correlation ID: 5a45d094-4d6e-47ef-b571-c8d89dac46ad Timestamp: 2025-06-16 10:16:20Z",
+  error_codes: [ 90002 ],
+  timestamp: '2025-06-16 10:16:20Z',
+  trace_id: '0e5c1858-2adf-4ac9-a911-6dbbf1c24600',
+  correlation_id: '5a45d094-4d6e-47ef-b571-c8d89dac46ad',
+  error_uri: 'https://login.microsoftonline.com/error?code=90002'
+}

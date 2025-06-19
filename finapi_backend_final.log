@@ -1,0 +1,109 @@
+🚀 Clara360 FinAPI Backend v4.0 (WEBFORM ENHANCED) running on port 3001
+📊 FinAPI Base URL: https://sandbox.finapi.io/api/v2
+🔑 Client ID configured: true
+🔗 WebForm endpoints ready
+⚡ Ready for COMPLETE FinAPI WebForm integration
+[2025-06-16T08:44:37.254Z] Request-ID: 1750063477254-5yb2b7kw6 – Endpoint: /api/health
+[2025-06-16T08:44:54.982Z] Request-ID: 1750063494982-uuv6t306e – Endpoint: /api/webforms/bank-connection-import
+[2025-06-16T08:44:54.982Z] Data: {
+  "accountTypes": [
+    "CHECKING",
+    "SAVINGS"
+  ],
+  "redirectUri": "https://clara360.de/webform/callback"
+}
+🔑 Requesting FinAPI Access Token...
+📊 Client ID: your-finapi-client-id
+📊 Base URL: https://sandbox.finapi.io/api/v2
+📊 OAuth Response Status: 401 Unauthorized
+❌ OAuth Error Response: {"error":"invalid_client","error_description":"Bad client credentials"}
+❌ FinAPI Access Token Error: Error: FinAPI OAuth failed: 401 Unauthorized - {"error":"invalid_client","error_description":"Bad client credentials"}
+    at getFinAPIAccessToken (/var/www/clara360/finapi_backend_webform_enhanced.js:60:19)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async /var/www/clara360/finapi_backend_webform_enhanced.js:137:29
+[2025-06-16T08:44:55.165Z] WebForm Creation Error: Error: FinAPI OAuth failed: 401 Unauthorized - {"error":"invalid_client","error_description":"Bad client credentials"}
+    at getFinAPIAccessToken (/var/www/clara360/finapi_backend_webform_enhanced.js:60:19)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async /var/www/clara360/finapi_backend_webform_enhanced.js:137:29
+[2025-06-16T08:45:35.913Z] Request-ID: 1750063535913-z239u9m91 – Endpoint: /api/webforms/bank-connection-import
+[2025-06-16T08:45:35.913Z] Data: {
+  "accountTypes": [
+    "CHECKING",
+    "SAVINGS"
+  ]
+}
+🔑 Requesting FinAPI Access Token...
+📊 Client ID: your-finapi-client-id
+📊 Base URL: https://sandbox.finapi.io/api/v2
+📊 OAuth Response Status: 401 Unauthorized
+❌ OAuth Error Response: {"error":"invalid_client","error_description":"Bad client credentials"}
+❌ FinAPI Access Token Error: Error: FinAPI OAuth failed: 401 Unauthorized - {"error":"invalid_client","error_description":"Bad client credentials"}
+    at getFinAPIAccessToken (/var/www/clara360/finapi_backend_webform_enhanced.js:60:19)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async /var/www/clara360/finapi_backend_webform_enhanced.js:137:29
+[2025-06-16T08:45:36.004Z] WebForm Creation Error: Error: FinAPI OAuth failed: 401 Unauthorized - {"error":"invalid_client","error_description":"Bad client credentials"}
+    at getFinAPIAccessToken (/var/www/clara360/finapi_backend_webform_enhanced.js:60:19)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async /var/www/clara360/finapi_backend_webform_enhanced.js:137:29
+[2025-06-16T08:58:26.365Z] Request-ID: 1750064306365-jb9ef0a2v – Endpoint: /api/webforms/bank-connection-import
+[2025-06-16T08:58:26.365Z] Data: {
+  "accountTypes": [
+    "CHECKING",
+    "SAVINGS"
+  ],
+  "redirectUri": "https://clara360.de/banking/callback",
+  "callbackUrl": "https://clara360.de/api/webform-finished"
+}
+🔑 Requesting FinAPI Access Token...
+📊 Client ID: your-finapi-client-id
+📊 Base URL: https://sandbox.finapi.io/api/v2
+📊 OAuth Response Status: 401 Unauthorized
+❌ OAuth Error Response: {"error":"invalid_client","error_description":"Bad client credentials"}
+❌ FinAPI Access Token Error: Error: FinAPI OAuth failed: 401 Unauthorized - {"error":"invalid_client","error_description":"Bad client credentials"}
+    at getFinAPIAccessToken (/var/www/clara360/finapi_backend_webform_enhanced.js:60:19)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async /var/www/clara360/finapi_backend_webform_enhanced.js:137:29
+[2025-06-16T08:58:26.480Z] WebForm Creation Error: Error: FinAPI OAuth failed: 401 Unauthorized - {"error":"invalid_client","error_description":"Bad client credentials"}
+    at getFinAPIAccessToken (/var/www/clara360/finapi_backend_webform_enhanced.js:60:19)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async /var/www/clara360/finapi_backend_webform_enhanced.js:137:29
+[2025-06-16T09:36:39.786Z] Request-ID: 1750066599786-q2745b0v2 – Endpoint: /api/webforms/bank-connection-import
+[2025-06-16T09:36:39.786Z] Data: {
+  "accountTypes": [
+    "CHECKING",
+    "SAVINGS"
+  ]
+}
+🔑 Requesting FinAPI Access Token...
+📊 Client ID: your-finapi-client-id
+📊 Base URL: https://sandbox.finapi.io/api/v2
+📊 OAuth Response Status: 401 Unauthorized
+❌ OAuth Error Response: {"error":"invalid_client","error_description":"Bad client credentials"}
+❌ FinAPI Access Token Error: Error: FinAPI OAuth failed: 401 Unauthorized - {"error":"invalid_client","error_description":"Bad client credentials"}
+    at getFinAPIAccessToken (/var/www/clara360/finapi_backend_webform_enhanced.js:60:19)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async /var/www/clara360/finapi_backend_webform_enhanced.js:137:29
+[2025-06-16T09:36:39.894Z] WebForm Creation Error: Error: FinAPI OAuth failed: 401 Unauthorized - {"error":"invalid_client","error_description":"Bad client credentials"}
+    at getFinAPIAccessToken (/var/www/clara360/finapi_backend_webform_enhanced.js:60:19)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async /var/www/clara360/finapi_backend_webform_enhanced.js:137:29
+[2025-06-16T09:36:40.298Z] Request-ID: 1750066600298-ulwza8w3a – Endpoint: /api/webforms/bank-connection-import
+[2025-06-16T09:36:40.298Z] Data: {
+  "accountTypes": [
+    "CHECKING",
+    "SAVINGS"
+  ]
+}
+🔑 Requesting FinAPI Access Token...
+📊 Client ID: your-finapi-client-id
+📊 Base URL: https://sandbox.finapi.io/api/v2
+📊 OAuth Response Status: 401 Unauthorized
+❌ OAuth Error Response: {"error":"invalid_client","error_description":"Bad client credentials"}
+❌ FinAPI Access Token Error: Error: FinAPI OAuth failed: 401 Unauthorized - {"error":"invalid_client","error_description":"Bad client credentials"}
+    at getFinAPIAccessToken (/var/www/clara360/finapi_backend_webform_enhanced.js:60:19)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async /var/www/clara360/finapi_backend_webform_enhanced.js:137:29
+[2025-06-16T09:36:40.374Z] WebForm Creation Error: Error: FinAPI OAuth failed: 401 Unauthorized - {"error":"invalid_client","error_description":"Bad client credentials"}
+    at getFinAPIAccessToken (/var/www/clara360/finapi_backend_webform_enhanced.js:60:19)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async /var/www/clara360/finapi_backend_webform_enhanced.js:137:29

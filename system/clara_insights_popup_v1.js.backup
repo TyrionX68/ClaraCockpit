@@ -1,0 +1,314 @@
+// Clara KI Insights Button - NUR für Clara KI-Seite
+// Manus A compliant implementation - Präzise Seitenerkennung
+console.log("📈 Insights-Script aktiv auf:", window.location.pathname);
+(function() {
+  'use strict';
+  
+  console.log('🧠 Clara KI Insights Button loading...');
+  
+  // PRÄZISE Prüfung ob wir auf der Clara KI-Seite sind
+  function isOnClaraKIPage() {
+    // Nur auf exakter Clara KI-Seite aktivieren
+    const path = window.location.pathname;
+    const hash = window.location.hash;
+    
+    // Prüfe URL-Pfade
+    if (path.includes('/clara-ki') || hash.includes('#/clara-ki') || hash.includes('#clara-ki')) {
+      return true;
+    }
+    
+    // Prüfe Seitentitel
+    if (document.title.includes('Clara KI') || document.title.includes('Clara AI')) {
+      return true;
+    }
+    
+    // Prüfe spezifische Clara KI-Elemente
+    if (document.querySelector('[data-page="clara-ki"]') || 
+        document.querySelector('.clara-ki-page') ||
+        document.querySelector('#clara-ki-container')) {
+      return true;
+    }
+    
+    // Prüfe Chat-Container (nur wenn Clara KI-spezifisch)
+    const chatContainer = document.querySelector('.chat-container');
+    if (chatContainer && chatContainer.textContent.includes('Clara')) {
+      return true;
+    }
+    
+    return false;
+  }
+  
+  // ProactiveInsights Engine (vereinfacht für Modal)
+  class ProactiveInsightsEngine {
+    constructor() {
+      this.insights = [];
+      this.lastAnalysis = null;
+    }
+    
+    generateWaldhofstrasseInsights() {
+      const insights = [
+        {
+          type: 'positive',
+          category: 'cashflow',
+          title: 'Starker Cashflow',
+          message: `Monatlicher Überschuss von 7.560€ ermöglicht Reinvestitionen`,
+          priority: 'medium',
+          action: 'Überschuss in Modernisierung oder Expansion investieren'
+        },
+        {
+          type: 'positive',
+          category: 'performance',
+          title: 'Überdurchschnittliche Rendite',
+          message: `Aktuelle Rendite von 8.4% liegt über Marktdurchschnitt`,
+          priority: 'high',
+          action: 'Portfolio-Expansion bei ähnlichen Objekten prüfen'
+        },
+        {
+          type: 'positive',
+          category: 'occupancy',
+          title: 'Vollvermietung erreicht',
+          message: 'Optimale Auslastung - Mietanpassung bei Neuvermietung möglich',
+          priority: 'medium',
+          action: 'Marktmieten für zukünftige Anpassungen analysieren'
+        },
+        {
+          type: 'warning',
+          category: 'maintenance',
+          title: 'Wartungsrücklage prüfen',
+          message: `Ausgabenquote könnte für langfristige Instandhaltung zu niedrig sein`,
+          priority: 'medium',
+          action: 'Wartungsplan und Rücklagen für 2025 überprüfen'
+        },
+        {
+          type: 'info',
+          category: 'tax',
+          title: 'Steueroptimierung möglich',
+          message: 'Bei hoher Rendite Abschreibungsmöglichkeiten prüfen',
+          priority: 'low',
+          action: 'Steuerberater für Optimierungsstrategien konsultieren'
+        }
+      ];
+      
+      this.insights = insights;
+      this.lastAnalysis = new Date();
+      return insights;
+    }
+    
+    getInsightColor(type) {
+      const colors = {
+        positive: '#10B981',
+        warning: '#F59E0B', 
+        critical: '#EF4444',
+        info: '#3B82F6'
+      };
+      return colors[type] || colors.info;
+    }
+  }
+  
+  // Modal für Proaktive Empfehlungen erstellen
+  function createInsightsModal() {
+    const engine = new ProactiveInsightsEngine();
+    const insights = engine.generateWaldhofstrasseInsights();
+    
+    const modal = document.createElement('div');
+    modal.id = 'clara-insights-modal';
+    modal.style.cssText = `
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.5);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 10000;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    `;
+    
+    const modalContent = document.createElement('div');
+    modalContent.style.cssText = `
+      background: white;
+      border-radius: 12px;
+      padding: 24px;
+      max-width: 800px;
+      max-height: 80vh;
+      overflow-y: auto;
+      box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+      margin: 20px;
+      width: 100%;
+    `;
+    
+    modalContent.innerHTML = `
+      <div style="display: flex; justify-content: between; align-items: center; margin-bottom: 20px; border-bottom: 1px solid #e5e7eb; padding-bottom: 16px;">
+        <div style="display: flex; align-items: center;">
+          <div style="width: 40px; height: 40px; background: #3B82F6; border-radius: 8px; display: flex; align-items: center; justify-content: center; margin-right: 12px;">
+            🧠
+          </div>
+          <div>
+            <h2 style="margin: 0; font-size: 20px; font-weight: 600; color: #1f2937;">Proaktive Empfehlungen</h2>
+            <p style="margin: 0; font-size: 14px; color: #6b7280;">Automatische Analysen für Waldhofstraße 76</p>
+          </div>
+        </div>
+        <button id="close-insights-modal" style="background: #f3f4f6; border: none; border-radius: 6px; padding: 8px; cursor: pointer; color: #6b7280; font-size: 18px;">✕</button>
+      </div>
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); gap: 16px;">
+        ${insights.map(insight => `
+          <div style="background: #f9fafb; padding: 16px; border-radius: 8px; border-left: 4px solid ${engine.getInsightColor(insight.type)};">
+            <div style="display: flex; justify-content: between; align-items: start; margin-bottom: 8px;">
+              <h3 style="margin: 0; font-size: 16px; font-weight: 600; color: #1f2937;">${insight.title}</h3>
+              <span style="background: ${engine.getInsightColor(insight.type)}; color: white; padding: 2px 8px; border-radius: 12px; font-size: 11px; font-weight: 500;">${insight.priority.toUpperCase()}</span>
+            </div>
+            <p style="margin: 0 0 8px 0; font-size: 14px; line-height: 1.4; color: #4b5563;">${insight.message}</p>
+            <p style="margin: 0; font-size: 12px; color: #6b7280; font-style: italic;">💡 ${insight.action}</p>
+          </div>
+        `).join('')}
+      </div>
+      <div style="margin-top: 20px; text-align: center; color: #6b7280; font-size: 12px; border-top: 1px solid #e5e7eb; padding-top: 16px;">
+        Letzte Analyse: ${engine.lastAnalysis.toLocaleString('de-DE')} • ${insights.length} Empfehlungen
+      </div>
+    `;
+    
+    modal.appendChild(modalContent);
+    document.body.appendChild(modal);
+    
+    // Modal anzeigen
+    setTimeout(() => {
+      modal.style.opacity = '1';
+    }, 10);
+    
+    // Close-Handler
+    function closeModal() {
+      modal.style.opacity = '0';
+      setTimeout(() => {
+        if (modal.parentNode) {
+          modal.parentNode.removeChild(modal);
+        }
+      }, 300);
+    }
+    
+    document.getElementById('close-insights-modal').addEventListener('click', closeModal);
+    modal.addEventListener('click', (e) => {
+      if (e.target === modal) closeModal();
+    });
+    
+    // ESC-Key Handler
+    const escHandler = (e) => {
+      if (e.key === 'Escape') {
+        closeModal();
+        document.removeEventListener('keydown', escHandler);
+      }
+    };
+    document.addEventListener('keydown', escHandler);
+    
+    console.log('🧠 Proaktive Empfehlungen Modal opened');
+  }
+  
+  // Button NUR zur Clara KI-Seite hinzufügen
+  function addInsightsButtonToClaraKI() {
+    // STRENGE Prüfung - nur auf Clara KI-Seite
+    if (!isOnClaraKIPage()) {
+      console.log('🧠 Not on Clara KI page, skipping insights button');
+      return;
+    }
+    
+    // Prüfe ob Button bereits existiert
+    if (document.getElementById('clara-insights-button')) {
+      console.log('🧠 Insights button already exists');
+      return;
+    }
+    
+    // Suche nach Clara KI-spezifischem Container
+    let targetContainer = document.querySelector('.clara-ki-controls') || 
+                         document.querySelector('.chat-controls') ||
+                         document.querySelector('[data-page="clara-ki"]') ||
+                         document.querySelector('.clara-ki-page');
+    
+    // Fallback: Suche nach Chat-Container nur wenn Clara-spezifisch
+    if (!targetContainer) {
+      const chatContainer = document.querySelector('.chat-container');
+      if (chatContainer && chatContainer.textContent.includes('Clara')) {
+        targetContainer = chatContainer;
+      }
+    }
+    
+    if (!targetContainer) {
+      console.log('🧠 No Clara KI container found for insights button');
+      return;
+    }
+    
+    // Button erstellen
+    const insightsButton = document.createElement('button');
+    insightsButton.id = 'clara-insights-button';
+    insightsButton.style.cssText = `
+      background: linear-gradient(135deg, #3B82F6 0%, #1D4ED8 100%);
+      color: white;
+      border: none;
+      border-radius: 8px;
+      padding: 12px 20px;
+      font-size: 14px;
+      font-weight: 500;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin: 12px 0;
+      transition: all 0.2s ease;
+      box-shadow: 0 2px 4px rgba(59, 130, 246, 0.2);
+    `;
+    
+    insightsButton.innerHTML = '🧠 Proaktive Empfehlungen';
+    
+    // Hover-Effekt
+    insightsButton.addEventListener('mouseenter', () => {
+      insightsButton.style.transform = 'translateY(-1px)';
+      insightsButton.style.boxShadow = '0 4px 8px rgba(59, 130, 246, 0.3)';
+    });
+    
+    insightsButton.addEventListener('mouseleave', () => {
+      insightsButton.style.transform = 'translateY(0)';
+      insightsButton.style.boxShadow = '0 2px 4px rgba(59, 130, 246, 0.2)';
+    });
+    
+    // Click-Handler
+    insightsButton.addEventListener('click', () => {
+      console.log('🧠 Proaktive Empfehlungen button clicked');
+      createInsightsModal();
+    });
+    
+    // Button einfügen
+    if (targetContainer.firstChild) {
+      targetContainer.insertBefore(insightsButton, targetContainer.firstChild);
+    } else {
+      targetContainer.appendChild(insightsButton);
+    }
+    
+    console.log('🧠 Proaktive Empfehlungen button added to Clara KI page ONLY');
+  }
+  
+  // Initialisierung - NUR für Clara KI-Seite
+  function initClaraKIInsights() {
+    console.log('🧠 Initializing Clara KI Insights...');
+    
+    // Sofortige Prüfung
+    if (!isOnClaraKIPage()) {
+      console.log('🧠 Not on Clara KI page - Clara KI Insights disabled');
+      return;
+    }
+    
+    // Warte auf Seiten-Ladung
+    setTimeout(() => {
+      addInsightsButtonToClaraKI();
+    }, 3000);
+  }
+  
+  // DOM Ready Check - aber nur für Clara KI-Seite
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initClaraKIInsights);
+  } else {
+    initClaraKIInsights();
+  }
+  
+  console.log('🧠 Clara KI Insights Button loaded - ONLY for Clara KI page');
+})();

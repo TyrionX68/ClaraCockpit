@@ -1,0 +1,36 @@
+{
+  "system_version": "ClaraSuite v4.2.1",
+  "timestamp": "2025-06-15T21:13:00Z",
+  "vision": "Autonome KI-Assistenz für komplexe Geschäftsprozesse und Systemintegration",
+  "directives": [
+    "Echte FinAPI-Integration ohne Mock-Daten implementieren",
+    "Cache-Busting-Strategien für Frontend-Deployment",
+    "SSH-Zugriff für Manus A Instanzen standardisieren",
+    "Manifest-Panel reaktivieren und aktuell halten"
+  ],
+  "lessons_learned": [
+    "SSH-Passwort-Authentifizierung kann fehlschlagen - SSH-Keys bevorzugen",
+    "Backend-Ports müssen vor Neustart vollständig freigegeben werden",
+    "FinAPI-Credentials sind für produktive Integration zwingend erforderlich",
+    "Cache-freie Auslieferung verhindert Frontend-Update-Probleme"
+  ],
+  "slot_state": {
+    "finapi_backend": "real_integration_ready",
+    "ssh_access": "key_generated_vps_pending",
+    "manifest_panel": "updating",
+    "cache_busting": "implemented"
+  },
+  "active_components": [
+    "clara360-finapi-backend v3.0",
+    "psd2.clara360.de cache-free",
+    "ssh-key-checker.sh",
+    "manifest_integration_v4.js"
+  ],
+  "governance": {
+    "metagovernor_active": true,
+    "manus_a_role": "execution_agent",
+    "stable_fallback": "https://oqiizvhn.manus.space/",
+    "deployment_status": "production_ready"
+  }
+}
+

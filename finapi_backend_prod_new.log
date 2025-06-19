@@ -1,0 +1,15 @@
+nohup: ignoring input
+🚀 Clara360 FinAPI Backend v3.0 (REAL INTEGRATION) running on port 3001
+📊 FinAPI Base URL: https://sandbox.finapi.io/api/v2
+🔑 Client ID configured: true
+⚡ Ready for REAL FinAPI integration - NO MOCK DATA
+[2025-06-15T22:10:33.261Z] Request-ID: 1750025433261-o0ankjf70 – Endpoint: /api/health
+[2025-06-15T22:11:11.109Z] Request-ID: 1750025471109-oc63tbp5r – Endpoint: /api/search-institutions
+FinAPI Access Token Error: Error: FinAPI OAuth failed: Forbidden
+    at getFinAPIAccessToken (/var/www/clara360/finapi_backend_real_integration.js:50:19)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async /var/www/clara360/finapi_backend_real_integration.js:75:29
+[2025-06-15T22:11:11.283Z] FinAPI Search Error: Error: FinAPI OAuth failed: Forbidden
+    at getFinAPIAccessToken (/var/www/clara360/finapi_backend_real_integration.js:50:19)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async /var/www/clara360/finapi_backend_real_integration.js:75:29
