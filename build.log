@@ -1,0 +1,17 @@
+
+> clara360-frontend@3.0.0 build
+> vite build
+
+vite v4.5.14 building for production...
+<script src="/system/banking_modal_integration.v2.8.js"> in "/index.html" can't be bundled without type="module" attribute
+<script src="/system/kpi_dom_value_patch.js"> in "/index.html" can't be bundled without type="module" attribute
+<script src="/system/clara_insights_popup_v1.js"> in "/index.html" can't be bundled without type="module" attribute
+<script src="/system/clara_dummy_cleanup_copilot.js"> in "/index.html" can't be bundled without type="module" attribute
+<script src="/system/clara_chat_json_engine.js"> in "/index.html" can't be bundled without type="module" attribute
+transforming...
+✓ 1 modules transformed.
+rendering chunks...
+computing gzip size...
+dist/assets/vite-4a748afd.svg  1.50 kB │ gzip: 0.78 kB
+dist/index.html                1.86 kB │ gzip: 0.84 kB
+✓ built in 71ms

@@ -1,0 +1,312 @@
+{
+  "meta": {
+    "version": "1.0",
+    "description": "BaseDataRegistry für Clara360 - Definition strukturgebender Daten",
+    "lastUpdate": "2025-06-10T23:37:00Z",
+    "purpose": "Klassifizierung von Basis- vs. Variable Daten für Korrektur-Logik"
+  },
+  
+  "baseDataTypes": {
+    "objekte": {
+      "description": "Immobilien-Grunddaten - strukturgebend für gesamte Verwaltung",
+      "fields": [
+        {
+          "name": "adresse",
+          "type": "string",
+          "required": true,
+          "impact": "high",
+          "description": "Eindeutige Objektidentifikation"
+        },
+        {
+          "name": "eigentuemer",
+          "type": "string", 
+          "required": true,
+          "impact": "high",
+          "description": "Rechtliche Zuordnung"
+        },
+        {
+          "name": "baujahr",
+          "type": "number",
+          "required": false,
+          "impact": "medium",
+          "description": "Einfluss auf Abschreibungen und Wartung"
+        },
+        {
+          "name": "gesamtflaeche",
+          "type": "number",
+          "required": false,
+          "impact": "medium",
+          "description": "Basis für Flächenberechnungen"
+        },
+        {
+          "name": "einheiten_anzahl",
+          "type": "number",
+          "required": true,
+          "impact": "high",
+          "description": "Strukturiert Mieterverwaltung"
+        }
+      ],
+      "kpiImpact": [
+        "Vermietungsgrad",
+        "Gesamtrendite",
+        "Objektwert",
+        "Betriebskosten pro m²"
+      ]
+    },
+    
+    "mieter": {
+      "description": "Mieter-Stammdaten - Basis für Verträge und Kommunikation",
+      "fields": [
+        {
+          "name": "name",
+          "type": "string",
+          "required": true,
+          "impact": "high",
+          "description": "Eindeutige Mieteridentifikation"
+        },
+        {
+          "name": "wohnung_einheit",
+          "type": "string",
+          "required": true,
+          "impact": "high",
+          "description": "Zuordnung zu Objekt/Einheit"
+        },
+        {
+          "name": "einzugsdatum",
+          "type": "date",
+          "required": true,
+          "impact": "high",
+          "description": "Vertragsbeginn und Mietdauer-Berechnung"
+        },
+        {
+          "name": "auszugsdatum",
+          "type": "date",
+          "required": false,
+          "impact": "high",
+          "description": "Vertragsende und Leerstand"
+        },
+        {
+          "name": "kontakt_email",
+          "type": "string",
+          "required": false,
+          "impact": "medium",
+          "description": "Kommunikationskanal"
+        }
+      ],
+      "kpiImpact": [
+        "Vermietungsgrad",
+        "Mieterfluktuation",
+        "Leerstandszeiten",
+        "Kommunikationseffizienz"
+      ]
+    },
+    
+    "mietvertraege": {
+      "description": "Vertragsdaten - Basis für alle finanziellen Berechnungen",
+      "fields": [
+        {
+          "name": "mieter_id",
+          "type": "string",
+          "required": true,
+          "impact": "high",
+          "description": "Verknüpfung zu Mieter"
+        },
+        {
+          "name": "objekt_einheit",
+          "type": "string",
+          "required": true,
+          "impact": "high",
+          "description": "Verknüpfung zu Objekt"
+        },
+        {
+          "name": "kaltmiete",
+          "type": "number",
+          "required": true,
+          "impact": "high",
+          "description": "Basis für Einnahmenberechnung"
+        },
+        {
+          "name": "nebenkosten",
+          "type": "number",
+          "required": true,
+          "impact": "high",
+          "description": "Betriebskosten-Zuordnung"
+        },
+        {
+          "name": "kaution",
+          "type": "number",
+          "required": false,
+          "impact": "medium",
+          "description": "Sicherheitsleistung"
+        },
+        {
+          "name": "vertragsbeginn",
+          "type": "date",
+          "required": true,
+          "impact": "high",
+          "description": "Mietbeginn für Berechnungen"
+        },
+        {
+          "name": "vertragsende",
+          "type": "date",
+          "required": false,
+          "impact": "high",
+          "description": "Befristung oder unbefristet"
+        }
+      ],
+      "kpiImpact": [
+        "Mieteinnahmen",
+        "Sollmiete",
+        "Rendite",
+        "Betriebskostenumlagen"
+      ]
+    },
+    
+    "konten": {
+      "description": "Bank-/Kontendaten - Basis für Zahlungszuordnung",
+      "fields": [
+        {
+          "name": "iban",
+          "type": "string",
+          "required": true,
+          "impact": "high",
+          "description": "Eindeutige Kontoidentifikation"
+        },
+        {
+          "name": "bank_name",
+          "type": "string",
+          "required": true,
+          "impact": "medium",
+          "description": "Bank-Zuordnung"
+        },
+        {
+          "name": "eigentuemer_zuordnung",
+          "type": "string",
+          "required": true,
+          "impact": "high",
+          "description": "Rechtliche Kontenzuordnung"
+        },
+        {
+          "name": "objekt_zuordnung",
+          "type": "array",
+          "required": false,
+          "impact": "high",
+          "description": "Welche Objekte über dieses Konto abgewickelt werden"
+        }
+      ],
+      "kpiImpact": [
+        "Zahlungszuordnung",
+        "Liquidität",
+        "Cashflow-Tracking"
+      ]
+    }
+  },
+  
+  "variableDataTypes": {
+    "zahlungseingaenge": {
+      "description": "Transaktionsdaten - beeinflussen KPIs, aber nicht Struktur",
+      "fields": [
+        "datum",
+        "betrag", 
+        "verwendungszweck",
+        "absender",
+        "konto_ziel"
+      ],
+      "autoMapping": {
+        "mieter": "verwendungszweck + absender",
+        "objekt": "konto_ziel + verwendungszweck",
+        "vertrag": "mieter + objekt + datum"
+      }
+    },
+    
+    "wartungsausgaben": {
+      "description": "Kostendaten - beeinflussen Rendite-KPIs",
+      "fields": [
+        "datum",
+        "betrag",
+        "kategorie",
+        "dienstleister",
+        "objekt_zuordnung"
+      ]
+    },
+    
+    "csv_imports": {
+      "description": "Temporäre Import-Daten vor Zuordnung",
+      "fields": [
+        "rohdaten",
+        "mapping_vorschlag",
+        "korrektur_status",
+        "zuordnung_final"
+      ]
+    }
+  },
+  
+  "correctionRules": {
+    "automaticMapping": {
+      "confidence_threshold": 0.8,
+      "fallback_to_manual": true,
+      "keywords": {
+        "mieter_matching": [
+          "name_similarity",
+          "verwendungszweck_keywords",
+          "betrag_matching"
+        ],
+        "objekt_matching": [
+          "adresse_keywords",
+          "konto_zuordnung",
+          "betrag_plausibilität"
+        ]
+      }
+    },
+    
+    "manualCorrection": {
+      "required_fields": [
+        "mieter_zuordnung",
+        "objekt_zuordnung", 
+        "kategorie"
+      ],
+      "validation": {
+        "mieter_exists": true,
+        "objekt_exists": true,
+        "betrag_plausible": true
+      }
+    },
+    
+    "kpiUpdateTriggers": [
+      "mieter_zuordnung_changed",
+      "objekt_zuordnung_changed",
+      "betrag_korrigiert",
+      "datum_korrigiert"
+    ]
+  },
+  
+  "integrationPoints": {
+    "clara360_modules": {
+      "dashboard": {
+        "kpi_cards": [
+          "vermietungsgrad",
+          "mieteinnahmen",
+          "rueckstaende",
+          "rendite"
+        ]
+      },
+      "zahlungen": {
+        "auto_assignment": true,
+        "correction_overlay": true
+      },
+      "rueckstaende": {
+        "auto_calculation": true,
+        "manual_override": true
+      }
+    },
+    
+    "supabase_tables": {
+      "objekte": "base_data",
+      "mieter": "base_data", 
+      "vertraege": "base_data",
+      "zahlungen": "variable_data",
+      "korrekturen": "correction_log"
+    }
+  }
+}
+

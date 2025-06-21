@@ -1,0 +1,22 @@
+VertragID,MieterName,ObjektID,Wohnung,Mietbeginn,Kaltmiete,Nebenkosten,Gesamtmiete,Flaeche_m2,Status
+MA-001,Mieter_a,1,Wohnung DG,2022-12-01,840.0,200.0,1040.0,64.0,Aktiv
+MA-002,Mieter_b,2,Wohnung 1 OG,2022-09-01,1300.0,350.0,1650.0,101.0,Aktiv
+MA-003,Mieter_c,3,Wohnung EG,2019-10-01,1450.0,250.0,1700.0,115.0,Aktiv
+MA-004,Mieter_e,4,Wohnung  Vorderhau EG,2022-09-01,595.0,175.0,770.0,42.0,Aktiv
+MA-005,Mieter_f,5,Wohnung Vorderhaus 1 OG,2022-05-01,790.0,200.0,990.0,67.0,Aktiv
+MA-006,Mieter_g,6,Wohnung Vorderhaus DG,2022-05-01,795.0,150.0,945.0,59.0,Aktiv
+MA-007,Mieter_h,7,Wohnung Seitenhaus EG-DG,2023-09-01,850.0,140.0,990.0,70.0,Aktiv
+MA-008,Mieter_i,8,Wohnung Hinterhaus EG,2022-05-01,990.0,150.0,1140.0,106.0,Aktiv
+MA-009,Mieter_j,9,Wohnung Hinterhaus DG,2013-04-01,500.0,120.0,620.0,71.0,Aktiv
+MA-010,Mieter_k,10,Wohnung DG links,2023-05-01,1130.0,240.0,1370.0,101.0,Aktiv
+MA-011,Mieter_l,11,Wohnung DG rechts,2023-07-01,1080.0,170.0,1250.0,89.0,Aktiv
+MA-012,Mieter_m,12,Wohnung DG,01.09.2023,1150.0,150.0,1300.0,80.0,Aktiv
+MA-013,Mieter_n,13,Wohnung 1 OG,2023-05-01,1980.0,495.0,2475.0,165.0,Aktiv
+MA-014,Mieter_o,14,Wohnung UG-1,01.07.2023,595.0,125.0,720.0,45.0,Aktiv
+MA-015,Mieter_p,15,Wohnung UG-2,2022-10-01,495.0,145.0,640.0,38.0,Aktiv
+MA-016,Mieter_q,16,GewerbeflÃ¤che 1.OG,2023-07-01,1050.0,150.0,1200.0,75.0,Aktiv
+MA-017,Mieter_r,17,GewerbeflÃ¤che EG,2023-03-01,3200.0,700.0,4150.0,245.0,Aktiv
+MA-018,Mieter_t,18,Wohnung 1. OG,2017-01-15,1090.0,250.0,1340.0,125.5,Aktiv
+MA-019,Mieter_u,19,Wohnung EG,2017-03-01,425.0,120.0,545.0,41.0,Aktiv
+MA-020,Mieter_v,20,GewerbeflÃ¤che EG-1,2009-08-01,500.0,50.0,654.5,45.5,Aktiv
+MA-021,Mieter_w,21,GewerbeflÃ¤che EG-2,2009-09-01,510.0,50.0,666.4,40.5,Aktiv

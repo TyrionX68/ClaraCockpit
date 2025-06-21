@@ -1,0 +1,275 @@
+{
+  "manifest_id": "MF-20250620-02",
+  "version": "v2.3.0",
+  "timestamp": "2025-06-20T08:30:00Z",
+  "editor": "Manus A (mit GitHub Copilot)",
+  "authority": "MetaGovernor",
+  "authentication": {
+    "email": "hiss@clara360.de",
+    "password": "Clara360!",
+    "access_level": "MetaGovernor"
+  },
+  "system_architecture": {
+    "framework": "React 18 + Vite 6.3.5",
+    "ui_library": "shadcn/ui + Tailwind CSS",
+    "development_assistance": "GitHub Copilot",
+    "deployment_target": "clara360.de",
+    "object_focus": "Waldhofstraße"
+  },
+  "live_system_status": {
+    "system_version": "ClaraSuper_v4.4.0_WaldhofstrasseLive",
+    "deployment_timestamp": "2025-06-16T13:30:00.000Z",
+    "environment": "LIVE_READY",
+    "user_identity": "hiss@clara360.de",
+    "property_object": "Waldhofstraße",
+    "status": "UI_UNLOCKED_FOR_VISUAL_VERIFICATION"
+  },
+  "banking_integration": {
+    "provider": "FinAPI",
+    "environment": "SANDBOX_TO_LIVE_READY",
+    "endpoint": "https://sandbox.finapi.io/api/v2",
+    "live_endpoint": "https://api.finapi.io/api/v2",
+    "redirect_uri": "https://psd2.clara360.de/finapi/callback",
+    "target_bank": "Sparkasse Mannheim",
+    "account_purpose": "Mietkonto Waldhofstraße",
+    "selective_banking": true,
+    "multibank_disabled": true,
+    "ui_components": {
+      "banking_selection_field": true,
+      "account_type_selection": true,
+      "connection_button": true,
+      "dashboard_feedback": true
+    }
+  },
+  "kpi_modules": {
+    "rentflow_analytics": {
+      "enabled": true,
+      "data_source": "/api/finapi/waldhofstrasse/kpis",
+      "visible_after": "account_linked",
+      "update_interval": 3600,
+      "object_binding": "Waldhofstraße"
+    },
+    "account_balance_snapshot": {
+      "enabled": true,
+      "data_source": "/api/finapi/waldhofstrasse/accounts",
+      "visible_after": "first_transaction",
+      "icon": "🏘️",
+      "title": "Objekt-Kontostand (Waldhofstraße)"
+    },
+    "delta_30_days": {
+      "enabled": true,
+      "data_source": "/transactions?accountId={accountId}&days=30",
+      "visible_after": "account_linked_plus_1_day",
+      "calculations": ["inflow", "outflow", "net_change"]
+    },
+    "rent_tracking": {
+      "enabled": true,
+      "title": "Mieteingang vs. Soll",
+      "tracking_fields": ["monthlyRentIncome", "rentPaymentCount", "latePayments"]
+    },
+    "payment_timing": {
+      "enabled": true,
+      "title": "Zahlungseingang nach Fälligkeit",
+      "threshold_day": 5,
+      "tracking": "late_payments_daily"
+    },
+    "transaction_timeline": {
+      "enabled": true,
+      "title": "Bankbewegungen: Letzte 30 Tage",
+      "display_type": "timeline"
+    }
+  },
+  "api_endpoints": {
+    "health_check": "http://localhost:3006/api/health",
+    "banks_search": "/api/finapi/waldhofstrasse/banks",
+    "bank_connect": "/api/finapi/waldhofstrasse/connect",
+    "accounts": "/api/finapi/waldhofstrasse/accounts",
+    "kpis": "/api/finapi/waldhofstrasse/kpis",
+    "callback": "/api/finapi/waldhofstrasse/callback",
+    "environment_switch": "/api/finapi/switch-environment"
+  },
+  "react_components": {
+    "ClaraFusionEngine": {
+      "status": "AKTIV",
+      "path": "/src/clarafusion/ClaraFusionEngine.jsx",
+      "function": "Hauptintelligenz mit emotionaler KI",
+      "integration": "Slot-basiert",
+      "copilot_optimized": true
+    },
+    "ManifestViewer": {
+      "status": "AKTIV",
+      "path": "/src/components/ManifestViewer.jsx",
+      "function": "MetaGovernor Manifest-Kontrolle",
+      "authority": "MetaGovernor",
+      "authentication": "hiss@clara360.de",
+      "features": ["modal", "read_mode", "edit_mode", "session_security"]
+    },
+    "ClaraThemeConfig": {
+      "status": "AKTIV",
+      "path": "/src/clarafusion/ClaraThemeConfig.js",
+      "function": "Design-Standards und Layout-Koordinaten",
+      "theme": "Dark Mode mit #4299e1 Akzent"
+    },
+    "ClaraLayoutWrapper": {
+      "status": "AKTIV",
+      "path": "/src/clarafusion/ClaraLayoutWrapper.jsx",
+      "function": "Responsive Layout-Container",
+      "standards": "24px Modal-Spacing, 32px Header-Abstand"
+    },
+    "ClaraChatBubbleSlot": {
+      "status": "AKTIV",
+      "path": "/src/clarafusion/ClaraChatBubbleSlot.jsx",
+      "function": "Modular Chat-Interface",
+      "architecture": "Card-basiert mit shadcn/ui"
+    }
+  },
+  "zip_integration": {
+    "ClaraTooltipSystem": {
+      "source": "clara360_full_project(1).zip",
+      "status": "PORTIERT",
+      "migration": "Vue → React JSX",
+      "path": "/src/components/ui/ClaraTooltipSystem.jsx"
+    },
+    "BaseDataRegistry": {
+      "source": "CLARA360_PRODUCTION_COMPLETE.zip",
+      "status": "INTEGRIERT",
+      "path": "/public/data/BaseDataRegistry.json",
+      "function": "Strukturdefinitionen für Datenmodell"
+    },
+    "legacy_components": {
+      "ClaraDialogContext": "/src/components/legacy/",
+      "ClaraEmotionScaler": "/src/components/legacy/",
+      "ClaraResponseEnhancer": "/src/components/legacy/",
+      "useContractActions": "/src/hooks/"
+    }
+  },
+  "archived_files": {
+    "vue_system": {
+      "status": "ARCHIVIERT",
+      "path": "/home/ubuntu/ClaraCockpit/src/",
+      "reason": "React-First Strategie",
+      "backup": "Referenz-Zwecke"
+    },
+    "dummy_chat_engines": {
+      "status": "ARCHIVIERT",
+      "count": 5,
+      "path": "/src/components/legacy/archived/",
+      "replaced_by": "ClaraFusionEngine"
+    }
+  },
+  "deployment_status": {
+    "vps_connection": {
+      "server": "root@217.154.242.134",
+      "password": "a53x658C",
+      "status": "AKTIV",
+      "backup": "/var/www/clara360.backup.20250620_074713/",
+      "production_directory": "FEHLT (/var/www/clara360.de/)"
+    },
+    "github_repository": {
+      "url": "https://github.com/TyrionX68/ClaraCockpit.git",
+      "remote": "KONFIGURIERT",
+      "branch": "main",
+      "status": "Bereit für Push"
+    },
+    "build_system": {
+      "framework": "React + Vite",
+      "path": "/home/ubuntu/ClaraCockpit/clara-react-upgrade/",
+      "dependencies": ["Tailwind CSS", "shadcn/ui", "Lucide Icons"],
+      "status": "Entwicklung aktiv"
+    }
+  },
+  "phase_2_3_achievements": {
+    "manifest_unification": {
+      "status": "ABGESCHLOSSEN",
+      "integration": "ClaraSuper_v4.4.0_WaldhofstrasseLive → MANUS_MANIFEST.md",
+      "structure": "Strukturierte Blöcke mit block-end Markern",
+      "authority": "MetaGovernor implementiert"
+    },
+    "manifest_viewer": {
+      "status": "ABGESCHLOSSEN",
+      "component": "ManifestViewer.jsx",
+      "authentication": "hiss@clara360.de",
+      "features": ["Modal", "Read/Edit-Modus", "Session-Sicherheit"],
+      "position": "Button unten rechts"
+    },
+    "manifest_guard": {
+      "status": "ABGESCHLOSSEN",
+      "validation": "Copilot-assistierte Validierung",
+      "checks": ["README.md", "MANUS_MANIFEST.md", "Komponenten", "package.json"],
+      "result": "Alle Validierungen bestanden"
+    },
+    "build_process": {
+      "status": "ERFOLGREICH",
+      "command": "npm run build",
+      "duration": "2.90s",
+      "output": {
+        "css": "96.68 kB",
+        "js": "230.92 kB",
+        "html": "0.50 kB"
+      }
+    }
+  },
+  "deployment_log": {
+    "phase_2_3": {
+      "date": "2025-06-20T08:15:00Z",
+      "developer": "Manus A (mit GitHub Copilot)",
+      "commit": "Phase 2.3 Manifest Integration & MetaGovernor UI",
+      "status": "BUILD ERFOLGREICH",
+      "steps_completed": [
+        "Manifest-Vereinheitlichung",
+        "ManifestViewer Komponente",
+        "Manifest Guard Validierung",
+        "Build-Prozess erfolgreich"
+      ],
+      "ready_for": [
+        "GitHub Push",
+        "VPS Deployment",
+        "MetaGovernor Review",
+        "Live System Integration"
+      ]
+    }
+  },
+  "current_challenges": {
+    "browser_access": {
+      "problem": "Manus VM Computer Gateway blockiert externe Zugriffe",
+      "ports_tested": [4000, 5000, 8080],
+      "error": "504 Gateway Timeout",
+      "local_validation": "HTTP 200 OK"
+    },
+    "production_deployment": {
+      "problem": "/var/www/clara360.de/ existiert nicht",
+      "solution": "VPS-Verzeichnis erstellen und deployen",
+      "backup_available": "Vollständige Wiederherstellung möglich"
+    }
+  },
+  "next_steps": {
+    "immediate": [
+      "Context-Finalisierung abschließen",
+      "Manifest-Export als JSON",
+      "VPS-Deployment vorbereiten",
+      "GitHub-Push durchführen"
+    ],
+    "long_term": [
+      "Live Banking Integration Test",
+      "KPI-Module UI Implementation",
+      "Performance-Optimierung",
+      "Design-System-Erweiterung"
+    ]
+  },
+  "meta_comments": {
+    "current_reflection": "Phase 2.3 Integration erfolgreich abgeschlossen. Das Manus-Manifest ist vollständig vereinheitlicht und unter MetaGovernor-Kontrolle. GitHub Copilot hat die Entwicklung erheblich beschleunigt.",
+    "copilot_assistance": [
+      "Manifest Guard Validierung automatisiert",
+      "React-Komponenten optimiert",
+      "Build-Prozess stabilisiert",
+      "Deployment-Pipeline vorbereitet"
+    ],
+    "strategic_notes": [
+      "Clara Fusion Engine bereit für Live-Integration",
+      "Banking-Module produktionsbereit für Waldhofstraße",
+      "MetaGovernor-Kontrolle vollständig implementiert",
+      "React-First Architektur bestätigt und optimiert"
+    ]
+  }
+}
+

@@ -1,0 +1,13 @@
+Titel,Objekt,Fälligkeitsdatum,Priorität,Status,Beschreibung,Zugewiesen
+Heizungsausfall,Berliner Str. 45,2024-06-10,Hoch,Offen,Heizung funktioniert seit gestern nicht mehr. Mieter haben sich beschwert.,Techniker Schmidt
+Wasserschaden Badezimmer,Münchener Allee 12,2024-06-15,Hoch,In Bearbeitung,Wasserschaden im Badezimmer. Leckage an der Dusche.,Hausmeister Müller
+Türschloss defekt,Hamburger Weg 78,2024-06-20,Mittel,Offen,Eingangstür schließt nicht richtig.,Schlosser Wagner
+Fenster undicht,Kölner Str. 23,2024-06-25,Niedrig,Offen,Fenster im Wohnzimmer ist undicht. Bei starkem Regen kommt Wasser rein.,Hausmeister Müller
+Rolladen klemmt,Frankfurter Ring 56,2024-06-12,Niedrig,Abgeschlossen,Rolladen im Schlafzimmer klemmt und lässt sich nicht mehr hochziehen.,Techniker Schmidt
+Rauchmelder defekt,Dresdner Platz 3,2024-06-08,Hoch,In Bearbeitung,Rauchmelder piept ständig ohne erkennbaren Grund.,Elektriker Bauer
+Schimmel im Bad,Stuttgarter Allee 67,2024-06-18,Mittel,Offen,Schimmelbildung an der Badezimmerdecke.,Maler Hoffmann
+Parkplatzmarkierung erneuern,Berliner Str. 45,2024-07-15,Niedrig,Offen,Parkplatzmarkierungen sind verblasst und kaum noch sichtbar.,Hausmeister Müller
+Dachrinne verstopft,Münchener Allee 12,2024-06-30,Mittel,Abgeschlossen,Dachrinne ist verstopft und läuft über.,Dachdecker Klein
+Treppenhausbeleuchtung defekt,Hamburger Weg 78,2024-06-05,Hoch,Abgeschlossen,Beleuchtung im Treppenhaus funktioniert nicht mehr.,Elektriker Bauer
+Gartenpflege,Kölner Str. 23,2024-07-10,Niedrig,Offen,Regelmäßige Gartenpflege für die Außenanlage.,Gärtner Schulz
+Aufzug außer Betrieb,Frankfurter Ring 56,2024-06-07,Hoch,In Bearbeitung,Aufzug bleibt stecken und macht seltsame Geräusche.,Aufzugstechniker Weber

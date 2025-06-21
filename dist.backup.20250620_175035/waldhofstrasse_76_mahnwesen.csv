@@ -1,0 +1,7 @@
+Datum,VertragID,Mieter,Einheit,Sollmiete,Eingegangen,Differenz,Status,Mahnverfahren,Anmerkungen
+2024-11-25,V-003,Mohamad Rizki Nurdena,3. OG Links,445.00,445.00,0.00,Verspätet,Mahnung 1,10 Tage Verzug - Zahlungsschwierigkeiten
+2024-12-15,V-003,Mohamad Rizki Nurdena,3. OG Links,445.00,0.00,-445.00,Ausfall,Mahnung 2,Kompletter Zahlungsausfall
+2024-12-28,V-008,Daniel Gungor,Dachgeschoss,465.00,300.00,-165.00,Teilzahlung,Mahnung 1,Jobverlust - Ratenzahlung vereinbart
+2025-01-05,V-003,Mohamad Rizki Nurdena,3. OG Links,445.00,0.00,-445.00,Ausfall,Inkasso,Inkassoverfahren eingeleitet
+2025-01-10,V-008,Daniel Gungor,Dachgeschoss,165.00,165.00,0.00,Nachzahlung,Erledigt,Restbetrag Dezember nachgezahlt
+
