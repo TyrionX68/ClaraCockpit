@@ -1,0 +1,108 @@
+{
+  "documents": {
+    "mietvertraege": {
+      "waldhofstrasse-15": {
+        "title": "Mietvertrag Waldhofstraße 15",
+        "path": "/documents/contracts/waldhofstrasse_15_mietvertrag.pdf",
+        "type": "contract",
+        "mieter": "Max Mustermann",
+        "property": "Waldhofstraße 15",
+        "created": "2023-01-15",
+        "status": "active"
+      },
+      "hauptstrasse-42": {
+        "title": "Mietvertrag Hauptstraße 42",
+        "path": "/documents/contracts/hauptstrasse_42_mietvertrag.pdf",
+        "type": "contract",
+        "mieter": "Anna Schmidt",
+        "property": "Hauptstraße 42",
+        "created": "2023-03-20",
+        "status": "active"
+      }
+    },
+    "rechnungen": {
+      "wartung-2024-06": {
+        "title": "Wartungsrechnung Juni 2024",
+        "path": "/documents/invoices/wartung_juni_2024.pdf",
+        "type": "invoice",
+        "property": "Waldhofstraße 15",
+        "amount": "450.00",
+        "date": "2024-06-15",
+        "status": "paid"
+      },
+      "heizung-2024-05": {
+        "title": "Heizungswartung Mai 2024",
+        "path": "/documents/invoices/heizung_mai_2024.pdf",
+        "type": "invoice",
+        "property": "Hauptstraße 42",
+        "amount": "320.00",
+        "date": "2024-05-10",
+        "status": "pending"
+      }
+    },
+    "mahnungen": {
+      "rueckstand-mustermann": {
+        "title": "Mahnung Max Mustermann",
+        "path": "/documents/reminders/mahnung_mustermann_2024.pdf",
+        "type": "reminder",
+        "mieter": "Max Mustermann",
+        "property": "Waldhofstraße 15",
+        "amount": "1200.00",
+        "date": "2024-06-01",
+        "status": "sent"
+      }
+    },
+    "berichte": {
+      "cashflow-2024-q2": {
+        "title": "Cashflow-Bericht Q2 2024",
+        "path": "/documents/reports/cashflow_q2_2024.pdf",
+        "type": "report",
+        "period": "Q2 2024",
+        "created": "2024-06-30",
+        "status": "final"
+      },
+      "mieteinnahmen-2024-06": {
+        "title": "Mieteinnahmen Juni 2024",
+        "path": "/documents/reports/mieteinnahmen_juni_2024.pdf",
+        "type": "report",
+        "period": "Juni 2024",
+        "created": "2024-06-30",
+        "status": "final"
+      }
+    }
+  },
+  "templates": {
+    "mahnung": {
+      "title": "Mahnung-Vorlage",
+      "path": "/documents/templates/mahnung_template.pdf",
+      "type": "template",
+      "description": "Standard-Mahnungsvorlage für Mietrückstände"
+    },
+    "mietvertrag": {
+      "title": "Mietvertrag-Vorlage",
+      "path": "/documents/templates/mietvertrag_template.pdf",
+      "type": "template",
+      "description": "Standard-Mietvertragsvorlage"
+    },
+    "kuendigung": {
+      "title": "Kündigungs-Vorlage",
+      "path": "/documents/templates/kuendigung_template.pdf",
+      "type": "template",
+      "description": "Vorlage für Mietvertragskündigungen"
+    }
+  },
+  "quick_access": {
+    "recent_documents": [
+      "cashflow-2024-q2",
+      "mieteinnahmen-2024-06",
+      "wartung-2024-06",
+      "rueckstand-mustermann"
+    ],
+    "frequently_used": [
+      "mahnung",
+      "mietvertrag",
+      "cashflow-2024-q2"
+    ]
+  }
+}
+

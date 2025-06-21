@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Clara360 - Intelligente Hausverwaltung</title>
+    <script type="module" crossorigin src="/assets/index-TKew24W4.js"></script>
+    <link rel="stylesheet" crossorigin href="/assets/index-CJdY74ci.css">
+  </head>
+  <body>
+    <div id="root"></div>
+    
+    <!-- Clara KI Blue Design Integration -->
+    <div id="clara-ki-slot"></div>
+    
+    <!-- React Dependencies für Clara KI -->
+    <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+    
+    <!-- Clara KI Blue Component -->
+    <script src="/assets/components/clara-ki-panel-blue.umd.js"></script>
+    
+    <!-- Clara360 VPS Integration Scripts -->
+    <script src="/system/banking_modal_integration.js"></script>
+    <script src="/system/kpi_dom_value_patch.js"></script>
+    <script src="/system/clara_insights_popup_v1.js"></script>
+    <script src="/system/clara_dummy_cleanup_copilot.js"></script>
+    
+    <!-- Clara KI Blue Initialization -->
+    <script src="/assets/components/clara-ki-init-blue.js"></script>
+    
+    <script>
+      // Warte auf React-App-Ladung
+      setTimeout(() => {
+        if (typeof addBankingButton === 'function') {
+          addBankingButton();
+        }
+      }, 2000);
+      
+      console.log("[CLARA-FUSION] Initialisierung");
+      console.log("🧠 Clara KI Panel wird initialisiert...");
+      
+      // Prüfe Clara Integration nach 3 Sekunden
+      setTimeout(() => {
+        const claraSlot = document.getElementById('clara-ki-slot');
+        if (claraSlot && claraSlot.children.length > 0) {
+          console.log("✅ Clara Integration erfolgreich geladen");
+        } else {
+          console.error("❌ Clara Integration nicht gefunden");
+        }
+      }, 3000);
+    </script>
+    
+    <script src="/system/clara_chat_json_engine.js" defer></script>
+  </body>
+</html>
+

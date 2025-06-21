@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Clara360 - Intelligente Hausverwaltung</title>
+    <script type="module" crossorigin src="/assets/index-TKew24W4.js"></script>
+    <link rel="stylesheet" crossorigin href="/assets/index-CJdY74ci.css">
+  </head>
+  <body>
+    <div id="root"></div>
+    
+    <!-- Clara360 VPS Integration Scripts -->
+    <script src="/system/banking_modal_integration.js"></script>
+    
+    <!-- Clara Fusion Widget - Modulare Integration -->
+    <script src="/clara_fusion/clara-fusion-widget-mount.js"></script>
+    
+    <script>
+      // Warte auf vollständige Clara360 UI-Ladung
+      setTimeout(() => {
+        // Banking Integration
+        if (typeof addBankingButton === 'function') {
+          addBankingButton();
+        }
+        
+        // Clara Fusion Widget - Modulare Integration (überschreibt NICHTS)
+        if (window.ClaraFusionWidget) {
+          console.log('Clara Fusion Widget wird modular integriert...');
+          const result = window.ClaraFusionWidget.mount();
+          console.log('Clara Fusion Widget Result:', result);
+        }
+      }, 5000); // Wartezeit für vollständige Clara360 UI-Ladung
+    </script>
+  </body>
+</html>
+
