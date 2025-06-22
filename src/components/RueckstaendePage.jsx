@@ -1,9 +1,10 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Card, CardContent, CardHeader, CardTitle } from './ui/card';
 import { Button } from './ui/button';
-import { AlertTriangle, ArrowLeft } from 'lucide-react';
+import { AlertTriangle, ArrowLeft, Download, Plus, RefreshCw, Filter } from 'lucide-react';
 import Sidebar from './Sidebar';
+import ClaraPageHeader from './ClaraPageHeader';
 
 const RueckstaendePage = () => {
   const navigate = useNavigate();
@@ -24,23 +25,30 @@ const RueckstaendePage = () => {
       <Sidebar currentPage="rueckstaende" onNavigate={(path) => navigate(path)} />
       
       <main className="flex-1 p-6">
-        <div className="mb-6">
-          <div className="flex items-center gap-4 mb-4">
-            <Button variant="outline" size="sm" onClick={() => navigate('/dashboard')}>
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Zurück
+        {/* Standardisierter Header */}
+        <ClaraPageHeader
+          title="Rückstände-Verwaltung"
+          subtitle="Übersicht und Management offener Zahlungen"
+          icon={<AlertTriangle className="w-5 h-5 text-blue-600" />}
+          actions={[
+            <Button key="filter" variant="outline">
+              <Filter className="w-4 h-4 mr-2" />
+              Filter
+            </Button>,
+            <Button key="export" variant="outline">
+              <Download className="w-4 h-4 mr-2" />
+              Export
+            </Button>,
+            <Button key="refresh" variant="outline">
+              <RefreshCw className="w-4 h-4 mr-2" />
+              Aktualisieren
+            </Button>,
+            <Button key="add">
+              <Plus className="w-4 h-4 mr-2" />
+              Rückstand hinzufügen
             </Button>
-            <div className="flex items-center gap-3">
-              <div className="w-10 h-10 bg-red-600 rounded-lg flex items-center justify-center">
-                <AlertTriangle className="w-6 h-6 text-white" />
-              </div>
-              <div>
-                <h1 className="text-2xl font-bold text-gray-900">Rückstände</h1>
-                <p className="text-gray-600">Übersicht offener Zahlungen</p>
-              </div>
-            </div>
-          </div>
-        </div>
+          ]}
+        />
 
         <div className="space-y-4">
           {rueckstaende.map((rueckstand) => (

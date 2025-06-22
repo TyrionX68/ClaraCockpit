@@ -3,8 +3,9 @@ import { useNavigate } from 'react-router-dom';
 import { Card, CardContent, CardHeader, CardTitle } from './ui/card';
 import { Button } from './ui/button';
 import { Input } from './ui/input';
-import { Users, ArrowLeft, Search, Plus, Edit, Trash2 } from 'lucide-react';
+import { Users, ArrowLeft, Search, Plus, Edit, Trash2, RefreshCw } from 'lucide-react';
 import Sidebar from './Sidebar';
+import ClaraPageHeader from './ClaraPageHeader';
 
 const EigentuemerPage = () => {
   const navigate = useNavigate();
@@ -52,48 +53,44 @@ const EigentuemerPage = () => {
     owner.email.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
+  const handleRefresh = () => {
+    setLoading(true);
+    // Simuliere Refresh
+    setTimeout(() => setLoading(false), 1000);
+  };
+
   return (
     <div className="min-h-screen bg-gray-50 flex">
       <Sidebar currentPage="eigentuemer" onNavigate={(path) => navigate(path)} />
       
       <main className="flex-1 p-6">
-        {/* Header */}
-        <div className="mb-6">
-          <div className="flex items-center gap-4 mb-4">
-            <Button 
-              variant="outline" 
-              size="sm"
-              onClick={() => navigate('/dashboard')}
-            >
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Zurück
+        {/* Standardisierter Header */}
+        <ClaraPageHeader
+          title="Eigentümer-Verwaltung"
+          subtitle="Übersicht und Verwaltung aller Immobilieneigentümer"
+          icon={<Users className="w-5 h-5 text-blue-600" />}
+          actions={[
+            <Button key="refresh" variant="outline" onClick={handleRefresh}>
+              <RefreshCw className="w-4 h-4 mr-2" />
+              Aktualisieren
+            </Button>,
+            <Button key="add">
+              <Plus className="w-4 h-4 mr-2" />
+              Eigentümer hinzufügen
             </Button>
-            <div className="flex items-center gap-3">
-              <div className="w-10 h-10 bg-orange-600 rounded-lg flex items-center justify-center">
-                <Users className="w-6 h-6 text-white" />
-              </div>
-              <div>
-                <h1 className="text-2xl font-bold text-gray-900">Eigentümer</h1>
-                <p className="text-gray-600">Verwaltung aller Eigentümer</p>
-              </div>
-            </div>
-          </div>
+          ]}
+        />
 
-          {/* Aktionen */}
-          <div className="flex items-center gap-4">
-            <div className="relative flex-1 max-w-md">
-              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-4 h-4" />
-              <Input
-                placeholder="Eigentümer suchen..."
-                value={searchTerm}
-                onChange={(e) => setSearchTerm(e.target.value)}
-                className="pl-10"
-              />
-            </div>
-            <Button className="gap-2">
-              <Plus className="w-4 h-4" />
-              Neuer Eigentümer
-            </Button>
+        {/* Suchbereich */}
+        <div className="mb-6">
+          <div className="relative max-w-md">
+            <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-4 h-4" />
+            <Input
+              placeholder="Eigentümer suchen..."
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+              className="pl-10"
+            />
           </div>
         </div>
 
