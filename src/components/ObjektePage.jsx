@@ -4,7 +4,6 @@ import { Card, CardContent, CardHeader, CardTitle } from './ui/card';
 import { Button } from './ui/button';
 import { Building2, ArrowLeft, Map, Table, Plus, RefreshCw } from 'lucide-react';
 import Sidebar from './Sidebar';
-import ClaraPageHeader from './ClaraPageHeader';
 
 const ObjektePage = () => {
   const navigate = useNavigate();
@@ -15,14 +14,27 @@ const ObjektePage = () => {
       <Sidebar currentPage="objekte" onNavigate={(path) => navigate(path)} />
       
       <main className="flex-1 p-6">
-        {/* Standardisierter Header */}
-        <ClaraPageHeader
-          title="Objekte-Verwaltung"
-          subtitle="Verwalten Sie Ihre Immobilien-Objekte und deren Details"
-          icon={<Building2 className="w-5 h-5 text-blue-600" />}
-          actions={[
+        {/* Standardisierter Header nach Zahlungen-Template */}
+        <div className="mb-6">
+          <div className="flex items-center gap-4 mb-4">
+            <Button variant="outline" size="sm" onClick={() => navigate('/dashboard')}>
+              <ArrowLeft className="w-4 h-4 mr-2" />
+              Zurück
+            </Button>
+            <div className="flex items-center gap-3">
+              <div className="w-10 h-10 bg-purple-600 rounded-lg flex items-center justify-center">
+                <Building2 className="w-6 h-6 text-white" />
+              </div>
+              <div>
+                <h1 className="text-2xl font-bold text-gray-900">Objekte</h1>
+                <p className="text-gray-600">Übersicht aller Immobilien</p>
+              </div>
+            </div>
+          </div>
+          
+          {/* Action Buttons */}
+          <div className="flex gap-2 ml-14">
             <Button 
-              key="view-toggle" 
               variant="outline" 
               onClick={() => setViewMode(viewMode === 'table' ? 'map' : 'table')}
             >
@@ -37,17 +49,17 @@ const ObjektePage = () => {
                   Tabellenansicht
                 </>
               )}
-            </Button>,
-            <Button key="refresh" variant="outline">
+            </Button>
+            <Button variant="outline">
               <RefreshCw className="w-4 h-4 mr-2" />
               Aktualisieren
-            </Button>,
-            <Button key="add">
+            </Button>
+            <Button>
               <Plus className="w-4 h-4 mr-2" />
               Objekt hinzufügen
             </Button>
-          ]}
-        />
+          </div>
+        </div>
 
         <Card>
           <CardHeader>
