@@ -5,7 +5,6 @@ import { Button } from './ui/button';
 import { Input } from './ui/input';
 import { Users, ArrowLeft, Search, Plus, Edit, Trash2, RefreshCw } from 'lucide-react';
 import Sidebar from './Sidebar';
-import ClaraPageHeader from './ClaraPageHeader';
 
 const EigentuemerPage = () => {
   const navigate = useNavigate();
@@ -47,6 +46,42 @@ const EigentuemerPage = () => {
 
     loadEigentuemer();
   }, []);
+
+  return (
+    <div className="min-h-screen bg-gray-50 flex">
+      <Sidebar currentPage="eigentuemer" onNavigate={(path) => navigate(path)} />
+      
+      <main className="flex-1 p-6">
+        {/* Standardisierter Header nach Zahlungen-Template */}
+        <div className="mb-6">
+          <div className="flex items-center gap-4 mb-4">
+            <Button variant="outline" size="sm" onClick={() => navigate('/dashboard')}>
+              <ArrowLeft className="w-4 h-4 mr-2" />
+              Zurück
+            </Button>
+            <div className="flex items-center gap-3">
+              <div className="w-10 h-10 bg-orange-600 rounded-lg flex items-center justify-center">
+                <Users className="w-6 h-6 text-white" />
+              </div>
+              <div>
+                <h1 className="text-2xl font-bold text-gray-900">Eigentümer</h1>
+                <p className="text-gray-600">Übersicht aller Eigentümer</p>
+              </div>
+            </div>
+          </div>
+          
+          {/* Action Buttons */}
+          <div className="flex gap-2 ml-14">
+            <Button variant="outline">
+              <RefreshCw className="w-4 h-4 mr-2" />
+              Aktualisieren
+            </Button>
+            <Button>
+              <Plus className="w-4 h-4 mr-2" />
+              Eigentümer hinzufügen
+            </Button>
+          </div>
+        </div>
 
   const filteredEigentuemer = eigentuemer.filter(owner =>
     owner.name.toLowerCase().includes(searchTerm.toLowerCase()) ||

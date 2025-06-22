@@ -4,7 +4,6 @@ import { Card, CardContent, CardHeader, CardTitle } from './ui/card';
 import { Button } from './ui/button';
 import { AlertTriangle, ArrowLeft, Download, Plus, RefreshCw, Filter } from 'lucide-react';
 import Sidebar from './Sidebar';
-import ClaraPageHeader from './ClaraPageHeader';
 
 const RueckstaendePage = () => {
   const navigate = useNavigate();
@@ -25,29 +24,44 @@ const RueckstaendePage = () => {
       <Sidebar currentPage="rueckstaende" onNavigate={(path) => navigate(path)} />
       
       <main className="flex-1 p-6">
-        {/* Standardisierter Header */}
-        <ClaraPageHeader
-          title="Rückstände-Verwaltung"
-          subtitle="Übersicht und Management offener Zahlungen"
-          icon={<AlertTriangle className="w-5 h-5 text-blue-600" />}
-          actions={[
-            <Button key="filter" variant="outline">
+        {/* Standardisierter Header nach Zahlungen-Template */}
+        <div className="mb-6">
+          <div className="flex items-center gap-4 mb-4">
+            <Button variant="outline" size="sm" onClick={() => navigate('/dashboard')}>
+              <ArrowLeft className="w-4 h-4 mr-2" />
+              Zurück
+            </Button>
+            <div className="flex items-center gap-3">
+              <div className="w-10 h-10 bg-red-600 rounded-lg flex items-center justify-center">
+                <AlertTriangle className="w-6 h-6 text-white" />
+              </div>
+              <div>
+                <h1 className="text-2xl font-bold text-gray-900">Rückstände</h1>
+                <p className="text-gray-600">Übersicht offener Zahlungen</p>
+              </div>
+            </div>
+          </div>
+          
+          {/* Action Buttons */}
+          <div className="flex gap-2 ml-14">
+            <Button variant="outline">
               <Filter className="w-4 h-4 mr-2" />
               Filter
-            </Button>,
-            <Button key="export" variant="outline">
+            </Button>
+            <Button variant="outline">
               <Download className="w-4 h-4 mr-2" />
               Export
-            </Button>,
-            <Button key="refresh" variant="outline">
+            </Button>
+            <Button variant="outline">
               <RefreshCw className="w-4 h-4 mr-2" />
               Aktualisieren
-            </Button>,
-            <Button key="add">
+            </Button>
+            <Button>
               <Plus className="w-4 h-4 mr-2" />
               Rückstand hinzufügen
             </Button>
-          ]}
+          </div>
+        </div>
         />
 
         <div className="space-y-4">
