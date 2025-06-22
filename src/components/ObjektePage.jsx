@@ -14,7 +14,7 @@ const ObjektePage = () => {
       <Sidebar currentPage="objekte" onNavigate={(path) => navigate(path)} />
       
       <main className="flex-1 p-6">
-        {/* Standardisierter Header nach Zahlungen-Template */}
+        {/* Standardisierter Header nach Zahlungen-Pattern */}
         <div className="mb-6">
           <div className="flex items-center gap-4 mb-4">
             <Button variant="outline" size="sm" onClick={() => navigate('/dashboard')}>
