@@ -24,7 +24,7 @@ const RueckstaendePage = () => {
       <Sidebar currentPage="rueckstaende" onNavigate={(path) => navigate(path)} />
       
       <main className="flex-1 p-6">
-        {/* Standardisierter Header nach Zahlungen-Template */}
+        {/* Standardisierter Header nach Zahlungen-Pattern */}
         <div className="mb-6">
           <div className="flex items-center gap-4 mb-4">
             <Button variant="outline" size="sm" onClick={() => navigate('/dashboard')}>
@@ -62,7 +62,6 @@ const RueckstaendePage = () => {
             </Button>
           </div>
         </div>
-        />
 
         <div className="space-y-4">
           {rueckstaende.map((rueckstand) => (

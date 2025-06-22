@@ -52,7 +52,7 @@ const EigentuemerPage = () => {
       <Sidebar currentPage="eigentuemer" onNavigate={(path) => navigate(path)} />
       
       <main className="flex-1 p-6">
-        {/* Standardisierter Header nach Zahlungen-Template */}
+        {/* Standardisierter Header nach Zahlungen-Pattern */}
         <div className="mb-6">
           <div className="flex items-center gap-4 mb-4">
             <Button variant="outline" size="sm" onClick={() => navigate('/dashboard')}>
@@ -83,42 +83,9 @@ const EigentuemerPage = () => {
           </div>
         </div>
 
-  const filteredEigentuemer = eigentuemer.filter(owner =>
-    owner.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    owner.email.toLowerCase().includes(searchTerm.toLowerCase())
-  );
-
-  const handleRefresh = () => {
-    setLoading(true);
-    // Simuliere Refresh
-    setTimeout(() => setLoading(false), 1000);
-  };
-
-  return (
-    <div className="min-h-screen bg-gray-50 flex">
-      <Sidebar currentPage="eigentuemer" onNavigate={(path) => navigate(path)} />
-      
-      <main className="flex-1 p-6">
-        {/* Standardisierter Header */}
-        <ClaraPageHeader
-          title="Eigentümer-Verwaltung"
-          subtitle="Übersicht und Verwaltung aller Immobilieneigentümer"
-          icon={<Users className="w-5 h-5 text-blue-600" />}
-          actions={[
-            <Button key="refresh" variant="outline" onClick={handleRefresh}>
-              <RefreshCw className="w-4 h-4 mr-2" />
-              Aktualisieren
-            </Button>,
-            <Button key="add">
-              <Plus className="w-4 h-4 mr-2" />
-              Eigentümer hinzufügen
-            </Button>
-          ]}
-        />
-
         {/* Suchbereich */}
         <div className="mb-6">
-          <div className="relative max-w-md">
+          <div className="relative">
             <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-4 h-4" />
             <Input
               placeholder="Eigentümer suchen..."
@@ -130,84 +97,45 @@ const EigentuemerPage = () => {
         </div>
 
         {/* Eigentümer-Liste */}
-        {loading ? (
-          <Card>
-            <CardContent className="p-8 text-center">
-              <p className="text-gray-500">Lade Eigentümer...</p>
-            </CardContent>
-          </Card>
-        ) : (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {filteredEigentuemer.map((owner) => (
-              <Card key={owner.id} className="hover:shadow-md transition-shadow">
-                <CardHeader>
-                  <CardTitle className="flex items-center justify-between">
-                    <span className="text-lg">{owner.name}</span>
-                    <div className="flex gap-2">
-                      <Button variant="ghost" size="sm">
-                        <Edit className="w-4 h-4" />
-                      </Button>
-                      <Button variant="ghost" size="sm" className="text-red-600">
-                        <Trash2 className="w-4 h-4" />
-                      </Button>
-                    </div>
-                  </CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <div className="space-y-3">
-                    <div>
-                      <p className="text-sm text-gray-500">E-Mail</p>
-                      <p className="font-medium">{owner.email}</p>
-                    </div>
-                    <div>
-                      <p className="text-sm text-gray-500">Telefon</p>
-                      <p className="font-medium">{owner.telefon}</p>
-                    </div>
-                    <div>
-                      <p className="text-sm text-gray-500">Objekte</p>
-                      <div className="flex flex-wrap gap-1 mt-1">
-                        {owner.objekte.map((objekt, idx) => (
-                          <span 
-                            key={idx}
-                            className="px-2 py-1 bg-blue-100 text-blue-800 text-xs rounded-full"
-                          >
-                            {objekt}
-                          </span>
-                        ))}
+        <div className="space-y-4">
+          {loading ? (
+            <Card>
+              <CardContent className="p-6">
+                <p className="text-center text-gray-500">Lade Eigentümer...</p>
+              </CardContent>
+            </Card>
+          ) : (
+            eigentuemer
+              .filter(owner =>
+                owner.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                owner.email.toLowerCase().includes(searchTerm.toLowerCase())
+              )
+              .map((owner) => (
+                <Card key={owner.id}>
+                  <CardContent className="p-6">
+                    <div className="flex items-center justify-between">
+                      <div>
+                        <h3 className="font-semibold text-lg">{owner.name}</h3>
+                        <p className="text-gray-600">{owner.email}</p>
+                        <p className="text-sm text-gray-500">{owner.telefon}</p>
+                        <p className="text-sm text-gray-500">
+                          Objekte: {owner.objekte.join(', ')}
+                        </p>
+                      </div>
+                      <div className="flex gap-2">
+                        <Button variant="outline" size="sm">
+                          <Edit className="w-4 h-4" />
+                        </Button>
+                        <Button variant="outline" size="sm">
+                          <Trash2 className="w-4 h-4" />
+                        </Button>
                       </div>
                     </div>
-                    <div className="flex items-center justify-between pt-2">
-                      <span className={`px-2 py-1 text-xs rounded-full ${
-                        owner.status === 'aktiv' 
-                          ? 'bg-green-100 text-green-800' 
-                          : 'bg-gray-100 text-gray-800'
-                      }`}>
-                        {owner.status}
-                      </span>
-                      <Button variant="outline" size="sm">
-                        Details
-                      </Button>
-                    </div>
-                  </div>
-                </CardContent>
-              </Card>
-            ))}
-          </div>
-        )}
-
-        {filteredEigentuemer.length === 0 && !loading && (
-          <Card>
-            <CardContent className="p-8 text-center">
-              <Users className="w-12 h-12 text-gray-400 mx-auto mb-4" />
-              <p className="text-gray-500">Keine Eigentümer gefunden</p>
-              {searchTerm && (
-                <p className="text-sm text-gray-400 mt-2">
-                  Versuchen Sie einen anderen Suchbegriff
-                </p>
-              )}
-            </CardContent>
-          </Card>
-        )}
+                  </CardContent>
+                </Card>
+              ))
+          )}
+        </div>
       </main>
     </div>
   );
