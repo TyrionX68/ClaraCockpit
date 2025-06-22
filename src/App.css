@@ -1,0 +1,56 @@
+/* Clara360 Fusion Dashboard Styles */
+.fusion-dashboard {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+}
+
+.sidebar-section {
+  transition: all 0.2s ease-in-out;
+}
+
+.sidebar-section:hover {
+  background-color: rgba(59, 130, 246, 0.05);
+}
+
+.kpi-card {
+  transition: all 0.2s ease-in-out;
+}
+
+.kpi-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.status-alert {
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.8;
+  }
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .sidebar {
+    width: 100%;
+    height: auto;
+    position: relative;
+  }
+  
+  .main-content {
+    margin-left: 0;
+  }
+}
+
+/* Dark Mode Support */
+@media (prefers-color-scheme: dark) {
+  .fusion-dashboard {
+    background-color: #1f2937;
+    color: #f9fafb;
+  }
+}
+

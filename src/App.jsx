@@ -1,9 +1,23 @@
 import { useState } from 'react'
+import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom'
+import ClaraFusionDashboard from './components/ClaraFusionDashboard'
+import EigentuemerPage from './components/EigentuemerPage'
+import ObjektePage from './components/ObjektePage'
+import RueckstaendePage from './components/RueckstaendePage'
+import ZahlungenPage from './components/ZahlungenPage'
+import BankingPage from './components/BankingPage'
+import MieterKommunikationPage from './components/MieterKommunikationPage'
+import ClaraKIPanel from './components/ClaraKIPanel'
+import OutlookPage from './components/OutlookPage'
+import EinstellungenPage from './components/EinstellungenPage'
 import ManifestViewer from './components/ManifestViewer'
+import TransactionAnalyticsPage from './components/TransactionAnalyticsPage'
+import { PropertyProvider } from './hooks/usePropertyContext'
 import './App.css'
 
 function App() {
-  const [count, setCount] = useState(0)
+  // Feature Flag für UI-Anker-Integration
+  const useAnchorUI = import.meta.env.VITE_USE_ANCHOR_UI === 'true' || true;
 
   // Simulate MetaGovernor authentication for demo
   const authenticateMetaGovernor = () => {
@@ -20,6 +34,33 @@ function App() {
 
   const isAuthenticated = localStorage.getItem('clara_user_email') === 'hiss@clara360.de';
 
+  // Wenn UI-Anker aktiviert ist, zeige das vollständige Fusion-System
+  if (useAnchorUI) {
+    return (
+      <PropertyProvider>
+        <Router>
+          <Routes>
+            <Route path="/" element={<Navigate to="/dashboard" replace />} />
+            <Route path="/dashboard" element={<ClaraFusionDashboard />} />
+            <Route path="/eigentuemer" element={<EigentuemerPage />} />
+            <Route path="/objekte" element={<ObjektePage />} />
+            <Route path="/rueckstaende" element={<RueckstaendePage />} />
+            <Route path="/zahlungen" element={<ZahlungenPage />} />
+            <Route path="/banking" element={<BankingPage />} />
+            <Route path="/mieter-kommunikation" element={<MieterKommunikationPage />} />
+            <Route path="/clara-ki" element={<ClaraKIPanel />} />
+            <Route path="/outlook" element={<OutlookPage />} />
+            <Route path="/einstellungen" element={<EinstellungenPage />} />
+            <Route path="/manifest" element={<ManifestViewer />} />
+            <Route path="/analytics" element={<TransactionAnalyticsPage />} />
+            <Route path="*" element={<Navigate to="/dashboard" replace />} />
+          </Routes>
+        </Router>
+      </PropertyProvider>
+    );
+  }
+
+  // Fallback: Klassisches GitHub-Cockpit
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-900 via-blue-900 to-gray-900">
       {/* Clara Cockpit Header */}
@@ -53,7 +94,7 @@ function App() {
               ) : (
                 <button
                   onClick={authenticateMetaGovernor}
-                  className="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg transition-colors"
+                  className="px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
                 >
                   MetaGovernor Login
                 </button>
@@ -64,120 +105,89 @@ function App() {
       </header>
 
       {/* Main Content */}
-      <main className="container mx-auto px-6 py-12">
-        <div className="max-w-4xl mx-auto">
-          {/* Welcome Section */}
-          <div className="text-center mb-12">
-            <h2 className="text-4xl font-bold text-white mb-4">
-              🏘️ Waldhofstraße Hausverwaltung
+      <main className="container mx-auto px-6 py-8">
+        {isAuthenticated ? (
+          <div className="space-y-8">
+            {/* Welcome Section */}
+            <div className="text-center">
+              <h2 className="text-3xl font-bold text-white mb-4">
+                Willkommen im Clara Cockpit
+              </h2>
+              <p className="text-blue-200 text-lg">
+                MetaGovernor-Zugang aktiv - Vollständige Systemkontrolle verfügbar
+              </p>
+            </div>
+
+            {/* Feature Cards */}
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              <div className="bg-gray-800/50 backdrop-blur-sm rounded-xl p-6 border border-gray-700">
+                <h3 className="text-xl font-semibold text-white mb-3">Manifest Viewer</h3>
+                <p className="text-gray-300 mb-4">
+                  Zentrale Kontrolle über das Clara360-System
+                </p>
+                <ManifestViewer />
+              </div>
+
+              <div className="bg-gray-800/50 backdrop-blur-sm rounded-xl p-6 border border-gray-700">
+                <h3 className="text-xl font-semibold text-white mb-3">System Status</h3>
+                <p className="text-gray-300 mb-4">
+                  Überwachung aller Systemkomponenten
+                </p>
+                <div className="space-y-2">
+                  <div className="flex justify-between">
+                    <span className="text-gray-400">React Version:</span>
+                    <span className="text-green-400">19.1.0</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span className="text-gray-400">Vite Version:</span>
+                    <span className="text-green-400">6.3.5</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span className="text-gray-400">UI Framework:</span>
+                    <span className="text-green-400">shadcn/ui</span>
+                  </div>
+                </div>
+              </div>
+
+              <div className="bg-gray-800/50 backdrop-blur-sm rounded-xl p-6 border border-gray-700">
+                <h3 className="text-xl font-semibold text-white mb-3">Quick Actions</h3>
+                <p className="text-gray-300 mb-4">
+                  Häufig verwendete Funktionen
+                </p>
+                <div className="space-y-2">
+                  <button className="w-full px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors">
+                    Banking Integration
+                  </button>
+                  <button className="w-full px-4 py-2 bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition-colors">
+                    Clara KI Panel
+                  </button>
+                  <button className="w-full px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors">
+                    Transaction Analytics
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        ) : (
+          <div className="text-center">
+            <h2 className="text-3xl font-bold text-white mb-4">
+              Clara Cockpit - MetaGovernor Zugang
             </h2>
-            <p className="text-xl text-gray-300 mb-8">
-              KI-gestützte Immobilienverwaltung mit Banking-Integration
+            <p className="text-blue-200 text-lg mb-8">
+              Bitte authentifizieren Sie sich für den Zugang zum System
             </p>
-            
-            {/* Status Cards */}
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-              <div className="bg-gray-800/50 backdrop-blur-sm rounded-xl p-6 border border-gray-700">
-                <div className="text-green-400 text-2xl mb-2">✅</div>
-                <h3 className="text-white font-semibold mb-2">System Status</h3>
-                <p className="text-gray-400">LIVE_READY</p>
-              </div>
-              
-              <div className="bg-gray-800/50 backdrop-blur-sm rounded-xl p-6 border border-gray-700">
-                <div className="text-blue-400 text-2xl mb-2">🏦</div>
-                <h3 className="text-white font-semibold mb-2">Banking</h3>
-                <p className="text-gray-400">FinAPI Connected</p>
-              </div>
-              
-              <div className="bg-gray-800/50 backdrop-blur-sm rounded-xl p-6 border border-gray-700">
-                <div className="text-purple-400 text-2xl mb-2">🤖</div>
-                <h3 className="text-white font-semibold mb-2">KI-Engine</h3>
-                <p className="text-gray-400">Clara Fusion Active</p>
-              </div>
-            </div>
+            <button
+              onClick={authenticateMetaGovernor}
+              className="px-8 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors text-lg"
+            >
+              MetaGovernor Login
+            </button>
           </div>
-
-          {/* Feature Grid */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-            {/* KPI Dashboard */}
-            <div className="bg-gray-800/30 backdrop-blur-sm rounded-2xl p-8 border border-gray-700">
-              <h3 className="text-2xl font-bold text-white mb-6 flex items-center gap-3">
-                📊 KPI Dashboard
-                <span className="text-sm bg-blue-900/50 text-blue-400 px-2 py-1 rounded-full">6 Module</span>
-              </h3>
-              
-              <div className="space-y-4">
-                <div className="flex items-center justify-between p-3 bg-gray-700/50 rounded-lg">
-                  <span className="text-gray-300">Rentflow Analytics</span>
-                  <span className="text-green-400">🟩 Active</span>
-                </div>
-                <div className="flex items-center justify-between p-3 bg-gray-700/50 rounded-lg">
-                  <span className="text-gray-300">Account Balance</span>
-                  <span className="text-green-400">🟩 Active</span>
-                </div>
-                <div className="flex items-center justify-between p-3 bg-gray-700/50 rounded-lg">
-                  <span className="text-gray-300">Payment Timing</span>
-                  <span className="text-green-400">🟩 Active</span>
-                </div>
-              </div>
-            </div>
-
-            {/* System Architecture */}
-            <div className="bg-gray-800/30 backdrop-blur-sm rounded-2xl p-8 border border-gray-700">
-              <h3 className="text-2xl font-bold text-white mb-6 flex items-center gap-3">
-                🏗️ Architecture
-                <span className="text-sm bg-green-900/50 text-green-400 px-2 py-1 rounded-full">React 18</span>
-              </h3>
-              
-              <div className="space-y-4">
-                <div className="flex items-center justify-between p-3 bg-gray-700/50 rounded-lg">
-                  <span className="text-gray-300">Frontend</span>
-                  <span className="text-blue-400">React + Vite</span>
-                </div>
-                <div className="flex items-center justify-between p-3 bg-gray-700/50 rounded-lg">
-                  <span className="text-gray-300">UI Library</span>
-                  <span className="text-blue-400">shadcn/ui</span>
-                </div>
-                <div className="flex items-center justify-between p-3 bg-gray-700/50 rounded-lg">
-                  <span className="text-gray-300">Development</span>
-                  <span className="text-purple-400">GitHub Copilot</span>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          {/* Authentication Notice */}
-          {!isAuthenticated && (
-            <div className="mt-12 p-6 bg-yellow-900/20 border border-yellow-600 rounded-xl">
-              <div className="flex items-center gap-3 text-yellow-400">
-                <div className="text-2xl">🔐</div>
-                <div>
-                  <h4 className="font-semibold">MetaGovernor-Zugang erforderlich</h4>
-                  <p className="text-sm text-yellow-300">
-                    Melden Sie sich als MetaGovernor an, um das Manus-Manifest zu verwalten.
-                  </p>
-                </div>
-              </div>
-            </div>
-          )}
-        </div>
+        )}
       </main>
-
-      {/* ManifestViewer Component */}
-      <ManifestViewer />
-
-      {/* Footer */}
-      <footer className="bg-gray-800/30 backdrop-blur-sm border-t border-gray-700 mt-20">
-        <div className="container mx-auto px-6 py-8">
-          <div className="text-center text-gray-400">
-            <p className="mb-2">Clara Cockpit v2.3 - Entwickelt mit ❤️ und 🤖 GitHub Copilot</p>
-            <p className="text-sm">für die Waldhofstraße Hausverwaltung</p>
-          </div>
-        </div>
-      </footer>
     </div>
-  )
+  );
 }
 
-export default App
+export default App;
 
