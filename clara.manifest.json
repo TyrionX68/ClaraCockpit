@@ -1,0 +1,48 @@
+{
+  "name": "Clara360",
+  "version": "2.0.0-sandbox-fusion",
+  "description": "Intelligente Hausverwaltung mit KI-Assistenz - Vollständige Plattform",
+  "type": "react-spa",
+  "framework": "React + Vite",
+  "deployment": {
+    "source": "https://kbklvdyh.manus.space/#/dashboard",
+    "target": "IONOS VPS 217.154.242.134",
+    "date": "2025-06-23",
+    "status": "live"
+  },
+  "features": {
+    "dashboard": "KPI-Übersicht mit Finanzmetriken",
+    "clara_ai": "KI-Assistent mit Smart-Buttons",
+    "property_management": "Objekte-Verwaltung (Karten/Tabelle)",
+    "tenant_management": "Mieter-Übersicht und Kommunikation",
+    "financial_tracking": "Banking, Rückstände, Zahlungen",
+    "reporting": "Automatische Berichte und Analytics",
+    "outlook_integration": "E-Mail-Integration"
+  },
+  "technical": {
+    "main_bundle": "public/assets/index-CnUs3CUE.js",
+    "main_styles": "public/assets/index-ltDO5WwX.css",
+    "entry_point": "public/index.html",
+    "backend": "Supabase (API-Key erforderlich)",
+    "responsive": "Desktop-optimiert, Mobile-Verbesserung geplant"
+  },
+  "development": {
+    "repository": "https://github.com/TyrionX68/ClaraCockpit",
+    "branch": "anker-version",
+    "workflow": "GitHub + Visual Studio + Copilot",
+    "next_priorities": [
+      "Supabase API-Key Konfiguration",
+      "Mobile Responsiveness",
+      "Error Boundaries",
+      "PDF-Export System"
+    ]
+  },
+  "kpis": {
+    "monthly_rent": "8.360€",
+    "annual_yield": "8.4%",
+    "portfolio_value": "1.200.000€",
+    "occupancy_rate": "100%",
+    "properties": 1,
+    "units": 14
+  }
+}

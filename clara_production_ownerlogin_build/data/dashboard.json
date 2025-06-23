@@ -1,0 +1,58 @@
+{
+  "obj001": {
+    "objektId": "obj001",
+    "name": "Waldhofstraße 76",
+    "kpis": {
+      "mieteinnahmen_monat": 4800,
+      "mieteinnahmen_jahr": 57600,
+      "rueckstaende": 1200,
+      "leerstand_prozent": 12.5,
+      "instandhaltung_jahr": 8500,
+      "netto_rendite": 4.2,
+      "vermietungsgrad": 87.5
+    },
+    "letzte_aktualisierung": "2025-06-22"
+  },
+  "obj002": {
+    "objektId": "obj002",
+    "name": "Neckarstraße 12",
+    "kpis": {
+      "mieteinnahmen_monat": 1200,
+      "mieteinnahmen_jahr": 14400,
+      "rueckstaende": 0,
+      "leerstand_prozent": 0,
+      "instandhaltung_jahr": 2800,
+      "netto_rendite": 5.1,
+      "vermietungsgrad": 100
+    },
+    "letzte_aktualisierung": "2025-06-22"
+  },
+  "obj003": {
+    "objektId": "obj003",
+    "name": "Augustaanlage 45",
+    "kpis": {
+      "mieteinnahmen_monat": 8400,
+      "mieteinnahmen_jahr": 100800,
+      "rueckstaende": 2100,
+      "leerstand_prozent": 8.3,
+      "instandhaltung_jahr": 12000,
+      "netto_rendite": 6.8,
+      "vermietungsgrad": 91.7
+    },
+    "letzte_aktualisierung": "2025-06-22"
+  },
+  "obj004": {
+    "objektId": "obj004",
+    "name": "Rheinstraße 88",
+    "kpis": {
+      "mieteinnahmen_monat": 3200,
+      "mieteinnahmen_jahr": 38400,
+      "rueckstaende": 800,
+      "leerstand_prozent": 16.7,
+      "instandhaltung_jahr": 5500,
+      "netto_rendite": 3.9,
+      "vermietungsgrad": 83.3
+    },
+    "letzte_aktualisierung": "2025-06-22"
+  }
+}

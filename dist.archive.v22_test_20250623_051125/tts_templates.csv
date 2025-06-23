@@ -1,0 +1,27 @@
+id,trigger,template,voice_text,priority,context,active
+tts_welcome,app_start,Willkommen bei Clara360. Wie kann ich Ihnen heute helfen?,Willkommen bei Clara360. Wie kann ich Ihnen heute helfen?,high,global,true
+tts_navigation_dashboard,navigate_dashboard,Ich öffne das Dashboard für Sie.,Ich öffne das Dashboard für Sie.,medium,navigation,true
+tts_navigation_owners,navigate_owners,Ich zeige Ihnen die Eigentümer-Übersicht.,Ich zeige Ihnen die Eigentümer-Übersicht.,medium,navigation,true
+tts_navigation_contracts,navigate_contracts,Ich öffne die Verträge-Übersicht.,Ich öffne die Verträge-Übersicht.,medium,navigation,true
+tts_navigation_maintenance,navigate_maintenance,Ich öffne den Wartungsmanager für Sie.,Ich öffne den Wartungsmanager für Sie.,medium,navigation,true
+tts_data_saved,data_saved,Die Daten wurden erfolgreich gespeichert.,Die Daten wurden erfolgreich gespeichert.,high,data,true
+tts_data_exported,data_exported,Die Daten wurden erfolgreich exportiert.,Die Daten wurden erfolgreich exportiert.,medium,data,true
+tts_error_general,error_general,Es ist ein Fehler aufgetreten. Bitte versuchen Sie es erneut.,Es ist ein Fehler aufgetreten. Bitte versuchen Sie es erneut.,high,error,true
+tts_owner_details,owner_details,Hier sind die Details zu Eigentümer {name}. Das Portfolio umfasst {units} Einheiten mit einem Gesamtwert von {value} Euro.,Hier sind die Details zu Eigentümer {name}. Das Portfolio umfasst {units} Einheiten mit einem Gesamtwert von {value} Euro.,medium,eigentuemer,true
+tts_property_analysis,property_analysis,Das Objekt {address} hat einen Marktwert von {value} Euro und generiert monatliche Mieteinnahmen von {rent} Euro.,Das Objekt {address} hat einen Marktwert von {value} Euro und generiert monatliche Mieteinnahmen von {rent} Euro.,medium,objekte,true
+tts_contract_status,contract_status,Der Vertrag für {tenant} in {unit} ist {status} mit einer monatlichen Miete von {rent} Euro.,Der Vertrag für {tenant} in {unit} ist {status} mit einer monatlichen Miete von {rent} Euro.,medium,vertraege,true
+tts_maintenance_alert,maintenance_alert,Achtung: Es gibt {count} kritische Wartungsaufgaben die sofortige Aufmerksamkeit benötigen.,Achtung: Es gibt {count} kritische Wartungsaufgaben die sofortige Aufmerksamkeit benötigen.,high,wartung,true
+tts_payment_overdue,payment_overdue,Warnung: {count} Mieter haben überfällige Zahlungen. Der Gesamtrückstand beträgt {amount} Euro.,Warnung: {count} Mieter haben überfällige Zahlungen. Der Gesamtrückstand beträgt {amount} Euro.,high,zahlungen,true
+tts_roi_analysis,roi_analysis,Die Rendite für {property} beträgt {roi} Prozent jährlich.,Die Rendite für {property} beträgt {roi} Prozent jährlich.,medium,analyse,true
+tts_portfolio_summary,portfolio_summary,Ihr Portfolio umfasst {properties} Objekte mit {units} Einheiten. Der Gesamtwert beträgt {value} Euro bei monatlichen Mieteinnahmen von {rent} Euro.,Ihr Portfolio umfasst {properties} Objekte mit {units} Einheiten. Der Gesamtwert beträgt {value} Euro bei monatlichen Mieteinnahmen von {rent} Euro.,medium,portfolio,true
+tts_cashflow_positive,cashflow_positive,Gute Nachrichten: Der Cashflow für {property} ist positiv mit {amount} Euro monatlich.,Gute Nachrichten: Der Cashflow für {property} ist positiv mit {amount} Euro monatlich.,medium,cashflow,true
+tts_cashflow_negative,cashflow_negative,Achtung: Der Cashflow für {property} ist negativ mit minus {amount} Euro monatlich.,Achtung: Der Cashflow für {property} ist negativ mit minus {amount} Euro monatlich.,high,cashflow,true
+tts_maintenance_scheduled,maintenance_scheduled,Die Wartungsaufgabe für {property} wurde erfolgreich geplant.,Die Wartungsaufgabe für {property} wurde erfolgreich geplant.,medium,wartung,true
+tts_report_generated,report_generated,Der Bericht für {owner} wurde erfolgreich erstellt und steht zum Download bereit.,Der Bericht für {owner} wurde erfolgreich erstellt und steht zum Download bereit.,medium,berichte,true
+tts_search_results,search_results,Ich habe {count} Ergebnisse für Ihre Suche nach {term} gefunden.,Ich habe {count} Ergebnisse für Ihre Suche nach {term} gefunden.,medium,suche,true
+tts_no_results,no_results,Leider habe ich keine Ergebnisse für Ihre Suche gefunden.,Leider habe ich keine Ergebnisse für Ihre Suche gefunden.,medium,suche,true
+tts_help_available,help_available,Ich kann Ihnen bei der Navigation helfen. Sagen Sie zum Beispiel 'Zeige Dashboard' oder 'Zeige Eigentümer'.,Ich kann Ihnen bei der Navigation helfen. Sagen Sie zum Beispiel 'Zeige Dashboard' oder 'Zeige Eigentümer'.,medium,hilfe,true
+tts_voice_not_understood,voice_not_understood,Entschuldigung ich habe Sie nicht verstanden. Können Sie das bitte wiederholen?,Entschuldigung ich habe Sie nicht verstanden. Können Sie das bitte wiederholen?,medium,voice,true
+tts_voice_activated,voice_activated,Sprachsteuerung ist jetzt aktiv. Sprechen Sie Ihren Befehl.,Sprachsteuerung ist jetzt aktiv. Sprechen Sie Ihren Befehl.,medium,voice,true
+tts_voice_deactivated,voice_deactivated,Sprachsteuerung wurde deaktiviert.,Sprachsteuerung wurde deaktiviert.,medium,voice,true
+

@@ -1,0 +1,29 @@
+[
+  {
+    "id": "e001",
+    "name": "Müller",
+    "password": "test123",
+    "email": "mueller@clara360.de",
+    "created": "2024-01-15",
+    "role": "eigentuemer",
+    "active": true
+  },
+  {
+    "id": "e002", 
+    "name": "Klein",
+    "password": "abc456",
+    "email": "klein@clara360.de",
+    "created": "2024-02-20",
+    "role": "eigentuemer",
+    "active": true
+  },
+  {
+    "id": "e003",
+    "name": "Schmidt",
+    "password": "demo789",
+    "email": "schmidt@clara360.de", 
+    "created": "2024-03-10",
+    "role": "eigentuemer",
+    "active": true
+  }
+]

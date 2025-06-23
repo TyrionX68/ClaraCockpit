@@ -1,0 +1,46 @@
+[
+  {
+    "id": "obj001",
+    "name": "Waldhofstraße 76",
+    "adresse": "Waldhofstraße 76, 68169 Mannheim",
+    "ownerId": "e001",
+    "typ": "Mehrfamilienhaus",
+    "einheiten": 8,
+    "baujahr": 1985,
+    "wohnflaeche": 640,
+    "created": "2024-01-15"
+  },
+  {
+    "id": "obj002",
+    "name": "Neckarstraße 12",
+    "adresse": "Neckarstraße 12, 68159 Mannheim",
+    "ownerId": "e002",
+    "typ": "Einfamilienhaus",
+    "einheiten": 1,
+    "baujahr": 1992,
+    "wohnflaeche": 180,
+    "created": "2024-02-20"
+  },
+  {
+    "id": "obj003",
+    "name": "Augustaanlage 45",
+    "adresse": "Augustaanlage 45, 68165 Mannheim",
+    "ownerId": "e001",
+    "typ": "Bürogebäude",
+    "einheiten": 12,
+    "baujahr": 1978,
+    "wohnflaeche": 1200,
+    "created": "2024-01-20"
+  },
+  {
+    "id": "obj004",
+    "name": "Rheinstraße 88",
+    "adresse": "Rheinstraße 88, 68161 Mannheim",
+    "ownerId": "e003",
+    "typ": "Mehrfamilienhaus",
+    "einheiten": 6,
+    "baujahr": 2001,
+    "wohnflaeche": 480,
+    "created": "2024-03-10"
+  }
+]

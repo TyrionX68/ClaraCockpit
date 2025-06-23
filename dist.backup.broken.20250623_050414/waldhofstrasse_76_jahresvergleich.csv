@@ -1,0 +1,5 @@
+Jahr,Mieteinnahmen_Soll,Mieteinnahmen_Ist,Ausfallquote,Wartungskosten,Nebenkosten,Sonstige_Ausgaben,Netto_Cashflow,ROI_Jahr,Durchschnitt_Monat,Anmerkungen
+2022,101940.00,99850.00,2.1%,4200.00,6800.00,800.00,88050.00,7.34%,7337.50,Renovierung 4. Stock - höhere Kosten
+2023,101940.00,100580.00,1.3%,3850.00,6500.00,450.00,89780.00,7.48%,7481.67,Stabile Phase - wenig Probleme
+2024,101940.00,101385.00,0.5%,3710.00,6563.00,200.00,91122.00,7.59%,7593.50,Beste Performance - nur Dezember Probleme
+

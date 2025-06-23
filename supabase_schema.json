@@ -1,0 +1,304 @@
+{
+  "supabase_schema": {
+    "version": "1.0.0",
+    "description": "Clara360 Eigentümer-Portal Supabase Schema",
+    "tables": {
+      "users": {
+        "description": "Eigentümer-Benutzer mit Authentifizierung",
+        "columns": {
+          "id": {
+            "type": "uuid",
+            "primary_key": true,
+            "default": "gen_random_uuid()"
+          },
+          "owner_id": {
+            "type": "varchar(10)",
+            "unique": true,
+            "not_null": true,
+            "description": "Eindeutige Eigentümer-ID (z.B. e001)"
+          },
+          "name": {
+            "type": "varchar(100)",
+            "not_null": true,
+            "description": "Vollständiger Name des Eigentümers"
+          },
+          "email": {
+            "type": "varchar(255)",
+            "unique": true,
+            "description": "E-Mail-Adresse für Authentifizierung"
+          },
+          "password_hash": {
+            "type": "varchar(255)",
+            "description": "Gehashtes Passwort (bcrypt)"
+          },
+          "active": {
+            "type": "boolean",
+            "default": true,
+            "description": "Aktiver Status des Benutzers"
+          },
+          "created_at": {
+            "type": "timestamp",
+            "default": "now()"
+          },
+          "updated_at": {
+            "type": "timestamp",
+            "default": "now()"
+          }
+        },
+        "indexes": [
+          "CREATE INDEX idx_users_owner_id ON users(owner_id);",
+          "CREATE INDEX idx_users_email ON users(email);"
+        ]
+      },
+      "objekte": {
+        "description": "Immobilienobjekte mit Eigentümer-Zuordnung",
+        "columns": {
+          "id": {
+            "type": "uuid",
+            "primary_key": true,
+            "default": "gen_random_uuid()"
+          },
+          "objekt_id": {
+            "type": "varchar(20)",
+            "unique": true,
+            "not_null": true,
+            "description": "Eindeutige Objekt-ID (z.B. obj001)"
+          },
+          "owner_id": {
+            "type": "varchar(10)",
+            "not_null": true,
+            "description": "Referenz auf users.owner_id"
+          },
+          "name": {
+            "type": "varchar(200)",
+            "not_null": true,
+            "description": "Name/Adresse des Objekts"
+          },
+          "adresse": {
+            "type": "varchar(300)",
+            "description": "Vollständige Adresse"
+          },
+          "typ": {
+            "type": "varchar(100)",
+            "description": "Objekttyp (Mehrfamilienhaus, etc.)"
+          },
+          "einheiten": {
+            "type": "integer",
+            "default": 1,
+            "description": "Anzahl Wohneinheiten"
+          },
+          "baujahr": {
+            "type": "integer",
+            "description": "Baujahr des Objekts"
+          },
+          "wohnflaeche": {
+            "type": "decimal(10,2)",
+            "description": "Wohnfläche in m²"
+          },
+          "created_at": {
+            "type": "timestamp",
+            "default": "now()"
+          },
+          "updated_at": {
+            "type": "timestamp",
+            "default": "now()"
+          }
+        },
+        "indexes": [
+          "CREATE INDEX idx_objekte_owner_id ON objekte(owner_id);",
+          "CREATE INDEX idx_objekte_objekt_id ON objekte(objekt_id);"
+        ],
+        "foreign_keys": [
+          "ALTER TABLE objekte ADD CONSTRAINT fk_objekte_owner FOREIGN KEY (owner_id) REFERENCES users(owner_id);"
+        ]
+      },
+      "dashboard_kpis": {
+        "description": "KPI-Daten pro Objekt für Dashboard-Anzeige",
+        "columns": {
+          "id": {
+            "type": "uuid",
+            "primary_key": true,
+            "default": "gen_random_uuid()"
+          },
+          "objekt_id": {
+            "type": "varchar(20)",
+            "not_null": true,
+            "description": "Referenz auf objekte.objekt_id"
+          },
+          "mieteinnahmen": {
+            "type": "decimal(10,2)",
+            "default": 0,
+            "description": "Monatliche Mieteinnahmen in EUR"
+          },
+          "rueckstaende": {
+            "type": "decimal(10,2)",
+            "default": 0,
+            "description": "Offene Rückstände in EUR"
+          },
+          "vermietungsgrad": {
+            "type": "decimal(5,2)",
+            "default": 0,
+            "description": "Vermietungsgrad in Prozent"
+          },
+          "rendite": {
+            "type": "decimal(5,2)",
+            "default": 0,
+            "description": "Netto-Rendite in Prozent"
+          },
+          "instandhaltung_jahr": {
+            "type": "decimal(10,2)",
+            "default": 0,
+            "description": "Jährliche Instandhaltungskosten in EUR"
+          },
+          "stichtag": {
+            "type": "date",
+            "default": "CURRENT_DATE",
+            "description": "Stichtag der KPI-Daten"
+          },
+          "created_at": {
+            "type": "timestamp",
+            "default": "now()"
+          },
+          "updated_at": {
+            "type": "timestamp",
+            "default": "now()"
+          }
+        },
+        "indexes": [
+          "CREATE INDEX idx_dashboard_kpis_objekt_id ON dashboard_kpis(objekt_id);",
+          "CREATE INDEX idx_dashboard_kpis_stichtag ON dashboard_kpis(stichtag);"
+        ],
+        "foreign_keys": [
+          "ALTER TABLE dashboard_kpis ADD CONSTRAINT fk_dashboard_kpis_objekt FOREIGN KEY (objekt_id) REFERENCES objekte(objekt_id);"
+        ]
+      }
+    },
+    "initial_data": {
+      "users": [
+        {
+          "owner_id": "e001",
+          "name": "Müller",
+          "email": "mueller@example.com",
+          "password_hash": "$2b$10$example_hash_for_test123",
+          "active": true
+        },
+        {
+          "owner_id": "e002",
+          "name": "Klein",
+          "email": "klein@example.com",
+          "password_hash": "$2b$10$example_hash_for_abc456",
+          "active": true
+        },
+        {
+          "owner_id": "e003",
+          "name": "Schmidt",
+          "email": "schmidt@example.com",
+          "password_hash": "$2b$10$example_hash_for_demo789",
+          "active": true
+        }
+      ],
+      "objekte": [
+        {
+          "objekt_id": "obj001",
+          "owner_id": "e001",
+          "name": "Waldhofstraße 76",
+          "adresse": "68169 Mannheim",
+          "typ": "Mehrfamilienhaus",
+          "einheiten": 8,
+          "baujahr": 1985,
+          "wohnflaeche": 420.00
+        },
+        {
+          "objekt_id": "obj002",
+          "owner_id": "e001",
+          "name": "Neckarstraße 12",
+          "adresse": "69115 Heidelberg",
+          "typ": "Einfamilienhaus",
+          "einheiten": 1,
+          "baujahr": 1920,
+          "wohnflaeche": 120.00
+        },
+        {
+          "objekt_id": "obj003",
+          "owner_id": "e002",
+          "name": "Hauptstraße 45",
+          "adresse": "69117 Heidelberg",
+          "typ": "Mehrfamilienhaus",
+          "einheiten": 4,
+          "baujahr": 1960,
+          "wohnflaeche": 280.00
+        }
+      ],
+      "dashboard_kpis": [
+        {
+          "objekt_id": "obj001",
+          "mieteinnahmen": 2800.00,
+          "rueckstaende": 800.00,
+          "vermietungsgrad": 95.00,
+          "rendite": 4.50,
+          "instandhaltung_jahr": 8500.00
+        },
+        {
+          "objekt_id": "obj002",
+          "mieteinnahmen": 1200.00,
+          "rueckstaende": 0.00,
+          "vermietungsgrad": 100.00,
+          "rendite": 3.80,
+          "instandhaltung_jahr": 2400.00
+        },
+        {
+          "objekt_id": "obj003",
+          "mieteinnahmen": 1850.00,
+          "rueckstaende": 400.00,
+          "vermietungsgrad": 75.00,
+          "rendite": 4.10,
+          "instandhaltung_jahr": 4200.00
+        }
+      ]
+    },
+    "sql_setup": {
+      "create_tables": [
+        "CREATE TABLE users (id uuid PRIMARY KEY DEFAULT gen_random_uuid(), owner_id varchar(10) UNIQUE NOT NULL, name varchar(100) NOT NULL, email varchar(255) UNIQUE, password_hash varchar(255), active boolean DEFAULT true, created_at timestamp DEFAULT now(), updated_at timestamp DEFAULT now());",
+        "CREATE TABLE objekte (id uuid PRIMARY KEY DEFAULT gen_random_uuid(), objekt_id varchar(20) UNIQUE NOT NULL, owner_id varchar(10) NOT NULL, name varchar(200) NOT NULL, adresse varchar(300), typ varchar(100), einheiten integer DEFAULT 1, baujahr integer, wohnflaeche decimal(10,2), created_at timestamp DEFAULT now(), updated_at timestamp DEFAULT now());",
+        "CREATE TABLE dashboard_kpis (id uuid PRIMARY KEY DEFAULT gen_random_uuid(), objekt_id varchar(20) NOT NULL, mieteinnahmen decimal(10,2) DEFAULT 0, rueckstaende decimal(10,2) DEFAULT 0, vermietungsgrad decimal(5,2) DEFAULT 0, rendite decimal(5,2) DEFAULT 0, instandhaltung_jahr decimal(10,2) DEFAULT 0, stichtag date DEFAULT CURRENT_DATE, created_at timestamp DEFAULT now(), updated_at timestamp DEFAULT now());"
+      ],
+      "create_indexes": [
+        "CREATE INDEX idx_users_owner_id ON users(owner_id);",
+        "CREATE INDEX idx_users_email ON users(email);",
+        "CREATE INDEX idx_objekte_owner_id ON objekte(owner_id);",
+        "CREATE INDEX idx_objekte_objekt_id ON objekte(objekt_id);",
+        "CREATE INDEX idx_dashboard_kpis_objekt_id ON dashboard_kpis(objekt_id);",
+        "CREATE INDEX idx_dashboard_kpis_stichtag ON dashboard_kpis(stichtag);"
+      ],
+      "create_foreign_keys": [
+        "ALTER TABLE objekte ADD CONSTRAINT fk_objekte_owner FOREIGN KEY (owner_id) REFERENCES users(owner_id);",
+        "ALTER TABLE dashboard_kpis ADD CONSTRAINT fk_dashboard_kpis_objekt FOREIGN KEY (objekt_id) REFERENCES objekte(objekt_id);"
+      ]
+    }
+  },
+  "feature_flags": {
+    "VITE_USE_LOCAL_AUTH": {
+      "description": "Verwende lokale JSON-Authentifizierung statt Supabase",
+      "default": true,
+      "values": {
+        "true": "JSON-basierte Authentifizierung (Fallback)",
+        "false": "Supabase-Authentifizierung"
+      }
+    },
+    "VITE_ENABLE_SUPABASE_SYNC": {
+      "description": "Aktiviere Supabase-Synchronisation im Hintergrund",
+      "default": false,
+      "values": {
+        "true": "Daten werden mit Supabase synchronisiert",
+        "false": "Nur lokale JSON-Daten"
+      }
+    }
+  },
+  "migration_strategy": {
+    "phase_1": "JSON-Basis beibehalten, Supabase-Schema vorbereiten",
+    "phase_2": "Parallele Supabase-Integration mit Feature-Flag",
+    "phase_3": "Schrittweise Migration mit Daten-Sync",
+    "phase_4": "Vollständige Supabase-Migration (optional)"
+  }
+}
+

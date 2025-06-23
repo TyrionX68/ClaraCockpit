@@ -1,0 +1,47 @@
+VertragID,MieterName,ObjektID,Wohnung,Mietbeginn,Mietende,Kaltmiete,Nebenkosten,Kaution,Status,Kuendigungsfrist,Indexierung,Letzter_Kontakt
+V-2024-001,Mieter C,2,Wohnung 1 OG,2015-05-01,2025-12-31,400.0,175.0,1200.0,Aktiv,3 Monate,Ja,2024-06-01
+V-2024-002,Mieter D,3,Wohnung EG,2008-03-01,2025-12-31,669.6,142.6,2008.8000000000002,Aktiv,3 Monate,Ja,2024-06-01
+V-2024-003,Mieter E,4,GewerbeflÃ¤che EG,2008-03-01,2025-12-31,410.4,87.4,1231.1999999999998,Aktiv,3 Monate,Ja,2024-06-01
+V-2024-004,Mieter F,1,Gesamt: 4 Einheiten,2020-01-01,2025-12-31,1970.0,500.0,5910.0,Aktiv,3 Monate,Ja,2024-06-01
+V-2024-005,Mieter H,6,Wohnung 1 ( EG ),1997-04-01,2025-12-31,601.79,102.26,1805.37,Aktiv,3 Monate,Ja,2024-06-01
+V-2024-006,Mieter I,7,GewerbeflÃ¤che 1 ( EG ),2022-10-01,2025-12-31,1000.0,250.0,3000.0,Aktiv,3 Monate,Ja,2024-06-01
+V-2024-007,Mieter J,1,Gesamt: 2 Einheiten,2020-01-01,2025-12-31,1601.79,352.26,4805.37,Aktiv,3 Monate,Ja,2024-06-01
+V-2024-008,Mieter K,3,Wohnung EG ,2021-10-01,2025-12-31,1295.0,200.0,3885.0,Aktiv,3 Monate,Ja,2024-06-01
+V-2024-009,Mieter L,2,Wohnung 1 OG,2016-12-01,2025-12-31,1065.8,200.0,3197.3999999999996,Aktiv,3 Monate,Ja,2024-06-01
+V-2024-010,Mieter M,11,Wohnung 2 OG,2016-11-01,2025-12-31,473.92,170.0,1421.76,Aktiv,3 Monate,Ja,2024-06-01
+V-2024-011,Mieter F,1,Gesamt: 3 Einheiten,2020-01-01,2025-12-31,2834.7200000000003,570.0,8504.16,Aktiv,3 Monate,Ja,2024-06-01
+V-2024-012,Mieter U,24,GewerbeflÃ¤che Restaurant ,2018-01-01,2025-12-31,6630.0,1000.0,19890.0,Aktiv,3 Monate,Ja,2024-06-01
+V-2024-013,Mieter Y,25,GewerbeflÃ¤che Kindergarten,2022-01-01,2025-12-31,13000.0,870.0,39000.0,Aktiv,3 Monate,Ja,2024-06-01
+V-2024-014,Mieter [,27,Praxis 1 OG rechts ,2020-05-01,2025-12-31,990.0,250.0,2970.0,Aktiv,3 Monate,Ja,2024-06-01
+V-2024-015,Mieter \,2,Wohnung 1 OG ,2022-12-01,2025-12-31,410.0,80.0,1230.0,Aktiv,3 Monate,Ja,2024-06-01
+V-2024-016,Mieter [,29,Praxis 1 OG links,2022-03-01,2025-12-31,790.0,150.0,2370.0,Aktiv,3 Monate,Ja,2024-06-01
+V-2024-017,Mieter ],4,GewerbeflÃ¤che EG ,2023-04-01,2025-12-31,1250.0,250.0,3750.0,Aktiv,3 Monate,Ja,2024-06-01
+V-2024-018,Mieter ^,31,Wohnung 1 EG ,2023-08-01,2025-12-31,500.0,110.0,1500.0,Aktiv,3 Monate,Ja,2024-06-01
+V-2024-019,Mieter _,32,Wohnung 2 EG ,2022-08-15,2025-12-31,515.0,80.0,1545.0,Aktiv,3 Monate,Ja,2024-06-01
+V-2024-020,Mieter `,1,Gesamt: 6,2020-01-01,2025-12-31,4455.0,920.0,13365.0,Aktiv,3 Monate,Ja,2024-06-01
+V-2024-021,Mieter a,36,Wohnung DG ,2022-12-01,2025-12-31,840.0,200.0,2520.0,Aktiv,3 Monate,Ja,2024-06-01
+V-2024-022,Mieter b,2,Wohnung 1 OG ,2022-09-01,2025-12-31,1300.0,350.0,3900.0,Aktiv,3 Monate,Ja,2024-06-01
+V-2024-023,Mieter c,3,Wohnung EG,2019-10-01,2025-12-31,1450.0,250.0,4350.0,Aktiv,3 Monate,Ja,2024-06-01
+V-2024-024,Mieter `,1,Gesamt: Einheiten,2020-01-01,2025-12-31,3590.0,800.0,10770.0,Aktiv,3 Monate,Ja,2024-06-01
+V-2024-025,Mieter e,41,Wohnung  Vorderhau EG ,2022-09-01,2025-12-31,595.0,175.0,1785.0,Aktiv,3 Monate,Ja,2024-06-01
+V-2024-026,Mieter f,42,Wohnung Vorderhaus 1 OG,2022-05-01,2025-12-31,790.0,200.0,2370.0,Aktiv,3 Monate,Ja,2024-06-01
+V-2024-027,Mieter g,43,Wohnung Vorderhaus DG ,2022-05-01,2025-12-31,795.0,150.0,2385.0,Aktiv,3 Monate,Ja,2024-06-01
+V-2024-028,Mieter h,44,Wohnung Seitenhaus EG-DG ,2023-09-01,2025-12-31,850.0,140.0,2550.0,Aktiv,3 Monate,Ja,2024-06-01
+V-2024-029,Mieter i,45,Wohnung Hinterhaus EG,2022-05-01,2025-12-31,990.0,150.0,2970.0,Aktiv,3 Monate,Ja,2024-06-01
+V-2024-030,Mieter j,46,Wohnung Hinterhaus DG,2013-04-01,2025-12-31,500.0,120.0,1500.0,Aktiv,3 Monate,Ja,2024-06-01
+V-2024-031,Mieter `,1,Gesamt: 6 Einheiten,2020-01-01,2025-12-31,4520.0,935.0,13560.0,Aktiv,3 Monate,Ja,2024-06-01
+V-2024-032,Mieter k,36,Wohnung DG links,2023-05-01,2025-12-31,1130.0,240.0,3390.0,Aktiv,3 Monate,Ja,2024-06-01
+V-2024-033,Mieter l,36,Wohnung DG rechts,2023-07-01,2025-12-31,1080.0,170.0,3240.0,Aktiv,3 Monate,Ja,2024-06-01
+V-2024-034,Mieter `,1,Gesamt: 2 Einheiten,2020-01-01,2025-12-31,2210.0,410.0,6630.0,Aktiv,3 Monate,Ja,2024-06-01
+V-2024-035,Mieter m,51,Wohnung DG,2020-01-01,2025-12-31,1150.0,150.0,3450.0,Aktiv,3 Monate,Ja,2024-06-01
+V-2024-036,Mieter n,2,Wohnung 1 OG,2023-05-01,2025-12-31,1980.0,495.0,5940.0,Aktiv,3 Monate,Ja,2024-06-01
+V-2024-037,Mieter o,39,Wohnung UG-1,2020-01-01,2025-12-31,595.0,125.0,1785.0,Aktiv,3 Monate,Ja,2024-06-01
+V-2024-038,Mieter p,39,Wohnung UG-2,2022-10-01,2025-12-31,495.0,145.0,1485.0,Aktiv,3 Monate,Ja,2024-06-01
+V-2024-039,Mieter q,55,GewerbeflÃ¤che 1.OG,2023-07-01,2025-12-31,1050.0,150.0,3150.0,Aktiv,3 Monate,Ja,2024-06-01
+V-2024-040,Mieter r,4,GewerbeflÃ¤che EG,2023-03-01,2025-12-31,3200.0,700.0,9600.0,Aktiv,3 Monate,Ja,2024-06-01
+V-2024-041,Mieter s,1,Gesamt: 6 Einheiten,2020-01-01,2025-12-31,8470.0,1765.0,25410.0,Aktiv,3 Monate,Ja,2024-06-01
+V-2024-042,Mieter t,58,Wohnung 1. OG,2017-01-15,2025-12-31,1090.0,250.0,3270.0,Aktiv,3 Monate,Ja,2024-06-01
+V-2024-043,Mieter u,3,Wohnung EG ,2017-03-01,2025-12-31,425.0,120.0,1275.0,Aktiv,3 Monate,Ja,2024-06-01
+V-2024-044,Mieter v,4,GewerbeflÃ¤che EG-1,2009-08-01,2025-12-31,500.0,50.0,1500.0,Aktiv,3 Monate,Ja,2024-06-01
+V-2024-045,Mieter w,4,GewerbeflÃ¤che EG-2,2009-09-01,2025-12-31,510.0,50.0,1530.0,Aktiv,3 Monate,Ja,2024-06-01
+V-2024-046,Mieter s,1,Gesamt: 6 Einheiten,2020-01-01,2025-12-31,2525.0,470.0,7575.0,Aktiv,3 Monate,Ja,2024-06-01

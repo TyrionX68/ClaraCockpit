@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Clara360 Eigentümer-Portal</title>
+    <script src="https://unpkg.com/react@18/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body {
+            margin: 0;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+                'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+                sans-serif;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+        
+        .clara-kpi-card {
+            transition: all 0.2s ease-in-out;
+        }
+        
+        .clara-kpi-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        }
+    </style>
+</head>
+<body>
+    <div id="root"></div>
+    
+    <!-- Load Components -->
+    <script type="text/babel" src="components/KPIBox.jsx"></script>
+    <script type="text/babel" src="components/ObjektListe.jsx"></script>
+    <script type="text/babel" src="pages/EigentuemerLogin.jsx"></script>
+    <script type="text/babel" src="pages/EigentuemerDashboard.jsx"></script>
+    <script type="text/babel" src="App.jsx"></script>
+    
+    <!-- Main Application -->
+    <script type="text/babel">
+        const { useState, useEffect } = React;
+        
+        // Main App Component
+        function MainApp() {
+            const [currentRoute, setCurrentRoute] = useState('login');
+            const [isAuthenticated, setIsAuthenticated] = useState(false);
+            const [loading, setLoading] = useState(true);
+
+            useEffect(() => {
+                // Check if user is already logged in
+                const ownerId = sessionStorage.getItem('ownerId');
+                const loginTime = sessionStorage.getItem('loginTime');
+                
+                if (ownerId && loginTime) {
+                    // Check if login is still valid (24 hours)
+                    const loginDate = new Date(loginTime);
+                    const now = new Date();
+                    const hoursDiff = (now - loginDate) / (1000 * 60 * 60);
+                    
+                    if (hoursDiff < 24) {
+                        setIsAuthenticated(true);
+                        setCurrentRoute('dashboard');
+                    } else {
+                        // Session expired
+                        sessionStorage.clear();
+                        setIsAuthenticated(false);
+                        setCurrentRoute('login');
+                    }
+                } else {
+                    setIsAuthenticated(false);
+                    setCurrentRoute('login');
+                }
+                
+                setLoading(false);
+            }, []);
+
+            const handleLoginSuccess = (user) => {
+                setIsAuthenticated(true);
+                setCurrentRoute('dashboard');
+                window.history.pushState({}, '', '/dashboard');
+            };
+
+            const handleLogout = () => {
+                sessionStorage.clear();
+                setIsAuthenticated(false);
+                setCurrentRoute('login');
+                window.history.pushState({}, '', '/login');
+            };
+
+            if (loading) {
+                return React.createElement('div', {
+                    className: "min-h-screen bg-gray-100 flex items-center justify-center"
+                }, React.createElement('div', {
+                    className: "text-center"
+                }, [
+                    React.createElement('div', {
+                        key: 'spinner',
+                        className: "animate-spin w-8 h-8 border-4 border-blue-600 border-t-transparent rounded-full mx-auto"
+                    }),
+                    React.createElement('p', {
+                        key: 'text',
+                        className: "text-gray-600 mt-2"
+                    }, "Clara360 wird geladen...")
+                ]));
+            }
+
+            // Route rendering
+            if (currentRoute === 'dashboard' && isAuthenticated) {
+                return React.createElement(EigentuemerDashboard, { onLogout: handleLogout });
+            } else {
+                return React.createElement(EigentuemerLogin, { onLoginSuccess: handleLoginSuccess });
+            }
+        }
+
+        // Render the application
+        const root = ReactDOM.createRoot(document.getElementById('root'));
+        root.render(React.createElement(MainApp));
+    </script>
+</body>
+</html>
+

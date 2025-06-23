@@ -1,0 +1,6 @@
+Datum,Mieter_ID,Name,Betrag,Verwendungszweck,Buchungstext
+2025-05-03,M001,Müller GmbH,500.0,Miete April 2025,Teilzahlung April
+2025-05-05,M002,Schmidt KG,1200.0,Miete Mai 2025,Mai Vorauszahlung
+2025-05-10,M003,Bauer OHG,950.5,Miete+NK Mai,Dauerauftrag
+2025-05-14,M004,Delta GmbH,0.0,Mahnung ignoriert,Fehlbuchung
+2025-05-20,M001,Müller GmbH,700.0,Restzahlung April,Überweisung
