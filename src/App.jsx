@@ -1,10 +1,15 @@
 import { useState, useEffect } from 'react'
 import ManifestViewer from './components/ManifestViewer'
 import EigentuemerPortal from './components/EigentuemerPortal'
+import ClaraGreeting from './components/ClaraGreeting'
+import EigentuemerLogin_SBX from './components/EigentuemerLogin_SBX'
+import ObjektePage from "./pages/ObjektePage"
 import './App.css'
 
 function App() {
+  console.log("🏠 ===> App.jsx geladen!");
   const [currentRoute, setCurrentRoute] = useState('dashboard')
+  console.log("🗺️ ===> Aktuelle Route:", currentRoute);
   const [count, setCount] = useState(0)
 
   // Handle URL routing
@@ -36,6 +41,43 @@ function App() {
   const isAuthenticated = localStorage.getItem('clara_user_email') === 'hiss@clara360.de';
 
   // Owner Portal Route
+            {/* TyrionX Debug: Supabase Login Button */}
+            <button
+              onClick={() => {
+                console.log("🔗 ===> Direkter Supabase Login Button geklickt!");
+                setCurrentRoute("supabase-login");
+              }}
+              className="px-4 py-2 rounded-lg bg-green-600 text-white hover:bg-green-700 transition-colors"
+              style={{ marginTop: "10px" }}
+            >
+              🧪 SUPABASE TEST LOGIN
+            </button>
+  // Supabase Login Route
+            <button
+              onClick={() => {
+                console.log("🔗 ===> Direkter Supabase Login Button geklickt!");
+                setCurrentRoute("supabase-login");
+              }}
+              className="px-4 py-2 rounded-lg bg-green-600 text-white hover:bg-green-700 transition-colors"
+              style={{ marginTop: "10px" }}
+            >
+              🧪 SUPABASE TEST LOGIN
+            </button>
+  console.log("🔍 ===> Prüfe Route für supabase-login...");
+  // TyrionX Phase 2: /sbx Route für direkten Test
+  if (currentRoute === "sbx") {
+    console.log("🧪 ===> /sbx Route aktiviert - EigentuemerLogin_SBX wird gerendert!");
+    return <EigentuemerLogin_SBX />;
+  }
+
+  if (currentRoute === 'supabase-login') {
+    return <EigentuemerLogin_SBX />;
+    console.log("✅ ===> EigentuemerLogin_SBX wird gerendert!");
+  }
+
+  if (currentRoute === "objekte") {
+    return <ObjektePage />
+  }
   if (currentRoute === 'eigentuemer-portal') {
     return <EigentuemerPortal />
   }
@@ -121,6 +163,9 @@ function App() {
       <main className="container mx-auto px-6 py-8">
         {currentRoute === 'dashboard' && (
           <div className="space-y-8">
+            {/* Clara Greeting */}
+            <ClaraGreeting />
+            
             {/* Welcome Section */}
             <div className="text-center space-y-4">
               <h2 className="text-4xl font-bold text-white">
