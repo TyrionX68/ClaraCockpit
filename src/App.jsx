@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom'
+import { ClaraThemeProvider } from './context/ClaraThemeContext'
 import ClaraFusionDashboard from './components/ClaraFusionDashboard'
 import EigentuemerPage from './components/EigentuemerPage'
 import ObjektePage from './components/ObjektePage'
@@ -37,26 +38,28 @@ function App() {
   // Wenn UI-Anker aktiviert ist, zeige das vollständige Fusion-System
   if (useAnchorUI) {
     return (
-      <PropertyProvider>
-        <Router>
-          <Routes>
-            <Route path="/" element={<Navigate to="/dashboard" replace />} />
-            <Route path="/dashboard" element={<ClaraFusionDashboard />} />
-            <Route path="/eigentuemer" element={<EigentuemerPage />} />
-            <Route path="/objekte" element={<ObjektePage />} />
-            <Route path="/rueckstaende" element={<RueckstaendePage />} />
-            <Route path="/zahlungen" element={<ZahlungenPage />} />
-            <Route path="/banking" element={<BankingPage />} />
-            <Route path="/mieter-kommunikation" element={<MieterKommunikationPage />} />
-            <Route path="/clara-ki" element={<ClaraKIPanel />} />
-            <Route path="/outlook" element={<OutlookPage />} />
-            <Route path="/einstellungen" element={<EinstellungenPage />} />
-            <Route path="/manifest" element={<ManifestViewer />} />
+      <ClaraThemeProvider>
+        <PropertyProvider>
+          <Router>
+            <Routes>
+              <Route path="/" element={<Navigate to="/dashboard" replace />} />
+              <Route path="/dashboard" element={<ClaraFusionDashboard />} />
+              <Route path="/eigentuemer" element={<EigentuemerPage />} />
+              <Route path="/objekte" element={<ObjektePage />} />
+              <Route path="/rueckstaende" element={<RueckstaendePage />} />
+              <Route path="/zahlungen" element={<ZahlungenPage />} />
+              <Route path="/banking" element={<BankingPage />} />
+              <Route path="/mieter-kommunikation" element={<MieterKommunikationPage />} />
+              <Route path="/clara-ki" element={<ClaraKIPanel />} />
+              <Route path="/outlook" element={<OutlookPage />} />
+              <Route path="/einstellungen" element={<EinstellungenPage />} />
+              <Route path="/manifest" element={<ManifestViewer />} />
             <Route path="/analytics" element={<TransactionAnalyticsPage />} />
             <Route path="*" element={<Navigate to="/dashboard" replace />} />
           </Routes>
         </Router>
       </PropertyProvider>
+    </ClaraThemeProvider>
     );
   }
 
