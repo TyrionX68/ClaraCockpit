@@ -342,3 +342,6 @@ export function TransactionAnalyticsPage() {
   );
 }
 
+
+export default TransactionAnalyticsPage;
+
