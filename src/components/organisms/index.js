@@ -8,3 +8,4 @@ export { default as ClaraFileVault } from './ClaraFileVault';
 // Future organisms will be exported here
 // export { default as ClaraVendorMap } from './ClaraVendorMap';
 // export { default as ClaraReportingPanel } from './ClaraReportingPanel';
+export { default as ClaraKIPanel } from './ClaraKIPanel';
