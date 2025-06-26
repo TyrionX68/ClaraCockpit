@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Card, CardContent, CardHeader, CardTitle } from './ui/card';
 import { Button } from './ui/button';
+import ClaraThemeSwitch from './atoms/ClaraThemeSwitch';
 import { 
   Building2, 
   Users, 
@@ -151,6 +152,15 @@ const ClaraFusionDashboard = () => {
               <p className="text-xs text-gray-500">admin@clara360.de</p>
             </div>
           </div>
+          
+          {/* Theme Switch */}
+          <div className="mb-3 p-2 bg-gray-50 rounded-lg">
+            <div className="flex items-center justify-between">
+              <span className="text-xs text-gray-600">Theme</span>
+              <ClaraThemeSwitch size="sm" showLabel={false} />
+            </div>
+          </div>
+          
           <Button variant="outline" className="w-full gap-2 h-9" onClick={handleLogout}>
             <LogOut className="w-4 h-4" />
             Abmelden
