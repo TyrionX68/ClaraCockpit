@@ -1,0 +1,84 @@
+{
+  "clara360_legacy_migration_map": {
+    "version": "v3.0_to_v3.1",
+    "created": "2025-06-26_17-46-07",
+    "purpose": "Systematic mapping of legacy Clara components to v3.1 architecture",
+    
+    "migration_phases": {
+      "phase_1_critical": {
+        "priority": "high",
+        "timeline": "immediate",
+        "components": [
+          {
+            "name": "ClaraKIPanel",
+            "source": "vps_backup",
+            "target": "organisms/ClaraAIAssistant",
+            "status": "requires_assessment",
+            "migration_effort": "medium",
+            "dependencies": ["ClaraIntelligenceEngine", "clara_ki_responses.json"]
+          },
+          {
+            "name": "ClaraZahlungsPanel",
+            "source": "replit_export",
+            "target": "organisms/ClaraPaymentDashboard",
+            "status": "ready_for_migration",
+            "migration_effort": "low",
+            "dependencies": ["FinAPI integration"]
+          }
+        ]
+      },
+      
+      "phase_2_enhancement": {
+        "priority": "medium",
+        "timeline": "v3.1_release",
+        "components": [
+          {
+            "name": "ClaraMieterStatus",
+            "source": "zip_archive",
+            "target": "enhancement_to_ClaraMieterDashboard",
+            "status": "evaluate_for_merge",
+            "migration_effort": "medium",
+            "dependencies": ["tenant_data_schema"]
+          },
+          {
+            "name": "ClaraWartungsplaner",
+            "source": "vps_backup",
+            "target": "organisms/ClaraMaintenanceScheduler",
+            "status": "requires_modernization",
+            "migration_effort": "high",
+            "dependencies": ["calendar_integration", "vendor_management"]
+          }
+        ]
+      },
+      
+      "phase_3_integration": {
+        "priority": "low",
+        "timeline": "v3.2_planning",
+        "components": [
+          {
+            "name": "ClaraReportGenerator",
+            "source": "multiple_sources",
+            "target": "organisms/ClaraAnalyticsDashboard",
+            "status": "concept_stage",
+            "migration_effort": "high",
+            "dependencies": ["data_aggregation", "pdf_generation"]
+          }
+        ]
+      }
+    },
+    
+    "integration_guidelines": {
+      "atomic_design_compliance": "All migrated components must fit atomic design structure",
+      "react_hooks_only": "Convert all class components to functional components with hooks",
+      "tailwind_styling": "Replace custom CSS with Tailwind classes",
+      "typescript_support": "Add TypeScript definitions for all components",
+      "test_coverage": "Minimum 80% test coverage for migrated components"
+    },
+    
+    "risk_assessment": {
+      "high_risk": ["ClaraIntelligenceEngine - complex AI logic"],
+      "medium_risk": ["ClaraWartungsplaner - calendar dependencies"],
+      "low_risk": ["ClaraZahlungsPanel - well-defined interface"]
+    }
+  }
+}
