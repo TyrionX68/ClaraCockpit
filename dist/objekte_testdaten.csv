@@ -1,8 +1,0 @@
-ID,Name,Adresse,Typ,Baujahr,Flaeche,Einheiten,Eigentuemer,Zustand,Marktwert
-1,Nadlerstraße 10,"Nadlerstraße 10, 68161 Mannheim",Wohngebäude,1985,850,8,Torsten Hiss,Gut,1200000
-2,Pfalzstraße 1,"Pfalzstraße 1, 68161 Mannheim",Wohngebäude,1992,650,6,Uwe Scheerer,Sehr gut,950000
-3,Industriestraße 35,"Industriestraße 35, 68169 Mannheim",Gewerbeimmobilie,2005,2400,18,HM Projektmanagement GmbH,Ausgezeichnet,4200000
-4,Rheinallee 5,"Rheinallee 5, 68161 Mannheim",Wohngebäude,1978,720,6,Uwe Scheerer,Gut,850000
-5,Bahnhofstraße 22,"Bahnhofstraße 22, 68161 Mannheim",Mischnutzung,1995,1200,8,Pro Estate Verwaltung,Sehr gut,1800000
-6,Marktplatz 8,"Marktplatz 8, 68161 Mannheim",Gewerbeimmobilie,2010,800,4,Pro Estate Verwaltung,Ausgezeichnet,1150000
-

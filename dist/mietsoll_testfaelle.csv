@@ -1,6 +1,0 @@
-Mieter_ID,Name,Objekt,Monat,Jahr,Soll_Kaltmiete,Soll_Nebenkosten,Soll_Gesamt
-M001,Müller GmbH,Hauptstr. 1,5,2025,1000.0,200.0,1200.0
-M002,Schmidt KG,Gewerbestr. 5,5,2025,950.0,250.0,1200.0
-M003,Bauer OHG,,5,2025,,150.0,950.5
-M004,Delta GmbH,Allee 7,5,2025,1100.0,300.0,1400.0
-M006,Unbekannt,Testweg 99,5,2025,1234.0,,1234.0

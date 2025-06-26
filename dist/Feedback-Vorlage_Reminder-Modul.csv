@@ -1,8 +1,0 @@
-Funktion/Bereich,Beispieltest (optional),Erwartetes Ergebnis,Tatsächliches Ergebnis,Bewertung (1–5),Anmerkungen/Verbesserungsvorschläge
-Filterfunktion: Mahnstufe ≥ 2 & Rückstand > 30 Tage,Filter auf Mahnstufe 3 und Rückstand > 60 Tage,,,,
-Anzeige offener Rückstände,Mieter Müller mit 2 offenen Monaten sichtbar?,,,,
-Mahnvorschläge: Begründung & Textvorschlag,Sind Formulierungen individuell oder generisch?,,,,
-Exportoptionen (CSV/PDF),"Export funktioniert, Daten korrekt formatiert?",,,,
-UI-Navigation & Übersichtlichkeit,Ist die Bedienung intuitiv (1–2 Klicks)?,,,,
-Datenaktualität & Aktualisierungszeitpunkt,Wird Hinweis zu „Datenstand“ eingeblendet?,,,,
-Fehlermeldungen oder Unklarheiten,Fehlt eine erwartete Mahnung oder Erklärung?,,,,

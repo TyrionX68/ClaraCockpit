@@ -1,7 +1,0 @@
-Testzeitpunkt,Testkriterium,Erwartung,Testergebnis,Kommentar
-2025-05-23 13:22:11,Zugriff als Admin,Vollzugriff mit Exportrechten,,
-2025-05-23 13:22:11,Zugriff als Sachbearbeiter,"Zugriff mit Export, keine Konfiguration",,
-2025-05-23 13:22:11,Zugriff als Report-Nutzer (nur PDF),Nur Lesezugriff auf PDF-Vorschau,,
-2025-05-23 13:22:11,PDF-Export verfügbar und CI-konform,"PDF exportierbar, Design korrekt",,
-2025-05-23 13:22:11,"Filterfunktionen (Zeitraum, Objekt, Mandant)",Filter anwählbar und funktional,,
-2025-05-23 13:22:11,"Layout konsistent mit Dashboard (Header, Sidebar, Footer)",Ja,,
