@@ -1,65 +1,30 @@
-import React, { useState } from 'react';
+import React from 'react';
 import ModernKpiCard from '../components/molecules/ModernKpiCard';
 import BottomNavigation from '../components/molecules/BottomNavigation';
 
 const ModernDashboardPage = () => {
-  const [activeNav, setActiveNav] = useState('dashboard');
-
   return (
-    <div style={{ 
-      background: 'var(--bg-primary)', 
-      minHeight: '100vh',
-      color: 'var(--text-primary)',
-      padding: '1rem',
-      paddingBottom: '6rem'
-    }}>
+    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 text-white">
       {/* Header */}
-      <div style={{ marginBottom: '2rem' }}>
-        <h1 style={{ 
-          fontSize: '2rem', 
-          fontWeight: '700',
-          marginBottom: '0.5rem'
-        }}>
-          Clara360 Dashboard
-        </h1>
-        <p style={{ 
-          color: 'var(--text-secondary)',
-          fontSize: '0.875rem'
-        }}>
-          Hausverwaltung Waldhofstraße 76 - Live-Modus
-        </p>
+      <div className="p-6">
+        <h1 className="text-3xl font-bold mb-2">Clara360 Dashboard</h1>
+        <p className="text-slate-400">Hausverwaltung Waldhofstraße 76 - Live-Modus</p>
       </div>
 
       {/* Supabase Status */}
-      <div className="glass-card" style={{ 
-        marginBottom: '2rem',
-        borderLeft: '4px solid var(--accent-orange)'
-      }}>
-        <h3 style={{ 
-          fontSize: '1.125rem',
-          fontWeight: '600',
-          marginBottom: '0.5rem',
-          display: 'flex',
-          alignItems: 'center',
-          gap: '0.5rem'
-        }}>
-          ⚠️ Supabase Status
-        </h3>
-        <p style={{ color: 'var(--text-secondary)', marginBottom: '0.5rem' }}>
-          Verbindungsfehler: Invalid API key
-        </p>
-        <p style={{ fontSize: '0.75rem', color: 'var(--text-muted)' }}>
-          Letzter Test: 22.6.2025, 19:51:22
-        </p>
+      <div className="mx-6 mb-6 glass-card border-l-4 border-orange-500">
+        <div className="flex items-center gap-3">
+          <span className="text-orange-500 text-xl">⚠️</span>
+          <div>
+            <h3 className="font-semibold text-orange-400">Supabase Status</h3>
+            <p className="text-slate-400">Verbindungsfehler: Invalid API key</p>
+            <p className="text-sm text-slate-500">Letzter Test: 22.6.2025, 19:51:22</p>
+          </div>
+        </div>
       </div>
 
-      {/* KPI Grid - Exakt wie Screenshots */}
-      <div style={{ 
-        display: 'grid',
-        gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))',
-        gap: '1rem',
-        marginBottom: '2rem'
-      }}>
+      {/* KPI Grid */}
+      <div className="grid grid-cols-2 md:grid-cols-4 gap-4 px-6 mb-6">
         <ModernKpiCard
           icon="🏢"
           value="1"
@@ -67,7 +32,6 @@ const ModernDashboardPage = () => {
           subtext="Waldhofstraße 76"
           color="blue"
         />
-        
         <ModernKpiCard
           icon="👥"
           value="14"
@@ -76,16 +40,14 @@ const ModernDashboardPage = () => {
           color="green"
           trend="up"
         />
-        
         <ModernKpiCard
           icon="💰"
           value="8.360€"
           label="Monatliche Miete"
           subtext="Gesamteinnahmen"
-          color="green"
+          color="orange"
           trend="up"
         />
-        
         <ModernKpiCard
           icon="📈"
           value="8.4%"
@@ -97,105 +59,45 @@ const ModernDashboardPage = () => {
       </div>
 
       {/* Rückstände */}
-      <div className="glass-card" style={{ 
-        marginBottom: '2rem',
-        borderLeft: '4px solid var(--accent-red)'
-      }}>
-        <h3 style={{ 
-          fontSize: '1.125rem',
-          fontWeight: '600',
-          marginBottom: '1rem',
-          display: 'flex',
-          alignItems: 'center',
-          gap: '0.5rem'
-        }}>
-          ⚠️ Aktuelle Rückstände
-        </h3>
-        <div style={{ marginBottom: '0.5rem' }}>
-          <strong>Familie Schmidt</strong>
+      <div className="mx-6 mb-6 glass-card border-l-4 border-red-500">
+        <div className="flex items-center gap-3 mb-4">
+          <span className="text-red-500 text-xl">⚠️</span>
+          <h3 className="font-semibold text-red-400">Aktuelle Rückstände</h3>
         </div>
-        <div style={{ 
-          color: 'var(--text-secondary)',
-          fontSize: '0.875rem',
-          marginBottom: '0.5rem'
-        }}>
-          1. OG rechts - 2 Monate
-        </div>
-        <div style={{ 
-          fontSize: '1.5rem',
-          fontWeight: '700',
-          color: 'var(--accent-red)'
-        }}>
-          1.200€
+        <div className="space-y-3">
+          <div>
+            <p className="font-medium">Familie Schmidt</p>
+            <p className="text-sm text-slate-400">1. OG rechts - 2 Monate</p>
+            <p className="text-xl font-bold text-red-400">1.200€</p>
+          </div>
         </div>
       </div>
 
       {/* Finanzübersicht */}
-      <div className="glass-card" style={{ marginBottom: '2rem' }}>
-        <h3 style={{ 
-          fontSize: '1.125rem',
-          fontWeight: '600',
-          marginBottom: '1rem',
-          display: 'flex',
-          alignItems: 'center',
-          gap: '0.5rem'
-        }}>
-          📊 Finanzübersicht
-        </h3>
-        
-        <div style={{ 
-          display: 'flex',
-          justifyContent: 'space-between',
-          alignItems: 'center',
-          marginBottom: '0.75rem',
-          paddingBottom: '0.75rem',
-          borderBottom: '1px solid var(--glass-border)'
-        }}>
-          <span>Mieteinnahmen (Monat)</span>
-          <span style={{ 
-            color: 'var(--accent-green)',
-            fontWeight: '600'
-          }}>
-            +8.360€
-          </span>
+      <div className="mx-6 mb-20 glass-card">
+        <div className="flex items-center gap-3 mb-4">
+          <span className="text-blue-500 text-xl">📊</span>
+          <h3 className="font-semibold">Finanzübersicht</h3>
         </div>
-        
-        <div style={{ 
-          display: 'flex',
-          justifyContent: 'space-between',
-          alignItems: 'center',
-          marginBottom: '0.75rem',
-          paddingBottom: '0.75rem',
-          borderBottom: '1px solid var(--glass-border)'
-        }}>
-          <span>Betriebskosten</span>
-          <span style={{ 
-            color: 'var(--accent-red)',
-            fontWeight: '600'
-          }}>
-            -1.200€
-          </span>
-        </div>
-        
-        <div style={{ 
-          display: 'flex',
-          justifyContent: 'space-between',
-          alignItems: 'center',
-          fontSize: '1.125rem',
-          fontWeight: '700'
-        }}>
-          <span>Netto-Cashflow</span>
-          <span style={{ color: 'var(--accent-green)' }}>
-            +7.160€
-          </span>
+        <div className="space-y-2">
+          <div className="flex justify-between">
+            <span>Mieteinnahmen (Monat)</span>
+            <span className="text-green-400 font-semibold">+8.360€</span>
+          </div>
+          <div className="flex justify-between">
+            <span>Betriebskosten</span>
+            <span className="text-red-400 font-semibold">-1.200€</span>
+          </div>
+          <hr className="border-slate-600" />
+          <div className="flex justify-between font-bold">
+            <span>Netto-Cashflow</span>
+            <span className="text-green-400">+7.160€</span>
+          </div>
         </div>
       </div>
 
       {/* Bottom Navigation */}
-      <BottomNavigation 
-        activeItem={activeNav}
-        onItemClick={setActiveNav}
-      />
+      <BottomNavigation />
     </div>
   );
 };
