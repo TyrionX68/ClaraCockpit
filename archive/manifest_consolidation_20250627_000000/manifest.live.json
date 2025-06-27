@@ -1,0 +1,148 @@
+{
+  "system_version": "ClaraSuper_v4.4.0_WaldhofstrasseLive",
+  "deployment_timestamp": "2025-06-16T13:30:00.000Z",
+  "environment": "LIVE_READY",
+  "user_identity": "hiss@clara360.de",
+  "property_object": "Waldhofstraße",
+  
+  "banking_integration": {
+    "status": "UI_UNLOCKED_FOR_VISUAL_VERIFICATION",
+    "provider": "FinAPI",
+    "environment": "SANDBOX_TO_LIVE_READY",
+    "endpoint": "https://sandbox.finapi.io/api/v2",
+    "live_endpoint": "https://api.finapi.io/api/v2",
+    "redirect_uri": "https://psd2.clara360.de/finapi/callback",
+    "linked_account": null,
+    "target_bank": "Sparkasse Mannheim",
+    "account_purpose": "Mietkonto Waldhofstraße",
+    "selective_banking": true,
+    "multibank_disabled": true
+  },
+  
+  "ui_components": {
+    "banking_selection_field": {
+      "enabled": true,
+      "autocomplete_endpoint": "/api/finapi/waldhofstrasse/banks",
+      "search_placeholder": "Bank suchen (z.B. Sparkasse, Deutsche Bank...)"
+    },
+    "account_type_selection": {
+      "enabled": true,
+      "options": ["CHECKING", "SAVINGS"],
+      "default": "CHECKING",
+      "label": "Kontotyp für Waldhofstraße"
+    },
+    "connection_button": {
+      "enabled": true,
+      "text": "🏘️ Bankkonto für Waldhofstraße verbinden",
+      "action": "createWaldhofstrasseBankConnection",
+      "webform_trigger": true
+    },
+    "dashboard_feedback": {
+      "enabled": true,
+      "status_display": "Bankverbindung aktiv",
+      "fields": ["bankName", "status", "kontoAlias", "propertyObject"]
+    }
+  },
+  
+  "kpi_modules": {
+    "rentflow_analytics": {
+      "enabled": true,
+      "data_source": "/api/finapi/waldhofstrasse/kpis",
+      "visible_after": "account_linked",
+      "update_interval": 3600,
+      "object_binding": "Waldhofstraße"
+    },
+    "account_balance_snapshot": {
+      "enabled": true,
+      "data_source": "/api/finapi/waldhofstrasse/accounts",
+      "visible_after": "first_transaction",
+      "icon": "🏘️",
+      "title": "Objekt-Kontostand (Waldhofstraße)"
+    },
+    "delta_30_days": {
+      "enabled": true,
+      "data_source": "/transactions?accountId={accountId}&days=30",
+      "visible_after": "account_linked_plus_1_day",
+      "calculations": ["inflow", "outflow", "net_change"],
+      "object_context": "Waldhofstraße"
+    },
+    "rent_tracking": {
+      "enabled": true,
+      "title": "Mieteingang vs. Soll",
+      "data_source": "/api/finapi/waldhofstrasse/kpis",
+      "tracking_fields": ["monthlyRentIncome", "rentPaymentCount", "latePayments"],
+      "object_binding": "Waldhofstraße"
+    },
+    "payment_timing": {
+      "enabled": true,
+      "title": "Zahlungseingang nach Fälligkeit",
+      "data_source": "/api/finapi/waldhofstrasse/kpis",
+      "threshold_day": 5,
+      "tracking": "late_payments_daily",
+      "object_context": "Waldhofstraße"
+    },
+    "transaction_timeline": {
+      "enabled": true,
+      "title": "Bankbewegungen: Letzte 30 Tage",
+      "data_source": "/transactions?accountId={accountId}&days=30",
+      "display_type": "timeline",
+      "object_binding": "Waldhofstraße"
+    }
+  },
+  
+  "api_endpoints": {
+    "health_check": "http://localhost:3006/api/health",
+    "banks_search": "/api/finapi/waldhofstrasse/banks",
+    "bank_connect": "/api/finapi/waldhofstrasse/connect",
+    "accounts": "/api/finapi/waldhofstrasse/accounts",
+    "kpis": "/api/finapi/waldhofstrasse/kpis",
+    "callback": "/api/finapi/waldhofstrasse/callback",
+    "environment_switch": "/api/finapi/switch-environment"
+  },
+  
+  "live_mode_preparation": {
+    "ready": true,
+    "switch_command": "POST /api/finapi/switch-environment {\"environment\": \"live\"}",
+    "live_credentials_required": true,
+    "live_endpoint": "https://api.finapi.io/api/v2",
+    "sandbox_fallback": true
+  },
+  
+  "security": {
+    "user_identity": "hiss@clara360.de",
+    "selective_banking_enforced": true,
+    "single_account_policy": true,
+    "object_binding_required": "Waldhofstraße",
+    "token_storage": "/secure/tokens/live.finapi.token.json"
+  },
+  
+  "logging": {
+    "directory": "/var/log/clara360/finapi",
+    "live_directory": "/var/log/clara360/finapi/live",
+    "audit_enabled": true,
+    "transaction_logging": true,
+    "kpi_logging": true
+  },
+  
+  "ui_state": {
+    "visus_ready": false,
+    "components_loaded": false,
+    "banking_integration_visible": false,
+    "kpi_dashboard_active": false,
+    "mock_data_removed": true
+  },
+  
+  "deployment_notes": {
+    "last_updated_by": "Manus A",
+    "governance_mode": "anticipatory_architecture",
+    "object_focus": "Waldhofstraße",
+    "integration_type": "selective_banking",
+    "next_steps": [
+      "UI-Komponenten aktivieren",
+      "Visus-Ready-Status setzen",
+      "Live-Modus-Umschaltung testen",
+      "KPI-Module validieren"
+    ]
+  }
+}
+
