@@ -1,24 +1,29 @@
 import React from 'react';
+import { NavLink, useLocation } from 'react-router-dom';
 
-const BottomNavigation = ({ activeItem = 'dashboard', onItemClick }) => {
+const BottomNavigation = () => {
+  const location = useLocation();
+  
   const navItems = [
-    { id: 'ki', icon: '🤖', label: 'Clara KI' },
-    { id: 'banking', icon: '💳', label: 'Banking' }, 
-    { id: 'manifest', icon: '⚙️', label: 'Manifest' },
-    { id: 'kommunikation', icon: '💬', label: 'Kommunikation' }
+    { id: 'clara-ki', label: 'Clara KI', icon: '🤖', path: '/clara-ki' },
+    { id: 'banking', label: 'Banking', icon: '💳', path: '/banking' },
+    { id: 'manifest', label: 'Manifest', icon: '⚙️', path: '/manifest' },
+    { id: 'kommunikation', label: 'Kommunikation', icon: '💬', path: '/kommunikation' }
   ];
 
   return (
     <div className="bottom-nav">
       {navItems.map((item) => (
-        <div
+        <NavLink
           key={item.id}
-          className={`bottom-nav-item ${activeItem === item.id ? 'active' : ''}`}
-          onClick={() => onItemClick?.(item.id)}
+          to={item.path}
+          className={({ isActive }) => 
+            `bottom-nav-item ${isActive ? 'active' : ''}`
+          }
         >
-          <span className="text-lg mb-1">{item.icon}</span>
-          <span className="text-xs font-medium">{item.label}</span>
-        </div>
+          <span className="text-2xl mb-1">{item.icon}</span>
+          <span className="text-xs">{item.label}</span>
+        </NavLink>
       ))}
     </div>
   );
