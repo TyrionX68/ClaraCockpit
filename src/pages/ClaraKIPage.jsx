@@ -42,7 +42,7 @@ const ClaraKIPage = () => {
       {/* Header */}
       <div className="p-6 border-b border-slate-700">
         <h1 className="text-2xl font-bold flex items-center">
-          🤖 Clara KI Assistant
+          🤖 Clara KI Assistant - ROUTING TEST
         </h1>
         <p className="text-slate-300 mt-2">Ihr intelligenter Assistent für alle Fragen</p>
       </div>
