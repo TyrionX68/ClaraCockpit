@@ -14,7 +14,7 @@
     
     function isMetaGovernor() {
         // Prüfe auf MetaGovernor-Berechtigung
-        if (window.currentUser && window.currentUser.email === "hiss@clara360.de") {
+        if (window.currentUser && window.currentUser.email === "admin@demo-clara360.de") {
             return true;
         }
         
@@ -23,7 +23,7 @@
                          sessionStorage.getItem('userEmail') ||
                          getCookie('userEmail');
         
-        if (userEmail === "hiss@clara360.de") {
+        if (userEmail === "admin@demo-clara360.de") {
             return true;
         }
         

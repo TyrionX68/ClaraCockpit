@@ -13,7 +13,7 @@
     }
     
     function isMetaGovernor() {
-        return true; // Fuer MetaGovernor hiss@clara360.de
+        return true; // Fuer MetaGovernor admin@demo-clara360.de
     }
     
     function createFloatingManifestButton() {

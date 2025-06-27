@@ -9,7 +9,7 @@
 - **Erstellt:** 2025-06-20T08:05:00Z
 - **Letzter Editor:** Manus A (mit GitHub Copilot)
 - **MetaGovernor-Status:** AKTIV
-- **Authentifizierung:** hiss@clara360.de
+- **Authentifizierung:** admin@demo-clara360.de
 - **Passwort:** Clara360!
 - **Authority:** MetaGovernor
 - **Source:** clara_fusion_manifest
@@ -34,7 +34,7 @@ Clara360 als KI-gestützte Hausverwaltungsplattform mit modularer React-Architek
 - **System Version:** ClaraSuper_v4.4.0_WaldhofstrasseLive
 - **Deployment Timestamp:** 2025-06-16T13:30:00.000Z
 - **Environment:** LIVE_READY
-- **User Identity:** hiss@clara360.de
+- **User Identity:** admin@demo-clara360.de
 - **Property Object:** Waldhofstraße
 - **Status:** UI_UNLOCKED_FOR_VISUAL_VERIFICATION
 <!-- /block-end -->
@@ -119,7 +119,7 @@ Clara360 als KI-gestützte Hausverwaltungsplattform mit modularer React-Architek
     "pfad": "/src/components/ManifestViewer.jsx", 
     "funktion": "MetaGovernor Manifest-Kontrolle",
     "authority": "MetaGovernor",
-    "authentifizierung": "hiss@clara360.de"
+    "authentifizierung": "admin@demo-clara360.de"
   },
   "ClaraThemeConfig": {
     "status": "AKTIV", 
@@ -226,7 +226,7 @@ Clara360 als KI-gestützte Hausverwaltungsplattform mit modularer React-Architek
 - **Status:** Bereit für Push
 
 ### AUTHENTIFIZIERUNG & CREDENTIALS:
-- **MetaGovernor-Login:** hiss@clara360.de
+- **MetaGovernor-Login:** admin@demo-clara360.de
 - **MetaGovernor-Passwort:** Clara360!
 - **VPS-Root-Passwort:** a53x658C
 - **FinAPI-Environment:** LIVE_READY (Sandbox to Live)
@@ -331,7 +331,7 @@ Clara360 als KI-gestützte Hausverwaltungsplattform mit modularer React-Architek
    - MetaGovernor Authority implementiert
 
 2. ✅ ManifestViewer Komponente erstellt
-   - React-Komponente mit hiss@clara360.de Authentifizierung
+   - React-Komponente mit admin@demo-clara360.de Authentifizierung
    - Modal mit Read/Edit-Modus
    - Button unten rechts für MetaGovernor-Zugang
    - Session-basierte Sicherheit
@@ -350,7 +350,7 @@ Clara360 als KI-gestützte Hausverwaltungsplattform mit modularer React-Architek
 **TECHNISCHE DETAILS:**
 - **Framework:** React 18 + Vite 6.3.5
 - **UI Library:** shadcn/ui + Tailwind CSS
-- **Authentifizierung:** hiss@clara360.de / Clara360!
+- **Authentifizierung:** admin@demo-clara360.de / Clara360!
 - **Manifest Authority:** MetaGovernor
 - **Copilot Integration:** ✅ Aktiv
 

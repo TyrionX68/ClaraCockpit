@@ -18,9 +18,6 @@ app.use(express.json());
 // FinAPI Konfiguration - ECHTE API-INTEGRATION
 const FINAPI_CONFIG = {
     baseUrl: 'https://sandbox.finapi.io/api/v2',
-    clientId: process.env.FINAPI_CLIENT_ID || 'your-finapi-client-id',
-    clientSecret: process.env.FINAPI_CLIENT_SECRET || 'your-finapi-client-secret',
-    apiKey: process.env.FINAPI_API_KEY || 'your-finapi-api-key'
 };
 
 // In-Memory Storage für WebForm-Status (in Produktion: Redis/Database)

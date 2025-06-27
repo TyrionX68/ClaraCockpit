@@ -60,7 +60,7 @@ class Clara360MobileOptimizer {
     return {
       role: 'metaGovernor', // oder 'admin', 'staff', 'external'
       name: 'T. Hiss',
-      email: 'hiss@clara360.de'
+      email: 'admin@demo-clara360.de'
     };
   }
   

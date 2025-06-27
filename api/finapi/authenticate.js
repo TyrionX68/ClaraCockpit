@@ -14,10 +14,7 @@ router.post('/', async (req, res) => {
   
   try {
     // Lade FinAPI-Credentials aus .env
-    const FINAPI_CLIENT_ID = process.env.FINAPI_CLIENT_ID;
-    const FINAPI_CLIENT_SECRET = process.env.FINAPI_CLIENT_SECRET;
     
-    if (!FINAPI_CLIENT_ID || !FINAPI_CLIENT_SECRET) {
       console.error('❌ FinAPI-Credentials fehlen in .env');
       return res.status(500).json({ 
         error: 'FinAPI-Credentials nicht konfiguriert',
@@ -31,8 +28,6 @@ router.post('/', async (req, res) => {
     const tokenResponse = await axios.post('https://api.finapi.io/oauth/token', 
       new URLSearchParams({
         grant_type: 'client_credentials',
-        client_id: FINAPI_CLIENT_ID,
-        client_secret: FINAPI_CLIENT_SECRET
       }), {
         headers: { 
           'Content-Type': 'application/x-www-form-urlencoded',

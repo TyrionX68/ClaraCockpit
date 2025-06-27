@@ -26,7 +26,7 @@ class ClaraUserManagement {
     this.users = [
       {
         id: 1,
-        email: 'hiss@clara360.de',
+        email: 'admin@demo-clara360.de',
         name: 'T. Hiss',
         role: 'MetaGovernor',
         status: 'active',
@@ -40,7 +40,7 @@ class ClaraUserManagement {
       },
       {
         id: 2,
-        email: 'admin@clara360.de',
+        email: 'admin@demo-clara360.de',
         name: 'System Admin',
         role: 'Admin',
         status: 'active',
@@ -601,7 +601,7 @@ class ClaraUserManagement {
   }
 
   getCurrentUser() {
-    return this.currentUser || this.users.find(u => u.email === 'hiss@clara360.de');
+    return this.currentUser || this.users.find(u => u.email === 'admin@demo-clara360.de');
   }
 
   setCurrentUser(email) {

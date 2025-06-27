@@ -14,8 +14,6 @@ app.use(express.json());
 
 // FinAPI Configuration - CORRECTED ENDPOINTS
 const FINAPI_CONFIG = {
-  clientId: process.env.FINAPI_CLIENT_ID,
-  clientSecret: process.env.FINAPI_CLIENT_SECRET,
   baseUrl: 'https://sandbox.finapi.io/api/v2',
   tokenEndpoint: 'https://sandbox.finapi.io/api/v2/oauth/token',
   redirectUri: process.env.FINAPI_REDIRECT_URI,
