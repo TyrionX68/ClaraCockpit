@@ -5,7 +5,7 @@
   "editor": "Manus A (mit GitHub Copilot)",
   "authority": "MetaGovernor",
   "authentication": {
-    "email": "hiss@clara360.de",
+    "email": "admin@demo-clara360.de",
     "password": "Clara360!",
     "access_level": "MetaGovernor"
   },
@@ -20,7 +20,7 @@
     "system_version": "ClaraSuper_v4.4.0_WaldhofstrasseLive",
     "deployment_timestamp": "2025-06-16T13:30:00.000Z",
     "environment": "LIVE_READY",
-    "user_identity": "hiss@clara360.de",
+    "user_identity": "admin@demo-clara360.de",
     "property_object": "Waldhofstraße",
     "status": "UI_UNLOCKED_FOR_VISUAL_VERIFICATION"
   },
@@ -101,7 +101,7 @@
       "path": "/src/components/ManifestViewer.jsx",
       "function": "MetaGovernor Manifest-Kontrolle",
       "authority": "MetaGovernor",
-      "authentication": "hiss@clara360.de",
+      "authentication": "admin@demo-clara360.de",
       "features": ["modal", "read_mode", "edit_mode", "session_security"]
     },
     "ClaraThemeConfig": {
@@ -188,7 +188,7 @@
     "manifest_viewer": {
       "status": "ABGESCHLOSSEN",
       "component": "ManifestViewer.jsx",
-      "authentication": "hiss@clara360.de",
+      "authentication": "admin@demo-clara360.de",
       "features": ["Modal", "Read/Edit-Modus", "Session-Sicherheit"],
       "position": "Button unten rechts"
     },

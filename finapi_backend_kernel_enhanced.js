@@ -58,7 +58,6 @@ app.use(express.json());
 function validateApiAccess(req, res, next) {
     const apiKey = req.headers['x-api-key'] || req.query.apikey;
     const validApiKeys = [
-        process.env.CLARA360_API_KEY,
         'clara360-internal-key', // Fallback für interne Requests
     ].filter(Boolean);
     
@@ -86,8 +85,6 @@ function validateApiAccess(req, res, next) {
 
 const FINAPI_CONFIG = {
     baseUrl: 'https://sandbox.finapi.io',
-    clientId: process.env.FINAPI_CLIENT_ID || 'your_client_id',
-    clientSecret: process.env.FINAPI_CLIENT_SECRET || 'your_client_secret',
     redirectUri: 'https://clara360.de/finapi/callback'
 };
 
@@ -233,7 +230,6 @@ app.listen(PORT, '0.0.0.0', () => {
     console.log(`🌐 Server running on http://0.0.0.0:${PORT}`);
     console.log(`📊 Features: Request-ID Tracking, Enhanced Logging, API Security`);
     console.log(`📝 Audit logs: ${path.join(__dirname, 'finapi_audit.log')}`);
-    console.log(`🔐 API Security: ${process.env.CLARA360_API_KEY ? 'Enabled' : 'Disabled (set CLARA360_API_KEY)'}`);
 });
 
 module.exports = app;

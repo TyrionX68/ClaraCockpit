@@ -351,7 +351,7 @@ export class ClaraInit {
       orientation: {
         welcome: "Fallback-Modus aktiv - Bitte MetaGovernor kontaktieren",
         urgentTasks: ["System-Wiederherstellung erforderlich"],
-        quickStart: ["Kontaktiere hiss@clara360.de für Support"]
+        quickStart: ["Kontaktiere admin@demo-clara360.de für Support"]
       }
     };
   }

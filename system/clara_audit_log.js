@@ -26,7 +26,7 @@ class ClaraAuditLog {
       {
         id: 1,
         timestamp: '2024-12-13T08:30:15Z',
-        user: 'hiss@clara360.de',
+        user: 'admin@demo-clara360.de',
         action: 'user_login',
         category: 'authentication',
         details: 'Benutzer angemeldet',
@@ -41,7 +41,7 @@ class ClaraAuditLog {
       {
         id: 2,
         timestamp: '2024-12-13T08:35:22Z',
-        user: 'hiss@clara360.de',
+        user: 'admin@demo-clara360.de',
         action: 'tenant_view',
         category: 'data_access',
         details: 'Mieter-Dashboard aufgerufen',
@@ -56,10 +56,10 @@ class ClaraAuditLog {
       {
         id: 3,
         timestamp: '2024-12-13T09:15:45Z',
-        user: 'admin@clara360.de',
+        user: 'admin@demo-clara360.de',
         action: 'user_created',
         category: 'user_management',
-        details: 'Neuer Benutzer erstellt: max.mustermann@clara360.de',
+        details: 'Neuer Benutzer erstellt: demo.user@demo-clara360.de',
         ipAddress: '192.168.1.101',
         userAgent: 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36',
         sessionId: 'sess_def456',
@@ -69,14 +69,14 @@ class ClaraAuditLog {
           table: 'users',
           action: 'insert',
           recordId: 'user_123',
-          changes: { email: 'max.mustermann@clara360.de', role: 'Mitarbeiter' }
+          changes: { email: 'demo.user@demo-clara360.de', role: 'Mitarbeiter' }
         },
         complianceLevel: 'high'
       },
       {
         id: 4,
         timestamp: '2024-12-13T10:22:18Z',
-        user: 'hiss@clara360.de',
+        user: 'admin@demo-clara360.de',
         action: 'backup_created',
         category: 'system_operation',
         details: 'Manuelles Backup erstellt: clara360_manual_2024-12-13.json',
@@ -136,7 +136,7 @@ class ClaraAuditLog {
       {
         id: 7,
         timestamp: '2024-12-13T13:15:42Z',
-        user: 'hiss@clara360.de',
+        user: 'admin@demo-clara360.de',
         action: 'system_error',
         category: 'error',
         details: 'Fehler beim Laden der Transaktionsdaten',
@@ -221,8 +221,8 @@ class ClaraAuditLog {
             
             <select class="user-filter">
               <option value="all">Alle Benutzer</option>
-              <option value="hiss@clara360.de">T. Hiss</option>
-              <option value="admin@clara360.de">Admin</option>
+              <option value="admin@demo-clara360.de">T. Hiss</option>
+              <option value="admin@demo-clara360.de">Admin</option>
               <option value="mitarbeiter@clara360.de">Mitarbeiter</option>
               <option value="system">System</option>
             </select>
@@ -844,7 +844,7 @@ ${highEntries > 10 ? '⚠️ Viele hochpriorisierte Events' : '✅ Normale Event
   }
 
   getCurrentUser() {
-    return window.claraUserManagement?.getCurrentUser()?.email || 'hiss@clara360.de';
+    return window.claraUserManagement?.getCurrentUser()?.email || 'admin@demo-clara360.de';
   }
 
   getClientIP() {

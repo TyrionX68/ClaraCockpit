@@ -6,8 +6,6 @@ class Clara360FinAPIIntegration {
     this.config = {
       // Live FinAPI (nicht Sandbox)
       baseURL: 'https://api.finapi.io',
-      clientId: process.env.VITE_FINAPI_CLIENT_ID || 'clara360_client_id',
-      clientSecret: process.env.VITE_FINAPI_CLIENT_SECRET || 'clara360_client_secret',
       redirectUri: 'https://clara360.de/banking/callback',
       
       // Token-Speicherung

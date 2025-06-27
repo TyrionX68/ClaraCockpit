@@ -19,8 +19,6 @@ app.use(express.json());
 
 // FinAPI Configuration - Dynamic Live/Sandbox
 const FINAPI_CONFIG = {
-  clientId: process.env.FINAPI_CLIENT_ID,
-  clientSecret: process.env.FINAPI_CLIENT_SECRET,
   baseUrl: process.env.FINAPI_BASE_URL,
   tokenEndpoint: process.env.FINAPI_TOKEN_ENDPOINT,
   webformEndpoint: process.env.FINAPI_WEBFORM_ENDPOINT,

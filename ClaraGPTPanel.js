@@ -1,5 +1,5 @@
 // ClaraGPTPanel.js - GPT-4.5-Integration für MetaGovernor
-// Nur sichtbar für hiss@clara360.de
+// Nur sichtbar für admin@demo-clara360.de
 
 (function() {
     'use strict';
@@ -8,7 +8,7 @@
     function createClaraGPTPanel() {
         // Prüfe MetaGovernor-Berechtigung
         const userEmail = localStorage.getItem('clara360_user_email');
-        if (userEmail !== 'hiss@clara360.de') {
+        if (userEmail !== 'admin@demo-clara360.de') {
             console.log('🚫 GPT-Panel nur für MetaGovernor verfügbar');
             return;
         }

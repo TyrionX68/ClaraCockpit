@@ -65,8 +65,6 @@ async function generateNewToken() {
       },
       body: new URLSearchParams({
         grant_type: 'client_credentials',
-        client_id: FINAPI_CLIENT_ID,
-        client_secret: FINAPI_CLIENT_SECRET
       })
     });
     
@@ -475,12 +473,7 @@ app.post('/api/finapi/authenticate', async (req, res) => {
   
   try {
     // Lade FinAPI-Credentials aus .env oder direkt
-    const FINAPI_CLIENT_ID = process.env.FINAPI_CLIENT_ID || 'clara360_finapi_client';
-    const FINAPI_CLIENT_SECRET = process.env.FINAPI_CLIENT_SECRET || 'clara360_finapi_secret_2024';
-    console.log("DEBUG - CLIENT_ID:", FINAPI_CLIENT_ID);
-    console.log("DEBUG - CLIENT_SECRET:", FINAPI_CLIENT_SECRET ? "[HIDDEN]" : "undefined");
     
-    if (!FINAPI_CLIENT_ID || !FINAPI_CLIENT_SECRET) {
       console.error('❌ FinAPI-Credentials fehlen');
       return res.status(500).json({ 
         error: 'FinAPI-Credentials nicht konfiguriert',
@@ -496,8 +489,6 @@ app.post('/api/finapi/authenticate', async (req, res) => {
     
     const postData = querystring.stringify({
       grant_type: 'client_credentials',
-      client_id: FINAPI_CLIENT_ID,
-      client_secret: FINAPI_CLIENT_SECRET
     });
     
     const options = {
