@@ -1,0 +1,31 @@
+Datum,Kategorie,Beschreibung,Betrag,Typ,Einheit,Dienstleister,Status,Rechnungsnummer
+2024-01-15,Heizung,Heizungsreparatur 2. OG,280.00,Ausgabe,2. OG Rechts,Heizung Mannheim GmbH,Bezahlt,R-2024-001
+2024-01-22,Reinigung,Treppenhaus-Reinigung,120.00,Ausgabe,Allgemein,CleanTeam Mannheim,Bezahlt,R-2024-002
+2024-02-05,Elektrik,Beleuchtung Hausflur,95.00,Ausgabe,Allgemein,ElektroService Hiss,Bezahlt,R-2024-003
+2024-02-18,Wartung,Aufzugswartung,150.00,Ausgabe,Allgemein,Aufzug-Service Rhein-Neckar,Bezahlt,R-2024-004
+2024-03-10,Sanitär,Wasserhahn-Reparatur Café,85.00,Ausgabe,Café (Erdgeschoss),Sanitär Mannheim,Bezahlt,R-2024-005
+2024-03-25,Garten,Gartenpflege Hinterhof,200.00,Ausgabe,Allgemein,Grünpflege Mannheim,Bezahlt,R-2024-006
+2024-04-08,Heizung,Heizungswartung Jahresservice,450.00,Ausgabe,Allgemein,Heizung Mannheim GmbH,Bezahlt,R-2024-007
+2024-04-20,Reinigung,Fensterreinigung,180.00,Ausgabe,Allgemein,CleanTeam Mannheim,Bezahlt,R-2024-008
+2024-05-12,Elektrik,Sicherungskasten-Wartung,120.00,Ausgabe,Allgemein,ElektroService Hiss,Bezahlt,R-2024-009
+2024-05-28,Sanitär,Rohrreinigung Dachgeschoss,95.00,Ausgabe,Dachgeschoss,Sanitär Mannheim,Bezahlt,R-2024-010
+2024-06-15,Wartung,Brandmelder-Prüfung,75.00,Ausgabe,Allgemein,Sicherheitstechnik Mannheim,Bezahlt,R-2024-011
+2024-01-31,Nebenkosten,Strom Allgemeinbereiche,145.00,Ausgabe,Allgemein,MVV Energie AG,Bezahlt,R-2024-012
+2024-01-31,Nebenkosten,Wasser/Abwasser,320.00,Ausgabe,Allgemein,Stadtwerke Mannheim,Bezahlt,R-2024-013
+2024-01-31,Nebenkosten,Müllentsorgung,85.00,Ausgabe,Allgemein,AVR Kommunal GmbH,Bezahlt,R-2024-014
+2024-02-29,Nebenkosten,Strom Allgemeinbereiche,138.00,Ausgabe,Allgemein,MVV Energie AG,Bezahlt,R-2024-015
+2024-02-29,Nebenkosten,Wasser/Abwasser,295.00,Ausgabe,Allgemein,Stadtwerke Mannheim,Bezahlt,R-2024-016
+2024-02-29,Nebenkosten,Müllentsorgung,85.00,Ausgabe,Allgemein,AVR Kommunal GmbH,Bezahlt,R-2024-017
+2024-03-31,Nebenkosten,Strom Allgemeinbereiche,152.00,Ausgabe,Allgemein,MVV Energie AG,Bezahlt,R-2024-018
+2024-03-31,Nebenkosten,Wasser/Abwasser,310.00,Ausgabe,Allgemein,Stadtwerke Mannheim,Bezahlt,R-2024-019
+2024-03-31,Nebenkosten,Müllentsorgung,85.00,Ausgabe,Allgemein,AVR Kommunal GmbH,Bezahlt,R-2024-020
+2024-04-30,Nebenkosten,Strom Allgemeinbereiche,140.00,Ausgabe,Allgemein,MVV Energie AG,Bezahlt,R-2024-021
+2024-04-30,Nebenkosten,Wasser/Abwasser,285.00,Ausgabe,Allgemein,Stadtwerke Mannheim,Bezahlt,R-2024-022
+2024-04-30,Nebenkosten,Müllentsorgung,85.00,Ausgabe,Allgemein,AVR Kommunal GmbH,Bezahlt,R-2024-023
+2024-05-31,Nebenkosten,Strom Allgemeinbereiche,135.00,Ausgabe,Allgemein,MVV Energie AG,Bezahlt,R-2024-024
+2024-05-31,Nebenkosten,Wasser/Abwasser,275.00,Ausgabe,Allgemein,Stadtwerke Mannheim,Bezahlt,R-2024-025
+2024-05-31,Nebenkosten,Müllentsorgung,85.00,Ausgabe,Allgemein,AVR Kommunal GmbH,Bezahlt,R-2024-026
+2024-06-30,Nebenkosten,Strom Allgemeinbereiche,148.00,Ausgabe,Allgemein,MVV Energie AG,Bezahlt,R-2024-027
+2024-06-30,Nebenkosten,Wasser/Abwasser,290.00,Ausgabe,Allgemein,Stadtwerke Mannheim,Bezahlt,R-2024-028
+2024-06-30,Nebenkosten,Müllentsorgung,85.00,Ausgabe,Allgemein,AVR Kommunal GmbH,Bezahlt,R-2024-029
+

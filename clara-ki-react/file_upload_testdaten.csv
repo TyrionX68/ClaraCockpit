@@ -1,0 +1,16 @@
+Dateiname,Typ,Größe,Datum,Status,Kategorie,Hochgeladen von,Sprache
+Mietvertrag_Müller_2024.pdf,application/pdf,1245678,2024-06-01,success,Verträge,Max Müller,Deutsch
+Nebenkostenabrechnung_Q1_2024.xlsx,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,892345,2024-05-28,success,Finanzen,Thomas Klein,Deutsch
+Hausordnung_aktualisiert.docx,application/vnd.openxmlformats-officedocument.wordprocessingml.document,345678,2024-06-02,success,Dokumente,Lisa Bauer,Deutsch
+Grundriss_Wohnung_205.png,image/png,2345678,2024-06-03,success,Immobilien,Stefan Hoffmann,Deutsch
+Schadensmeldung_Wasserschaden.pdf,application/pdf,1567890,2024-06-04,pending,Schäden,Julia Schmidt,Deutsch
+Energieausweis_Gebäude_B.pdf,application/pdf,2345678,2024-05-30,success,Immobilien,Michael Wagner,Deutsch
+Mieterliste_2024_Q2.csv,text/csv,567890,2024-06-01,success,Mieter,Sabine Fischer,Deutsch
+Versicherungspolice_2024.pdf,application/pdf,1234567,2024-05-25,success,Versicherung,Peter Schulz,Deutsch
+Bauplan_Renovierung_Küche.jpg,image/jpeg,3456789,2024-06-02,pending,Renovierung,Christine Meyer,Deutsch
+Eigentümerversammlung_Protokoll.docx,application/vnd.openxmlformats-officedocument.wordprocessingml.document,456789,2024-06-01,success,Protokolle,Andreas Becker,Deutsch
+Heizkosten_Verteilung_2023.csv,text/csv,345678,2024-05-20,success,Finanzen,Nicole Schneider,Deutsch
+Wartungsvertrag_Aufzug.pdf,application/pdf,789456,2024-06-03,failed,Verträge,Markus Weber,Deutsch
+Brandschutzprüfung_2024.pdf,application/pdf,1234567,2024-06-04,pending,Sicherheit,Laura Müller,Deutsch
+Grundsteuer_Bescheid_2024.pdf,application/pdf,567890,2024-05-15,success,Steuern,Daniel Schmidt,Deutsch
+Mietzahlung_Übersicht_Q2.xlsx,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,678901,2024-06-01,failed,Finanzen,Sarah Becker,Deutsch
