@@ -1,103 +1,57 @@
-import React, { useState, useRef, useEffect } from 'react';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '../components/ui/card';
-import { Button } from '../components/ui/button';
-import { Input } from '../components/ui/input';
-import { Badge } from '../components/ui/badge';
-import { ArrowLeft, Bot, User, Send, Sparkles, MessageSquare, Zap, Calculator, TrendingUp, Home, Users } from 'lucide-react';
+import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { Bot, Users, Mic, MicOff, Send } from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
 import VoiceFeedback from '../components/molecules/VoiceFeedback';
 import MicButton from '../components/molecules/MicButton';
 import ClaraKIEngine from '../components/organisms/ClaraKIEngine';
-import { createClient } from '@supabase/supabase-js';
 
-// Supabase Client
-const supabase = createClient(
-  'https://anhomormslputicoybng.supabase.co',
-  'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImFuaG9tb3Jtc2xwdXRpY295Ym5nIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MTk0MDcwNzEsImV4cCI6MjAzNDk4MzA3MX0.4R5TCDhUNMKJLfGJOKUYGJZaKBOOOBgOjfA_JdWBqzY'
-);
-
-const ClaraKIPage = ({ onNavigate }) => {
+const ClaraKIPage = () => {
+  const navigate = useNavigate();
   const [messages, setMessages] = useState([
     {
-      id: 1,
       type: 'assistant',
       content: 'Hallo! Ich bin Clara KI, Ihre intelligente Assistentin für die Hausverwaltung. Ich kenne alle Immobilien-Fachbegriffe, kann Wirtschaftlichkeitsberechnungen durchführen und alle Module steuern. Sprechen Sie mit mir oder schreiben Sie Ihre Frage!',
-      timestamp: new Date(),
-      suggestions: [
-        'Zeige mir das Dashboard',
-        'Wie ist mein Cashflow?',
-        'Berechne die Rendite',
-        'Zeige Mietrückstände'
-      ]
+      timestamp: new Date().toLocaleTimeString('de-DE', { hour: '2-digit', minute: '2-digit' }),
+      suggestions: ['Zeige mir das Dashboard', 'Wie ist mein Cashflow?', 'Berechne die Rendite', 'Zeige Mietrückstände'],
+      kpis: {}
     }
   ]);
   const [inputValue, setInputValue] = useState('');
   const [isTyping, setIsTyping] = useState(false);
   const [voiceActive, setVoiceActive] = useState(false);
-  const messagesEndRef = useRef(null);
 
-  // Clara KI Engine Integration
-  const claraEngine = ClaraKIEngine({ 
-    onNavigate, 
-    supabaseClient: supabase 
+  // Initialize Clara KI Engine
+  const claraEngine = ClaraKIEngine({
+    onNavigate: navigate,
+    supabaseClient: null // Mock for now
   });
 
-  const scrollToBottom = () => {
-    messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
-  };
+  const { contextData } = claraEngine;
 
-  useEffect(() => {
-    scrollToBottom();
-  }, [messages]);
-
-  // Handle voice feedback
-  const getVoiceStatus = () => {
-    if (claraEngine.isProcessing) return 'processing';
-    if (claraEngine.isListening) return 'listening';
-    if (voiceActive) return 'success';
-    return 'idle';
-  };
-
-  const getVoiceMessage = () => {
-    if (claraEngine.isProcessing) return 'Clara denkt nach...';
-    if (claraEngine.isListening) return 'Clara hört zu...';
-    if (claraEngine.lastCommand) return `Verstanden: "${claraEngine.lastCommand}"`;
-    if (voiceActive) return 'Voice-Control aktiv';
-    return '';
-  };
-
-  const handleVoiceToggle = () => {
-    setVoiceActive(!voiceActive);
-    claraEngine.toggleVoiceRecognition();
-  };
-
-  const handleSendMessage = async (messageText = null) => {
-    const text = messageText || inputValue;
-    if (!text.trim()) return;
+  const handleSendMessage = async (message = inputValue) => {
+    if (!message.trim()) return;
 
     const userMessage = {
-      id: messages.length + 1,
       type: 'user',
-      content: text,
-      timestamp: new Date()
+      content: message,
+      timestamp: new Date().toLocaleTimeString('de-DE', { hour: '2-digit', minute: '2-digit' })
     };
 
     setMessages(prev => [...prev, userMessage]);
     setInputValue('');
     setIsTyping(true);
 
-    // Process with Clara KI Engine
     try {
-      await claraEngine.processVoiceCommand(text.toLowerCase());
-      
-      // Generate intelligent response based on context
-      const response = await generateIntelligentResponse(text, claraEngine.contextData);
-      
-      setTimeout(() => {
+      // Simulate processing delay
+      setTimeout(async () => {
+        const response = await generateIntelligentResponse(message, contextData);
+        
         const assistantMessage = {
-          id: messages.length + 2,
           type: 'assistant',
           content: response.content,
-          timestamp: new Date(),
+          timestamp: new Date().toLocaleTimeString('de-DE', { hour: '2-digit', minute: '2-digit' }),
           suggestions: response.suggestions,
           kpis: response.kpis
         };
@@ -106,7 +60,7 @@ const ClaraKIPage = ({ onNavigate }) => {
         setIsTyping(false);
         
         // Speak response if voice is active
-        if (voiceActive) {
+        if (voiceActive && response.content) {
           claraEngine.speak(response.content);
         }
       }, 1000);
@@ -132,7 +86,7 @@ const ClaraKIPage = ({ onNavigate }) => {
     if (lowerInput.includes('cashflow') || lowerInput.includes('rendite')) {
       const monthlyRent = contextData.kpis?.totalRent || 0;
       const annualRent = monthlyRent * 12;
-      const estimatedCosts = annualRent * 0.25; // 25% Bewirtschaftungskosten
+      const estimatedCosts = annualRent * 0.25;
       const netCashflow = annualRent - estimatedCosts;
       
       return {
@@ -173,7 +127,8 @@ const ClaraKIPage = ({ onNavigate }) => {
     // Fallback: Allgemeine Immobilien-Beratung
     return {
       content: 'Als Ihre Immobilien-Expertin kann ich Ihnen bei allen Fragen zur Hausverwaltung helfen. Ich kenne Fachbegriffe, führe Wirtschaftlichkeitsberechnungen durch und analysiere Ihre Daten. Was möchten Sie wissen?',
-      suggestions: ['Dashboard anzeigen', 'Cashflow berechnen', 'Mieter verwalten', 'Wartung planen']
+      suggestions: ['Dashboard anzeigen', 'Cashflow berechnen', 'Mieter verwalten', 'Wartung planen'],
+      kpis: contextData.kpis || {}
     };
   };
 
@@ -181,8 +136,27 @@ const ClaraKIPage = ({ onNavigate }) => {
     handleSendMessage(suggestion);
   };
 
+  const handleVoiceToggle = () => {
+    setVoiceActive(!voiceActive);
+    claraEngine.toggleVoiceRecognition();
+  };
+
+  const getVoiceMessage = () => {
+    if (claraEngine.isListening) return 'Ich höre zu...';
+    if (claraEngine.isProcessing) return 'Verarbeite Anfrage...';
+    if (voiceActive) return 'Voice-Control aktiv';
+    return 'Voice-Control inaktiv';
+  };
+
+  const getVoiceStatus = () => {
+    if (claraEngine.isListening) return 'listening';
+    if (claraEngine.isProcessing) return 'processing';
+    if (voiceActive) return 'active';
+    return 'inactive';
+  };
+
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-purple-50">
+    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-purple-50 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900">
       {/* Voice Feedback */}
       <VoiceFeedback
         isActive={voiceActive || claraEngine.isListening || claraEngine.isProcessing}
@@ -193,42 +167,35 @@ const ClaraKIPage = ({ onNavigate }) => {
       />
 
       {/* Header */}
-      <div className="bg-white/80 backdrop-blur-sm border-b border-gray-200 sticky top-0 z-40">
+      <div className="bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm border-b border-gray-200 dark:border-gray-700 sticky top-0 z-40">
         <div className="max-w-4xl mx-auto px-4 py-4">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-4">
-              <Button
-                variant="ghost"
-                size="sm"
-                onClick={() => onNavigate('dashboard')}
-                className="text-gray-600 hover:text-gray-900"
-              >
-                <ArrowLeft className="w-4 h-4 mr-2" />
-                Zurück
-              </Button>
               <div className="flex items-center gap-3">
-                <div className="w-10 h-10 bg-gradient-to-r from-blue-500 to-purple-600 rounded-full flex items-center justify-center">
+                <div className="w-10 h-10 bg-gradient-to-br from-blue-500 to-purple-600 rounded-xl flex items-center justify-center">
                   <Bot className="w-6 h-6 text-white" />
                 </div>
                 <div>
-                  <h1 className="text-xl font-bold text-gray-900">Clara KI</h1>
-                  <p className="text-sm text-gray-600">Immobilien-Expertin mit Voice-Control</p>
+                  <h1 className="text-xl font-bold text-gray-900 dark:text-white">Clara KI</h1>
+                  <p className="text-sm text-gray-600 dark:text-gray-300">Immobilien-Expertin mit Voice-Control</p>
                 </div>
               </div>
             </div>
-            
-            {/* Voice Control Status */}
-            <div className="flex items-center gap-2">
-              <Badge variant={voiceActive ? "default" : "secondary"} className="gap-1">
-                <Sparkles className="w-3 h-3" />
-                {voiceActive ? 'Voice aktiv' : 'Voice inaktiv'}
-              </Badge>
-              {claraEngine.contextData.kpis && (
-                <Badge variant="outline" className="gap-1">
-                  <TrendingUp className="w-3 h-3" />
-                  {claraEngine.contextData.kpis.tenantCount} Mieter
-                </Badge>
-              )}
+
+            <div className="flex items-center gap-3">
+              <div className="flex items-center gap-2 text-sm">
+                <div className={`w-2 h-2 rounded-full ${voiceActive ? 'bg-green-500' : 'bg-gray-400'}`}></div>
+                <span className="text-gray-600 dark:text-gray-300">
+                  {voiceActive ? 'Voice aktiv' : 'Voice inaktiv'}
+                </span>
+              </div>
+              
+              <div className="flex items-center gap-2 text-sm">
+                <Users className="w-4 h-4 text-gray-500" />
+                <span className="text-gray-600 dark:text-gray-300">
+                  {contextData.kpis?.tenantCount || 0} Mieter
+                </span>
+              </div>
             </div>
           </div>
         </div>
@@ -236,77 +203,36 @@ const ClaraKIPage = ({ onNavigate }) => {
 
       {/* Chat Container */}
       <div className="max-w-4xl mx-auto px-4 py-6">
-        <Card className="h-[calc(100vh-200px)] flex flex-col shadow-xl border-0 bg-white/90 backdrop-blur-sm">
-          {/* Messages */}
-          <CardContent className="flex-1 overflow-y-auto p-6 space-y-4">
-            {messages.map((message) => (
+        <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-xl border border-gray-200 dark:border-gray-700 overflow-hidden">
+          {/* Chat Messages */}
+          <div className="h-96 overflow-y-auto p-6 space-y-4">
+            {messages.map((message, index) => (
               <div
-                key={message.id}
+                key={index}
                 className={`flex gap-3 ${message.type === 'user' ? 'justify-end' : 'justify-start'}`}
               >
                 {message.type === 'assistant' && (
-                  <div className="w-8 h-8 bg-gradient-to-r from-blue-500 to-purple-600 rounded-full flex items-center justify-center flex-shrink-0">
-                    <Bot className="w-5 h-5 text-white" />
+                  <div className="w-8 h-8 bg-gradient-to-br from-blue-500 to-purple-600 rounded-full flex items-center justify-center flex-shrink-0">
+                    <Bot className="w-4 h-4 text-white" />
                   </div>
                 )}
                 
-                <div className={`max-w-[80%] ${message.type === 'user' ? 'order-1' : ''}`}>
-                  <div
-                    className={`p-4 rounded-2xl ${
-                      message.type === 'user'
-                        ? 'bg-blue-500 text-white ml-auto'
-                        : 'bg-gray-100 text-gray-900'
-                    }`}
-                  >
-                    <p className="text-sm leading-relaxed">{message.content}</p>
+                <div className={`
+                  max-w-xs lg:max-w-md px-4 py-3 rounded-2xl
+                  ${message.type === 'user' 
+                    ? 'bg-blue-500 text-white' 
+                    : 'bg-gray-100 dark:bg-gray-700 text-gray-900 dark:text-white'
+                  }
+                `}>
+                  <p className="text-sm">{message.content}</p>
+                  <div className="text-xs opacity-70 mt-1">
+                    {message.timestamp}
                   </div>
-                  
-                  {/* KPIs Display */}
-                  {message.kpis && (
-                    <div className="mt-3 grid grid-cols-2 gap-2">
-                      <div className="bg-blue-50 p-3 rounded-lg">
-                        <div className="flex items-center gap-2">
-                          <Home className="w-4 h-4 text-blue-600" />
-                          <span className="text-sm font-medium">{message.kpis.tenantCount} Mieter</span>
-                        </div>
-                      </div>
-                      <div className="bg-green-50 p-3 rounded-lg">
-                        <div className="flex items-center gap-2">
-                          <TrendingUp className="w-4 h-4 text-green-600" />
-                          <span className="text-sm font-medium">{message.kpis.totalRent?.toLocaleString('de-DE')} €</span>
-                        </div>
-                      </div>
-                    </div>
-                  )}
-                  
-                  {/* Suggestions */}
-                  {message.suggestions && (
-                    <div className="mt-3 flex flex-wrap gap-2">
-                      {message.suggestions.map((suggestion, index) => (
-                        <Button
-                          key={index}
-                          variant="outline"
-                          size="sm"
-                          onClick={() => handleSuggestionClick(suggestion)}
-                          className="text-xs"
-                        >
-                          {suggestion}
-                        </Button>
-                      ))}
-                    </div>
-                  )}
-                  
-                  <p className="text-xs text-gray-500 mt-2">
-                    {message.timestamp.toLocaleTimeString('de-DE', { 
-                      hour: '2-digit', 
-                      minute: '2-digit' 
-                    })}
-                  </p>
                 </div>
                 
                 {message.type === 'user' && (
-                  <div className="w-8 h-8 bg-gray-300 rounded-full flex items-center justify-center flex-shrink-0">
-                    <User className="w-5 h-5 text-gray-600" />
+                  <div className="w-8 h-8 bg-gray-300 dark:bg-gray-600 rounded-full flex items-center justify-center flex-shrink-0">
+                    <span className="text-sm font-medium text-gray-700 dark:text-gray-300">Sie</span>
                   </div>
                 )}
               </div>
@@ -314,58 +240,70 @@ const ClaraKIPage = ({ onNavigate }) => {
             
             {isTyping && (
               <div className="flex gap-3 justify-start">
-                <div className="w-8 h-8 bg-gradient-to-r from-blue-500 to-purple-600 rounded-full flex items-center justify-center">
-                  <Bot className="w-5 h-5 text-white" />
+                <div className="w-8 h-8 bg-gradient-to-br from-blue-500 to-purple-600 rounded-full flex items-center justify-center flex-shrink-0">
+                  <Bot className="w-4 h-4 text-white" />
                 </div>
-                <div className="bg-gray-100 p-4 rounded-2xl">
-                  <div className="flex gap-1">
+                <div className="bg-gray-100 dark:bg-gray-700 px-4 py-3 rounded-2xl">
+                  <div className="flex space-x-1">
                     <div className="w-2 h-2 bg-gray-400 rounded-full animate-bounce"></div>
-                    <div className="w-2 h-2 bg-gray-400 rounded-full animate-bounce" style={{ animationDelay: '0.1s' }}></div>
-                    <div className="w-2 h-2 bg-gray-400 rounded-full animate-bounce" style={{ animationDelay: '0.2s' }}></div>
+                    <div className="w-2 h-2 bg-gray-400 rounded-full animate-bounce" style={{animationDelay: '0.1s'}}></div>
+                    <div className="w-2 h-2 bg-gray-400 rounded-full animate-bounce" style={{animationDelay: '0.2s'}}></div>
                   </div>
                 </div>
               </div>
             )}
-            <div ref={messagesEndRef} />
-          </CardContent>
+          </div>
 
-          {/* Input */}
-          <div className="p-4 border-t border-gray-200 bg-white/50">
-            <div className="flex gap-3 items-end">
-              <div className="flex-1">
+          {/* Suggestions */}
+          {messages.length > 0 && messages[messages.length - 1].suggestions && (
+            <div className="px-6 py-4 border-t border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-750">
+              <div className="flex flex-wrap gap-2">
+                {messages[messages.length - 1].suggestions.map((suggestion, index) => (
+                  <Button
+                    key={index}
+                    variant="outline"
+                    size="sm"
+                    onClick={() => handleSuggestionClick(suggestion)}
+                    className="text-xs bg-white dark:bg-gray-800 hover:bg-blue-50 dark:hover:bg-blue-900 border-gray-300 dark:border-gray-600"
+                  >
+                    {suggestion}
+                  </Button>
+                ))}
+              </div>
+            </div>
+          )}
+
+          {/* Input Area */}
+          <div className="p-6 border-t border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800">
+            <div className="flex gap-3">
+              <div className="flex-1 relative">
                 <Input
                   value={inputValue}
                   onChange={(e) => setInputValue(e.target.value)}
-                  placeholder="Fragen Sie Clara nach Immobilien-Kennzahlen, Berechnungen oder Verwaltungsaufgaben..."
                   onKeyPress={(e) => e.key === 'Enter' && handleSendMessage()}
-                  className="resize-none border-gray-300 focus:border-blue-500"
+                  placeholder="Fragen Sie Clara nach Immobilien-Kennzahlen, Berechnungen oder Verwaltungsaufgaben..."
+                  className="pr-12 dark:bg-gray-700 dark:border-gray-600 dark:text-white"
                 />
+                <Button
+                  onClick={() => handleSendMessage()}
+                  size="sm"
+                  className="absolute right-1 top-1 h-8 w-8 p-0"
+                  disabled={!inputValue.trim()}
+                >
+                  <Send className="w-4 h-4" />
+                </Button>
               </div>
+              
               <MicButton
                 isActive={voiceActive}
                 isListening={claraEngine.isListening}
-                onToggle={handleVoiceToggle}
-                position="inline"
+                onClick={handleVoiceToggle}
+                title={voiceActive ? 'Voice deaktivieren' : 'Voice aktivieren'}
               />
-              <Button 
-                onClick={() => handleSendMessage()}
-                disabled={!inputValue.trim() || isTyping}
-                className="bg-blue-500 hover:bg-blue-600"
-              >
-                <Send className="w-4 h-4" />
-              </Button>
             </div>
           </div>
-        </Card>
+        </div>
       </div>
-
-      {/* Floating Voice Button */}
-      <MicButton
-        isActive={voiceActive}
-        isListening={claraEngine.isListening}
-        onToggle={handleVoiceToggle}
-        position="floating"
-      />
     </div>
   );
 };
