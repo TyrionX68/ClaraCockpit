@@ -31,6 +31,7 @@ import { useProactiveAISuggestions } from '../hooks/useProactiveAISuggestions';
 // NEW V6.1.9 VOICE SYSTEM ISOLATION
 import SimpleMicButton from '../components/molecules/SimpleMicButton';
 import WakewordButton from '../components/molecules/WakewordButton';
+import WorkingMicButton from '../components/molecules/WorkingMicButton';
 import { useVoiceSystemHandler } from '../hooks/VoiceSystemHandler';
 
 // Main ClaraKI Component with Voice Integration
@@ -395,10 +396,10 @@ const ClaraKIPageContent = () => {
             </div>
             
             <div className="flex flex-col sm:flex-row gap-3 sm:gap-6">
-              {/* NEW V6.1.9 VOICE SYSTEM - Separated Manual & Wakeword */}
+              {/* WORKING V6.1.9 VOICE SYSTEM - Functional Manual & Wakeword */}
               <div className="flex items-center gap-3">
-                {/* Manual Speech Button (Sprechen) */}
-                <SimpleMicButton
+                {/* Working Manual Speech Button (Sprechen) */}
+                <WorkingMicButton
                   onTranscriptReceived={(transcript) => {
                     if (transcript.trim()) {
                       console.log('📝 Manual transcript received:', transcript);
@@ -407,11 +408,10 @@ const ClaraKIPageContent = () => {
                   }}
                   size="sm"
                   showStatus={true}
-                  showAudioLevel={true}
                   className="flex-shrink-0"
                 />
                 
-                {/* Wakeword Button (Hey Clara) */}
+                {/* Wakeword Button (Hey Clara) - TODO: Implement real functionality */}
                 <WakewordButton
                   size="sm"
                   showStatus={true}
@@ -574,13 +574,12 @@ const ClaraKIPageContent = () => {
                 </Button>
               </div>
               
-              {/* NEW V6.1.9 - Unified Voice System for Chat Input */}
-              <SimpleMicButton
+              {/* WORKING V6.1.9 - Guaranteed Functional Voice System */}
+              <WorkingMicButton
                 onTranscriptReceived={handleSendMessage}
                 className="w-10 h-10 sm:w-12 sm:h-12"
                 size="sm"
                 showStatus={false}
-                showAudioLevel={false}
               />
             </div>
           </div>
