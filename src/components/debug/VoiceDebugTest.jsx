@@ -1,18 +1,19 @@
 /**
  * VoiceDebugTest.jsx
- * Isolierter Test für Speech Recognition API
+ * Isolierter Test für Speech Recognition API + Chat Integration
  * Debugging für Clara Voice-Integration
  */
 
 import React, { useState, useEffect } from 'react';
-import { Mic, MicOff } from 'lucide-react';
+import { Mic, MicOff, MessageSquare } from 'lucide-react';
 
-const VoiceDebugTest = () => {
+const VoiceDebugTest = ({ onTranscriptReceived }) => {
   const [isSupported, setIsSupported] = useState(false);
   const [isListening, setIsListening] = useState(false);
   const [transcript, setTranscript] = useState('');
   const [error, setError] = useState(null);
   const [debugLog, setDebugLog] = useState([]);
+  const [autoSendToChat, setAutoSendToChat] = useState(true);
   
   const addLog = (message) => {
     const timestamp = new Date().toLocaleTimeString();
@@ -70,6 +71,12 @@ const VoiceDebugTest = () => {
         const result = event.results[0][0].transcript;
         addLog(`✅ Transcript received: "${result}"`);
         setTranscript(result);
+        
+        // Auto-send to chat if enabled
+        if (autoSendToChat && onTranscriptReceived) {
+          addLog('📤 Sending transcript to chat...');
+          onTranscriptReceived(result);
+        }
       }
     };
     
@@ -105,9 +112,16 @@ const VoiceDebugTest = () => {
     }
   };
 
+  const sendTranscriptToChat = () => {
+    if (transcript && onTranscriptReceived) {
+      addLog('📤 Manually sending transcript to chat...');
+      onTranscriptReceived(transcript);
+    }
+  };
+
   return (
     <div className="p-6 bg-card rounded-lg border border-border max-w-2xl mx-auto">
-      <h2 className="text-xl font-bold mb-4 text-foreground">🔧 Voice Debug Test</h2>
+      <h2 className="text-xl font-bold mb-4 text-foreground">🔧 Voice Debug Test + Chat Integration</h2>
       
       {/* Status */}
       <div className="mb-4 space-y-2">
@@ -117,13 +131,26 @@ const VoiceDebugTest = () => {
         </div>
         
         <div className={`flex items-center gap-2 ${isListening ? 'text-blue-600' : 'text-gray-600'}`}>
-          <div className={`w-3 h-3 rounded-full ${isListening ? 'bg-blue-500' : 'bg-gray-500'}`}></div>
+          <div className={`w-3 h-3 rounded-full ${isListening ? 'bg-blue-500 animate-pulse' : 'bg-gray-500'}`}></div>
           <span>Status: {isListening ? 'Listening...' : 'Inactive'}</span>
+        </div>
+        
+        <div className="flex items-center gap-2">
+          <input
+            type="checkbox"
+            id="autoSend"
+            checked={autoSendToChat}
+            onChange={(e) => setAutoSendToChat(e.target.checked)}
+            className="w-4 h-4"
+          />
+          <label htmlFor="autoSend" className="text-sm text-foreground">
+            Auto-send transcript to chat
+          </label>
         </div>
       </div>
 
       {/* Controls */}
-      <div className="mb-4 space-x-3">
+      <div className="mb-4 space-x-3 flex flex-wrap gap-2">
         <button
           onClick={startListening}
           disabled={!isSupported || isListening}
@@ -140,6 +167,16 @@ const VoiceDebugTest = () => {
           <MicOff className="w-4 h-4" />
           Test Microphone
         </button>
+        
+        {transcript && (
+          <button
+            onClick={sendTranscriptToChat}
+            className="px-4 py-2 bg-purple-500 text-white rounded-lg flex items-center gap-2"
+          >
+            <MessageSquare className="w-4 h-4" />
+            Send to Chat
+          </button>
+        )}
       </div>
 
       {/* Results */}
@@ -174,7 +211,8 @@ const VoiceDebugTest = () => {
           <li>1. Click "Test Microphone" to check permissions</li>
           <li>2. Click "Start Voice Test" to test speech recognition</li>
           <li>3. Speak clearly in German when listening starts</li>
-          <li>4. Check the debug log for detailed information</li>
+          <li>4. Check if transcript auto-sends to chat below</li>
+          <li>5. Use "Send to Chat" button for manual sending</li>
         </ol>
       </div>
     </div>
