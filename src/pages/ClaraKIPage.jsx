@@ -32,12 +32,26 @@ import { useProactiveAISuggestions } from '../hooks/useProactiveAISuggestions';
 import SimpleMicButton from '../components/molecules/SimpleMicButton';
 import WakewordButton from '../components/molecules/WakewordButton';
 import WorkingMicButton from '../components/molecules/WorkingMicButton';
+import VoiceDebugPanel from '../components/molecules/VoiceDebugPanel';
 import { useVoiceSystemHandler } from '../hooks/VoiceSystemHandler';
+
+// ENHANCED V6.2.0 VOICE SYSTEM - FIXED & IMPROVED
+import EnhancedWorkingMicButton from '../components/molecules/EnhancedWorkingMicButton';
+import RealWakewordButton from '../components/molecules/RealWakewordButton';
 
 // Main ClaraKI Component with Voice Integration
 const ClaraKIPageContent = () => {
   const navigate = useNavigate();
   const chatContainerRef = useRef(null);
+  
+  // Debug panel state
+  const [showDebugPanel, setShowDebugPanel] = useState(false);
+  
+  // Check URL for debug parameter
+  useEffect(() => {
+    const urlParams = new URLSearchParams(window.location.search);
+    setShowDebugPanel(urlParams.get('debug') === 'true');
+  }, []);
   
   // Voice Context Integration
   const {
@@ -396,26 +410,35 @@ const ClaraKIPageContent = () => {
             </div>
             
             <div className="flex flex-col sm:flex-row gap-3 sm:gap-6">
-              {/* WORKING V6.1.9 VOICE SYSTEM - Functional Manual & Wakeword */}
+              {/* ENHANCED V6.2.0 VOICE SYSTEM - Fixed & Improved */}
               <div className="flex items-center gap-3">
-                {/* Working Manual Speech Button (Sprechen) */}
-                <WorkingMicButton
+                {/* Enhanced Manual Speech Button (Sprechen) */}
+                <EnhancedWorkingMicButton
                   onTranscriptReceived={(transcript) => {
                     if (transcript.trim()) {
-                      console.log('📝 Manual transcript received:', transcript);
+                      console.log('📝 Enhanced transcript received:', transcript);
                       handleSendMessage(transcript);
                     }
                   }}
                   size="sm"
                   showStatus={true}
+                  showPermissionHelper={true}
                   className="flex-shrink-0"
                 />
                 
-                {/* Wakeword Button (Hey Clara) - TODO: Implement real functionality */}
-                <WakewordButton
+                {/* Real Wakeword Button (Hey Clara) - FULLY FUNCTIONAL */}
+                <RealWakewordButton
+                  onWakewordDetected={(detection) => {
+                    console.log('🎯 Wakeword detected:', detection);
+                  }}
+                  onTranscriptReceived={(transcript) => {
+                    if (transcript.trim()) {
+                      console.log('📝 Wakeword transcript received:', transcript);
+                      handleSendMessage(transcript);
+                    }
+                  }}
                   size="sm"
                   showStatus={true}
-                  variant="outline"
                   className="flex-shrink-0"
                 />
               </div>
@@ -574,12 +597,13 @@ const ClaraKIPageContent = () => {
                 </Button>
               </div>
               
-              {/* WORKING V6.1.9 - Guaranteed Functional Voice System */}
-              <WorkingMicButton
+              {/* ENHANCED V6.2.0 - Fixed Voice System with Permission Handling */}
+              <EnhancedWorkingMicButton
                 onTranscriptReceived={handleSendMessage}
                 className="w-10 h-10 sm:w-12 sm:h-12"
                 size="sm"
                 showStatus={false}
+                showPermissionHelper={true}
               />
             </div>
           </div>
@@ -690,6 +714,12 @@ const ClaraKIPageContent = () => {
       {/* Enhanced AI Providers - Hidden but active */}
       <ResponseStylerProvider />
       <DialogContextProvider />
+      
+      {/* Voice Debug Panel - Toggleable */}
+      <VoiceDebugPanel 
+        isVisible={showDebugPanel}
+        onToggle={() => setShowDebugPanel(!showDebugPanel)}
+      />
     </div>
   );
 };
