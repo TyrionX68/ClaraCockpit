@@ -1,228 +1,166 @@
 {
-  "system_version": "ClaraSuite_v4.4.1_Consolidated",
-  "active_branch": "main",
-  "last_updated": "2025-06-26T21:20:00Z",
-  "updated_by": "Manus A",
-  "repository": "https://github.com/TyrionX68/ClaraCockpit",
-  "deployment": {
-    "vercel_branch": "main",
-    "status": "live",
-    "url": "https://clara-cockpit.vercel.app",
-    "environment": "LIVE_READY",
-    "cache_busting": "implemented"
+  "manifest": {
+    "name": "Clara360 v3.1",
+    "version": "3.1.0",
+    "timestamp": "2025-06-27T09:30:00Z",
+    "commit": "consolidated_manifest",
+    "status": "production_ready",
+    "description": "Comprehensive property management dashboard with AI-powered tenant communication and FinAPI banking integration"
+  },
+  "vision": {
+    "mission": "Revolutionize property management through intelligent automation and seamless tenant communication",
+    "goals": [
+      "Automate 80% of routine property management tasks",
+      "Provide real-time financial insights and cash flow management", 
+      "Enable AI-powered tenant communication and support",
+      "Ensure DSGVO-compliant data handling and privacy protection",
+      "Deliver mobile-first, responsive user experience"
+    ],
+    "target_users": [
+      "Property managers",
+      "Real estate investors", 
+      "Housing associations",
+      "Individual landlords"
+    ]
   },
   "architecture": {
-    "design_system": "Atomic Design",
-    "framework": "React 18",
-    "styling": "Tailwind CSS", 
-    "build_tool": "Vite",
-    "backend": "Supabase + FinAPI",
-    "governance": "MetaGovernor + Manus A coordination"
-  },
-  "user_identity": {
-    "primary": "hiss@clara360.de",
-    "role": "metaGovernor",
-    "property_object": "Waldhofstraße 76"
-  },
-  "banking_integration": {
-    "status": "UI_UNLOCKED_FOR_VISUAL_VERIFICATION",
-    "provider": "FinAPI",
-    "environment": "SANDBOX_TO_LIVE_READY",
-    "endpoint": "https://sandbox.finapi.io/api/v2",
-    "live_endpoint": "https://api.finapi.io/api/v2",
-    "redirect_uri": "https://psd2.clara360.de/finapi/callback",
-    "target_bank": "Sparkasse Mannheim",
-    "account_purpose": "Mietkonto Waldhofstraße",
-    "selective_banking": true,
-    "multibank_disabled": true
-  },
-  "slot_structure": {
-    "mieter": {
-      "component": "ClaraMieterDashboard",
-      "path": "src/components/organisms/ClaraMieterDashboard.jsx",
-      "status": "active",
-      "description": "Tenant management and overview dashboard",
-      "data_source": "waldhofstrasse_76_mietvertraege.csv"
+    "frontend": {
+      "framework": "React 18 + Vite",
+      "styling": "Tailwind CSS + Radix UI",
+      "routing": "React Router v6",
+      "state": "React Hooks + Context",
+      "deployment": "Vercel (auto-deploy from GitHub main)"
     },
-    "mahnung": {
-      "component": "ClaraMahnungPanel", 
-      "path": "src/components/organisms/ClaraMahnungPanel.jsx",
-      "status": "active",
-      "description": "Payment reminder and dunning management",
-      "data_source": "waldhofstrasse_76_mahnwesen.csv"
+    "backend": {
+      "database": "Supabase PostgreSQL",
+      "authentication": "Supabase Auth",
+      "apis": "FinAPI (banking), Supabase (data)",
+      "storage": "Supabase Storage (documents)"
     },
-    "ki": {
-      "component": "ClaraKIPanel",
-      "path": "src/components/organisms/ClaraKIPanel.jsx", 
-      "status": "migrated_v3.1",
-      "description": "AI assistant panel with intent recognition",
-      "features": ["React Hooks", "Mock AI provider", "Confidence indicators"]
+    "integrations": {
+      "banking": "FinAPI Sandbox (production-ready)",
+      "ai": "Clara KI Chat System",
+      "notifications": "Email + SMS via Supabase",
+      "documents": "PDF generation + storage"
+    }
+  },
+  "slots": {
+    "dashboard": {
+      "component": "ModernDashboardPage",
+      "status": "active",
+      "features": ["KPI overview", "Financial summary", "Alerts", "Quick actions"],
+      "route": "/"
     },
     "banking": {
-      "component": "BankingPage",
-      "path": "src/components/BankingPage.jsx",
-      "status": "finapi_integrated",
-      "description": "FinAPI banking integration for Waldhofstraße",
-      "kpi_modules": ["rentflow_analytics", "account_balance_snapshot", "delta_30_days"]
+      "component": "BankingPage", 
+      "status": "active",
+      "features": ["Account overview", "Transactions", "FinAPI integration", "Payment tracking"],
+      "route": "/banking"
     },
-    "dokumente": {
-      "component": "ClaraFileVault",
-      "path": "src/components/organisms/ClaraFileVault.jsx",
-      "status": "planned",
-      "description": "GDPR-compliant document management system"
+    "clara_ki": {
+      "component": "ClaraKIPage",
+      "status": "active", 
+      "features": ["AI chat interface", "Tenant communication", "Smart responses", "Context awareness"],
+      "route": "/clara-ki"
     },
-    "zahlung": {
-      "component": "ClaraZahlungsPanel",
-      "path": "src/components/organisms/ClaraZahlungsPanel.jsx",
-      "status": "in_migration",
-      "description": "Payment dashboard and financial KPIs",
-      "integration": "finapi_kpis"
+    "kommunikation": {
+      "component": "KommunikationPage",
+      "status": "active",
+      "features": ["Tenant messaging", "Maintenance requests", "Announcements", "Communication history"],
+      "route": "/kommunikation"
     },
-    "zukunft": {
-      "component": "placeholder",
-      "path": "tbd",
-      "status": "placeholder",
-      "description": "Future expansion slot"
+    "manifest": {
+      "component": "ManifestPage",
+      "status": "active",
+      "features": ["System info", "Component status", "Version tracking", "Health monitoring"],
+      "route": "/manifest"
     }
   },
-  "system_components": {
-    "manifest_manager": {
-      "path": "system/ManifestManager.js",
-      "status": "active",
-      "description": "Central manifest management with Supabase integration"
-    },
-    "manus_guard": {
-      "path": "system/ManusGuard.js", 
-      "status": "active",
-      "description": "Multi-Manus coordination and access control"
-    },
-    "metagovernor_dashboard": {
-      "path": "system/MetaGovernorDashboard.jsx",
-      "status": "active",
-      "description": "System oversight and governance interface"
-    },
-    "system_sync_status": {
-      "path": "system/SystemSyncStatus.vue",
-      "status": "active",
-      "description": "Real-time system synchronization monitoring"
-    }
-  },
-  "migration_history": [
-    {
-      "date": "2025-06-26T17:59:34Z",
-      "component": "ClaraKIPanel",
-      "action": "migrated_to_v3.1",
-      "slot": "ki",
-      "commit": "2a73fb9",
-      "features": [
-        "React Hooks architecture",
-        "Mock AI provider",
-        "Character count display",
-        "Confidence indicators",
-        "Enhanced accessibility"
-      ]
-    },
-    {
-      "date": "2025-06-26T21:20:00Z",
-      "action": "manifest_consolidation",
-      "description": "Consolidated multiple manifest files into unified structure",
-      "archived_files": [
-        "context_manifest.json",
-        "manifest_integration_v4.1.js", 
-        "manifest_ui_routes.json"
-      ],
-      "commit": "cf727a6"
-    }
-  ],
-  "active_features": {
-    "theme_system": {
-      "status": "predecessor_implemented",
-      "components": ["ClaraThemeSwitch", "ClaraThemeContext"],
-      "path": "src/components/atoms/ClaraThemeSwitch.jsx",
-      "description": "Dark/Light mode with persistent storage"
-    },
-    "intent_system": {
-      "status": "in_development", 
-      "components": ["IntentProcessor", "IntentBadge"],
-      "description": "AI intent recognition and routing"
-    },
-    "slot_renderer": {
-      "status": "active",
-      "component": "ClaraSlotRenderer",
-      "path": "src/components/templates/ClaraSlotRenderer.jsx",
-      "description": "Dynamic component rendering system"
-    },
-    "finapi_integration": {
-      "status": "live_ready",
-      "components": ["BankingPage", "KPI modules"],
-      "description": "Real FinAPI integration for Waldhofstraße banking"
-    }
+  "components": {
+    "organisms": [
+      "ClaraDashboardHeader",
+      "ClaraKIPanel", 
+      "ClaraZahlungsPanel",
+      "ClaraBankingDashboard",
+      "BottomNavigation"
+    ],
+    "molecules": [
+      "ClaraKpiCard",
+      "ClaraAlertCard",
+      "ClaraTransactionItem",
+      "ClaraChatMessage"
+    ],
+    "atoms": [
+      "ClaraButton",
+      "ClaraInput",
+      "ClaraIcon",
+      "ClaraAvatar"
+    ]
   },
   "data_sources": {
     "mock_data": {
-      "path": "src/data/mockData.js",
-      "includes": ["tenantMocks", "mahnungMocks", "dashboardConfig"]
+      "tenants": "safe_mock_tenants.json",
+      "transactions": "mock_transactions.json",
+      "maintenance": "mock_maintenance.json"
     },
-    "csv_files": {
-      "tenant_data": "waldhofstrasse_76_mietvertraege.csv",
-      "payment_data": "waldhofstrasse_76_zahlungseingaenge.csv",
-      "maintenance_data": "wartungsanfragen.csv",
-      "cashflow_data": "waldhofstrasse_76_cashflow_2024_komplett.csv"
-    },
-    "supabase_integration": {
-      "status": "configured",
-      "tables": ["users", "manifest", "manus_registry"],
-      "schema_path": "system/clara360_manifest_schema.sql"
+    "live_data": {
+      "supabase": "anhomormslputicoybng.supabase.co",
+      "finapi": "sandbox.finapi.io",
+      "status": "DSGVO_compliant"
     }
   },
-  "development_status": {
-    "current_phase": "v4.4_consolidation_and_v3.1_migration",
-    "active_slots": ["theme_switch_sync", "intent_system", "payment_panel"],
-    "completion_percentage": 75,
-    "next_milestones": [
-      "Synchronize ClaraThemeSwitch with VPS version",
-      "Complete ClaraZahlungsPanel migration",
-      "Integrate IntentProcessor with ClaraKIPanel", 
-      "Add ClaraFileVault component",
-      "Activate FinAPI live mode"
-    ]
+  "deployment": {
+    "production_url": "https://clara-cockpit.vercel.app",
+    "github_repo": "TyrionX68/ClaraCockpit",
+    "branch": "main",
+    "auto_deploy": true,
+    "last_deploy": "2025-06-27T09:00:00Z"
   },
-  "commit_conventions": {
-    "format": "[SLOT-YYYYMMDD_HHMM] Description",
-    "examples": [
-      "🎨 [THEME-SWITCH-20250626_2025] ClaraThemeSwitch implementiert",
-      "🤖 [INTENT-20250626_2030] IntentProcessor connected to ClaraKIPanel",
-      "💸 [ZAHLUNG-20250626_2035] ZahlungsPanel v3.1 initialisiert",
-      "📋 [MANIFEST-20250626_2120] Manifest-Konsolidierung abgeschlossen"
-    ]
-  },
-  "governance": {
-    "metagovernor_active": true,
-    "manus_a_role": "execution_agent",
-    "stable_fallback": "https://oqiizvhn.manus.space/",
-    "deployment_status": "production_ready",
-    "ssh_access": "key_generated_vps_pending",
-    "manifest_panel": "consolidated"
-  },
-  "quality_assurance": {
-    "testing": {
-      "framework": "Vitest + React Testing Library",
-      "coverage_target": "80%",
-      "status": "setup_required"
+  "compliance": {
+    "dsgvo": {
+      "status": "compliant",
+      "measures": [
+        "Personal data anonymized in public repositories",
+        "Demo email addresses (@demo-clara360.de)",
+        "No real phone numbers or addresses in code",
+        "Supabase RLS policies active"
+      ]
     },
-    "ci_cd": {
-      "platform": "Vercel",
-      "auto_deploy": true,
-      "branch": "main",
-      "cache_busting": "implemented"
+    "security": {
+      "authentication": "Supabase Auth",
+      "authorization": "Row Level Security",
+      "api_keys": "Environment variables only",
+      "data_encryption": "TLS 1.3 + database encryption"
     }
   },
-  "lessons_learned": [
-    "SSH-Passwort-Authentifizierung kann fehlschlagen - SSH-Keys bevorzugen",
-    "Backend-Ports müssen vor Neustart vollständig freigegeben werden", 
-    "FinAPI-Credentials sind für produktive Integration zwingend erforderlich",
-    "Cache-freie Auslieferung verhindert Frontend-Update-Probleme",
-    "Manifest-Konsolidierung verhindert Versionskonflikte zwischen Manus-Instanzen"
-  ]
+  "development": {
+    "workflow": "GitHub-first with Vercel auto-deployment",
+    "testing": "Local development + staging environment",
+    "code_quality": "ESLint + Prettier",
+    "documentation": "Inline comments + README"
+  },
+  "roadmap": {
+    "v3.2": [
+      "Advanced AI tenant communication",
+      "Automated rent collection",
+      "Maintenance scheduling system"
+    ],
+    "v3.3": [
+      "Multi-property management",
+      "Advanced reporting dashboard",
+      "Mobile app (React Native)"
+    ],
+    "v4.0": [
+      "Full FinAPI production integration",
+      "Enterprise features",
+      "White-label solutions"
+    ]
+  },
+  "metadata": {
+    "created_by": "Manus AI Agent",
+    "last_updated": "2025-06-27T09:30:00Z",
+    "purpose": "Comprehensive system documentation and slot management",
+    "format_version": "1.0"
+  }
 }
 
