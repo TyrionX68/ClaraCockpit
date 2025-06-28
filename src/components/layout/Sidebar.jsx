@@ -1,24 +1,24 @@
 import React from 'react';
-import { useNavigate, useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { 
   Home, 
   Bot, 
   CreditCard, 
-  Settings, 
-  MessageSquare,
-  Users,
-  FileText,
-  BarChart3,
-  Wrench,
-  Sun,
-  Moon,
+  Users, 
+  FileText, 
+  BarChart3, 
+  Wrench, 
+  MessageSquare, 
+  Settings,
   ChevronLeft,
-  ChevronRight
+  ChevronRight,
+  Moon,
+  Sun
 } from 'lucide-react';
 
 const Sidebar = ({ isCollapsed, onToggle, theme, onThemeToggle }) => {
-  const navigate = useNavigate();
   const location = useLocation();
+  const navigate = useNavigate();
 
   const menuItems = [
     {
@@ -99,33 +99,33 @@ const Sidebar = ({ isCollapsed, onToggle, theme, onThemeToggle }) => {
 
   return (
     <div className={`
-      fixed left-0 top-0 h-full bg-gray-50 dark:bg-gray-800 border-r border-gray-200 dark:border-gray-700
+      fixed left-0 top-0 h-full bg-card border-r border-border
       transition-all duration-300 ease-in-out z-50 shadow-lg
       ${isCollapsed ? 'w-16' : 'w-64'}
     `}>
       {/* Header */}
-      <div className="flex items-center justify-between p-4 border-b border-gray-200 dark:border-gray-700">
+      <div className="flex items-center justify-between p-4 border-b border-border">
         {!isCollapsed && (
           <div className="flex items-center gap-3">
             <div className="w-8 h-8 bg-gradient-to-br from-blue-500 to-purple-600 rounded-lg flex items-center justify-center">
               <span className="text-white font-bold text-sm">C</span>
             </div>
             <div>
-              <h1 className="font-bold text-gray-900 dark:text-white">Clara360</h1>
-              <p className="text-xs text-gray-500 dark:text-gray-400">Fusion Dashboard</p>
+              <h1 className="font-bold text-card-foreground">Clara360</h1>
+              <p className="text-xs text-muted-foreground">Fusion Dashboard</p>
             </div>
           </div>
         )}
         
         <button
           onClick={onToggle}
-          className="p-1.5 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors"
+          className="p-1.5 rounded-lg hover:bg-accent transition-colors"
           title={isCollapsed ? 'Sidebar erweitern' : 'Sidebar einklappen'}
         >
           {isCollapsed ? (
-            <ChevronRight className="w-4 h-4 text-gray-600 dark:text-gray-400" />
+            <ChevronRight className="w-4 h-4 text-muted-foreground" />
           ) : (
-            <ChevronLeft className="w-4 h-4 text-gray-600 dark:text-gray-400" />
+            <ChevronLeft className="w-4 h-4 text-muted-foreground" />
           )}
         </button>
       </div>
@@ -145,26 +145,26 @@ const Sidebar = ({ isCollapsed, onToggle, theme, onThemeToggle }) => {
                   w-full flex items-center gap-3 px-3 py-2.5 rounded-lg
                   transition-all duration-200 text-left group
                   ${active 
-                    ? 'bg-blue-50 dark:bg-blue-900/50 text-blue-700 dark:text-blue-300 border border-blue-200 dark:border-blue-700' 
-                    : 'text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 hover:text-gray-900 dark:hover:text-white'
+                    ? 'bg-primary text-primary-foreground' 
+                    : 'text-card-foreground hover:bg-accent hover:text-accent-foreground'
                   }
                 `}
                 title={isCollapsed ? `${item.label} - ${item.description}` : ''}
               >
                 <Icon className={`
                   w-5 h-5 flex-shrink-0
-                  ${active ? 'text-blue-600 dark:text-blue-400' : 'text-gray-500 dark:text-gray-400 group-hover:text-gray-700 dark:group-hover:text-gray-300'}
+                  ${active ? 'text-primary-foreground' : 'text-muted-foreground group-hover:text-accent-foreground'}
                 `} />
                 
                 {!isCollapsed && (
                   <div className="flex-1 min-w-0">
                     <div className="font-medium text-sm">{item.label}</div>
-                    <div className="text-xs text-gray-500 dark:text-gray-400 truncate">{item.description}</div>
+                    <div className="text-xs text-muted-foreground truncate">{item.description}</div>
                   </div>
                 )}
                 
                 {!isCollapsed && active && (
-                  <div className="w-2 h-2 bg-blue-500 dark:bg-blue-400 rounded-full flex-shrink-0"></div>
+                  <div className="w-2 h-2 bg-primary-foreground rounded-full flex-shrink-0"></div>
                 )}
               </button>
             );
@@ -173,18 +173,18 @@ const Sidebar = ({ isCollapsed, onToggle, theme, onThemeToggle }) => {
       </nav>
 
       {/* Theme Toggle */}
-      <div className="p-4 border-t border-gray-200 dark:border-gray-700">
+      <div className="p-4 border-t border-border">
         <button
           onClick={onThemeToggle}
-                className={`
+          className={`
             w-full flex items-center gap-3 px-3 py-2.5 rounded-lg
-            text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors
+            text-card-foreground hover:bg-accent hover:text-accent-foreground transition-colors
             ${isCollapsed ? 'justify-center' : ''}
           `}
           title={`${theme === 'light' ? 'Dark' : 'Light'} Mode aktivieren`}
         >
           {theme === 'light' ? (
-            <Moon className="w-5 h-5 text-gray-500 dark:text-gray-400" />
+            <Moon className="w-5 h-5 text-muted-foreground" />
           ) : (
             <Sun className="w-5 h-5 text-yellow-500" />
           )}
@@ -194,7 +194,7 @@ const Sidebar = ({ isCollapsed, onToggle, theme, onThemeToggle }) => {
               <div className="font-medium text-sm">
                 {theme === 'light' ? 'Dark Mode' : 'Light Mode'}
               </div>
-              <div className="text-xs text-gray-500 dark:text-gray-400">
+              <div className="text-xs text-muted-foreground">
                 {theme === 'light' ? 'Dunkles Design' : 'Helles Design'}
               </div>
             </div>
@@ -204,7 +204,7 @@ const Sidebar = ({ isCollapsed, onToggle, theme, onThemeToggle }) => {
         {/* Footer Info */}
         {!isCollapsed && (
           <div className="mt-4">
-            <div className="text-xs text-gray-400 dark:text-gray-500 text-center">
+            <div className="text-xs text-muted-foreground text-center">
               Immobilien-Management
             </div>
           </div>
@@ -215,4 +215,3 @@ const Sidebar = ({ isCollapsed, onToggle, theme, onThemeToggle }) => {
 };
 
 export default Sidebar;
-

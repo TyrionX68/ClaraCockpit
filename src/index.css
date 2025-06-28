@@ -1,21 +1,22 @@
 @import "tailwindcss";
 
-/* Custom CSS Variables for Dark Mode */
+/* Custom CSS Variables for Light/Dark Mode */
 :root {
-  --background: 0 0% 100%;
-  --foreground: 222.2 84% 4.9%;
-  --card: 0 0% 100%;
-  --card-foreground: 222.2 84% 4.9%;
+  /* Light Mode - Helle Farben mit starkem Kontrast */
+  --background: 0 0% 100%;          /* Reines Weiß */
+  --foreground: 0 0% 3.9%;          /* Fast Schwarz */
+  --card: 0 0% 100%;                /* Weiße Karten */
+  --card-foreground: 0 0% 3.9%;     /* Dunkler Text */
   --popover: 0 0% 100%;
-  --popover-foreground: 222.2 84% 4.9%;
-  --primary: 221.2 83.2% 53.3%;
+  --popover-foreground: 0 0% 3.9%;
+  --primary: 221.2 83.2% 53.3%;     /* Blau */
   --primary-foreground: 210 40% 98%;
-  --secondary: 210 40% 96%;
-  --secondary-foreground: 222.2 84% 4.9%;
-  --muted: 210 40% 96%;
+  --secondary: 210 40% 98%;          /* Sehr helles Grau */
+  --secondary-foreground: 0 0% 9%;   /* Dunkler Text */
+  --muted: 210 40% 96%;             /* Helles Grau */
   --muted-foreground: 215.4 16.3% 46.9%;
   --accent: 210 40% 96%;
-  --accent-foreground: 222.2 84% 4.9%;
+  --accent-foreground: 0 0% 9%;
   --destructive: 0 84.2% 60.2%;
   --destructive-foreground: 210 40% 98%;
   --border: 214.3 31.8% 91.4%;
@@ -25,15 +26,16 @@
 }
 
 .dark {
-  --background: 222.2 84% 4.9%;
-  --foreground: 210 40% 98%;
-  --card: 222.2 84% 4.9%;
-  --card-foreground: 210 40% 98%;
+  /* Dark Mode - Dunkle Farben mit starkem Kontrast */
+  --background: 222.2 84% 4.9%;      /* Sehr dunkel */
+  --foreground: 210 40% 98%;         /* Fast Weiß */
+  --card: 222.2 84% 4.9%;           /* Dunkle Karten */
+  --card-foreground: 210 40% 98%;    /* Heller Text */
   --popover: 222.2 84% 4.9%;
   --popover-foreground: 210 40% 98%;
-  --primary: 217.2 91.2% 59.8%;
+  --primary: 217.2 91.2% 59.8%;     /* Helles Blau */
   --primary-foreground: 222.2 84% 4.9%;
-  --secondary: 217.2 32.6% 17.5%;
+  --secondary: 217.2 32.6% 17.5%;   /* Dunkles Grau */
   --secondary-foreground: 210 40% 98%;
   --muted: 217.2 32.6% 17.5%;
   --muted-foreground: 215 20.2% 65.1%;
@@ -53,24 +55,47 @@
 body {
   background-color: hsl(var(--background));
   color: hsl(var(--foreground));
+  font-family: system-ui, -apple-system, sans-serif;
+  min-height: 100vh;
+  transition: background-color 0.3s ease, color 0.3s ease;
 }
 
-/* Voice Control Animations */
+/* Voice Control Animations - Optimized for Performance */
 @keyframes pulse {
   0%, 100% {
     opacity: 1;
   }
   50% {
-    opacity: 0.5;
+    opacity: 0.7;
   }
 }
 
 .voice-active {
-  animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+  animation: pulse 3s ease-in-out infinite; /* Slower animation */
 }
 
-/* Smooth transitions */
+/* Smooth transitions - Reduced for performance */
 * {
-  transition: background-color 0.2s ease, color 0.2s ease, border-color 0.2s ease;
+  transition: background-color 0.15s ease, color 0.15s ease, border-color 0.15s ease;
+}
+
+/* Performance optimizations */
+.performance-mode {
+  transform: translateZ(0); /* Force GPU acceleration only when needed */
+  will-change: auto; /* Let browser decide */
+}
+
+/* Reduce backdrop-blur for better performance */
+.backdrop-blur-sm {
+  backdrop-filter: blur(2px); /* Reduced from default */
+}
+
+/* Optimize box-shadows */
+.shadow-lg {
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1); /* Simplified shadow */
+}
+
+.shadow-xl {
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1); /* Simplified shadow */
 }
 

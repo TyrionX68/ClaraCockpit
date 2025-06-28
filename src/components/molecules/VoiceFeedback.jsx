@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback, useRef } from 'react';
 import { Mic, MicOff, Volume2, CheckCircle, AlertCircle, Loader2 } from 'lucide-react';
 
 const VoiceFeedback = ({ 
@@ -8,53 +8,66 @@ const VoiceFeedback = ({
   status = 'idle', // idle, listening, processing, success, error
   onToggle 
 }) => {
-  const [visualBars, setVisualBars] = useState(Array(10).fill(0));
+  const [visualBars, setVisualBars] = useState(Array(5).fill(0)); // Reduced from 10 to 5
+  const intervalRef = useRef(null);
+  const animationRef = useRef(null);
 
-  // Animate voice visualization bars
-  useEffect(() => {
-    let interval;
+  // Optimized voice visualization with requestAnimationFrame
+  const animateVoiceBars = useCallback(() => {
     if (isListening) {
-      interval = setInterval(() => {
-        setVisualBars(prev => 
-          prev.map(() => Math.floor(Math.random() * 20) + 5)
-        );
-      }, 150);
+      setVisualBars(prev => 
+        prev.map(() => Math.floor(Math.random() * 15) + 3) // Reduced range
+      );
+      animationRef.current = requestAnimationFrame(() => {
+        setTimeout(animateVoiceBars, 300); // Reduced frequency from 150ms to 300ms
+      });
+    }
+  }, [isListening]);
+
+  useEffect(() => {
+    if (isListening) {
+      animateVoiceBars();
     } else {
-      setVisualBars(Array(10).fill(0));
+      setVisualBars(Array(5).fill(0));
+      if (animationRef.current) {
+        cancelAnimationFrame(animationRef.current);
+      }
     }
     
     return () => {
-      if (interval) clearInterval(interval);
+      if (animationRef.current) {
+        cancelAnimationFrame(animationRef.current);
+      }
     };
-  }, [isListening]);
+  }, [isListening, animateVoiceBars]);
 
   const getStatusIcon = () => {
     switch (status) {
       case 'listening':
-        return <Mic className="w-5 h-5 text-blue-500" />;
+        return <Mic className="w-4 h-4 text-blue-500" />;
       case 'processing':
-        return <Loader2 className="w-5 h-5 text-yellow-500 animate-spin" />;
+        return <Loader2 className="w-4 h-4 text-yellow-500 animate-spin" />;
       case 'success':
-        return <CheckCircle className="w-5 h-5 text-green-500" />;
+        return <CheckCircle className="w-4 h-4 text-green-500" />;
       case 'error':
-        return <AlertCircle className="w-5 h-5 text-red-500" />;
+        return <AlertCircle className="w-4 h-4 text-red-500" />;
       default:
-        return <Volume2 className="w-5 h-5 text-gray-500" />;
+        return <Volume2 className="w-4 h-4 text-muted-foreground" />;
     }
   };
 
   const getStatusColor = () => {
     switch (status) {
       case 'listening':
-        return 'border-blue-500 bg-blue-50';
+        return 'border-blue-500 bg-blue-50 dark:bg-blue-900/20';
       case 'processing':
-        return 'border-yellow-500 bg-yellow-50';
+        return 'border-yellow-500 bg-yellow-50 dark:bg-yellow-900/20';
       case 'success':
-        return 'border-green-500 bg-green-50';
+        return 'border-green-500 bg-green-50 dark:bg-green-900/20';
       case 'error':
-        return 'border-red-500 bg-red-50';
+        return 'border-red-500 bg-red-50 dark:bg-red-900/20';
       default:
-        return 'border-gray-300 bg-white';
+        return 'border-border bg-card';
     }
   };
 
@@ -63,21 +76,21 @@ const VoiceFeedback = ({
   return (
     <div className={`
       fixed top-4 right-4 z-50 
-      flex items-center gap-3 
-      px-4 py-3 rounded-lg border-2 
-      shadow-lg backdrop-blur-sm
-      transition-all duration-300 ease-in-out
+      flex items-center gap-2 
+      px-3 py-2 rounded-lg border 
+      shadow-md
+      transition-opacity duration-200 ease-in-out
       ${getStatusColor()}
-      ${isActive ? 'animate-slide-in-right' : ''}
+      ${isActive ? 'opacity-100' : 'opacity-90'}
     `}>
-      {/* Voice Visualization */}
+      {/* Voice Visualization - Simplified */}
       {isListening && (
-        <div className="flex items-end gap-1 h-6">
+        <div className="flex items-end gap-1 h-4">
           {visualBars.map((height, index) => (
             <div
               key={index}
-              className="w-1 bg-blue-500 rounded-full transition-all duration-150"
-              style={{ height: `${height}px` }}
+              className="w-1 bg-blue-500 rounded-full transition-all duration-200"
+              style={{ height: `${Math.max(height, 2)}px` }}
             />
           ))}
         </div>
@@ -88,26 +101,26 @@ const VoiceFeedback = ({
         {getStatusIcon()}
       </div>
 
-      {/* Message */}
+      {/* Message - Truncated for performance */}
       {message && (
-        <span className="text-sm font-medium text-gray-700 max-w-xs">
+        <span className="text-xs font-medium text-card-foreground max-w-[200px] truncate">
           {message}
         </span>
       )}
 
-      {/* Toggle Button */}
+      {/* Toggle Button - Simplified */}
       {onToggle && (
         <button
           onClick={onToggle}
           className={`
-            flex-shrink-0 p-1 rounded-full transition-colors
+            flex-shrink-0 p-1 rounded-full transition-colors duration-200
             ${isActive 
-              ? 'bg-red-100 hover:bg-red-200 text-red-600' 
-              : 'bg-blue-100 hover:bg-blue-200 text-blue-600'
+              ? 'bg-red-100 hover:bg-red-200 text-red-600 dark:bg-red-900/30 dark:hover:bg-red-900/50' 
+              : 'bg-blue-100 hover:bg-blue-200 text-blue-600 dark:bg-blue-900/30 dark:hover:bg-blue-900/50'
             }
           `}
         >
-          {isActive ? <MicOff className="w-4 h-4" /> : <Mic className="w-4 h-4" />}
+          {isActive ? <MicOff className="w-3 h-3" /> : <Mic className="w-3 h-3" />}
         </button>
       )}
     </div>
