@@ -28,7 +28,7 @@ const ClaraKIPage = () => {
     supabaseClient: null // Mock for now
   });
 
-  const { contextData } = claraEngine;
+  const { contextData, ResponseStylerProvider, DialogContextProvider } = claraEngine;
 
   const handleSendMessage = async (message = inputValue) => {
     if (!message.trim()) return;
@@ -304,6 +304,10 @@ const ClaraKIPage = () => {
           </div>
         </div>
       </div>
+      
+      {/* Enhanced AI Providers - Hidden but active */}
+      <ResponseStylerProvider />
+      <DialogContextProvider />
     </div>
   );
 };
