@@ -15,6 +15,8 @@ import SpeechControls from '../components/molecules/SpeechControls';
 import ClaraKIEngine from '../components/organisms/ClaraKIEngine';
 import { VoiceContextProvider, useVoiceContext } from '../contexts/VoiceContext';
 import { useSpeechSynthesis } from '../hooks/useSpeechSynthesis';
+import { useClaraDialogContext } from '../hooks/useClaraDialogContext';
+import { useClaraSuggestions } from '../hooks/useClaraSuggestions';
 import { generateSSML } from '../logic/SSMLResponseGenerator';
 import VoiceDebugTest from '../components/debug/VoiceDebugTest';
 
@@ -46,6 +48,28 @@ const ClaraKIPageContent = () => {
     settings: speechSettings,
     updateSettings: updateSpeechSettings
   } = useSpeechSynthesis();
+  
+  // Clara Dialog Context Integration
+  const {
+    conversationHistory,
+    currentTopic,
+    pendingQuestions,
+    isFollowUp,
+    processQuery,
+    recordResponse,
+    generateCallbackReference,
+    clearConversationHistory,
+    getActiveContext
+  } = useClaraDialogContext();
+  
+  // Clara Suggestions Integration
+  const {
+    suggestions: claraSuggestions,
+    isGenerating: isGeneratingSuggestions,
+    generateSuggestions,
+    clearSuggestions,
+    executeSuggestion
+  } = useClaraSuggestions();
   
   const [messages, setMessages] = useState([
     {
@@ -83,10 +107,21 @@ const ClaraKIPageContent = () => {
   const handleSendMessage = async (message) => {
     if (!message.trim()) return;
 
+    // Process query with dialog context
+    const queryContext = processQuery({
+      query: message,
+      entities: [], // TODO: Add entity extraction
+      intentType: 'unknown', // TODO: Add intent detection
+      confidence: 1.0,
+      additionalContext: { contextData }
+    });
+
     const userMessage = {
       type: 'user',
       content: message,
-      timestamp: new Date().toLocaleTimeString('de-DE', { hour: '2-digit', minute: '2-digit' })
+      timestamp: new Date().toLocaleTimeString('de-DE', { hour: '2-digit', minute: '2-digit' }),
+      isFollowUp: queryContext.isFollowUp,
+      resolvedQuery: queryContext.resolvedQuery
     };
 
     setMessages(prev => {
@@ -100,15 +135,56 @@ const ClaraKIPageContent = () => {
     try {
       // Simulate processing delay - reduced for better performance
       setTimeout(async () => {
-        const response = await generateIntelligentResponse(message, contextData);
+        const response = await generateIntelligentResponse(queryContext.resolvedQuery || message, contextData, queryContext.context);
+        
+        // Generate callback reference if applicable
+        const callbackReference = generateCallbackReference({
+          currentQuery: message,
+          currentContext: queryContext.context
+        });
+        
+        // Prepend callback reference to response if available
+        let finalContent = response.content;
+        if (callbackReference) {
+          finalContent = `${callbackReference}. ${response.content}`;
+        }
+        
+        // Generate suggestions based on query and response
+        const generatedSuggestions = await generateSuggestions({
+          query: message,
+          context: queryContext.context,
+          entities: [], // TODO: Add entity extraction
+          intentType: 'unknown', // TODO: Add intent detection
+          confidence: 1.0,
+          missingParameters: {} // TODO: Add parameter detection
+        });
+        
+        // Combine response suggestions with generated suggestions
+        const allSuggestions = [
+          ...(response.suggestions || []),
+          ...generatedSuggestions.map(s => s.text)
+        ].slice(0, 4); // Limit to 4 suggestions
         
         const assistantMessage = {
           type: 'assistant',
-          content: response.content,
+          content: finalContent,
           timestamp: new Date().toLocaleTimeString('de-DE', { hour: '2-digit', minute: '2-digit' }),
-          suggestions: response.suggestions,
-          kpis: response.kpis
+          suggestions: allSuggestions,
+          kpis: response.kpis,
+          claraSuggestions: generatedSuggestions,
+          hasCallbackReference: !!callbackReference
         };
+        
+        // Record response in dialog context
+        recordResponse({
+          query: message,
+          response: finalContent,
+          context: queryContext.context,
+          entities: [], // TODO: Add entity extraction
+          intentType: 'unknown', // TODO: Add intent detection
+          confidence: 1.0,
+          containsQuestion: finalContent.includes('?')
+        });
         
         setMessages(prev => {
           const newMessages = [...prev, assistantMessage];
@@ -153,8 +229,12 @@ const ClaraKIPageContent = () => {
     }
   };
 
-  const generateIntelligentResponse = async (input, contextData) => {
+  const generateIntelligentResponse = async (input, contextData, dialogContext = {}) => {
     const lowerInput = input.toLowerCase();
+    
+    // Check for follow-up context
+    const isFollowUp = dialogContext.isFollowUp || false;
+    const previousTopic = dialogContext.currentTopic;
     
     // Dashboard & KPIs
     if (lowerInput.includes('dashboard') || lowerInput.includes('übersicht')) {
