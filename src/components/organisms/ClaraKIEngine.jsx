@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { createClient } from '@supabase/supabase-js';
 import ClaraResponseStyler from '../logic/ClaraResponseStyler';
+import ClaraDialogContext from '../logic/ClaraDialogContext';
 
 // Immobilien-Fachwissen und Kennzahlen
 const REAL_ESTATE_KNOWLEDGE = {
@@ -80,6 +81,7 @@ const ClaraKIEngine = ({ onNavigate, supabaseClient }) => {
   const [recognition, setRecognition] = useState(null);
   const [preferredVoice, setPreferredVoice] = useState(null);
   const [responseStyler, setResponseStyler] = useState(null);
+  const [dialogContext, setDialogContext] = useState(null);
 
   // Initialize preferred German female voice
   useEffect(() => {
@@ -231,9 +233,82 @@ const ClaraKIEngine = ({ onNavigate, supabaseClient }) => {
     setIsProcessing(false);
   };
 
-  // Process natural language queries
+  // Helper function to extract entities from query
+  const extractEntitiesFromQuery = useCallback((query) => {
+    const entities = [];
+    const lowerQuery = query.toLowerCase();
+    
+    // Property entities
+    if (lowerQuery.includes('waldhofstraße') || lowerQuery.includes('objekt') || lowerQuery.includes('immobilie')) {
+      entities.push({ type: 'property', value: 'Waldhofstraße 76' });
+    }
+    
+    // Financial entities
+    const financialTerms = ['euro', '€', 'rendite', 'cashflow', 'miete', 'kosten'];
+    if (financialTerms.some(term => lowerQuery.includes(term))) {
+      entities.push({ type: 'financial', value: 'financial_metric' });
+    }
+    
+    // Tenant entities
+    if (lowerQuery.includes('mieter') || lowerQuery.includes('verträge') || lowerQuery.includes('rückstände')) {
+      entities.push({ type: 'tenant', value: 'tenant_info' });
+    }
+    
+    // Maintenance entities
+    if (lowerQuery.includes('wartung') || lowerQuery.includes('reparatur') || lowerQuery.includes('instandhaltung')) {
+      entities.push({ type: 'maintenance', value: 'maintenance_task' });
+    }
+    
+    return entities;
+  }, []);
+
+  // Helper function to determine intent type from query
+  const determineIntentType = useCallback((query) => {
+    const lowerQuery = query.toLowerCase();
+    
+    if (lowerQuery.includes('dashboard') || lowerQuery.includes('übersicht')) {
+      return 'dashboard';
+    }
+    
+    if (lowerQuery.includes('cashflow') || lowerQuery.includes('rendite') || lowerQuery.includes('finanzen')) {
+      return 'finance';
+    }
+    
+    if (lowerQuery.includes('mieter') || lowerQuery.includes('rückstände') || lowerQuery.includes('verträge')) {
+      return 'tenants';
+    }
+    
+    if (lowerQuery.includes('wartung') || lowerQuery.includes('reparatur')) {
+      return 'maintenance';
+    }
+    
+    if (lowerQuery.includes('dokument') || lowerQuery.includes('vertrag') || lowerQuery.includes('upload')) {
+      return 'documents';
+    }
+    
+    return 'general';
+  }, []);
+
+  // Process natural language queries with dialog context
   const processNaturalLanguage = async (command) => {
     const lowerCommand = command.toLowerCase();
+    
+    // Process query with dialog context if available
+    let dialogResult = null;
+    if (dialogContext && dialogContext.processQuery) {
+      dialogResult = dialogContext.processQuery({
+        query: command,
+        entities: extractEntitiesFromQuery(command),
+        intentType: determineIntentType(command),
+        confidence: 0.9,
+        additionalContext: contextData
+      });
+    }
+    
+    // Use dialog context for enhanced responses
+    const isFollowUp = dialogResult?.isFollowUp || false;
+    const resolvedQuery = dialogResult?.resolvedQuery || command;
+    const enhancedContext = dialogResult?.context || {};
     
     // Dashboard & Übersichten
     if (lowerCommand.includes('dashboard') || lowerCommand.includes('übersicht')) {
@@ -241,15 +316,37 @@ const ClaraKIEngine = ({ onNavigate, supabaseClient }) => {
       const context = {
         property: { name: 'Ihr Portfolio', address: 'Waldhofstraße 76' },
         financial: { metric: 'monatlicher Ertrag', value: kpis?.totalRent || 0, format: 'currency' },
-        temporal: { comparison: 'aktueller Stand' }
+        temporal: { comparison: 'aktueller Stand' },
+        ...enhancedContext
       };
       
-      speak(
-        `Sie verwalten ${kpis?.tenantCount || 0} Mieteinheiten mit einem monatlichen Gesamtertrag von ${(kpis?.totalRent || 0).toLocaleString('de-DE')} Euro. Die Vermietungsquote beträgt ${(kpis?.occupancyRate || 0).toFixed(1)} Prozent.`,
-        context,
-        'informative',
-        0.95
-      );
+      let responseText = `Sie verwalten ${kpis?.tenantCount || 0} Mieteinheiten mit einem monatlichen Gesamtertrag von ${(kpis?.totalRent || 0).toLocaleString('de-DE')} Euro. Die Vermietungsquote beträgt ${(kpis?.occupancyRate || 0).toFixed(1)} Prozent.`;
+      
+      // Add callback reference if this is a follow-up
+      if (isFollowUp && dialogContext?.generateCallbackReference) {
+        const callbackRef = dialogContext.generateCallbackReference({
+          currentQuery: command,
+          currentContext: context
+        });
+        if (callbackRef) {
+          responseText = `${callbackRef}. ${responseText}`;
+        }
+      }
+      
+      const finalResponse = speak(responseText, context, 'informative', 0.95);
+      
+      // Record response in dialog context
+      if (dialogContext?.recordResponse) {
+        dialogContext.recordResponse({
+          query: command,
+          response: finalResponse,
+          context,
+          entities: extractEntitiesFromQuery(command),
+          intentType: 'dashboard',
+          confidence: 0.95
+        });
+      }
+      
       return;
     }
     
@@ -258,7 +355,7 @@ const ClaraKIEngine = ({ onNavigate, supabaseClient }) => {
       const { kpis } = contextData;
       const monthlyRent = kpis?.totalRent || 0;
       const annualRent = monthlyRent * 12;
-      const estimatedCosts = annualRent * 0.25; // 25% Bewirtschaftungskosten
+      const estimatedCosts = annualRent * 0.25;
       const netCashflow = annualRent - estimatedCosts;
       const grossReturn = kpis?.propertyValue ? REAL_ESTATE_KNOWLEDGE.calculations.bruttomietrendite(annualRent, kpis.propertyValue) : 0;
       
@@ -268,7 +365,8 @@ const ClaraKIEngine = ({ onNavigate, supabaseClient }) => {
           value: netCashflow, 
           format: 'currency' 
         },
-        temporal: { comparison: 'bei aktueller Marktlage' }
+        temporal: { comparison: 'bei aktueller Marktlage' },
+        ...enhancedContext
       };
       
       const data = {
@@ -282,13 +380,33 @@ const ClaraKIEngine = ({ onNavigate, supabaseClient }) => {
         ]
       };
       
-      speak(
-        `Brutto-Jahresertrag ${annualRent.toLocaleString('de-DE')} Euro, Netto-Cashflow ${netCashflow.toLocaleString('de-DE')} Euro. Die Bruttomietrendite beträgt ${grossReturn.toFixed(2)} Prozent.`,
-        context,
-        'professional',
-        0.9,
-        data
-      );
+      let responseText = `Brutto-Jahresertrag ${annualRent.toLocaleString('de-DE')} Euro, Netto-Cashflow ${netCashflow.toLocaleString('de-DE')} Euro. Die Bruttomietrendite beträgt ${grossReturn.toFixed(2)} Prozent.`;
+      
+      // Add callback reference if this is a follow-up
+      if (isFollowUp && dialogContext?.generateCallbackReference) {
+        const callbackRef = dialogContext.generateCallbackReference({
+          currentQuery: command,
+          currentContext: context
+        });
+        if (callbackRef) {
+          responseText = `${callbackRef}. ${responseText}`;
+        }
+      }
+      
+      const finalResponse = speak(responseText, context, 'professional', 0.9, data);
+      
+      // Record response in dialog context
+      if (dialogContext?.recordResponse) {
+        dialogContext.recordResponse({
+          query: command,
+          response: finalResponse,
+          context,
+          entities: extractEntitiesFromQuery(command),
+          intentType: 'finance',
+          confidence: 0.9
+        });
+      }
+      
       return;
     }
     
@@ -300,38 +418,81 @@ const ClaraKIEngine = ({ onNavigate, supabaseClient }) => {
       
       const context = {
         tenant: { name: 'Ihre Mieter', since: 'verschiedene Vertragslaufzeiten' },
-        financial: { metric: 'Rückstände', value: arrears, format: 'currency' }
+        financial: { metric: 'Rückstände', value: arrears, format: 'currency' },
+        ...enhancedContext
       };
       
+      let responseText;
+      let confidence;
+      
       if (arrears > 0) {
-        speak(
-          `Sie haben ${activeContracts} aktive Mietverträge. Es bestehen Mietrückstände in Höhe von ${arrears.toLocaleString('de-DE')} Euro.`,
-          context,
-          'professional',
-          0.8
-        );
+        responseText = `Sie haben ${activeContracts} aktive Mietverträge. Es bestehen Mietrückstände in Höhe von ${arrears.toLocaleString('de-DE')} Euro.`;
+        confidence = 0.8;
       } else {
-        speak(
-          `Sie haben ${activeContracts} aktive Mietverträge und keine offenen Mietrückstände. Alle Mieter zahlen pünktlich.`,
-          context,
-          'conversational',
-          1.0
-        );
+        responseText = `Sie haben ${activeContracts} aktive Mietverträge und keine offenen Mietrückstände. Alle Mieter zahlen pünktlich.`;
+        confidence = 1.0;
       }
+      
+      // Add callback reference if this is a follow-up
+      if (isFollowUp && dialogContext?.generateCallbackReference) {
+        const callbackRef = dialogContext.generateCallbackReference({
+          currentQuery: command,
+          currentContext: context
+        });
+        if (callbackRef) {
+          responseText = `${callbackRef}. ${responseText}`;
+        }
+      }
+      
+      const finalResponse = speak(responseText, context, arrears > 0 ? 'professional' : 'conversational', confidence);
+      
+      // Record response in dialog context
+      if (dialogContext?.recordResponse) {
+        dialogContext.recordResponse({
+          query: command,
+          response: finalResponse,
+          context,
+          entities: extractEntitiesFromQuery(command),
+          intentType: 'tenants',
+          confidence
+        });
+      }
+      
       return;
     }
     
     // Fallback mit niedrigerer Konfidenz
     const context = {
-      temporal: { comparison: 'jederzeit verfügbar' }
+      temporal: { comparison: 'jederzeit verfügbar' },
+      ...enhancedContext
     };
     
-    speak(
-      'Ich bin Clara, Ihre Immobilien-Expertin. Ich kann Ihnen bei Fragen zu Cashflow, Rendite, Mietern und Wirtschaftlichkeit helfen.',
-      context,
-      'conversational',
-      0.7
-    );
+    let responseText = 'Ich bin Clara, Ihre Immobilien-Expertin. Ich kann Ihnen bei Fragen zu Cashflow, Rendite, Mietern und Wirtschaftlichkeit helfen.';
+    
+    // Add callback reference if this is a follow-up
+    if (isFollowUp && dialogContext?.generateCallbackReference) {
+      const callbackRef = dialogContext.generateCallbackReference({
+        currentQuery: command,
+        currentContext: context
+      });
+      if (callbackRef) {
+        responseText = `${callbackRef}. ${responseText}`;
+      }
+    }
+    
+    const finalResponse = speak(responseText, context, 'conversational', 0.7);
+    
+    // Record response in dialog context
+    if (dialogContext?.recordResponse) {
+      dialogContext.recordResponse({
+        query: command,
+        response: finalResponse,
+        context,
+        entities: extractEntitiesFromQuery(command),
+        intentType: 'general',
+        confidence: 0.7
+      });
+    }
   };
 
   // Execute specific intents
@@ -383,6 +544,12 @@ const ClaraKIEngine = ({ onNavigate, supabaseClient }) => {
   const handleResponseStylerReady = useCallback((stylerFunctions) => {
     setResponseStyler(stylerFunctions);
     console.log('ClaraResponseStyler initialized and ready');
+  }, []);
+
+  // Handle DialogContext initialization
+  const handleDialogContextReady = useCallback((contextFunctions) => {
+    setDialogContext(contextFunctions);
+    console.log('ClaraDialogContext initialized and ready');
   }, []);
 
   // Enhanced speak function with response styling
@@ -464,11 +631,30 @@ const ClaraKIEngine = ({ onNavigate, supabaseClient }) => {
     VOICE_COMMANDS,
     responseStyler,
     handleResponseStylerReady,
-    // JSX Component for ResponseStyler integration
+    dialogContext,
+    handleDialogContextReady,
+    // JSX Components for integration
     ResponseStylerProvider: () => (
       <ClaraResponseStyler onResponseStyled={handleResponseStylerReady}>
         <div style={{ display: 'none' }}>ClaraResponseStyler Provider</div>
       </ClaraResponseStyler>
+    ),
+    DialogContextProvider: () => (
+      <ClaraDialogContext 
+        options={{
+          maxReferenceDistance: 3,
+          enableExplicitCallbacks: true,
+          enableImplicitReferences: true,
+          enableTopicTracking: true,
+          maxTopicAge: 5 * 60 * 1000, // 5 minutes
+          memoryOptions: {
+            maxExchanges: 10
+          }
+        }}
+        onContextUpdate={handleDialogContextReady}
+      >
+        <div style={{ display: 'none' }}>ClaraDialogContext Provider</div>
+      </ClaraDialogContext>
     )
   };
 };
