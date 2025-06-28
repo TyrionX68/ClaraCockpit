@@ -2,6 +2,8 @@ import React, { useState, useEffect, useCallback } from 'react';
 import { createClient } from '@supabase/supabase-js';
 import ClaraResponseStyler from '../logic/ClaraResponseStyler';
 import ClaraDialogContext from '../logic/ClaraDialogContext';
+import { mapVoiceCommand, validateIntent } from '../../logic/VoiceCommandMapper';
+import { generateSSML, validateSSMLResponse, ssmlToText } from '../../logic/SSMLResponseGenerator';
 
 // Immobilien-Fachwissen und Kennzahlen
 const REAL_ESTATE_KNOWLEDGE = {
@@ -311,26 +313,65 @@ const ClaraKIEngine = ({ onNavigate, supabaseClient }) => {
     loadContextData();
   }, [loadContextData]);
 
-  // Process voice commands
+  // Process voice commands with V6.1.3 Voice & Response Optimierung
   const processVoiceCommand = async (command) => {
     setIsProcessing(true);
     
     try {
-      // Finde passenden Voice Command
-      const matchedCommand = Object.keys(VOICE_COMMANDS).find(cmd => 
-        command.includes(cmd.replace('clara ', ''))
-      );
-
-      if (matchedCommand) {
-        const { intent, module } = VOICE_COMMANDS[matchedCommand];
-        await executeIntent(intent, module, command);
-      } else {
-        // Intelligente Verarbeitung für natürliche Sprache
-        await processNaturalLanguage(command);
+      console.log('Processing voice command:', command);
+      
+      // Phase 1: Map voice command to intent using VoiceCommandMapper
+      const intentResult = mapVoiceCommand(command, { contextData });
+      
+      if (!validateIntent(intentResult)) {
+        console.error('Invalid intent result:', intentResult);
+        await speakWithSSML('unknown', {}, 'Entschuldigung, ich konnte Ihren Befehl nicht verarbeiten.');
+        return;
       }
+      
+      console.log('Mapped intent:', intentResult);
+      
+      // Phase 2: Execute intent and gather response data
+      const responseData = await executeIntentV6(intentResult.intent, intentResult.parameters, command);
+      
+      // Phase 3: Generate SSML response using SSMLResponseGenerator
+      const ssmlResponse = generateSSML(intentResult.intent, responseData, {
+        confidence: intentResult.confidence,
+        originalInput: command
+      });
+      
+      if (!validateSSMLResponse(ssmlResponse)) {
+        console.error('Invalid SSML response:', ssmlResponse);
+        await speakWithSSML('unknown', {}, 'Es ist ein Fehler bei der Antwortgenerierung aufgetreten.');
+        return;
+      }
+      
+      console.log('Generated SSML response:', ssmlResponse);
+      
+      // Phase 4: Speak response with SSML support
+      await speakWithSSML(
+        intentResult.intent, 
+        responseData, 
+        ssmlResponse.text,
+        ssmlResponse.ssml,
+        ssmlResponse.emotion
+      );
+      
+      // Phase 5: Record interaction for dialog context
+      if (dialogContext?.recordResponse) {
+        dialogContext.recordResponse({
+          query: command,
+          intent: intentResult.intent,
+          response: ssmlResponse.text,
+          confidence: intentResult.confidence,
+          emotion: ssmlResponse.emotion,
+          timestamp: new Date().toISOString()
+        });
+      }
+      
     } catch (error) {
       console.error('Error processing voice command:', error);
-      speak('Entschuldigung, bei der Verarbeitung Ihres Befehls ist ein Fehler aufgetreten.');
+      await speakWithSSML('unknown', {}, 'Entschuldigung, bei der Verarbeitung Ihres Befehls ist ein Fehler aufgetreten.');
     }
     
     setIsProcessing(false);
@@ -640,6 +681,215 @@ const ClaraKIEngine = ({ onNavigate, supabaseClient }) => {
         
       default:
         speak('Funktion wird ausgeführt.');
+    }
+  };
+
+  // V6.1.3: Execute intents with enhanced data gathering for SSML responses
+  const executeIntentV6 = async (intent, parameters, originalCommand) => {
+    const { kpis } = contextData;
+    
+    try {
+      switch (intent) {
+        case 'zeige-dashboard':
+          if (onNavigate) onNavigate('dashboard');
+          return {
+            tenantCount: kpis?.tenantCount || 0,
+            totalRent: kpis?.totalRent || 0,
+            occupancyRate: kpis?.occupancyRate || 0,
+            activeContracts: kpis?.activeContracts || 0
+          };
+          
+        case 'zeige-cashflow':
+          const monthlyRent = kpis?.totalRent || 0;
+          const annualRent = monthlyRent * 12;
+          const estimatedCosts = annualRent * 0.25; // 25% Kostenschätzung
+          const netCashflow = monthlyRent - (estimatedCosts / 12);
+          
+          return {
+            cashflow: netCashflow,
+            monthlyRent,
+            annualRent,
+            estimatedCosts,
+            tenantCount: kpis?.tenantCount || 0
+          };
+          
+        case 'berechne-rendite':
+          if (kpis?.propertyValue && kpis?.annualRent) {
+            const grossReturn = REAL_ESTATE_KNOWLEDGE.calculations.bruttomietrendite(
+              kpis.annualRent, 
+              kpis.propertyValue
+            );
+            const netReturn = grossReturn - 2.5; // Geschätzte Bewirtschaftungskosten
+            
+            return {
+              rendite: parameters.typ === 'netto' ? netReturn : grossReturn,
+              typ: parameters.typ === 'netto' ? 'Nettomietrendite' : 'Bruttomietrendite',
+              annualRent: kpis.annualRent,
+              propertyValue: kpis.propertyValue
+            };
+          } else {
+            return {
+              rendite: 0,
+              typ: 'Rendite',
+              error: 'Objektwert nicht verfügbar'
+            };
+          }
+          
+        case 'zeige-mieter':
+          const arrears = kpis?.totalArrears || 0;
+          return {
+            tenantCount: kpis?.tenantCount || 0,
+            activeContracts: kpis?.activeContracts || 0,
+            arrears,
+            occupancyRate: kpis?.occupancyRate || 0,
+            filter: parameters.filter || 'alle'
+          };
+          
+        case 'zeige-rückstände':
+          return {
+            arrears: kpis?.totalArrears || 0,
+            tenantCount: kpis?.tenantCount || 0,
+            activeContracts: kpis?.activeContracts || 0
+          };
+          
+        case 'zeige-wartung':
+          // Mock-Daten für Wartung (in echter Anwendung aus Datenbank)
+          return {
+            urgentCount: 0,
+            scheduledCount: 2,
+            completedThisMonth: 5
+          };
+          
+        case 'navigation-zurück':
+          if (onNavigate) onNavigate('dashboard');
+          return {
+            destination: 'Dashboard'
+          };
+          
+        case 'zeige-hilfe':
+          return {
+            availableCommands: [
+              'Wie ist mein Cashflow?',
+              'Berechne Rendite',
+              'Zeige Mieter',
+              'Zeige Dashboard'
+            ]
+          };
+          
+        default:
+          return {
+            error: 'Unbekannter Intent',
+            intent,
+            suggestion: 'Versuchen Sie: "Zeige Dashboard" oder "Wie ist mein Cashflow?"'
+          };
+      }
+    } catch (error) {
+      console.error('Error executing intent V6:', error);
+      return {
+        error: 'Fehler bei der Intent-Ausführung',
+        intent,
+        originalError: error.message
+      };
+    }
+  };
+
+  // V6.1.3: Enhanced speak function with SSML support
+  const speakWithSSML = async (intent, responseData, fallbackText, ssmlText = null, emotion = 'neutral') => {
+    if (!('speechSynthesis' in window)) {
+      console.warn('Speech synthesis not supported');
+      return fallbackText;
+    }
+
+    try {
+      // Stoppe vorherige Sprachausgabe
+      speechSynthesis.cancel();
+      
+      let textToSpeak = fallbackText;
+      
+      // Use ResponseStyler if available
+      if (responseStyler && responseStyler.enhanceResponse) {
+        try {
+          textToSpeak = responseStyler.enhanceResponse({
+            baseResponse: fallbackText,
+            context: responseData,
+            style: emotion,
+            data: contextData,
+            confidence: 1.0
+          });
+          console.log('Enhanced response with ResponseStyler:', textToSpeak);
+        } catch (error) {
+          console.error('Error enhancing response:', error);
+          textToSpeak = fallbackText; // Fallback to original text
+        }
+      }
+      
+      const utterance = new SpeechSynthesisUtterance();
+      
+      // Try SSML first, fallback to plain text
+      if (ssmlText && 'ssml' in utterance) {
+        utterance.ssml = ssmlText;
+        console.log('Using SSML:', ssmlText);
+      } else {
+        utterance.text = textToSpeak;
+        console.log('Using plain text:', textToSpeak);
+      }
+      
+      // Verwende bevorzugte deutsche Frauenstimme
+      if (preferredVoice) {
+        utterance.voice = preferredVoice;
+      }
+      
+      // Emotion-basierte Spracheinstellungen
+      switch (emotion) {
+        case 'excited':
+        case 'positive':
+          utterance.rate = 0.9;
+          utterance.pitch = 1.2;
+          utterance.volume = 0.95;
+          break;
+        case 'concern':
+        case 'urgent':
+          utterance.rate = 0.8;
+          utterance.pitch = 0.9;
+          utterance.volume = 0.9;
+          break;
+        case 'apologetic':
+          utterance.rate = 0.75;
+          utterance.pitch = 0.95;
+          utterance.volume = 0.85;
+          break;
+        case 'helpful':
+          utterance.rate = 0.85;
+          utterance.pitch = 1.1;
+          utterance.volume = 0.9;
+          break;
+        default: // neutral
+          utterance.rate = 0.85;
+          utterance.pitch = 1.0;
+          utterance.volume = 0.9;
+      }
+      
+      utterance.lang = 'de-DE';
+      
+      // Promise-basierte Sprachausgabe
+      return new Promise((resolve, reject) => {
+        utterance.onend = () => {
+          console.log('Speech synthesis completed');
+          resolve(textToSpeak);
+        };
+        
+        utterance.onerror = (event) => {
+          console.error('Speech synthesis error:', event.error);
+          reject(new Error(`Speech synthesis failed: ${event.error}`));
+        };
+        
+        console.log('Speaking with emotion:', emotion, 'voice:', preferredVoice?.name);
+        speechSynthesis.speak(utterance);
+      });
+      
+    } catch (error) {
+      console.error('Error in speakWithSSML:', error);
+      return fallbackText;
     }
   };
 
