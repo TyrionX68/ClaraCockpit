@@ -7,6 +7,7 @@ import VoiceFeedback from '../components/molecules/VoiceFeedback';
 import MicButton from '../components/molecules/MicButton';
 import ClaraKIEngine from '../components/organisms/ClaraKIEngine';
 import { VoiceContextProvider, useVoiceContext } from '../contexts/VoiceContext';
+import VoiceDebugTest from '../components/debug/VoiceDebugTest';
 
 // Main ClaraKI Component with Voice Integration
 const ClaraKIPageContent = () => {
@@ -168,6 +169,11 @@ const ClaraKIPageContent = () => {
 
   return (
     <div className="min-h-screen bg-background text-foreground">
+      {/* DEBUG: Voice Test Component */}
+      <div className="max-w-4xl mx-auto px-2 sm:px-4 py-6">
+        <VoiceDebugTest />
+      </div>
+      
       {/* Header */}
       <div className="bg-card border-b border-border">
         <div className="max-w-4xl mx-auto px-2 sm:px-4 py-4 sm:py-6">
