@@ -202,48 +202,63 @@ const ClaraKIPage = () => {
       </div>
 
       {/* Chat Container */}
-      <div className="max-w-4xl mx-auto px-4 py-6">
+      <div className="max-w-4xl mx-auto px-2 sm:px-4 py-6">
         <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-xl border border-gray-200 dark:border-gray-700 overflow-hidden">
           {/* Chat Messages */}
-          <div className="h-96 overflow-y-auto p-6 space-y-4">
+          <div className="h-96 overflow-y-auto p-3 sm:p-6 space-y-4">
             {messages.map((message, index) => (
               <div
                 key={index}
-                className={`flex gap-3 ${message.type === 'user' ? 'justify-end' : 'justify-start'}`}
+                className={`flex gap-2 sm:gap-3 ${message.type === 'user' ? 'justify-end' : 'justify-start'}`}
               >
                 {message.type === 'assistant' && (
-                  <div className="w-8 h-8 bg-gradient-to-br from-blue-500 to-purple-600 rounded-full flex items-center justify-center flex-shrink-0">
-                    <Bot className="w-4 h-4 text-white" />
+                  <div className="w-6 h-6 sm:w-8 sm:h-8 bg-gradient-to-br from-blue-500 to-purple-600 rounded-full flex items-center justify-center flex-shrink-0">
+                    <Bot className="w-3 h-3 sm:w-4 sm:h-4 text-white" />
                   </div>
                 )}
                 
                 <div className={`
-                  max-w-xs lg:max-w-md px-4 py-3 rounded-2xl
+                  max-w-[280px] sm:max-w-xs lg:max-w-md px-3 sm:px-4 py-2 sm:py-3 rounded-2xl
                   ${message.type === 'user' 
                     ? 'bg-blue-500 text-white' 
                     : 'bg-gray-100 dark:bg-gray-700 text-gray-900 dark:text-white'
                   }
                 `}>
-                  <p className="text-sm">{message.content}</p>
+                  <p className="text-xs sm:text-sm leading-relaxed">{message.content}</p>
                   <div className="text-xs opacity-70 mt-1">
                     {message.timestamp}
                   </div>
+                  
+                  {/* Suggestions - Mobile optimiert */}
+                  {message.suggestions && message.suggestions.length > 0 && (
+                    <div className="mt-3 space-y-1 sm:space-y-2">
+                      {message.suggestions.map((suggestion, idx) => (
+                        <button
+                          key={idx}
+                          onClick={() => handleSendMessage(suggestion)}
+                          className="block w-full text-left px-2 sm:px-3 py-1 sm:py-2 text-xs sm:text-sm bg-green-100 hover:bg-green-200 dark:bg-green-800 dark:hover:bg-green-700 text-green-800 dark:text-green-200 rounded-lg transition-colors"
+                        >
+                          {suggestion}
+                        </button>
+                      ))}
+                    </div>
+                  )}
                 </div>
                 
                 {message.type === 'user' && (
-                  <div className="w-8 h-8 bg-gray-300 dark:bg-gray-600 rounded-full flex items-center justify-center flex-shrink-0">
-                    <span className="text-sm font-medium text-gray-700 dark:text-gray-300">Sie</span>
+                  <div className="w-6 h-6 sm:w-8 sm:h-8 bg-gray-300 dark:bg-gray-600 rounded-full flex items-center justify-center flex-shrink-0">
+                    <span className="text-xs sm:text-sm font-medium text-gray-700 dark:text-gray-300">Sie</span>
                   </div>
                 )}
               </div>
             ))}
             
             {isTyping && (
-              <div className="flex gap-3 justify-start">
-                <div className="w-8 h-8 bg-gradient-to-br from-blue-500 to-purple-600 rounded-full flex items-center justify-center flex-shrink-0">
-                  <Bot className="w-4 h-4 text-white" />
+              <div className="flex gap-2 sm:gap-3 justify-start">
+                <div className="w-6 h-6 sm:w-8 sm:h-8 bg-gradient-to-br from-blue-500 to-purple-600 rounded-full flex items-center justify-center flex-shrink-0">
+                  <Bot className="w-3 h-3 sm:w-4 sm:h-4 text-white" />
                 </div>
-                <div className="bg-gray-100 dark:bg-gray-700 px-4 py-3 rounded-2xl">
+                <div className="bg-gray-100 dark:bg-gray-700 px-3 sm:px-4 py-2 sm:py-3 rounded-2xl">
                   <div className="flex space-x-1">
                     <div className="w-2 h-2 bg-gray-400 rounded-full animate-bounce"></div>
                     <div className="w-2 h-2 bg-gray-400 rounded-full animate-bounce" style={{animationDelay: '0.1s'}}></div>
@@ -256,15 +271,15 @@ const ClaraKIPage = () => {
 
           {/* Suggestions */}
           {messages.length > 0 && messages[messages.length - 1].suggestions && (
-            <div className="px-6 py-4 border-t border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-750">
-              <div className="flex flex-wrap gap-2">
+            <div className="px-3 sm:px-6 py-3 sm:py-4 border-t border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-750">
+              <div className="flex flex-wrap gap-1 sm:gap-2">
                 {messages[messages.length - 1].suggestions.map((suggestion, index) => (
                   <Button
                     key={index}
                     variant="outline"
                     size="sm"
                     onClick={() => handleSuggestionClick(suggestion)}
-                    className="text-xs bg-white dark:bg-gray-800 hover:bg-blue-50 dark:hover:bg-blue-900 border-gray-300 dark:border-gray-600"
+                    className="text-xs sm:text-sm bg-white dark:bg-gray-800 hover:bg-blue-50 dark:hover:bg-blue-900 border-gray-300 dark:border-gray-600 px-2 sm:px-3 py-1 sm:py-2"
                   >
                     {suggestion}
                   </Button>
@@ -273,24 +288,24 @@ const ClaraKIPage = () => {
             </div>
           )}
 
-          {/* Input Area */}
-          <div className="p-6 border-t border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800">
-            <div className="flex gap-3">
+          {/* Input Area - Mobile optimiert */}
+          <div className="p-3 sm:p-6 border-t border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800">
+            <div className="flex gap-2 sm:gap-3">
               <div className="flex-1 relative">
                 <Input
                   value={inputValue}
                   onChange={(e) => setInputValue(e.target.value)}
                   onKeyPress={(e) => e.key === 'Enter' && handleSendMessage()}
                   placeholder="Fragen Sie Clara nach Immobilien-Kennzahlen, Berechnungen oder Verwaltungsaufgaben..."
-                  className="pr-12 dark:bg-gray-700 dark:border-gray-600 dark:text-white"
+                  className="pr-10 sm:pr-12 text-sm sm:text-base dark:bg-gray-700 dark:border-gray-600 dark:text-white"
                 />
                 <Button
                   onClick={() => handleSendMessage()}
                   size="sm"
-                  className="absolute right-1 top-1 h-8 w-8 p-0"
+                  className="absolute right-1 top-1 h-6 w-6 sm:h-8 sm:w-8 p-0"
                   disabled={!inputValue.trim()}
                 >
-                  <Send className="w-4 h-4" />
+                  <Send className="w-3 h-3 sm:w-4 sm:h-4" />
                 </Button>
               </div>
               
@@ -299,6 +314,7 @@ const ClaraKIPage = () => {
                 isListening={claraEngine.isListening}
                 onClick={handleVoiceToggle}
                 title={voiceActive ? 'Voice deaktivieren' : 'Voice aktivieren'}
+                className="w-10 h-10 sm:w-12 sm:h-12"
               />
             </div>
           </div>

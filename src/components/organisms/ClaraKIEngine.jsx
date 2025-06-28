@@ -89,24 +89,54 @@ const ClaraKIEngine = ({ onNavigate, supabaseClient }) => {
       if ('speechSynthesis' in window) {
         const voices = speechSynthesis.getVoices();
         
-        // Suche nach deutscher Frauenstimme
-        const germanFemaleVoices = voices.filter(voice => 
-          voice.lang.startsWith('de') && 
-          (voice.name.toLowerCase().includes('female') || 
-           voice.name.toLowerCase().includes('anna') ||
-           voice.name.toLowerCase().includes('petra') ||
-           voice.name.toLowerCase().includes('marlene') ||
-           voice.name.toLowerCase().includes('vicki') ||
-           voice.name.toLowerCase().includes('katrin'))
-        );
+        // Erweiterte Suche nach deutscher Frauenstimme
+        const germanFemaleVoices = voices.filter(voice => {
+          const name = voice.name.toLowerCase();
+          const lang = voice.lang.toLowerCase();
+          
+          // Muss deutsch sein
+          if (!lang.includes('de')) return false;
+          
+          // Bekannte deutsche Frauenstimmen
+          const femaleNames = [
+            'female', 'anna', 'petra', 'marlene', 'vicki', 'katrin',
+            'hedda', 'zira', 'sabina', 'gisela', 'ingrid', 'claudia',
+            'stefanie', 'susanne', 'angelika', 'brigitte', 'eva',
+            'microsoft hedda', 'microsoft katja', 'google deutsch'
+          ];
+          
+          // Ausschluss männlicher Stimmen
+          const maleNames = ['male', 'stefan', 'georg', 'ralf', 'michael', 'thomas'];
+          
+          // Prüfe auf männliche Namen (ausschließen)
+          if (maleNames.some(male => name.includes(male))) return false;
+          
+          // Prüfe auf weibliche Namen (einschließen)
+          return femaleNames.some(female => name.includes(female));
+        });
 
-        // Fallback: Alle deutschen Stimmen
+        // Fallback: Alle deutschen Stimmen (bevorzuge die ersten, die oft weiblich sind)
         const germanVoices = voices.filter(voice => voice.lang.startsWith('de'));
+        
+        // Sortiere deutsche Stimmen: Weibliche Namen zuerst
+        germanVoices.sort((a, b) => {
+          const aName = a.name.toLowerCase();
+          const bName = b.name.toLowerCase();
+          const femaleIndicators = ['female', 'anna', 'petra', 'hedda', 'zira'];
+          
+          const aIsFemale = femaleIndicators.some(indicator => aName.includes(indicator));
+          const bIsFemale = femaleIndicators.some(indicator => bName.includes(indicator));
+          
+          if (aIsFemale && !bIsFemale) return -1;
+          if (!aIsFemale && bIsFemale) return 1;
+          return 0;
+        });
         
         // Wähle beste verfügbare Stimme
         const selectedVoice = germanFemaleVoices[0] || germanVoices[0] || voices[0];
         
-        console.log('Available voices:', voices.map(v => ({ name: v.name, lang: v.lang })));
+        console.log('Available German voices:', germanVoices.map(v => ({ name: v.name, lang: v.lang })));
+        console.log('German female voices found:', germanFemaleVoices.map(v => ({ name: v.name, lang: v.lang })));
         console.log('Selected voice:', selectedVoice?.name, selectedVoice?.lang);
         
         setPreferredVoice(selectedVoice);
