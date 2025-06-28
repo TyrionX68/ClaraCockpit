@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Bot, Users, Mic, MicOff, Send } from 'lucide-react';
 import { Button } from '@/components/ui/button';
@@ -9,6 +9,8 @@ import ClaraKIEngine from '../components/organisms/ClaraKIEngine';
 
 const ClaraKIPage = () => {
   const navigate = useNavigate();
+  const chatContainerRef = useRef(null);
+  
   const [messages, setMessages] = useState([
     {
       type: 'assistant',
@@ -18,6 +20,7 @@ const ClaraKIPage = () => {
       kpis: {}
     }
   ]);
+  
   const [inputValue, setInputValue] = useState('');
   const [isTyping, setIsTyping] = useState(false);
   const [voiceActive, setVoiceActive] = useState(false);
@@ -30,7 +33,67 @@ const ClaraKIPage = () => {
 
   const { contextData, ResponseStylerProvider, DialogContextProvider } = claraEngine;
 
-  const handleSendMessage = async (message = inputValue) => {
+  // V6.1.5: Voice-to-Chat Integration
+  const handleVoiceToChat = async (transcript) => {
+    if (!transcript || transcript.trim().length === 0) {
+      console.warn('Empty voice transcript received');
+      return;
+    }
+
+    console.log('Voice transcript received:', transcript);
+    
+    // Automatically send transcribed text as chat message
+    await handleSendMessage(transcript.trim());
+    
+    // Auto-scroll to bottom after voice message
+    setTimeout(() => {
+      scrollToBottom();
+    }, 100);
+  };
+
+  // Auto-scroll to bottom of chat
+  const scrollToBottom = () => {
+    if (chatContainerRef.current) {
+      chatContainerRef.current.scrollTop = chatContainerRef.current.scrollHeight;
+    }
+  };
+
+  // Voice greeting when voice is activated
+  const handleVoiceActivation = () => {
+    setVoiceActive(true);
+    
+    // Clara greeting when voice is activated
+    if ('speechSynthesis' in window) {
+      const utterance = new SpeechSynthesisUtterance('Wie kann ich Ihnen helfen?');
+      utterance.lang = 'de-DE';
+      utterance.rate = 0.9;
+      utterance.pitch = 1.1;
+      speechSynthesis.speak(utterance);
+    }
+  };
+
+  // Voice deactivation
+  const handleVoiceDeactivation = () => {
+    setVoiceActive(false);
+  };
+
+  // Handle voice toggle with greeting and chat integration
+  const handleVoiceToggle = () => {
+    if (voiceActive) {
+      handleVoiceDeactivation();
+      claraEngine.stopVoiceRecognition();
+    } else {
+      handleVoiceActivation();
+      claraEngine.startVoiceRecognition(handleVoiceToChat);
+    }
+  };
+
+  // Auto-scroll when new messages are added
+  useEffect(() => {
+    scrollToBottom();
+  }, [messages]);
+
+  const handleSendMessage = async (message) => {
     if (!message.trim()) return;
 
     const userMessage = {
@@ -77,7 +140,7 @@ const ClaraKIPage = () => {
         }
       }, 800); // Reduced from 1000ms to 800ms
     } catch (error) {
-      console.error('Error processing message:', error);
+      console.error('Error generating response:', error);
       setIsTyping(false);
     }
   };
@@ -119,84 +182,35 @@ const ClaraKIPage = () => {
         suggestions: ['Mieter-Details anzeigen', 'Mahnwesen starten', 'Zahlungshistorie']
       };
     }
-    
-    // Wartung & Instandhaltung
-    if (lowerInput.includes('wartung') || lowerInput.includes('reparatur')) {
-      return {
-        content: 'Für eine professionelle Immobilienverwaltung empfehle ich eine Instandhaltungsrücklage von 8-12 € pro m² Wohnfläche jährlich. Bei größeren Reparaturen sollten Sie immer mehrere Kostenvoranschläge einholen.',
-        suggestions: ['Wartungskalender', 'Handwerker-Kontakte', 'Rücklage berechnen']
-      };
-    }
-    
-    // Wirtschaftlichkeit & Bewertung
-    if (lowerInput.includes('wirtschaftlich') || lowerInput.includes('bewert')) {
-      return {
-        content: 'Für die Wirtschaftlichkeitsbewertung betrachte ich folgende Kennzahlen: Bruttomietrendite (sollte >6% sein), Mietmultiplikator (<20), Leerstandsrisiko (<5%) und Eigenkapitalrendite. Möchten Sie eine detaillierte Analyse Ihrer Objekte?',
-        suggestions: ['Rendite berechnen', 'Marktvergleich', 'Optimierungspotentiale']
-      };
-    }
-    
-    // Fallback: Allgemeine Immobilien-Beratung
+
+    // Default response
     return {
-      content: 'Als Ihre Immobilien-Expertin kann ich Ihnen bei allen Fragen zur Hausverwaltung helfen. Ich kenne Fachbegriffe, führe Wirtschaftlichkeitsberechnungen durch und analysiere Ihre Daten. Was möchten Sie wissen?',
-      suggestions: ['Dashboard anzeigen', 'Cashflow berechnen', 'Mieter verwalten', 'Wartung planen'],
-      kpis: contextData.kpis || {}
+      content: `Ich verstehe Ihre Anfrage "${input}". Als Clara KI kann ich Ihnen bei Immobilien-Kennzahlen, Berechnungen und Verwaltungsaufgaben helfen. Stellen Sie mir gerne eine spezifische Frage zu Ihren Objekten, Mietern oder Finanzen.`,
+      suggestions: ['Dashboard anzeigen', 'Cashflow berechnen', 'Mieter-Übersicht', 'Wartungsaufgaben']
     };
   };
 
+  // Handle suggestion clicks
   const handleSuggestionClick = (suggestion) => {
     handleSendMessage(suggestion);
   };
 
-  const handleVoiceToggle = () => {
-    setVoiceActive(!voiceActive);
-    claraEngine.toggleVoiceRecognition();
-  };
-
-  const getVoiceMessage = () => {
-    if (claraEngine.isListening) return 'Ich höre zu...';
-    if (claraEngine.isProcessing) return 'Verarbeite Anfrage...';
-    if (voiceActive) return 'Voice-Control aktiv';
-    return 'Voice-Control inaktiv';
-  };
-
-  const getVoiceStatus = () => {
-    if (claraEngine.isListening) return 'listening';
-    if (claraEngine.isProcessing) return 'processing';
-    if (voiceActive) return 'active';
-    return 'inactive';
-  };
-
   return (
-    <div className="min-h-screen bg-background">
-      {/* Voice Feedback */}
-      <VoiceFeedback
-        isActive={voiceActive || claraEngine.isListening || claraEngine.isProcessing}
-        isListening={claraEngine.isListening}
-        message={getVoiceMessage()}
-        status={getVoiceStatus()}
-        onToggle={handleVoiceToggle}
-      />
-
+    <div className="min-h-screen bg-background text-foreground">
       {/* Header */}
-      <div className="bg-card/95 backdrop-blur-sm border-b border-border sticky top-0 z-40">
-        <div className="max-w-4xl mx-auto px-4 py-4">
-          <div className="flex items-center justify-between">
-            <div className="flex items-center gap-4">
-              <div className="flex items-center gap-3">
-                <div className="w-10 h-10 bg-gradient-to-br from-blue-500 to-purple-600 rounded-xl flex items-center justify-center">
-                  <Bot className="w-6 h-6 text-white" />
-                </div>
-                <div>
-                  <h1 className="text-xl font-bold text-card-foreground">Clara KI</h1>
-                  <p className="text-sm text-muted-foreground">Immobilien-Expertin mit Voice-Control</p>
-                </div>
-              </div>
+      <div className="bg-card border-b border-border">
+        <div className="max-w-4xl mx-auto px-2 sm:px-4 py-4 sm:py-6">
+          <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+            <div>
+              <h1 className="text-xl sm:text-2xl font-bold text-foreground">Clara KI</h1>
+              <p className="text-sm sm:text-base text-muted-foreground mt-1">
+                Ihre intelligente Assistentin für Hausverwaltung
+              </p>
             </div>
-
-            <div className="flex items-center gap-3">
+            
+            <div className="flex flex-col sm:flex-row gap-3 sm:gap-6">
               <div className="flex items-center gap-2 text-sm">
-                <div className={`w-2 h-2 rounded-full ${voiceActive ? 'bg-green-500' : 'bg-gray-400'}`}></div>
+                <div className={`w-2 h-2 rounded-full ${voiceActive ? 'bg-green-500' : 'bg-red-500'}`}></div>
                 <span className="text-muted-foreground">
                   {voiceActive ? 'Voice aktiv' : 'Voice inaktiv'}
                 </span>
@@ -217,7 +231,19 @@ const ClaraKIPage = () => {
       <div className="max-w-4xl mx-auto px-2 sm:px-4 py-6">
         <div className="bg-card rounded-2xl shadow-xl border border-border overflow-hidden">
           {/* Chat Messages */}
-          <div className="h-96 overflow-y-auto p-3 sm:p-6 space-y-4">
+          <div 
+            ref={chatContainerRef}
+            className="h-96 overflow-y-auto p-3 sm:p-6 space-y-4 scroll-smooth"
+            style={{
+              scrollBehavior: 'smooth',
+              overscrollBehavior: 'contain',
+              WebkitOverflowScrolling: 'touch'
+            }}
+            onWheel={(e) => {
+              // Ensure mouse wheel scrolling works
+              e.currentTarget.scrollTop += e.deltaY;
+            }}
+          >
             {messages.map((message, index) => (
               <div
                 key={index}
@@ -247,7 +273,7 @@ const ClaraKIPage = () => {
                       {message.suggestions.map((suggestion, idx) => (
                         <button
                           key={idx}
-                          onClick={() => handleSendMessage(suggestion)}
+                          onClick={() => handleSuggestionClick(suggestion)}
                           className="block w-full text-left px-2 sm:px-3 py-1 sm:py-2 text-xs sm:text-sm bg-accent hover:bg-accent/80 text-accent-foreground rounded-lg transition-colors"
                         >
                           {suggestion}
@@ -307,12 +333,12 @@ const ClaraKIPage = () => {
                 <Input
                   value={inputValue}
                   onChange={(e) => setInputValue(e.target.value)}
-                  onKeyPress={(e) => e.key === 'Enter' && handleSendMessage()}
+                  onKeyPress={(e) => e.key === 'Enter' && handleSendMessage(inputValue)}
                   placeholder="Fragen Sie Clara nach Immobilien-Kennzahlen, Berechnungen oder Verwaltungsaufgaben..."
                   className="pr-10 sm:pr-12 text-sm sm:text-base bg-background border-input text-foreground"
                 />
                 <Button
-                  onClick={() => handleSendMessage()}
+                  onClick={() => handleSendMessage(inputValue)}
                   size="sm"
                   className="absolute right-1 top-1 h-6 w-6 sm:h-8 sm:w-8 p-0"
                   disabled={!inputValue.trim()}

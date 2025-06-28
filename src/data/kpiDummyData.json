@@ -1,0 +1,350 @@
+{
+  "metadata": {
+    "version": "6.1.4",
+    "lastUpdated": "2025-06-28T12:00:00Z",
+    "description": "Zentrale Dummy-Daten für Clara360 V6.1.4 - DSGVO-konforme Simulation",
+    "dataSource": "anonymized_mock_data",
+    "propertyReference": "Waldhofstraße 76 (anonymisiert)"
+  },
+  
+  "dashboardKpis": [
+    {
+      "id": "objects_total",
+      "title": "12",
+      "label": "Objekte gesamt",
+      "icon": "Building",
+      "trend": "stable",
+      "color": "blue",
+      "category": "property"
+    },
+    {
+      "id": "active_tenants",
+      "title": "45",
+      "label": "aktive Mieter",
+      "icon": "Users",
+      "trend": "up",
+      "color": "green",
+      "category": "tenant"
+    },
+    {
+      "id": "monthly_rent",
+      "title": "87.500 €",
+      "label": "Mieteinnahmen/Monat",
+      "icon": "Euro",
+      "trend": "up",
+      "color": "green",
+      "category": "financial"
+    },
+    {
+      "id": "occupancy_rate",
+      "title": "94,2%",
+      "label": "Vermietungsquote",
+      "icon": "TrendingUp",
+      "trend": "stable",
+      "color": "green",
+      "category": "performance"
+    },
+    {
+      "id": "maintenance_tasks",
+      "title": "3",
+      "label": "offene Wartungen",
+      "icon": "Wrench",
+      "trend": "down",
+      "color": "orange",
+      "category": "maintenance"
+    },
+    {
+      "id": "rent_arrears",
+      "title": "2.450 €",
+      "label": "Mietrückstände",
+      "icon": "AlertTriangle",
+      "trend": "down",
+      "color": "red",
+      "category": "financial"
+    },
+    {
+      "id": "annual_return",
+      "title": "6,8%",
+      "label": "Bruttomietrendite",
+      "icon": "Percent",
+      "trend": "stable",
+      "color": "blue",
+      "category": "performance"
+    },
+    {
+      "id": "cash_flow",
+      "title": "8.036 €",
+      "label": "Netto-Cashflow",
+      "icon": "DollarSign",
+      "trend": "up",
+      "color": "green",
+      "category": "financial"
+    }
+  ],
+
+  "propertyData": {
+    "totalProperties": 12,
+    "totalUnits": 48,
+    "occupiedUnits": 45,
+    "vacantUnits": 3,
+    "totalArea": 3420,
+    "averageRentPerSqm": 12.50,
+    "propertyValue": 1850000,
+    "acquisitionYear": 2019
+  },
+
+  "financialData": {
+    "monthlyRent": 87500,
+    "annualRent": 1050000,
+    "operatingCosts": 18500,
+    "netCashflow": 8036,
+    "grossReturn": 6.8,
+    "netReturn": 4.2,
+    "totalArrears": 2450,
+    "averageRentPerUnit": 1944
+  },
+
+  "tenantData": {
+    "totalTenants": 45,
+    "activeContracts": 45,
+    "newContracts": 2,
+    "terminatedContracts": 1,
+    "averageTenancy": 3.2,
+    "occupancyRate": 94.2,
+    "tenantSatisfaction": 4.1
+  },
+
+  "maintenanceData": {
+    "openTasks": 3,
+    "scheduledTasks": 8,
+    "completedThisMonth": 12,
+    "urgentTasks": 1,
+    "averageCompletionTime": 5.2,
+    "maintenanceBudget": 15000,
+    "spentThisMonth": 3200
+  },
+
+  "documentData": {
+    "totalDocuments": 156,
+    "contracts": 45,
+    "invoices": 78,
+    "reports": 23,
+    "certificates": 10,
+    "recentUploads": 5,
+    "pendingApprovals": 2
+  },
+
+  "bankingData": {
+    "totalAccounts": 3,
+    "currentBalance": 125000,
+    "monthlyIncome": 87500,
+    "monthlyExpenses": 21500,
+    "pendingTransactions": 4,
+    "scheduledPayments": 12,
+    "lastBankSync": "2025-06-28T08:30:00Z"
+  },
+
+  "communicationData": {
+    "unreadMessages": 7,
+    "openTickets": 3,
+    "resolvedTickets": 28,
+    "averageResponseTime": 2.4,
+    "tenantSatisfactionScore": 4.1,
+    "lastCommunication": "2025-06-28T10:15:00Z"
+  },
+
+  "analyticsData": {
+    "totalReports": 15,
+    "scheduledReports": 5,
+    "dataQuality": 98.5,
+    "lastAnalysis": "2025-06-27T18:00:00Z",
+    "trendAnalysis": "positive",
+    "forecastAccuracy": 94.2
+  },
+
+  "mockTenants": [
+    {
+      "id": 1,
+      "name": "Mieter A",
+      "unit": "1.OG links",
+      "rent": 1850,
+      "status": "active",
+      "moveInDate": "2022-03-01",
+      "contractEnd": "2025-02-28",
+      "arrears": 0
+    },
+    {
+      "id": 2,
+      "name": "Mieter B", 
+      "unit": "1.OG rechts",
+      "rent": 1920,
+      "status": "active",
+      "moveInDate": "2021-08-15",
+      "contractEnd": "2024-08-14",
+      "arrears": 0
+    },
+    {
+      "id": 3,
+      "name": "Mieter C",
+      "unit": "EG links",
+      "rent": 1750,
+      "status": "active", 
+      "moveInDate": "2023-01-10",
+      "contractEnd": "2025-12-31",
+      "arrears": 1200
+    },
+    {
+      "id": 4,
+      "name": "Mieter D",
+      "unit": "2.OG links",
+      "rent": 2100,
+      "status": "active",
+      "moveInDate": "2020-06-01",
+      "contractEnd": "2025-05-31",
+      "arrears": 0
+    },
+    {
+      "id": 5,
+      "name": "Mieter E",
+      "unit": "2.OG rechts",
+      "rent": 1980,
+      "status": "active",
+      "moveInDate": "2023-09-01",
+      "contractEnd": "2026-08-31",
+      "arrears": 1250
+    }
+  ],
+
+  "mockTransactions": [
+    {
+      "id": 1,
+      "date": "2025-06-28",
+      "description": "Mieteingang Mieter A",
+      "amount": 1850,
+      "type": "income",
+      "category": "rent",
+      "status": "completed"
+    },
+    {
+      "id": 2,
+      "date": "2025-06-27",
+      "description": "Heizungsreparatur Obj. 3",
+      "amount": -450,
+      "type": "expense",
+      "category": "maintenance",
+      "status": "completed"
+    },
+    {
+      "id": 3,
+      "date": "2025-06-26",
+      "description": "Mieteingang Mieter B",
+      "amount": 1920,
+      "type": "income", 
+      "category": "rent",
+      "status": "completed"
+    },
+    {
+      "id": 4,
+      "date": "2025-06-25",
+      "description": "Versicherung Gebäude",
+      "amount": -280,
+      "type": "expense",
+      "category": "insurance",
+      "status": "pending"
+    }
+  ],
+
+  "mockMaintenanceTasks": [
+    {
+      "id": 1,
+      "title": "Heizung Wartung Obj. 5",
+      "description": "Jährliche Heizungswartung",
+      "priority": "medium",
+      "status": "scheduled",
+      "dueDate": "2025-07-15",
+      "estimatedCost": 350,
+      "assignedTo": "Heizungstechnik Schmidt"
+    },
+    {
+      "id": 2,
+      "title": "Dachrinne reinigen Obj. 2",
+      "description": "Verstopfte Dachrinne",
+      "priority": "high",
+      "status": "open",
+      "dueDate": "2025-07-02",
+      "estimatedCost": 180,
+      "assignedTo": "Hausmeister Service"
+    },
+    {
+      "id": 3,
+      "title": "Treppenhaus streichen",
+      "description": "Renovierung Treppenhaus",
+      "priority": "low",
+      "status": "planned",
+      "dueDate": "2025-08-30",
+      "estimatedCost": 1200,
+      "assignedTo": "Malerbetrieb Weber"
+    }
+  ],
+
+  "mockDocuments": [
+    {
+      "id": 1,
+      "name": "Mietvertrag_Mieter_A.pdf",
+      "type": "contract",
+      "size": "245 KB",
+      "uploadDate": "2022-02-28",
+      "category": "Verträge",
+      "status": "active"
+    },
+    {
+      "id": 2,
+      "name": "Nebenkostenabrechnung_2024.pdf",
+      "type": "invoice",
+      "size": "89 KB", 
+      "uploadDate": "2025-01-15",
+      "category": "Abrechnungen",
+      "status": "processed"
+    },
+    {
+      "id": 3,
+      "name": "Wartungsprotokoll_Heizung.pdf",
+      "type": "report",
+      "size": "156 KB",
+      "uploadDate": "2025-06-20",
+      "category": "Wartung",
+      "status": "archived"
+    }
+  ],
+
+  "voiceIntents": {
+    "cashflow": {
+      "patterns": ["cashflow", "geldfluss", "liquidität", "einnahmen"],
+      "response": "Ihr monatlicher Cashflow beträgt 8.036 Euro aus 45 Mieteinheiten.",
+      "data": {
+        "amount": 8036,
+        "units": 45,
+        "trend": "positive"
+      }
+    },
+    "rendite": {
+      "patterns": ["rendite", "return", "ertrag"],
+      "response": "Die Bruttomietrendite beträgt 6,8 Prozent bei einem Objektwert von 1,85 Millionen Euro.",
+      "data": {
+        "grossReturn": 6.8,
+        "propertyValue": 1850000,
+        "trend": "stable"
+      }
+    },
+    "mieter": {
+      "patterns": ["mieter", "vermieter", "bewohner"],
+      "response": "Sie haben 45 aktive Mieter mit einer Vermietungsquote von 94,2 Prozent.",
+      "data": {
+        "totalTenants": 45,
+        "occupancyRate": 94.2,
+        "arrears": 2450
+      }
+    }
+  }
+}
+
