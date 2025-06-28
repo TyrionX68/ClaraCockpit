@@ -155,37 +155,110 @@ const ClaraKIEngine = ({ onNavigate, supabaseClient }) => {
     };
   }, []);
 
-  // Initialize Speech Recognition
+  // Initialize Speech Recognition with improved error handling
   useEffect(() => {
     if ('webkitSpeechRecognition' in window || 'SpeechRecognition' in window) {
       const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
       const recognitionInstance = new SpeechRecognition();
       
+      // Voice active reference for safe cleanup
+      const voiceActiveRef = { current: false };
+      
       recognitionInstance.continuous = false;
       recognitionInstance.interimResults = false;
       recognitionInstance.lang = 'de-DE';
+      recognitionInstance.maxAlternatives = 1;
       
+      // Improved event handlers with timeout protection
       recognitionInstance.onstart = () => {
+        console.log('Speech recognition started');
+        voiceActiveRef.current = true;
         setIsListening(true);
       };
       
       recognitionInstance.onresult = (event) => {
-        const command = event.results[0][0].transcript.toLowerCase();
-        setLastCommand(command);
-        processVoiceCommand(command);
+        try {
+          if (event.results && event.results[0] && event.results[0][0]) {
+            const command = event.results[0][0].transcript.toLowerCase();
+            console.log('Voice command received:', command);
+            setLastCommand(command);
+            
+            // Process command asynchronously to avoid blocking
+            setTimeout(() => {
+              processVoiceCommand(command);
+            }, 50);
+          }
+        } catch (error) {
+          console.error('Error processing voice result:', error);
+        }
       };
       
+      // MetaGovernor Fix: Safe restart with timeout protection
       recognitionInstance.onend = () => {
+        console.log('Speech recognition ended');
+        voiceActiveRef.current = false;
         setIsListening(false);
+        
+        // NO AUTO-RESTART - prevents deadlock
+        // User must manually restart via button
       };
       
       recognitionInstance.onerror = (event) => {
-        console.error('Speech recognition error:', event.error);
+        console.error('Speech recognition error:', event.error, event);
+        voiceActiveRef.current = false;
         setIsListening(false);
-        speak('Entschuldigung, ich konnte Sie nicht verstehen. Bitte versuchen Sie es erneut.');
+        
+        // Improved error handling
+        let errorMessage = 'Spracherkennung-Fehler aufgetreten.';
+        
+        switch (event.error) {
+          case 'not-allowed':
+            errorMessage = 'Mikrofon-Berechtigung erforderlich. Bitte erlauben Sie den Zugriff.';
+            break;
+          case 'no-speech':
+            errorMessage = 'Keine Sprache erkannt. Bitte versuchen Sie es erneut.';
+            break;
+          case 'audio-capture':
+            errorMessage = 'Mikrofon nicht verfügbar. Prüfen Sie Ihre Audio-Einstellungen.';
+            break;
+          case 'network':
+            errorMessage = 'Netzwerkfehler bei der Spracherkennung.';
+            break;
+          case 'aborted':
+            // Silent - user cancelled
+            return;
+          default:
+            errorMessage = `Spracherkennung-Fehler: ${event.error}`;
+        }
+        
+        // Use setTimeout to avoid blocking the event loop
+        setTimeout(() => {
+          speak(errorMessage);
+        }, 100);
+      };
+      
+      // Store reference with cleanup function
+      recognitionInstance._cleanup = () => {
+        voiceActiveRef.current = false;
+        try {
+          if (recognitionInstance) {
+            recognitionInstance.abort(); // MetaGovernor recommendation
+          }
+        } catch (error) {
+          console.error('Error during recognition cleanup:', error);
+        }
       };
       
       setRecognition(recognitionInstance);
+      
+      // Cleanup on unmount
+      return () => {
+        if (recognitionInstance && recognitionInstance._cleanup) {
+          recognitionInstance._cleanup();
+        }
+      };
+    } else {
+      console.warn('Speech recognition not supported in this browser');
     }
   }, []);
 
@@ -637,13 +710,94 @@ const ClaraKIEngine = ({ onNavigate, supabaseClient }) => {
     return text;
   };
 
-  // Start/Stop voice recognition
-  const toggleVoiceRecognition = () => {
-    if (recognition) {
+  // Start/Stop voice recognition with error handling and timeout protection
+  const toggleVoiceRecognition = async () => {
+    if (!recognition) {
+      console.warn('Speech recognition not available');
+      speak('Spracherkennung ist in diesem Browser nicht verfügbar.');
+      return;
+    }
+
+    try {
       if (isListening) {
+        // Stop recognition safely
         recognition.stop();
+        setIsListening(false);
+        console.log('Voice recognition stopped');
       } else {
-        recognition.start();
+        // Start recognition with timeout protection
+        console.log('Starting voice recognition...');
+        
+        // Set listening state immediately for UI feedback
+        setIsListening(true);
+        
+        // Create timeout promise
+        const timeoutPromise = new Promise((_, reject) => {
+          setTimeout(() => {
+            reject(new Error('Voice recognition start timeout (5s)'));
+          }, 5000);
+        });
+        
+        // Create start promise
+        const startPromise = new Promise((resolve, reject) => {
+          // Add one-time error handler for start
+          const handleStartError = (event) => {
+            recognition.removeEventListener('error', handleStartError);
+            reject(new Error(`Speech recognition start failed: ${event.error}`));
+          };
+          
+          // Add one-time start handler
+          const handleStart = () => {
+            recognition.removeEventListener('start', handleStart);
+            recognition.removeEventListener('error', handleStartError);
+            resolve();
+          };
+          
+          recognition.addEventListener('error', handleStartError);
+          recognition.addEventListener('start', handleStart);
+          
+          // Attempt to start (this is where the blocking happens)
+          try {
+            recognition.start();
+          } catch (syncError) {
+            recognition.removeEventListener('error', handleStartError);
+            recognition.removeEventListener('start', handleStart);
+            reject(syncError);
+          }
+        });
+        
+        // Race between start and timeout
+        await Promise.race([startPromise, timeoutPromise]);
+        
+        console.log('Voice recognition started successfully');
+      }
+    } catch (error) {
+      console.error('Voice recognition error:', error);
+      setIsListening(false);
+      
+      // Provide user feedback based on error type
+      let errorMessage = 'Spracherkennung konnte nicht gestartet werden.';
+      
+      if (error.message.includes('timeout')) {
+        errorMessage = 'Spracherkennung-Start dauerte zu lange. Bitte versuchen Sie es erneut.';
+      } else if (error.message.includes('not-allowed')) {
+        errorMessage = 'Mikrofon-Berechtigung erforderlich. Bitte erlauben Sie den Mikrofon-Zugriff.';
+      } else if (error.message.includes('no-speech')) {
+        errorMessage = 'Keine Sprache erkannt. Bitte sprechen Sie deutlicher.';
+      }
+      
+      // Use setTimeout to avoid blocking the event loop with speech synthesis
+      setTimeout(() => {
+        speak(errorMessage);
+      }, 100);
+      
+      // Clean up recognition state
+      try {
+        if (recognition && isListening) {
+          recognition.stop();
+        }
+      } catch (cleanupError) {
+        console.error('Error during cleanup:', cleanupError);
       }
     }
   };
