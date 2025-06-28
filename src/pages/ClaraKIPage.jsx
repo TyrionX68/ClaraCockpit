@@ -8,6 +8,7 @@ import MicButton from '../components/molecules/MicButton';
 import EnhancedMicButton from '../components/molecules/EnhancedMicButton';
 import DesktopMicButton from '../components/molecules/DesktopMicButton';
 import SimpleMicButton from '../components/molecules/SimpleMicButton';
+import ImprovedMicButton from '../components/molecules/ImprovedMicButton';
 import SpeechControls from '../components/molecules/SpeechControls';
 import ClaraKIEngine from '../components/organisms/ClaraKIEngine';
 import { VoiceContextProvider, useVoiceContext } from '../contexts/VoiceContext';
@@ -365,8 +366,8 @@ const ClaraKIPageContent = () => {
                 </Button>
               </div>
               
-              {/* Simple Mic Button - No endless loops, clean timeouts */}
-              <SimpleMicButton
+              {/* Improved Mic Button - Full error display and debugging */}
+              <ImprovedMicButton
                 onTranscriptReceived={handleSendMessage}
                 className="w-10 h-10 sm:w-12 sm:h-12"
                 size="sm"
