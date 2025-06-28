@@ -5,9 +5,11 @@ import MainLayout from './components/layout/MainLayout';
 import DashboardLayout from './components/DashboardLayout';
 import ClaraKIPage from './pages/ClaraKIPage';
 import BankingPage from './pages/BankingPage';
+import MieterPage from './pages/MieterPage';
 import ObjectsPage from './pages/ObjectsPage';
 import MaintenancePage from './pages/MaintenancePage';
 import DocumentsPage from './pages/DocumentsPage';
+import AnalysenPage from './pages/AnalysenPage';
 import ManifestPage from './pages/ManifestPage';
 
 function App() {
@@ -22,8 +24,8 @@ function App() {
             <Route path="maintenance" element={<MaintenancePage />} />
             <Route path="documents" element={<DocumentsPage />} />
             <Route path="banking" element={<BankingPage />} />
-            <Route path="tenants" element={<div className="p-8"><h1 className="text-2xl font-bold text-foreground">Mieterverwaltung</h1><p className="text-muted-foreground mt-2">Mieter, Verträge und Rückstände</p></div>} />
-            <Route path="analytics" element={<div className="p-8"><h1 className="text-2xl font-bold text-foreground">Analysen</h1><p className="text-muted-foreground mt-2">Rendite-Analysen und Kennzahlen</p></div>} />
+            <Route path="tenants" element={<MieterPage />} />
+            <Route path="analytics" element={<AnalysenPage />} />
             <Route path="communication" element={<div className="p-8"><h1 className="text-2xl font-bold text-foreground">Kommunikation</h1><p className="text-muted-foreground mt-2">Nachrichten und Termine</p></div>} />
             <Route path="manifest" element={<ManifestPage />} />
           </Route>

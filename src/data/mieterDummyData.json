@@ -1,0 +1,221 @@
+{
+  "mieter": [
+    {
+      "id": "M001",
+      "name": "Familie Schmidt",
+      "vorname": "Hans",
+      "nachname": "Schmidt",
+      "email": "h.schmidt@email.com",
+      "telefon": "+49 30 12345678",
+      "wohnung": {
+        "objekt": "Musterstraße 12",
+        "einheit": "Wohnung 3A",
+        "groesse": "85 qm",
+        "zimmer": "3.5",
+        "etage": "3. OG"
+      },
+      "vertrag": {
+        "beginn": "2022-03-01",
+        "ende": "2025-02-28",
+        "miete": {
+          "kalt": 1250.00,
+          "nebenkosten": 280.00,
+          "gesamt": 1530.00
+        },
+        "kaution": 3750.00,
+        "status": "aktiv"
+      },
+      "zahlungen": {
+        "letzteZahlung": "2025-06-01",
+        "rueckstand": 0.00,
+        "status": "aktuell"
+      },
+      "kommunikation": [
+        {
+          "datum": "2025-06-15",
+          "typ": "Email",
+          "betreff": "Heizungsreparatur",
+          "status": "beantwortet"
+        }
+      ]
+    },
+    {
+      "id": "M002", 
+      "name": "Müller GmbH",
+      "vorname": "Thomas",
+      "nachname": "Müller",
+      "email": "t.mueller@firma.de",
+      "telefon": "+49 30 87654321",
+      "wohnung": {
+        "objekt": "Geschäftshaus Berlin",
+        "einheit": "Büro 2.1",
+        "groesse": "120 qm",
+        "zimmer": "4",
+        "etage": "2. OG"
+      },
+      "vertrag": {
+        "beginn": "2023-01-01",
+        "ende": "2028-12-31",
+        "miete": {
+          "kalt": 2400.00,
+          "nebenkosten": 450.00,
+          "gesamt": 2850.00
+        },
+        "kaution": 8550.00,
+        "status": "aktiv"
+      },
+      "zahlungen": {
+        "letzteZahlung": "2025-05-01",
+        "rueckstand": 2850.00,
+        "status": "rueckstand"
+      },
+      "kommunikation": [
+        {
+          "datum": "2025-06-20",
+          "typ": "Mahnung",
+          "betreff": "Zahlungsrückstand Juni 2025",
+          "status": "versendet"
+        },
+        {
+          "datum": "2025-05-15",
+          "typ": "Telefon",
+          "betreff": "Zahlungserinnerung",
+          "status": "kontaktiert"
+        }
+      ]
+    },
+    {
+      "id": "M003",
+      "name": "Familie Weber",
+      "vorname": "Anna",
+      "nachname": "Weber",
+      "email": "a.weber@email.com",
+      "telefon": "+49 30 55566677",
+      "wohnung": {
+        "objekt": "Parkstraße 8",
+        "einheit": "Wohnung 1B",
+        "groesse": "65 qm",
+        "zimmer": "2.5",
+        "etage": "1. OG"
+      },
+      "vertrag": {
+        "beginn": "2024-09-01",
+        "ende": "2026-08-31",
+        "miete": {
+          "kalt": 980.00,
+          "nebenkosten": 220.00,
+          "gesamt": 1200.00
+        },
+        "kaution": 2940.00,
+        "status": "aktiv"
+      },
+      "zahlungen": {
+        "letzteZahlung": "2025-06-01",
+        "rueckstand": 0.00,
+        "status": "aktuell"
+      },
+      "kommunikation": [
+        {
+          "datum": "2025-06-10",
+          "typ": "Email",
+          "betreff": "Balkonsanierung Anfrage",
+          "status": "in_bearbeitung"
+        }
+      ]
+    },
+    {
+      "id": "M004",
+      "name": "WG Studentenwohnung",
+      "vorname": "Lisa",
+      "nachname": "Klein",
+      "email": "lisa.klein@student.de",
+      "telefon": "+49 30 99887766",
+      "wohnung": {
+        "objekt": "Universitätsstraße 15",
+        "einheit": "Wohnung 4C",
+        "groesse": "95 qm",
+        "zimmer": "4",
+        "etage": "4. OG"
+      },
+      "vertrag": {
+        "beginn": "2024-10-01",
+        "ende": "2025-09-30",
+        "miete": {
+          "kalt": 1400.00,
+          "nebenkosten": 320.00,
+          "gesamt": 1720.00
+        },
+        "kaution": 4200.00,
+        "status": "aktiv"
+      },
+      "zahlungen": {
+        "letzteZahlung": "2025-04-01",
+        "rueckstand": 5160.00,
+        "status": "kritisch"
+      },
+      "kommunikation": [
+        {
+          "datum": "2025-06-25",
+          "typ": "Einschreiben",
+          "betreff": "Letzte Mahnung vor Kündigung",
+          "status": "versendet"
+        },
+        {
+          "datum": "2025-06-01",
+          "typ": "Telefon",
+          "betreff": "Zahlungsvereinbarung",
+          "status": "gescheitert"
+        }
+      ]
+    },
+    {
+      "id": "M005",
+      "name": "Praxis Dr. Hoffmann",
+      "vorname": "Dr. Michael",
+      "nachname": "Hoffmann",
+      "email": "praxis@dr-hoffmann.de",
+      "telefon": "+49 30 44332211",
+      "wohnung": {
+        "objekt": "Gesundheitszentrum",
+        "einheit": "Praxis EG",
+        "groesse": "180 qm",
+        "zimmer": "6",
+        "etage": "Erdgeschoss"
+      },
+      "vertrag": {
+        "beginn": "2021-06-01",
+        "ende": "2031-05-31",
+        "miete": {
+          "kalt": 3200.00,
+          "nebenkosten": 580.00,
+          "gesamt": 3780.00
+        },
+        "kaution": 9600.00,
+        "status": "aktiv"
+      },
+      "zahlungen": {
+        "letzteZahlung": "2025-06-01",
+        "rueckstand": 0.00,
+        "status": "aktuell"
+      },
+      "kommunikation": [
+        {
+          "datum": "2025-06-12",
+          "typ": "Email",
+          "betreff": "Vertragsverlängerung Anfrage",
+          "status": "beantwortet"
+        }
+      ]
+    }
+  ],
+  "statistiken": {
+    "gesamt": 5,
+    "aktiv": 5,
+    "aktuell": 3,
+    "rueckstand": 1,
+    "kritisch": 1,
+    "gesamtmiete": 11080.00,
+    "offeneRueckstaende": 8010.00
+  }
+}
+

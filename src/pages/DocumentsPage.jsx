@@ -1,9 +1,10 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { 
   Upload, Search, Filter, Download, Share, Eye, Trash2, 
   FileText, File, Image, Archive, Calendar, User, Tag,
   Plus, Grid, List, SortAsc, FolderOpen
 } from 'lucide-react';
+import { Button } from '@/components/ui/button';
 
 const DocumentsPage = () => {
   const [searchQuery, setSearchQuery] = useState('');
@@ -118,6 +119,45 @@ const DocumentsPage = () => {
     { id: 'png', name: 'Bilder' }
   ];
 
+  // Clara KI Integration - Expose data globally
+  useEffect(() => {
+    window.claraDocumentsContext = {
+      documents: documents,
+      categories: categories,
+      statistics: {
+        total: documents.length,
+        totalSize: Math.round(documents.reduce((sum, doc) => {
+          const size = parseFloat(doc.size);
+          const unit = doc.size.includes('MB') ? 1024 : 1;
+          return sum + (size * unit);
+        }, 0) / 1024),
+        recentUploads: documents.filter(d => {
+          const uploadDate = new Date(d.uploadDate);
+          const today = new Date();
+          const diffTime = Math.abs(today - uploadDate);
+          const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+          return diffDays <= 7;
+        }).length
+      },
+      actions: {
+        searchDocuments: (query) => setSearchQuery(query),
+        filterByCategory: (category) => setSelectedCategory(category),
+        filterByType: (type) => setSelectedType(type),
+        showRecentDocuments: () => {
+          setSortBy('date');
+          setSelectedCategory('all');
+        },
+        showContractDocuments: () => setSelectedCategory('Verträge'),
+        showMaintenanceDocuments: () => setSelectedCategory('Wartung'),
+        showFinancialDocuments: () => setSelectedCategory('Finanzen')
+      }
+    };
+
+    return () => {
+      delete window.claraDocumentsContext;
+    };
+  }, [documents, searchQuery, selectedCategory, selectedType, sortBy]);
+
   // Filterung und Sortierung
   const filteredDocuments = documents
     .filter(doc => {
@@ -204,6 +244,58 @@ const DocumentsPage = () => {
             <Upload className="w-5 h-5" />
             Hochladen
           </button>
+        </div>
+      </div>
+
+      {/* Clara KI Integration Panel */}
+      <div className="bg-gradient-to-r from-blue-50 to-purple-50 border border-blue-200 rounded-xl p-6 mb-8">
+        <div className="flex items-center gap-4">
+          <div className="w-12 h-12 bg-blue-600 rounded-full flex items-center justify-center">
+            <span className="text-white font-bold text-lg">C</span>
+          </div>
+          <div className="flex-1">
+            <h3 className="font-semibold text-blue-900 mb-2">Clara KI Dokumenten-Assistent</h3>
+            <p className="text-sm text-blue-700 mb-3">
+              Fragen Sie Clara: "Zeige mir alle Verträge" • "Suche Wartungsdokumente" • "Welche Dokumente sind neu?"
+            </p>
+            <div className="flex flex-wrap gap-2">
+              <Button 
+                variant="outline" 
+                size="sm"
+                onClick={() => setSelectedCategory('Verträge')}
+                className="border-blue-300 text-blue-700 hover:bg-blue-100"
+              >
+                📄 Verträge anzeigen
+              </Button>
+              <Button 
+                variant="outline" 
+                size="sm"
+                onClick={() => setSelectedCategory('Wartung')}
+                className="border-blue-300 text-blue-700 hover:bg-blue-100"
+              >
+                🔧 Wartungsdokumente
+              </Button>
+              <Button 
+                variant="outline" 
+                size="sm"
+                onClick={() => {
+                  setSortBy('date');
+                  setSelectedCategory('all');
+                }}
+                className="border-blue-300 text-blue-700 hover:bg-blue-100"
+              >
+                📅 Neueste zuerst
+              </Button>
+            </div>
+          </div>
+          <Button 
+            variant="outline" 
+            size="sm"
+            onClick={() => window.location.href = '/clara-ki'}
+            className="border-blue-300 text-blue-700 hover:bg-blue-100"
+          >
+            Zu Clara KI
+          </Button>
         </div>
       </div>
 

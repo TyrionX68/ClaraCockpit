@@ -1,8 +1,9 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { 
   Plus, Search, Filter, Calendar, Clock, CheckCircle, AlertTriangle, 
   Wrench, User, MapPin, Phone, Mail, Euro, FileText, Camera 
 } from 'lucide-react';
+import { Button } from '@/components/ui/button';
 
 const MaintenancePage = () => {
   const [searchQuery, setSearchQuery] = useState('');
@@ -120,6 +121,41 @@ const MaintenancePage = () => {
     return matchesSearch && matchesStatus && matchesPriority;
   });
 
+  // Clara KI Integration - Expose data globally
+  useEffect(() => {
+    window.claraMaintenanceContext = {
+      tasks: maintenanceTasks,
+      statistics: {
+        total: totalTasks,
+        open: openTasks,
+        inProgress: inProgressTasks,
+        completed: completedTasks,
+        urgent: urgentTasks,
+        totalCosts: totalCosts
+      },
+      statusOptions: statusOptions,
+      priorityOptions: priorityOptions,
+      actions: {
+        searchTasks: (query) => setSearchQuery(query),
+        filterByStatus: (status) => setSelectedStatus(status),
+        filterByPriority: (priority) => setSelectedPriority(priority),
+        showUrgentTasks: () => setSelectedPriority('dringend'),
+        showOpenTasks: () => setSelectedStatus('offen'),
+        showInProgressTasks: () => setSelectedStatus('in_bearbeitung'),
+        createNewTask: () => setShowCreateModal(true),
+        resetFilters: () => {
+          setSelectedStatus('all');
+          setSelectedPriority('all');
+          setSearchQuery('');
+        }
+      }
+    };
+
+    return () => {
+      delete window.claraMaintenanceContext;
+    };
+  }, [maintenanceTasks, searchQuery, selectedStatus, selectedPriority, totalTasks, openTasks, inProgressTasks, completedTasks, urgentTasks, totalCosts]);
+
   const getStatusColor = (status) => {
     const colors = {
       offen: 'bg-blue-100 text-blue-800',
@@ -176,6 +212,63 @@ const MaintenancePage = () => {
             <Plus className="w-5 h-5" />
             Neuer Auftrag
           </button>
+        </div>
+      </div>
+
+      {/* Clara KI Integration Panel */}
+      <div className="bg-gradient-to-r from-orange-50 to-red-50 border border-orange-200 rounded-xl p-6 mb-8">
+        <div className="flex items-center gap-4">
+          <div className="w-12 h-12 bg-orange-600 rounded-full flex items-center justify-center">
+            <span className="text-white font-bold text-lg">C</span>
+          </div>
+          <div className="flex-1">
+            <h3 className="font-semibold text-orange-900 mb-2">Clara KI Wartungs-Assistent</h3>
+            <p className="text-sm text-orange-700 mb-3">
+              Fragen Sie Clara: "Zeige mir dringende Aufträge" • "Welche Wartungen sind offen?" • "Wie hoch sind die Kosten?"
+            </p>
+            <div className="flex flex-wrap gap-2">
+              <Button 
+                variant="outline" 
+                size="sm"
+                onClick={() => setSelectedPriority('dringend')}
+                className="border-orange-300 text-orange-700 hover:bg-orange-100"
+              >
+                🚨 Dringende Aufträge
+              </Button>
+              <Button 
+                variant="outline" 
+                size="sm"
+                onClick={() => setSelectedStatus('offen')}
+                className="border-orange-300 text-orange-700 hover:bg-orange-100"
+              >
+                📋 Offene Aufträge
+              </Button>
+              <Button 
+                variant="outline" 
+                size="sm"
+                onClick={() => setSelectedStatus('in_bearbeitung')}
+                className="border-orange-300 text-orange-700 hover:bg-orange-100"
+              >
+                🔧 In Bearbeitung
+              </Button>
+              <Button 
+                variant="outline" 
+                size="sm"
+                onClick={() => setShowCreateModal(true)}
+                className="border-orange-300 text-orange-700 hover:bg-orange-100"
+              >
+                ➕ Neuer Auftrag
+              </Button>
+            </div>
+          </div>
+          <Button 
+            variant="outline" 
+            size="sm"
+            onClick={() => window.location.href = '/clara-ki'}
+            className="border-orange-300 text-orange-700 hover:bg-orange-100"
+          >
+            Zu Clara KI
+          </Button>
         </div>
       </div>
 
