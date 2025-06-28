@@ -10,6 +10,7 @@ import DesktopMicButton from '../components/molecules/DesktopMicButton';
 import SimpleMicButton from '../components/molecules/SimpleMicButton';
 import ImprovedMicButton from '../components/molecules/ImprovedMicButton';
 import ForcePermissionMicButton from '../components/molecules/ForcePermissionMicButton';
+import BasicVoiceButton from '../components/molecules/BasicVoiceButton';
 import SpeechControls from '../components/molecules/SpeechControls';
 import ClaraKIEngine from '../components/organisms/ClaraKIEngine';
 import { VoiceContextProvider, useVoiceContext } from '../contexts/VoiceContext';
@@ -367,8 +368,8 @@ const ClaraKIPageContent = () => {
                 </Button>
               </div>
               
-              {/* Improved Mic Button - Full error display and debugging */}
-              <ImprovedMicButton
+              {/* Basic Voice Button - Explicit microphone permission request */}
+              <BasicVoiceButton
                 onTranscriptReceived={handleSendMessage}
                 className="w-10 h-10 sm:w-12 sm:h-12"
                 size="sm"
