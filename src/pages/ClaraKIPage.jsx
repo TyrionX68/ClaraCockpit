@@ -6,10 +6,24 @@ import { Input } from '@/components/ui/input';
 import VoiceFeedback from '../components/molecules/VoiceFeedback';
 import MicButton from '../components/molecules/MicButton';
 import ClaraKIEngine from '../components/organisms/ClaraKIEngine';
+import { VoiceContextProvider, useVoiceContext } from '../contexts/VoiceContext';
 
-const ClaraKIPage = () => {
+// Main ClaraKI Component with Voice Integration
+const ClaraKIPageContent = () => {
   const navigate = useNavigate();
   const chatContainerRef = useRef(null);
+  
+  // Voice Context Integration
+  const {
+    voiceActive,
+    isListening,
+    transcript,
+    error: voiceError,
+    isSupported,
+    toggleVoice,
+    getVoiceStatus,
+    getStatusMessage
+  } = useVoiceContext();
   
   const [messages, setMessages] = useState([
     {
@@ -23,7 +37,6 @@ const ClaraKIPage = () => {
   
   const [inputValue, setInputValue] = useState('');
   const [isTyping, setIsTyping] = useState(false);
-  const [voiceActive, setVoiceActive] = useState(false);
 
   // Initialize Clara KI Engine
   const claraEngine = ClaraKIEngine({
@@ -33,58 +46,10 @@ const ClaraKIPage = () => {
 
   const { contextData, ResponseStylerProvider, DialogContextProvider } = claraEngine;
 
-  // V6.1.5: Voice-to-Chat Integration
-  const handleVoiceToChat = async (transcript) => {
-    if (!transcript || transcript.trim().length === 0) {
-      console.warn('Empty voice transcript received');
-      return;
-    }
-
-    console.log('Voice transcript received:', transcript);
-    
-    // Automatically send transcribed text as chat message
-    await handleSendMessage(transcript.trim());
-    
-    // Auto-scroll to bottom after voice message
-    setTimeout(() => {
-      scrollToBottom();
-    }, 100);
-  };
-
   // Auto-scroll to bottom of chat
   const scrollToBottom = () => {
     if (chatContainerRef.current) {
       chatContainerRef.current.scrollTop = chatContainerRef.current.scrollHeight;
-    }
-  };
-
-  // Voice greeting when voice is activated
-  const handleVoiceActivation = () => {
-    setVoiceActive(true);
-    
-    // Clara greeting when voice is activated
-    if ('speechSynthesis' in window) {
-      const utterance = new SpeechSynthesisUtterance('Wie kann ich Ihnen helfen?');
-      utterance.lang = 'de-DE';
-      utterance.rate = 0.9;
-      utterance.pitch = 1.1;
-      speechSynthesis.speak(utterance);
-    }
-  };
-
-  // Voice deactivation
-  const handleVoiceDeactivation = () => {
-    setVoiceActive(false);
-  };
-
-  // Handle voice toggle with greeting and chat integration
-  const handleVoiceToggle = () => {
-    if (voiceActive) {
-      handleVoiceDeactivation();
-      claraEngine.stopVoiceRecognition();
-    } else {
-      handleVoiceActivation();
-      claraEngine.startVoiceRecognition(handleVoiceToChat);
     }
   };
 
@@ -133,7 +98,13 @@ const ClaraKIPage = () => {
         // Speak response if voice is active - with error handling
         if (voiceActive && response.content) {
           try {
-            claraEngine.speak(response.content);
+            if ('speechSynthesis' in window) {
+              const utterance = new SpeechSynthesisUtterance(response.content);
+              utterance.lang = 'de-DE';
+              utterance.rate = 0.9;
+              utterance.pitch = 1.0;
+              speechSynthesis.speak(utterance);
+            }
           } catch (voiceError) {
             console.warn('Voice synthesis failed:', voiceError);
           }
@@ -210,9 +181,13 @@ const ClaraKIPage = () => {
             
             <div className="flex flex-col sm:flex-row gap-3 sm:gap-6">
               <div className="flex items-center gap-2 text-sm">
-                <div className={`w-2 h-2 rounded-full ${voiceActive ? 'bg-green-500' : 'bg-red-500'}`}></div>
+                <div className={`w-2 h-2 rounded-full ${
+                  voiceActive ? 'bg-green-500' : 
+                  voiceError ? 'bg-red-500' : 
+                  'bg-gray-500'
+                }`}></div>
                 <span className="text-muted-foreground">
-                  {voiceActive ? 'Voice aktiv' : 'Voice inaktiv'}
+                  {getStatusMessage()}
                 </span>
               </div>
               
@@ -349,12 +324,26 @@ const ClaraKIPage = () => {
               
               <MicButton
                 isActive={voiceActive}
-                isListening={claraEngine.isListening}
-                onClick={handleVoiceToggle}
+                isListening={isListening}
+                onClick={toggleVoice}
                 title={voiceActive ? 'Voice deaktivieren' : 'Voice aktivieren'}
                 className="w-10 h-10 sm:w-12 sm:h-12"
+                disabled={!isSupported}
               />
             </div>
+            
+            {/* Voice Status Display */}
+            {voiceError && (
+              <div className="mt-2 text-xs text-red-500">
+                Voice-Fehler: {voiceError}
+              </div>
+            )}
+            
+            {!isSupported && (
+              <div className="mt-2 text-xs text-yellow-600">
+                Voice-Erkennung wird von diesem Browser nicht unterstützt
+              </div>
+            )}
           </div>
         </div>
       </div>
@@ -363,6 +352,21 @@ const ClaraKIPage = () => {
       <ResponseStylerProvider />
       <DialogContextProvider />
     </div>
+  );
+};
+
+// Main Component with Voice Context Provider
+const ClaraKIPage = () => {
+  const handleVoiceTranscript = (transcript) => {
+    console.log('Voice transcript received in main component:', transcript);
+    // The transcript will be handled by the ClaraKIPageContent component
+    // through the voice context
+  };
+
+  return (
+    <VoiceContextProvider onTranscript={handleVoiceTranscript}>
+      <ClaraKIPageContent />
+    </VoiceContextProvider>
   );
 };
 
