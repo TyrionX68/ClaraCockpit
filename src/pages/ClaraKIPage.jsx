@@ -9,6 +9,7 @@ import EnhancedMicButton from '../components/molecules/EnhancedMicButton';
 import DesktopMicButton from '../components/molecules/DesktopMicButton';
 import SimpleMicButton from '../components/molecules/SimpleMicButton';
 import ImprovedMicButton from '../components/molecules/ImprovedMicButton';
+import ForcePermissionMicButton from '../components/molecules/ForcePermissionMicButton';
 import SpeechControls from '../components/molecules/SpeechControls';
 import ClaraKIEngine from '../components/organisms/ClaraKIEngine';
 import { VoiceContextProvider, useVoiceContext } from '../contexts/VoiceContext';
