@@ -21,13 +21,12 @@ import VoiceDebugTest from '../components/debug/VoiceDebugTest';
 import EnhancedVoiceControl from '../components/molecules/EnhancedVoiceControl';
 import ClaraTTSControl from '../components/molecules/ClaraTTSControl';
 import ClaraMemoryInsights from '../components/molecules/ClaraMemoryInsights';
-import { useEnhancedVoiceRecognition } from '../hooks/useEnhancedVoiceRecognition';
+import { useEnhancedVoiceRecognition } from '../hooks/archived_hooks/useEnhancedVoiceRecognition';
 import { useNaturalTTS } from '../hooks/useNaturalTTS';
 import { useIntelligentContextMemory } from '../hooks/useIntelligentContextMemory';
 import { useProactiveAISuggestions } from '../hooks/useProactiveAISuggestions';
 
 // NEW V6.1.9 VOICE SYSTEM ISOLATION
-import SimpleMicButton from '../components/molecules/SimpleMicButton';
 import WakewordButton from '../components/molecules/WakewordButton';
 import WorkingMicButton from '../components/molecules/WorkingMicButton';
 import VoiceDebugPanel from '../components/molecules/VoiceDebugPanel';
