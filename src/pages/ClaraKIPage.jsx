@@ -28,7 +28,7 @@ const ClaraKIPage = () => {
     supabaseClient: null // Mock for now
   });
 
-  const { contextData } = claraEngine;
+  const { contextData, ResponseStylerProvider } = claraEngine;
 
   const handleSendMessage = async (message = inputValue) => {
     if (!message.trim()) return;
@@ -304,6 +304,9 @@ const ClaraKIPage = () => {
           </div>
         </div>
       </div>
+      
+      {/* ResponseStyler Provider - Hidden but active */}
+      <ResponseStylerProvider />
     </div>
   );
 };

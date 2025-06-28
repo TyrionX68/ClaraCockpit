@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { createClient } from '@supabase/supabase-js';
+import ClaraResponseStyler from '../logic/ClaraResponseStyler';
 
 // Immobilien-Fachwissen und Kennzahlen
 const REAL_ESTATE_KNOWLEDGE = {
@@ -78,6 +79,7 @@ const ClaraKIEngine = ({ onNavigate, supabaseClient }) => {
   const [contextData, setContextData] = useState({});
   const [recognition, setRecognition] = useState(null);
   const [preferredVoice, setPreferredVoice] = useState(null);
+  const [responseStyler, setResponseStyler] = useState(null);
 
   // Initialize preferred German female voice
   useEffect(() => {
@@ -236,7 +238,18 @@ const ClaraKIEngine = ({ onNavigate, supabaseClient }) => {
     // Dashboard & Übersichten
     if (lowerCommand.includes('dashboard') || lowerCommand.includes('übersicht')) {
       const { kpis } = contextData;
-      speak(`Hier ist Ihre aktuelle Übersicht: Sie verwalten ${kpis?.tenantCount || 0} Mieteinheiten mit einem monatlichen Gesamtertrag von ${(kpis?.totalRent || 0).toLocaleString('de-DE')} Euro. Die Vermietungsquote beträgt ${(kpis?.occupancyRate || 0).toFixed(1)} Prozent.`);
+      const context = {
+        property: { name: 'Ihr Portfolio', address: 'Waldhofstraße 76' },
+        financial: { metric: 'monatlicher Ertrag', value: kpis?.totalRent || 0, format: 'currency' },
+        temporal: { comparison: 'aktueller Stand' }
+      };
+      
+      speak(
+        `Sie verwalten ${kpis?.tenantCount || 0} Mieteinheiten mit einem monatlichen Gesamtertrag von ${(kpis?.totalRent || 0).toLocaleString('de-DE')} Euro. Die Vermietungsquote beträgt ${(kpis?.occupancyRate || 0).toFixed(1)} Prozent.`,
+        context,
+        'informative',
+        0.95
+      );
       return;
     }
     
@@ -249,7 +262,33 @@ const ClaraKIEngine = ({ onNavigate, supabaseClient }) => {
       const netCashflow = annualRent - estimatedCosts;
       const grossReturn = kpis?.propertyValue ? REAL_ESTATE_KNOWLEDGE.calculations.bruttomietrendite(annualRent, kpis.propertyValue) : 0;
       
-      speak(`Ihre Cashflow-Analyse: Brutto-Jahresertrag ${annualRent.toLocaleString('de-DE')} Euro, geschätzte Bewirtschaftungskosten ${estimatedCosts.toLocaleString('de-DE')} Euro, Netto-Cashflow ${netCashflow.toLocaleString('de-DE')} Euro. Die Bruttomietrendite beträgt ${grossReturn.toFixed(2)} Prozent.`);
+      const context = {
+        financial: { 
+          metric: 'Netto-Cashflow', 
+          value: netCashflow, 
+          format: 'currency' 
+        },
+        temporal: { comparison: 'bei aktueller Marktlage' }
+      };
+      
+      const data = {
+        statistics: {
+          total: annualRent,
+          average: grossReturn,
+          trend: 0.3
+        },
+        insights: [
+          { message: 'die Rendite über dem Marktdurchschnitt liegt', impact: 'high' }
+        ]
+      };
+      
+      speak(
+        `Brutto-Jahresertrag ${annualRent.toLocaleString('de-DE')} Euro, Netto-Cashflow ${netCashflow.toLocaleString('de-DE')} Euro. Die Bruttomietrendite beträgt ${grossReturn.toFixed(2)} Prozent.`,
+        context,
+        'professional',
+        0.9,
+        data
+      );
       return;
     }
     
@@ -259,16 +298,40 @@ const ClaraKIEngine = ({ onNavigate, supabaseClient }) => {
       const arrears = kpis?.totalArrears || 0;
       const activeContracts = kpis?.activeContracts || 0;
       
+      const context = {
+        tenant: { name: 'Ihre Mieter', since: 'verschiedene Vertragslaufzeiten' },
+        financial: { metric: 'Rückstände', value: arrears, format: 'currency' }
+      };
+      
       if (arrears > 0) {
-        speak(`Sie haben ${activeContracts} aktive Mietverträge. Achtung: Es bestehen Mietrückstände in Höhe von ${arrears.toLocaleString('de-DE')} Euro. Ich empfehle eine zeitnahe Mahnung.`);
+        speak(
+          `Sie haben ${activeContracts} aktive Mietverträge. Es bestehen Mietrückstände in Höhe von ${arrears.toLocaleString('de-DE')} Euro.`,
+          context,
+          'professional',
+          0.8
+        );
       } else {
-        speak(`Sehr gut! Sie haben ${activeContracts} aktive Mietverträge und keine offenen Mietrückstände. Alle Mieter zahlen pünktlich.`);
+        speak(
+          `Sie haben ${activeContracts} aktive Mietverträge und keine offenen Mietrückstände. Alle Mieter zahlen pünktlich.`,
+          context,
+          'conversational',
+          1.0
+        );
       }
       return;
     }
     
-    // Fallback
-    speak('Ich bin Clara, Ihre Immobilien-Expertin. Ich kann Ihnen bei Fragen zu Cashflow, Rendite, Mietern und Wirtschaftlichkeit helfen. Was möchten Sie wissen?');
+    // Fallback mit niedrigerer Konfidenz
+    const context = {
+      temporal: { comparison: 'jederzeit verfügbar' }
+    };
+    
+    speak(
+      'Ich bin Clara, Ihre Immobilien-Expertin. Ich kann Ihnen bei Fragen zu Cashflow, Rendite, Mietern und Wirtschaftlichkeit helfen.',
+      context,
+      'conversational',
+      0.7
+    );
   };
 
   // Execute specific intents
@@ -316,13 +379,38 @@ const ClaraKIEngine = ({ onNavigate, supabaseClient }) => {
     }
   };
 
-  // Enhanced Text-to-Speech with German female voice
-  const speak = (text) => {
+  // Handle ResponseStyler initialization
+  const handleResponseStylerReady = useCallback((stylerFunctions) => {
+    setResponseStyler(stylerFunctions);
+    console.log('ClaraResponseStyler initialized and ready');
+  }, []);
+
+  // Enhanced speak function with response styling
+  const speak = (text, context = {}, style = 'conversational', confidence = 1.0) => {
     if ('speechSynthesis' in window && text) {
       // Stoppe vorherige Sprachausgabe
       speechSynthesis.cancel();
       
-      const utterance = new SpeechSynthesisUtterance(text);
+      let enhancedText = text;
+      
+      // Use ResponseStyler if available
+      if (responseStyler && responseStyler.enhanceResponse) {
+        try {
+          enhancedText = responseStyler.enhanceResponse({
+            baseResponse: text,
+            context,
+            style,
+            data: contextData,
+            confidence
+          });
+          console.log('Enhanced response:', enhancedText);
+        } catch (error) {
+          console.error('Error enhancing response:', error);
+          enhancedText = text; // Fallback to original text
+        }
+      }
+      
+      const utterance = new SpeechSynthesisUtterance(enhancedText);
       
       // Verwende bevorzugte deutsche Frauenstimme
       if (preferredVoice) {
@@ -344,9 +432,12 @@ const ClaraKIEngine = ({ onNavigate, supabaseClient }) => {
         console.log('Speech synthesis completed');
       };
       
-      console.log('Speaking:', text, 'with voice:', preferredVoice?.name);
+      console.log('Speaking:', enhancedText, 'with voice:', preferredVoice?.name);
       speechSynthesis.speak(utterance);
+      
+      return enhancedText; // Return enhanced text for logging/display
     }
+    return text;
   };
 
   // Start/Stop voice recognition
@@ -370,7 +461,15 @@ const ClaraKIEngine = ({ onNavigate, supabaseClient }) => {
     speak,
     processVoiceCommand,
     REAL_ESTATE_KNOWLEDGE,
-    VOICE_COMMANDS
+    VOICE_COMMANDS,
+    responseStyler,
+    handleResponseStylerReady,
+    // JSX Component for ResponseStyler integration
+    ResponseStylerProvider: () => (
+      <ClaraResponseStyler onResponseStyled={handleResponseStylerReady}>
+        <div style={{ display: 'none' }}>ClaraResponseStyler Provider</div>
+      </ClaraResponseStyler>
+    )
   };
 };
 
