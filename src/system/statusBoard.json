@@ -1,0 +1,96 @@
+[
+  {
+    "slot": "voice-integration",
+    "component": "ClaraKIPage.jsx + TTS-Integration",
+    "status": "completed",
+    "push_ready": true,
+    "description": "Voice-to-Chat + Audio-Output vollständig implementiert. Clara spricht ihre Antworten automatisch.",
+    "last_updated": "2025-06-28T14:40:00Z",
+    "files": [
+      "src/pages/ClaraKIPage.jsx",
+      "src/hooks/useEnhancedVoiceRecognition.js",
+      "src/hooks/useSpeechSynthesis.js",
+      "src/components/molecules/EnhancedMicButton.jsx",
+      "src/components/molecules/SpeechControls.jsx"
+    ]
+  },
+  {
+    "slot": "banking",
+    "component": "BankingPage.jsx",
+    "status": "completed",
+    "push_ready": true,
+    "description": "Vollständige Banking-Seite mit Clara-Integration, Financial Analytics und Desktop Voice Recognition für Laptop-Kompatibilität.",
+    "last_updated": "2025-06-28T14:50:00Z",
+    "files": [
+      "src/pages/BankingPage.jsx",
+      "src/hooks/useFinancialAnalytics.js",
+      "src/hooks/useDesktopVoiceRecognition.js",
+      "src/components/molecules/DesktopMicButton.jsx",
+      "src/App.jsx"
+    ]
+  },
+  {
+    "slot": "mieter",
+    "component": "MieterPage.jsx", 
+    "status": "queued",
+    "push_ready": false,
+    "description": "Verwaltung aktiver Mietverträge mit Filterfunktion, Vertrags-Details, Kommunikations-Log, Rückstände-Management.",
+    "last_updated": null,
+    "files": []
+  },
+  {
+    "slot": "dokumente",
+    "component": "DokumentePage.jsx",
+    "status": "queued", 
+    "push_ready": false,
+    "description": "Dateiupload & Kategorieverwaltung mit Drag & Drop, Volltext-Suche, Vorschau-Funktion.",
+    "last_updated": null,
+    "files": []
+  },
+  {
+    "slot": "wartung",
+    "component": "WartungPage.jsx",
+    "status": "queued",
+    "push_ready": false,
+    "description": "Task-Kanban-Board, Termin-Kalender, Kosten-Tracking, Dienstleister-Verwaltung.",
+    "last_updated": null,
+    "files": []
+  },
+  {
+    "slot": "analysen",
+    "component": "AnalysenPage.jsx",
+    "status": "queued",
+    "push_ready": false,
+    "description": "Charts, Reports, KPI-Trends mit Datenvisualisierung.",
+    "last_updated": null,
+    "files": []
+  },
+  {
+    "slot": "kommunikation",
+    "component": "KommunikationPage.jsx", 
+    "status": "queued",
+    "push_ready": false,
+    "description": "Nachrichten & Termine, E-Mail-Integration, Kontakt-Management.",
+    "last_updated": null,
+    "files": []
+  },
+  {
+    "slot": "clara-dialog-context",
+    "component": "ClaraDialogContext.js Integration",
+    "status": "available",
+    "push_ready": false,
+    "description": "Follow-up-Gespräche aus ZIP-Sammlung. Ermöglicht 'Und die Rendite?' nach Cashflow-Frage.",
+    "last_updated": null,
+    "files": []
+  },
+  {
+    "slot": "clara-suggestion-module", 
+    "component": "ClaraSuggestionModule.js Integration",
+    "status": "available",
+    "push_ready": false,
+    "description": "Proaktive Empfehlungen aus ZIP-Sammlung. KI schlägt automatisch nächste Schritte vor.",
+    "last_updated": null,
+    "files": []
+  }
+]
+

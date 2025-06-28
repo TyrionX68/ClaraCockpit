@@ -4,6 +4,7 @@ import { ThemeProvider } from './contexts/ThemeContext';
 import MainLayout from './components/layout/MainLayout';
 import DashboardLayout from './components/DashboardLayout';
 import ClaraKIPage from './pages/ClaraKIPage';
+import BankingPage from './pages/BankingPage';
 import ObjectsPage from './pages/ObjectsPage';
 import MaintenancePage from './pages/MaintenancePage';
 import DocumentsPage from './pages/DocumentsPage';
@@ -20,7 +21,7 @@ function App() {
             <Route path="objects" element={<ObjectsPage />} />
             <Route path="maintenance" element={<MaintenancePage />} />
             <Route path="documents" element={<DocumentsPage />} />
-            <Route path="banking" element={<div className="p-8"><h1 className="text-2xl font-bold text-foreground">Banking & Finanzen</h1><p className="text-muted-foreground mt-2">Cashflow-Management und Finanzübersicht</p></div>} />
+            <Route path="banking" element={<BankingPage />} />
             <Route path="tenants" element={<div className="p-8"><h1 className="text-2xl font-bold text-foreground">Mieterverwaltung</h1><p className="text-muted-foreground mt-2">Mieter, Verträge und Rückstände</p></div>} />
             <Route path="analytics" element={<div className="p-8"><h1 className="text-2xl font-bold text-foreground">Analysen</h1><p className="text-muted-foreground mt-2">Rendite-Analysen und Kennzahlen</p></div>} />
             <Route path="communication" element={<div className="p-8"><h1 className="text-2xl font-bold text-foreground">Kommunikation</h1><p className="text-muted-foreground mt-2">Nachrichten und Termine</p></div>} />
