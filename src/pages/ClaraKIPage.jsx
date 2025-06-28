@@ -7,7 +7,6 @@ import VoiceFeedback from '../components/molecules/VoiceFeedback';
 import MicButton from '../components/molecules/MicButton';
 import EnhancedMicButton from '../components/molecules/EnhancedMicButton';
 import DesktopMicButton from '../components/molecules/DesktopMicButton';
-import SimpleMicButton from '../components/molecules/SimpleMicButton';
 import ImprovedMicButton from '../components/molecules/ImprovedMicButton';
 import ForcePermissionMicButton from '../components/molecules/ForcePermissionMicButton';
 import BasicVoiceButton from '../components/molecules/BasicVoiceButton';
@@ -28,6 +27,11 @@ import { useEnhancedVoiceRecognition } from '../hooks/useEnhancedVoiceRecognitio
 import { useNaturalTTS } from '../hooks/useNaturalTTS';
 import { useIntelligentContextMemory } from '../hooks/useIntelligentContextMemory';
 import { useProactiveAISuggestions } from '../hooks/useProactiveAISuggestions';
+
+// NEW V6.1.9 VOICE SYSTEM ISOLATION
+import SimpleMicButton from '../components/molecules/SimpleMicButton';
+import WakewordButton from '../components/molecules/WakewordButton';
+import { useVoiceSystemHandler } from '../hooks/VoiceSystemHandler';
 
 // Main ClaraKI Component with Voice Integration
 const ClaraKIPageContent = () => {
@@ -391,27 +395,30 @@ const ClaraKIPageContent = () => {
             </div>
             
             <div className="flex flex-col sm:flex-row gap-3 sm:gap-6">
-              {/* Enhanced Voice Control - NEW */}
-              <EnhancedVoiceControl
-                isListening={enhancedListening}
-                isWakeWordActive={isWakeWordActive}
-                transcript={enhancedTranscript}
-                confidence={voiceConfidence}
-                audioLevel={audioLevel}
-                error={enhancedVoiceError}
-                isSupported={enhancedVoiceSupported}
-                onStartListening={startEnhancedListening}
-                onStopListening={stopEnhancedListening}
-                onToggleListening={toggleEnhancedListening}
-                onToggleWakeWord={toggleWakeWordMode}
-                onTranscriptReady={(transcript) => {
-                  if (transcript.trim()) {
-                    handleSendMessage(transcript);
-                    clearEnhancedTranscript();
-                  }
-                }}
-                className="flex-shrink-0"
-              />
+              {/* NEW V6.1.9 VOICE SYSTEM - Separated Manual & Wakeword */}
+              <div className="flex items-center gap-3">
+                {/* Manual Speech Button (Sprechen) */}
+                <SimpleMicButton
+                  onTranscriptReceived={(transcript) => {
+                    if (transcript.trim()) {
+                      console.log('📝 Manual transcript received:', transcript);
+                      handleSendMessage(transcript);
+                    }
+                  }}
+                  size="sm"
+                  showStatus={true}
+                  showAudioLevel={true}
+                  className="flex-shrink-0"
+                />
+                
+                {/* Wakeword Button (Hey Clara) */}
+                <WakewordButton
+                  size="sm"
+                  showStatus={true}
+                  variant="outline"
+                  className="flex-shrink-0"
+                />
+              </div>
               
               {/* Clara TTS Control - NEW */}
               <ClaraTTSControl
@@ -567,11 +574,13 @@ const ClaraKIPageContent = () => {
                 </Button>
               </div>
               
-              {/* Improved Mic Button - Full error display and debugging - FUNKTIONIERTE BEREITS! */}
-              <ImprovedMicButton
+              {/* NEW V6.1.9 - Unified Voice System for Chat Input */}
+              <SimpleMicButton
                 onTranscriptReceived={handleSendMessage}
                 className="w-10 h-10 sm:w-12 sm:h-12"
                 size="sm"
+                showStatus={false}
+                showAudioLevel={false}
               />
             </div>
           </div>
