@@ -147,12 +147,19 @@ const ImprovedMicButton = ({
           addDebugLog(`Transcript received: "${result}"`, 'success');
           setTranscript(result);
           
+          // Auto-stop listening after successful recognition
+          setIsListening(false);
+          recognition.stop();
+          
           if (onTranscriptReceived && result) {
             onTranscriptReceived(result);
           }
+          
+          // Clear transcript after 3 seconds
+          setTimeout(() => {
+            setTranscript('');
+          }, 3000);
         }
-        
-        setIsListening(false);
       };
 
       recognition.onerror = (event) => {
@@ -277,7 +284,7 @@ const ImprovedMicButton = ({
 
       {/* Full Error Display */}
       {error && (
-        <div className="absolute top-full left-0 mt-2 p-4 bg-red-50 border border-red-200 rounded-lg shadow-lg z-50 w-80 max-w-sm">
+        <div className="fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 p-4 bg-red-50 border border-red-200 rounded-lg shadow-xl z-[9999] w-80 max-w-sm">
           <div className="flex items-start gap-3">
             <AlertCircle className="w-5 h-5 text-red-600 flex-shrink-0 mt-0.5" />
             <div className="flex-1">
@@ -330,7 +337,7 @@ const ImprovedMicButton = ({
 
       {/* Transcript Display */}
       {transcript && (
-        <div className="absolute top-full left-0 mt-2 p-3 bg-green-50 border border-green-200 rounded-md shadow-lg z-50 min-w-48 max-w-64">
+        <div className="fixed bottom-20 left-1/2 transform -translate-x-1/2 p-3 bg-green-50 border border-green-200 rounded-md shadow-xl z-[9998] min-w-48 max-w-64">
           <div className="flex items-center gap-2 mb-1">
             <CheckCircle className="w-4 h-4 text-green-600" />
             <span className="text-xs text-green-700 font-medium">Erkannt:</span>
