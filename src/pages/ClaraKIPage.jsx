@@ -156,7 +156,7 @@ const ClaraKIPage = () => {
   };
 
   return (
-    <div className="min-h-screen bg-white dark:bg-gradient-to-br dark:from-gray-900 dark:via-gray-800 dark:to-gray-900">
+    <div className="min-h-screen bg-background">
       {/* Voice Feedback */}
       <VoiceFeedback
         isActive={voiceActive || claraEngine.isListening || claraEngine.isProcessing}
@@ -167,7 +167,7 @@ const ClaraKIPage = () => {
       />
 
       {/* Header */}
-      <div className="bg-white/95 dark:bg-gray-800/80 backdrop-blur-sm border-b border-gray-200 dark:border-gray-700 sticky top-0 z-40">
+      <div className="bg-card/95 backdrop-blur-sm border-b border-border sticky top-0 z-40">
         <div className="max-w-4xl mx-auto px-4 py-4">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-4">
@@ -176,8 +176,8 @@ const ClaraKIPage = () => {
                   <Bot className="w-6 h-6 text-white" />
                 </div>
                 <div>
-                  <h1 className="text-xl font-bold text-gray-900 dark:text-white">Clara KI</h1>
-                  <p className="text-sm text-gray-600 dark:text-gray-300">Immobilien-Expertin mit Voice-Control</p>
+                  <h1 className="text-xl font-bold text-card-foreground">Clara KI</h1>
+                  <p className="text-sm text-muted-foreground">Immobilien-Expertin mit Voice-Control</p>
                 </div>
               </div>
             </div>
@@ -185,14 +185,14 @@ const ClaraKIPage = () => {
             <div className="flex items-center gap-3">
               <div className="flex items-center gap-2 text-sm">
                 <div className={`w-2 h-2 rounded-full ${voiceActive ? 'bg-green-500' : 'bg-gray-400'}`}></div>
-                <span className="text-gray-600 dark:text-gray-300">
+                <span className="text-muted-foreground">
                   {voiceActive ? 'Voice aktiv' : 'Voice inaktiv'}
                 </span>
               </div>
               
               <div className="flex items-center gap-2 text-sm">
-                <Users className="w-4 h-4 text-gray-500" />
-                <span className="text-gray-600 dark:text-gray-300">
+                <Users className="w-4 h-4 text-muted-foreground" />
+                <span className="text-muted-foreground">
                   {contextData.kpis?.tenantCount || 0} Mieter
                 </span>
               </div>
@@ -203,7 +203,7 @@ const ClaraKIPage = () => {
 
       {/* Chat Container */}
       <div className="max-w-4xl mx-auto px-2 sm:px-4 py-6">
-        <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-xl border border-gray-200 dark:border-gray-700 overflow-hidden">
+        <div className="bg-card rounded-2xl shadow-xl border border-border overflow-hidden">
           {/* Chat Messages */}
           <div className="h-96 overflow-y-auto p-3 sm:p-6 space-y-4">
             {messages.map((message, index) => (
@@ -221,7 +221,7 @@ const ClaraKIPage = () => {
                   max-w-[280px] sm:max-w-xs lg:max-w-md px-3 sm:px-4 py-2 sm:py-3 rounded-2xl
                   ${message.type === 'user' 
                     ? 'bg-blue-500 text-white' 
-                    : 'bg-gray-100 dark:bg-gray-700 text-gray-900 dark:text-white'
+                    : 'bg-muted text-muted-foreground'
                   }
                 `}>
                   <p className="text-xs sm:text-sm leading-relaxed">{message.content}</p>
@@ -236,7 +236,7 @@ const ClaraKIPage = () => {
                         <button
                           key={idx}
                           onClick={() => handleSendMessage(suggestion)}
-                          className="block w-full text-left px-2 sm:px-3 py-1 sm:py-2 text-xs sm:text-sm bg-green-100 hover:bg-green-200 dark:bg-green-800 dark:hover:bg-green-700 text-green-800 dark:text-green-200 rounded-lg transition-colors"
+                          className="block w-full text-left px-2 sm:px-3 py-1 sm:py-2 text-xs sm:text-sm bg-accent hover:bg-accent/80 text-accent-foreground rounded-lg transition-colors"
                         >
                           {suggestion}
                         </button>
@@ -246,8 +246,8 @@ const ClaraKIPage = () => {
                 </div>
                 
                 {message.type === 'user' && (
-                  <div className="w-6 h-6 sm:w-8 sm:h-8 bg-gray-300 dark:bg-gray-600 rounded-full flex items-center justify-center flex-shrink-0">
-                    <span className="text-xs sm:text-sm font-medium text-gray-700 dark:text-gray-300">Sie</span>
+                  <div className="w-6 h-6 sm:w-8 sm:h-8 bg-secondary rounded-full flex items-center justify-center flex-shrink-0">
+                    <span className="text-xs sm:text-sm font-medium text-secondary-foreground">Sie</span>
                   </div>
                 )}
               </div>
@@ -258,11 +258,11 @@ const ClaraKIPage = () => {
                 <div className="w-6 h-6 sm:w-8 sm:h-8 bg-gradient-to-br from-blue-500 to-purple-600 rounded-full flex items-center justify-center flex-shrink-0">
                   <Bot className="w-3 h-3 sm:w-4 sm:h-4 text-white" />
                 </div>
-                <div className="bg-gray-100 dark:bg-gray-700 px-3 sm:px-4 py-2 sm:py-3 rounded-2xl">
+                <div className="bg-muted px-3 sm:px-4 py-2 sm:py-3 rounded-2xl">
                   <div className="flex space-x-1">
-                    <div className="w-2 h-2 bg-gray-400 rounded-full animate-bounce"></div>
-                    <div className="w-2 h-2 bg-gray-400 rounded-full animate-bounce" style={{animationDelay: '0.1s'}}></div>
-                    <div className="w-2 h-2 bg-gray-400 rounded-full animate-bounce" style={{animationDelay: '0.2s'}}></div>
+                    <div className="w-2 h-2 bg-muted-foreground rounded-full animate-bounce"></div>
+                    <div className="w-2 h-2 bg-muted-foreground rounded-full animate-bounce" style={{animationDelay: '0.1s'}}></div>
+                    <div className="w-2 h-2 bg-muted-foreground rounded-full animate-bounce" style={{animationDelay: '0.2s'}}></div>
                   </div>
                 </div>
               </div>
@@ -271,7 +271,7 @@ const ClaraKIPage = () => {
 
           {/* Suggestions */}
           {messages.length > 0 && messages[messages.length - 1].suggestions && (
-            <div className="px-3 sm:px-6 py-3 sm:py-4 border-t border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-750">
+            <div className="px-3 sm:px-6 py-3 sm:py-4 border-t border-border bg-muted">
               <div className="flex flex-wrap gap-1 sm:gap-2">
                 {messages[messages.length - 1].suggestions.map((suggestion, index) => (
                   <Button
@@ -279,7 +279,7 @@ const ClaraKIPage = () => {
                     variant="outline"
                     size="sm"
                     onClick={() => handleSuggestionClick(suggestion)}
-                    className="text-xs sm:text-sm bg-white dark:bg-gray-800 hover:bg-blue-50 dark:hover:bg-blue-900 border-gray-300 dark:border-gray-600 px-2 sm:px-3 py-1 sm:py-2"
+                    className="text-xs sm:text-sm bg-card hover:bg-accent border-border px-2 sm:px-3 py-1 sm:py-2"
                   >
                     {suggestion}
                   </Button>
@@ -289,7 +289,7 @@ const ClaraKIPage = () => {
           )}
 
           {/* Input Area - Mobile optimiert */}
-          <div className="p-3 sm:p-6 border-t border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800">
+          <div className="p-3 sm:p-6 border-t border-border bg-card">
             <div className="flex gap-2 sm:gap-3">
               <div className="flex-1 relative">
                 <Input
@@ -297,7 +297,7 @@ const ClaraKIPage = () => {
                   onChange={(e) => setInputValue(e.target.value)}
                   onKeyPress={(e) => e.key === 'Enter' && handleSendMessage()}
                   placeholder="Fragen Sie Clara nach Immobilien-Kennzahlen, Berechnungen oder Verwaltungsaufgaben..."
-                  className="pr-10 sm:pr-12 text-sm sm:text-base dark:bg-gray-700 dark:border-gray-600 dark:text-white"
+                  className="pr-10 sm:pr-12 text-sm sm:text-base bg-background border-input text-foreground"
                 />
                 <Button
                   onClick={() => handleSendMessage()}
