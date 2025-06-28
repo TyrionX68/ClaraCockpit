@@ -368,8 +368,8 @@ const ClaraKIPageContent = () => {
                 </Button>
               </div>
               
-              {/* Basic Voice Button - Explicit microphone permission request */}
-              <BasicVoiceButton
+              {/* Improved Mic Button - Full error display and debugging - FUNKTIONIERTE BEREITS! */}
+              <ImprovedMicButton
                 onTranscriptReceived={handleSendMessage}
                 className="w-10 h-10 sm:w-12 sm:h-12"
                 size="sm"
