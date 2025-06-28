@@ -5,6 +5,7 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import VoiceFeedback from '../components/molecules/VoiceFeedback';
 import MicButton from '../components/molecules/MicButton';
+import EnhancedMicButton from '../components/molecules/EnhancedMicButton';
 import ClaraKIEngine from '../components/organisms/ClaraKIEngine';
 import { VoiceContextProvider, useVoiceContext } from '../contexts/VoiceContext';
 import VoiceDebugTest from '../components/debug/VoiceDebugTest';
@@ -328,28 +329,18 @@ const ClaraKIPageContent = () => {
                 </Button>
               </div>
               
-              <MicButton
-                isActive={voiceActive}
-                isListening={isListening}
-                onClick={toggleVoice}
-                title={voiceActive ? 'Voice deaktivieren' : 'Voice aktivieren'}
+              <EnhancedMicButton
+                onTranscriptReceived={handleSendMessage}
+                onStatusChange={(status) => {
+                  // Optional: Handle status changes
+                  console.log('Voice status:', status);
+                }}
                 className="w-10 h-10 sm:w-12 sm:h-12"
-                disabled={!isSupported}
+                size="sm"
+                showStatus={false}
+                autoSend={true}
               />
             </div>
-            
-            {/* Voice Status Display */}
-            {voiceError && (
-              <div className="mt-2 text-xs text-red-500">
-                Voice-Fehler: {voiceError}
-              </div>
-            )}
-            
-            {!isSupported && (
-              <div className="mt-2 text-xs text-yellow-600">
-                Voice-Erkennung wird von diesem Browser nicht unterstützt
-              </div>
-            )}
           </div>
         </div>
       </div>
