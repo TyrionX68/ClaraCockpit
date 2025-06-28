@@ -202,11 +202,6 @@ const ClaraKIPageContent = () => {
 
   return (
     <div className="min-h-screen bg-background text-foreground">
-      {/* DEBUG: Voice Test Component with Chat Integration */}
-      <div className="max-w-4xl mx-auto px-2 sm:px-4 py-6">
-        <VoiceDebugTest onTranscriptReceived={handleSendMessage} />
-      </div>
-      
       {/* Header */}
       <div className="bg-card border-b border-border">
         <div className="max-w-4xl mx-auto px-2 sm:px-4 py-4 sm:py-6">
