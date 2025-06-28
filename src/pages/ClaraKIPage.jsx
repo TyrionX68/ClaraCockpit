@@ -6,8 +6,11 @@ import { Input } from '@/components/ui/input';
 import VoiceFeedback from '../components/molecules/VoiceFeedback';
 import MicButton from '../components/molecules/MicButton';
 import EnhancedMicButton from '../components/molecules/EnhancedMicButton';
+import SpeechControls from '../components/molecules/SpeechControls';
 import ClaraKIEngine from '../components/organisms/ClaraKIEngine';
 import { VoiceContextProvider, useVoiceContext } from '../contexts/VoiceContext';
+import { useSpeechSynthesis } from '../hooks/useSpeechSynthesis';
+import { generateSSML } from '../logic/SSMLResponseGenerator';
 import VoiceDebugTest from '../components/debug/VoiceDebugTest';
 
 // Main ClaraKI Component with Voice Integration
@@ -26,6 +29,18 @@ const ClaraKIPageContent = () => {
     getVoiceStatus,
     getStatusMessage
   } = useVoiceContext();
+  
+  // Speech Synthesis Integration
+  const {
+    speak,
+    stop: stopSpeaking,
+    isSpeaking,
+    isPaused,
+    isSupported: speechSupported,
+    error: speechError,
+    settings: speechSettings,
+    updateSettings: updateSpeechSettings
+  } = useSpeechSynthesis();
   
   const [messages, setMessages] = useState([
     {
@@ -97,18 +112,33 @@ const ClaraKIPageContent = () => {
         });
         setIsTyping(false);
         
-        // Speak response if voice is active - with error handling
-        if (voiceActive && response.content) {
+        // 🔊 TTS-Integration: Clara spricht ihre Antworten automatisch
+        if (response.content && 'speechSynthesis' in window) {
           try {
-            if ('speechSynthesis' in window) {
-              const utterance = new SpeechSynthesisUtterance(response.content);
-              utterance.lang = 'de-DE';
-              utterance.rate = 0.9;
-              utterance.pitch = 1.0;
-              speechSynthesis.speak(utterance);
-            }
-          } catch (voiceError) {
-            console.warn('Voice synthesis failed:', voiceError);
+            // Stoppe vorherige Ausgabe
+            window.speechSynthesis.cancel();
+            
+            // Erstelle neue Sprachausgabe
+            const utterance = new SpeechSynthesisUtterance(response.content);
+            utterance.lang = 'de-DE';
+            utterance.pitch = 1.1;
+            utterance.rate = 1.0;
+            utterance.volume = 1.0;
+            
+            // Optimierte Einstellungen für Clara's Stimme
+            utterance.onstart = () => {
+              console.log('🔊 Clara spricht:', response.content.substring(0, 50) + '...');
+            };
+            
+            utterance.onerror = (event) => {
+              console.warn('🚨 TTS-Fehler:', event.error);
+            };
+            
+            // Spreche die Antwort
+            window.speechSynthesis.speak(utterance);
+            
+          } catch (ttsError) {
+            console.warn('🚨 TTS-Integration fehlgeschlagen:', ttsError);
           }
         }
       }, 800); // Reduced from 1000ms to 800ms
@@ -197,6 +227,15 @@ const ClaraKIPageContent = () => {
                   {getStatusMessage()}
                 </span>
               </div>
+              
+              {/* Speech Controls */}
+              <SpeechControls 
+                showSettings={true}
+                onSettingsChange={(settings) => {
+                  console.log('Speech settings updated:', settings);
+                }}
+                className="relative"
+              />
               
               <div className="flex items-center gap-2 text-sm">
                 <Users className="w-4 h-4 text-muted-foreground" />
