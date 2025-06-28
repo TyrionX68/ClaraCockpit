@@ -20,6 +20,15 @@ import { useClaraSuggestions } from '../hooks/useClaraSuggestions';
 import { generateSSML } from '../logic/SSMLResponseGenerator';
 import VoiceDebugTest from '../components/debug/VoiceDebugTest';
 
+// NEW CLARA KI OPTIMIZATION IMPORTS
+import EnhancedVoiceControl from '../components/molecules/EnhancedVoiceControl';
+import ClaraTTSControl from '../components/molecules/ClaraTTSControl';
+import ClaraMemoryInsights from '../components/molecules/ClaraMemoryInsights';
+import { useEnhancedVoiceRecognition } from '../hooks/useEnhancedVoiceRecognition';
+import { useNaturalTTS } from '../hooks/useNaturalTTS';
+import { useIntelligentContextMemory } from '../hooks/useIntelligentContextMemory';
+import { useProactiveAISuggestions } from '../hooks/useProactiveAISuggestions';
+
 // Main ClaraKI Component with Voice Integration
 const ClaraKIPageContent = () => {
   const navigate = useNavigate();
@@ -70,6 +79,68 @@ const ClaraKIPageContent = () => {
     clearSuggestions,
     executeSuggestion
   } = useClaraSuggestions();
+
+  // NEW CLARA KI OPTIMIZATION HOOKS
+  
+  // Enhanced Voice Recognition with Wake-Word
+  const {
+    isListening: enhancedListening,
+    isWakeWordActive,
+    transcript: enhancedTranscript,
+    confidence: voiceConfidence,
+    error: enhancedVoiceError,
+    isSupported: enhancedVoiceSupported,
+    audioLevel,
+    wakeWordDetected,
+    startListening: startEnhancedListening,
+    stopListening: stopEnhancedListening,
+    toggleListening: toggleEnhancedListening,
+    toggleWakeWordMode,
+    clearTranscript: clearEnhancedTranscript
+  } = useEnhancedVoiceRecognition();
+
+  // Natural TTS with Clara Personality
+  const {
+    isSpeaking: claraSpeaking,
+    isPaused: claraPaused,
+    isSupported: claraTTSSupported,
+    currentText: claraCurrentText,
+    queue: claraSpeechQueue,
+    error: claraTTSError,
+    speak: claraSpeak,
+    addToQueue: addToSpeechQueue,
+    stop: stopClaraSpeak,
+    pause: pauseClaraSpeak,
+    resume: resumeClaraSpeak,
+    speakClaraResponse,
+    getClaraResponse
+  } = useNaturalTTS();
+
+  // Intelligent Context Memory
+  const {
+    conversationHistory: memoryHistory,
+    currentSession,
+    userPreferences,
+    contextTopics,
+    memoryStats,
+    addConversationEntry,
+    getRelevantContext,
+    generateContextualHints
+  } = useIntelligentContextMemory();
+
+  // Proactive AI Suggestions
+  const {
+    suggestions: aiSuggestions,
+    predictions,
+    alerts: aiAlerts,
+    trends,
+    isAnalyzing,
+    lastAnalysis,
+    performAnalysis,
+    executeSuggestion: executeAISuggestion,
+    dismissSuggestion,
+    getHighPrioritySuggestions
+  } = useProactiveAISuggestions();
   
   const [messages, setMessages] = useState([
     {
@@ -185,6 +256,22 @@ const ClaraKIPageContent = () => {
           confidence: 1.0,
           containsQuestion: finalContent.includes('?')
         });
+
+        // NEW: Add to Context Memory
+        addConversationEntry({
+          type: 'user',
+          content: message,
+          timestamp: new Date().toISOString(),
+          context: queryContext.context
+        });
+
+        addConversationEntry({
+          type: 'assistant',
+          content: finalContent,
+          timestamp: new Date().toISOString(),
+          context: queryContext.context,
+          suggestions: allSuggestions
+        });
         
         setMessages(prev => {
           const newMessages = [...prev, assistantMessage];
@@ -193,35 +280,42 @@ const ClaraKIPageContent = () => {
         });
         setIsTyping(false);
         
-        // 🔊 TTS-Integration: Clara spricht ihre Antworten automatisch
-        if (response.content && 'speechSynthesis' in window) {
+        // NEW: Enhanced TTS with Clara Personality
+        if (response.content && claraTTSSupported) {
           try {
-            // Stoppe vorherige Ausgabe
-            window.speechSynthesis.cancel();
+            // Use Clara's Natural TTS instead of basic Web Speech API
+            const claraResponse = getClaraResponse(response.content, {
+              context: queryContext.context,
+              emotion: response.emotion || 'friendly',
+              urgency: response.urgency || 'normal',
+              includePersonality: true
+            });
             
-            // Erstelle neue Sprachausgabe
-            const utterance = new SpeechSynthesisUtterance(response.content);
-            utterance.lang = 'de-DE';
-            utterance.pitch = 1.1;
-            utterance.rate = 1.0;
-            utterance.volume = 1.0;
+            speakClaraResponse(claraResponse);
             
-            // Optimierte Einstellungen für Clara's Stimme
-            utterance.onstart = () => {
-              console.log('🔊 Clara spricht:', response.content.substring(0, 50) + '...');
-            };
-            
-            utterance.onerror = (event) => {
-              console.warn('🚨 TTS-Fehler:', event.error);
-            };
-            
-            // Spreche die Antwort
-            window.speechSynthesis.speak(utterance);
+            console.log('🤖 Clara spricht mit Persönlichkeit:', response.content.substring(0, 50) + '...');
             
           } catch (ttsError) {
-            console.warn('🚨 TTS-Integration fehlgeschlagen:', ttsError);
+            console.warn('🚨 Clara TTS fehlgeschlagen, fallback zu Standard TTS:', ttsError);
+            
+            // Fallback to old TTS if Clara TTS fails
+            if ('speechSynthesis' in window) {
+              window.speechSynthesis.cancel();
+              const utterance = new SpeechSynthesisUtterance(response.content);
+              utterance.lang = 'de-DE';
+              utterance.pitch = 1.1;
+              utterance.rate = 1.0;
+              utterance.volume = 1.0;
+              window.speechSynthesis.speak(utterance);
+            }
           }
         }
+
+        // NEW: Trigger AI Analysis for Proactive Suggestions
+        setTimeout(() => {
+          performAnalysis();
+        }, 2000);
+        
       }, 800); // Reduced from 1000ms to 800ms
     } catch (error) {
       console.error('Error generating response:', error);
@@ -297,16 +391,41 @@ const ClaraKIPageContent = () => {
             </div>
             
             <div className="flex flex-col sm:flex-row gap-3 sm:gap-6">
-              <div className="flex items-center gap-2 text-sm">
-                <div className={`w-2 h-2 rounded-full ${
-                  voiceActive ? 'bg-green-500' : 
-                  voiceError ? 'bg-red-500' : 
-                  'bg-gray-500'
-                }`}></div>
-                <span className="text-muted-foreground">
-                  {getStatusMessage()}
-                </span>
-              </div>
+              {/* Enhanced Voice Control - NEW */}
+              <EnhancedVoiceControl
+                isListening={enhancedListening}
+                isWakeWordActive={isWakeWordActive}
+                transcript={enhancedTranscript}
+                confidence={voiceConfidence}
+                audioLevel={audioLevel}
+                error={enhancedVoiceError}
+                isSupported={enhancedVoiceSupported}
+                onStartListening={startEnhancedListening}
+                onStopListening={stopEnhancedListening}
+                onToggleListening={toggleEnhancedListening}
+                onToggleWakeWord={toggleWakeWordMode}
+                onTranscriptReady={(transcript) => {
+                  if (transcript.trim()) {
+                    handleSendMessage(transcript);
+                    clearEnhancedTranscript();
+                  }
+                }}
+                className="flex-shrink-0"
+              />
+              
+              {/* Clara TTS Control - NEW */}
+              <ClaraTTSControl
+                isSpeaking={claraSpeaking}
+                isPaused={claraPaused}
+                currentText={claraCurrentText}
+                queue={claraSpeechQueue}
+                error={claraTTSError}
+                isSupported={claraTTSSupported}
+                onStop={stopClaraSpeak}
+                onPause={pauseClaraSpeak}
+                onResume={resumeClaraSpeak}
+                className="flex-shrink-0"
+              />
               
               {/* Speech Controls */}
               <SpeechControls 
@@ -458,6 +577,107 @@ const ClaraKIPageContent = () => {
           </div>
         </div>
       </div>
+      
+      {/* NEW: Clara Memory Insights */}
+      <div className="max-w-4xl mx-auto px-2 sm:px-4 py-4">
+        <ClaraMemoryInsights
+          conversationHistory={memoryHistory}
+          currentSession={currentSession}
+          userPreferences={userPreferences}
+          contextTopics={contextTopics}
+          memoryStats={memoryStats}
+          onClearMemory={() => {
+            // Clear memory if needed
+            console.log('Memory cleared by user');
+          }}
+          className="mb-4"
+        />
+      </div>
+
+      {/* NEW: AI Suggestions Panel */}
+      {aiSuggestions.length > 0 && (
+        <div className="max-w-4xl mx-auto px-2 sm:px-4 py-4">
+          <div className="bg-card rounded-2xl shadow-xl border border-border p-4">
+            <h3 className="text-lg font-semibold text-foreground mb-4 flex items-center gap-2">
+              🤖 Clara's Empfehlungen
+              {isAnalyzing && (
+                <div className="w-4 h-4 border-2 border-blue-500 border-t-transparent rounded-full animate-spin"></div>
+              )}
+            </h3>
+            
+            <div className="grid gap-3 sm:grid-cols-2">
+              {getHighPrioritySuggestions().slice(0, 4).map((suggestion) => (
+                <div
+                  key={suggestion.id}
+                  className="bg-muted rounded-lg p-3 border border-border hover:border-blue-500 transition-colors"
+                >
+                  <div className="flex items-start justify-between gap-2">
+                    <div className="flex-1">
+                      <div className="flex items-center gap-2 mb-1">
+                        <span className="text-lg">{suggestion.category === 'urgent' ? '🚨' : suggestion.category === 'financial' ? '💰' : '💡'}</span>
+                        <span className={`text-xs px-2 py-1 rounded-full ${
+                          suggestion.priority === 'urgent' ? 'bg-red-100 text-red-800' :
+                          suggestion.priority === 'high' ? 'bg-orange-100 text-orange-800' :
+                          'bg-blue-100 text-blue-800'
+                        }`}>
+                          {suggestion.priority}
+                        </span>
+                      </div>
+                      <h4 className="font-medium text-sm text-foreground mb-1">
+                        {suggestion.title}
+                      </h4>
+                      <p className="text-xs text-muted-foreground mb-2">
+                        {suggestion.description}
+                      </p>
+                      <div className="text-xs text-green-600 mb-2">
+                        💡 {suggestion.impact}
+                      </div>
+                    </div>
+                  </div>
+                  
+                  <div className="flex gap-2">
+                    <Button
+                      size="sm"
+                      onClick={() => executeAISuggestion(suggestion.id, suggestion.action)}
+                      className="text-xs h-7"
+                    >
+                      Ausführen
+                    </Button>
+                    <Button
+                      size="sm"
+                      variant="outline"
+                      onClick={() => dismissSuggestion(suggestion.id)}
+                      className="text-xs h-7"
+                    >
+                      Ignorieren
+                    </Button>
+                  </div>
+                </div>
+              ))}
+            </div>
+            
+            {aiAlerts.length > 0 && (
+              <div className="mt-4 pt-4 border-t border-border">
+                <h4 className="font-medium text-sm text-foreground mb-2">🚨 Wichtige Hinweise</h4>
+                <div className="space-y-2">
+                  {aiAlerts.slice(0, 3).map((alert) => (
+                    <div
+                      key={alert.id}
+                      className={`text-xs p-2 rounded-lg ${
+                        alert.type === 'critical' ? 'bg-red-50 text-red-800 border border-red-200' :
+                        alert.type === 'warning' ? 'bg-orange-50 text-orange-800 border border-orange-200' :
+                        'bg-blue-50 text-blue-800 border border-blue-200'
+                      }`}
+                    >
+                      <strong>{alert.title}:</strong> {alert.message}
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
+          </div>
+        </div>
+      )}
       
       {/* Enhanced AI Providers - Hidden but active */}
       <ResponseStylerProvider />

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Mic, MicOff, Volume2, VolumeX, Zap, ZapOff, Activity } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import { useEnhancedVoiceRecognition } from '../hooks/useEnhancedVoiceRecognition';
+import { useEnhancedVoiceRecognition } from '../../hooks/useEnhancedVoiceRecognition';
 
 /**
  * Enhanced Voice Control Component with Wake-Word System

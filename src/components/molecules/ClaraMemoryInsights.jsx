@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Brain, Clock, TrendingUp, Users, MessageCircle, Download, Trash2, Eye, EyeOff } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import { useIntelligentContextMemory } from '../hooks/useIntelligentContextMemory';
+import { useIntelligentContextMemory } from '../../hooks/useIntelligentContextMemory';
 
 /**
  * Clara Context Memory Visualization Component

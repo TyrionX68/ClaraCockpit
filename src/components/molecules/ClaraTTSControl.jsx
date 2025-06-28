@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Volume2, VolumeX, Pause, Play, SkipForward, Trash2, Settings, Heart } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Slider } from '@/components/ui/slider';
-import { useNaturalTTS } from '../hooks/useNaturalTTS';
+import { useNaturalTTS } from '../../hooks/useNaturalTTS';
 
 /**
  * Clara TTS Control Component with Personality Visualization
