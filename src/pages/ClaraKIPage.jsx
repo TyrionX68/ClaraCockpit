@@ -6,6 +6,7 @@ import { Input } from '@/components/ui/input';
 import VoiceFeedback from '../components/molecules/VoiceFeedback';
 import MicButton from '../components/molecules/MicButton';
 import EnhancedMicButton from '../components/molecules/EnhancedMicButton';
+import DesktopMicButton from '../components/molecules/DesktopMicButton';
 import SpeechControls from '../components/molecules/SpeechControls';
 import ClaraKIEngine from '../components/organisms/ClaraKIEngine';
 import { VoiceContextProvider, useVoiceContext } from '../contexts/VoiceContext';
@@ -368,16 +369,11 @@ const ClaraKIPageContent = () => {
                 </Button>
               </div>
               
-              <EnhancedMicButton
+              {/* Desktop-optimized Mic Button for laptop compatibility */}
+              <DesktopMicButton
                 onTranscriptReceived={handleSendMessage}
-                onStatusChange={(status) => {
-                  // Optional: Handle status changes
-                  console.log('Voice status:', status);
-                }}
                 className="w-10 h-10 sm:w-12 sm:h-12"
                 size="sm"
-                showStatus={false}
-                autoSend={true}
               />
             </div>
           </div>
