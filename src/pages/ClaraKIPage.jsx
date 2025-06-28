@@ -39,6 +39,10 @@ import { useVoiceSystemHandler } from '../hooks/VoiceSystemHandler';
 import EnhancedWorkingMicButton from '../components/molecules/EnhancedWorkingMicButton';
 import RealWakewordButton from '../components/molecules/RealWakewordButton';
 
+// FIXED V6.2.1 VOICE SYSTEM - NO PROBLEMATIC APIS
+import FixedWorkingMicButton from '../components/molecules/FixedWorkingMicButton';
+import SimpleWakewordButton from '../components/molecules/SimpleWakewordButton';
+
 // Main ClaraKI Component with Voice Integration
 const ClaraKIPageContent = () => {
   const navigate = useNavigate();
@@ -410,13 +414,13 @@ const ClaraKIPageContent = () => {
             </div>
             
             <div className="flex flex-col sm:flex-row gap-3 sm:gap-6">
-              {/* ENHANCED V6.2.0 VOICE SYSTEM - Fixed & Improved */}
+              {/* FIXED V6.2.1 VOICE SYSTEM - No Problematic APIs */}
               <div className="flex items-center gap-3">
-                {/* Enhanced Manual Speech Button (Sprechen) */}
-                <EnhancedWorkingMicButton
+                {/* Fixed Manual Speech Button (Sprechen) */}
+                <FixedWorkingMicButton
                   onTranscriptReceived={(transcript) => {
                     if (transcript.trim()) {
-                      console.log('📝 Enhanced transcript received:', transcript);
+                      console.log('📝 Fixed transcript received:', transcript);
                       handleSendMessage(transcript);
                     }
                   }}
@@ -426,14 +430,14 @@ const ClaraKIPageContent = () => {
                   className="flex-shrink-0"
                 />
                 
-                {/* Real Wakeword Button (Hey Clara) - FULLY FUNCTIONAL */}
-                <RealWakewordButton
+                {/* Simple Wakeword Button (Hey Clara) - FIXED */}
+                <SimpleWakewordButton
                   onWakewordDetected={(detection) => {
-                    console.log('🎯 Wakeword detected:', detection);
+                    console.log('🎯 Simple wakeword detected:', detection);
                   }}
                   onTranscriptReceived={(transcript) => {
                     if (transcript.trim()) {
-                      console.log('📝 Wakeword transcript received:', transcript);
+                      console.log('📝 Simple wakeword transcript received:', transcript);
                       handleSendMessage(transcript);
                     }
                   }}
@@ -597,8 +601,8 @@ const ClaraKIPageContent = () => {
                 </Button>
               </div>
               
-              {/* ENHANCED V6.2.0 - Fixed Voice System with Permission Handling */}
-              <EnhancedWorkingMicButton
+              {/* FIXED V6.2.1 - Voice System without Problematic APIs */}
+              <FixedWorkingMicButton
                 onTranscriptReceived={handleSendMessage}
                 className="w-10 h-10 sm:w-12 sm:h-12"
                 size="sm"
