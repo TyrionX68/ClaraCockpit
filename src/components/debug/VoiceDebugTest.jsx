@@ -1,221 +1,339 @@
 /**
- * VoiceDebugTest.jsx
- * Isolierter Test für Speech Recognition API + Chat Integration
- * Debugging für Clara Voice-Integration
+ * VoiceDebugTest.jsx - ERWEITERTE VERSION v6.2.1
+ * Debug-Panel für Voice-Integration mit Master-Hook
+ * MetaGovernor: Auto-Send-Checkbox & Live-Status-Monitoring
  */
 
 import React, { useState, useEffect } from 'react';
-import { Mic, MicOff, MessageSquare } from 'lucide-react';
+import { Mic, MicOff, MessageSquare, Settings, CheckCircle, AlertCircle, Loader2 } from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { useVoiceRecognition } from '@/hooks/useVoiceRecognition';
+import SimpleMicButton from '../molecules/SimpleMicButton';
 
-const VoiceDebugTest = ({ onTranscriptReceived }) => {
-  const [isSupported, setIsSupported] = useState(false);
-  const [isListening, setIsListening] = useState(false);
-  const [transcript, setTranscript] = useState('');
-  const [error, setError] = useState(null);
+const VoiceDebugTest = ({ onTranscriptReceived, onSendToChat }) => {
   const [debugLog, setDebugLog] = useState([]);
-  const [autoSendToChat, setAutoSendToChat] = useState(true);
+  const [autoSendEnabled, setAutoSendEnabled] = useState(true);
+  const [showAdvanced, setShowAdvanced] = useState(false);
+  const [testTranscript, setTestTranscript] = useState('');
   
+  // Voice Recognition with Debug Mode
+  const {
+    isListening,
+    transcript,
+    error,
+    isSupported,
+    isEnabled,
+    startListening,
+    stopListening,
+    clearTranscript,
+    clearError,
+    requestMicrophonePermission
+  } = useVoiceRecognition({
+    onTranscript: (text) => {
+      addLog(`📝 Transcript received: "${text}"`);
+      setTestTranscript(text);
+      
+      if (onTranscriptReceived) {
+        onTranscriptReceived(text);
+      }
+      
+      if (autoSendEnabled && onSendToChat) {
+        addLog(`📤 Auto-sending to chat: "${text}"`);
+        onSendToChat(text);
+      }
+    },
+    onError: (err) => {
+      addLog(`❌ Voice error: ${err}`);
+    },
+    onStart: () => {
+      addLog('🎤 Voice recognition started');
+    },
+    onEnd: () => {
+      addLog('⏹️ Voice recognition ended');
+    },
+    debugMode: true
+  });
+
   const addLog = (message) => {
     const timestamp = new Date().toLocaleTimeString();
-    setDebugLog(prev => [...prev, `${timestamp}: ${message}`]);
-    console.log(`[VoiceDebug] ${message}`);
+    setDebugLog(prev => [...prev.slice(-19), `${timestamp}: ${message}`]);
+    console.log(`[VoiceDebugTest] ${message}`);
   };
 
   useEffect(() => {
-    addLog('VoiceDebugTest mounted');
+    addLog('🚀 Voice Debug Test initialized');
+    addLog(`Browser: ${navigator.userAgent.split(' ')[0]}`);
+    addLog(`Protocol: ${window.location.protocol}`);
+    addLog(`Speech Recognition: ${isSupported ? 'Supported' : 'Not Supported'}`);
     
-    // Check browser support
-    const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
-    
-    if (SpeechRecognition) {
-      setIsSupported(true);
-      addLog('✅ Speech Recognition API supported');
-      addLog(`API: ${window.SpeechRecognition ? 'SpeechRecognition' : 'webkitSpeechRecognition'}`);
-    } else {
-      setIsSupported(false);
-      addLog('❌ Speech Recognition API NOT supported');
+    if (isSupported) {
+      const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+      addLog(`API: ${window.SpeechRecognition ? 'Standard' : 'WebKit'}`);
     }
-    
-    // Check HTTPS
-    if (window.location.protocol === 'https:') {
-      addLog('✅ HTTPS detected');
-    } else {
-      addLog('⚠️ HTTP detected - Speech Recognition may not work');
-    }
-    
-  }, []);
+  }, [isSupported]);
 
-  const startListening = () => {
-    if (!isSupported) {
-      addLog('❌ Cannot start - API not supported');
-      return;
-    }
-
-    const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
-    const recognition = new SpeechRecognition();
-    
-    addLog('🎤 Attempting to start recognition...');
-    
-    recognition.continuous = false;
-    recognition.interimResults = false;
-    recognition.lang = 'de-DE';
-    
-    recognition.onstart = () => {
-      addLog('✅ Recognition started successfully');
-      setIsListening(true);
-      setError(null);
-    };
-    
-    recognition.onresult = (event) => {
-      if (event.results.length > 0) {
-        const result = event.results[0][0].transcript;
-        addLog(`✅ Transcript received: "${result}"`);
-        setTranscript(result);
-        
-        // Auto-send to chat if enabled
-        if (autoSendToChat && onTranscriptReceived) {
-          addLog('📤 Sending transcript to chat...');
-          onTranscriptReceived(result);
-        }
-      }
-    };
-    
-    recognition.onerror = (event) => {
-      addLog(`❌ Recognition error: ${event.error}`);
-      setError(event.error);
-      setIsListening(false);
-    };
-    
-    recognition.onend = () => {
-      addLog('🔴 Recognition ended');
-      setIsListening(false);
-    };
-    
-    try {
-      recognition.start();
-    } catch (err) {
-      addLog(`❌ Failed to start recognition: ${err.message}`);
-      setError(err.message);
+  const handleTestVoice = async () => {
+    addLog('🧪 Manual voice test triggered');
+    if (isListening) {
+      stopListening();
+    } else {
+      await startListening();
     }
   };
 
-  const testMicrophonePermission = async () => {
-    addLog('🎤 Testing microphone permission...');
-    
-    try {
-      const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
-      addLog('✅ Microphone permission granted');
-      stream.getTracks().forEach(track => track.stop()); // Clean up
-    } catch (err) {
-      addLog(`❌ Microphone permission denied: ${err.message}`);
-      setError(`Microphone: ${err.message}`);
+  const handleManualSend = () => {
+    if (testTranscript && onSendToChat) {
+      addLog(`📤 Manual send: "${testTranscript}"`);
+      onSendToChat(testTranscript);
     }
   };
 
-  const sendTranscriptToChat = () => {
-    if (transcript && onTranscriptReceived) {
-      addLog('📤 Manually sending transcript to chat...');
-      onTranscriptReceived(transcript);
-    }
+  const handleClearLogs = () => {
+    setDebugLog([]);
+    addLog('🧹 Debug logs cleared');
+  };
+
+  const getStatusColor = () => {
+    if (!isSupported) return 'text-gray-500';
+    if (error) return 'text-red-500';
+    if (isListening) return 'text-blue-500';
+    if (isEnabled) return 'text-green-500';
+    return 'text-orange-500';
+  };
+
+  const getStatusIcon = () => {
+    if (!isSupported) return <MicOff className="w-4 h-4" />;
+    if (error) return <AlertCircle className="w-4 h-4" />;
+    if (isListening) return <Loader2 className="w-4 h-4 animate-spin" />;
+    if (isEnabled) return <CheckCircle className="w-4 h-4" />;
+    return <Mic className="w-4 h-4" />;
   };
 
   return (
-    <div className="p-6 bg-card rounded-lg border border-border max-w-2xl mx-auto">
-      <h2 className="text-xl font-bold mb-4 text-foreground">🔧 Voice Debug Test + Chat Integration</h2>
+    <Card className="w-full max-w-2xl">
+      <CardHeader>
+        <CardTitle className="flex items-center gap-2">
+          <Settings className="w-5 h-5" />
+          Voice Debug Test + Chat Integration
+          <div className={`ml-auto flex items-center gap-2 ${getStatusColor()}`}>
+            {getStatusIcon()}
+            <span className="text-sm font-medium">
+              {!isSupported ? 'Not Supported' : 
+               error ? 'Error' :
+               isListening ? 'Listening' :
+               isEnabled ? 'Ready' : 'Permission Required'}
+            </span>
+          </div>
+        </CardTitle>
+      </CardHeader>
       
-      {/* Status */}
-      <div className="mb-4 space-y-2">
-        <div className={`flex items-center gap-2 ${isSupported ? 'text-green-600' : 'text-red-600'}`}>
-          <div className={`w-3 h-3 rounded-full ${isSupported ? 'bg-green-500' : 'bg-red-500'}`}></div>
-          <span>Speech Recognition: {isSupported ? 'Supported' : 'Not Supported'}</span>
-        </div>
-        
-        <div className={`flex items-center gap-2 ${isListening ? 'text-blue-600' : 'text-gray-600'}`}>
-          <div className={`w-3 h-3 rounded-full ${isListening ? 'bg-blue-500 animate-pulse' : 'bg-gray-500'}`}></div>
-          <span>Status: {isListening ? 'Listening...' : 'Inactive'}</span>
-        </div>
-        
-        <div className="flex items-center gap-2">
-          <input
-            type="checkbox"
-            id="autoSend"
-            checked={autoSendToChat}
-            onChange={(e) => setAutoSendToChat(e.target.checked)}
-            className="w-4 h-4"
-          />
-          <label htmlFor="autoSend" className="text-sm text-foreground">
-            Auto-send transcript to chat
+      <CardContent className="space-y-4">
+        {/* Auto-Send Checkbox - DAS WAR DAS PROBLEM! */}
+        <div className="p-4 bg-blue-50 border-2 border-blue-200 rounded-lg">
+          <label className="flex items-center gap-3 cursor-pointer">
+            <input 
+              type="checkbox" 
+              checked={autoSendEnabled}
+              onChange={(e) => {
+                setAutoSendEnabled(e.target.checked);
+                addLog(`🔄 Auto-send ${e.target.checked ? 'enabled' : 'disabled'}`);
+              }}
+              className="w-5 h-5 text-blue-600 rounded focus:ring-blue-500"
+            />
+            <span className="font-medium text-blue-800">
+              Auto-send transcript to chat
+            </span>
           </label>
+          <p className="text-sm text-gray-600 mt-2">
+            ✅ <strong>Das war das Problem!</strong> Diese Checkbox war nicht aktiviert.
+          </p>
         </div>
-      </div>
 
-      {/* Controls */}
-      <div className="mb-4 space-x-3 flex flex-wrap gap-2">
-        <button
-          onClick={startListening}
-          disabled={!isSupported || isListening}
-          className="px-4 py-2 bg-blue-500 text-white rounded-lg disabled:bg-gray-400 flex items-center gap-2"
-        >
-          <Mic className="w-4 h-4" />
-          Start Voice Test
-        </button>
-        
-        <button
-          onClick={testMicrophonePermission}
-          className="px-4 py-2 bg-green-500 text-white rounded-lg flex items-center gap-2"
-        >
-          <MicOff className="w-4 h-4" />
-          Test Microphone
-        </button>
-        
-        {transcript && (
-          <button
-            onClick={sendTranscriptToChat}
-            className="px-4 py-2 bg-purple-500 text-white rounded-lg flex items-center gap-2"
+        {/* Status Grid */}
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
+          <div className="text-center p-3 bg-gray-50 rounded">
+            <div className="text-lg mb-1">
+              {isSupported ? '✅' : '❌'}
+            </div>
+            <div className="text-xs font-medium">Speech Recognition</div>
+            <div className="text-xs text-gray-500">
+              {isSupported ? 'Supported' : 'Not Supported'}
+            </div>
+          </div>
+          
+          <div className="text-center p-3 bg-gray-50 rounded">
+            <div className="text-lg mb-1">
+              {isEnabled ? '✅' : '❌'}
+            </div>
+            <div className="text-xs font-medium">Microphone</div>
+            <div className="text-xs text-gray-500">
+              {isEnabled ? 'Enabled' : 'Permission Required'}
+            </div>
+          </div>
+          
+          <div className="text-center p-3 bg-gray-50 rounded">
+            <div className="text-lg mb-1">
+              {isListening ? '🎤' : '⏸️'}
+            </div>
+            <div className="text-xs font-medium">Status</div>
+            <div className="text-xs text-gray-500">
+              {isListening ? 'Listening' : 'Idle'}
+            </div>
+          </div>
+          
+          <div className="text-center p-3 bg-gray-50 rounded">
+            <div className="text-lg mb-1">
+              {autoSendEnabled ? '✅' : '❌'}
+            </div>
+            <div className="text-xs font-medium">Auto-Send</div>
+            <div className="text-xs text-gray-500">
+              {autoSendEnabled ? 'Enabled' : 'Disabled'}
+            </div>
+          </div>
+        </div>
+
+        {/* Test Controls */}
+        <div className="flex flex-wrap gap-2">
+          <Button 
+            onClick={handleTestVoice}
+            disabled={!isSupported}
+            variant={isListening ? "destructive" : "default"}
+            className="flex-1"
           >
-            <MessageSquare className="w-4 h-4" />
-            Send to Chat
-          </button>
+            {isListening ? (
+              <>
+                <Loader2 className="w-4 h-4 mr-2 animate-spin" />
+                Stop Voice Test
+              </>
+            ) : (
+              <>
+                <Mic className="w-4 h-4 mr-2" />
+                Start Voice Test
+              </>
+            )}
+          </Button>
+          
+          {!isEnabled && (
+            <Button 
+              onClick={requestMicrophonePermission}
+              variant="outline"
+            >
+              Request Permission
+            </Button>
+          )}
+          
+          <Button 
+            onClick={handleClearLogs}
+            variant="outline"
+            size="sm"
+          >
+            Clear Logs
+          </Button>
+        </div>
+
+        {/* Current Transcript */}
+        {(transcript || testTranscript) && (
+          <div className="p-3 bg-green-50 border border-green-200 rounded">
+            <div className="flex items-center gap-2 mb-2">
+              <MessageSquare className="w-4 h-4 text-green-600" />
+              <span className="text-sm font-medium text-green-800">Current Transcript:</span>
+            </div>
+            <div className="text-sm text-green-700 mb-2">
+              "{transcript || testTranscript}"
+            </div>
+            {!autoSendEnabled && (
+              <Button 
+                onClick={handleManualSend}
+                size="sm"
+                variant="outline"
+                className="text-xs"
+              >
+                Send to Chat
+              </Button>
+            )}
+          </div>
         )}
-      </div>
 
-      {/* Results */}
-      {transcript && (
-        <div className="mb-4 p-3 bg-green-50 border border-green-200 rounded-lg">
-          <h3 className="font-semibold text-green-800">Transcript:</h3>
-          <p className="text-green-700">"{transcript}"</p>
-        </div>
-      )}
+        {/* Error Display */}
+        {error && (
+          <div className="p-3 bg-red-50 border border-red-200 rounded">
+            <div className="flex items-center gap-2 mb-2">
+              <AlertCircle className="w-4 h-4 text-red-600" />
+              <span className="text-sm font-medium text-red-800">Error:</span>
+            </div>
+            <div className="text-sm text-red-700 mb-2">{error}</div>
+            <Button 
+              onClick={clearError}
+              size="sm"
+              variant="outline"
+              className="text-xs"
+            >
+              Clear Error
+            </Button>
+          </div>
+        )}
 
-      {error && (
-        <div className="mb-4 p-3 bg-red-50 border border-red-200 rounded-lg">
-          <h3 className="font-semibold text-red-800">Error:</h3>
-          <p className="text-red-700">{error}</p>
+        {/* Advanced Controls */}
+        <div>
+          <Button 
+            onClick={() => setShowAdvanced(!showAdvanced)}
+            variant="ghost"
+            size="sm"
+            className="text-xs"
+          >
+            {showAdvanced ? 'Hide' : 'Show'} Advanced Controls
+          </Button>
+          
+          {showAdvanced && (
+            <div className="mt-3 p-3 bg-gray-50 rounded">
+              <div className="mb-3">
+                <label className="block text-xs font-medium mb-1">
+                  Integrated Voice Button:
+                </label>
+                <SimpleMicButton
+                  onTranscript={(text) => {
+                    addLog(`📝 Integrated button transcript: "${text}"`);
+                    if (autoSendEnabled && onSendToChat) {
+                      onSendToChat(text);
+                    }
+                  }}
+                  autoSend={autoSendEnabled}
+                  debugMode={true}
+                  size="sm"
+                />
+              </div>
+            </div>
+          )}
         </div>
-      )}
 
-      {/* Debug Log */}
-      <div className="bg-gray-50 p-3 rounded-lg">
-        <h3 className="font-semibold mb-2 text-gray-800">Debug Log:</h3>
-        <div className="text-sm text-gray-600 space-y-1 max-h-40 overflow-y-auto">
-          {debugLog.map((log, index) => (
-            <div key={index} className="font-mono">{log}</div>
-          ))}
+        {/* Debug Logs */}
+        <div>
+          <div className="text-sm font-medium mb-2">Debug Logs:</div>
+          <div className="bg-black text-green-400 p-3 rounded font-mono text-xs h-32 overflow-y-auto">
+            {debugLog.length === 0 ? (
+              <div className="text-gray-500">No logs yet...</div>
+            ) : (
+              debugLog.map((log, index) => (
+                <div key={index}>{log}</div>
+              ))
+            )}
+          </div>
         </div>
-      </div>
-      
-      {/* Instructions */}
-      <div className="mt-4 p-3 bg-blue-50 border border-blue-200 rounded-lg">
-        <h3 className="font-semibold text-blue-800">Test Instructions:</h3>
-        <ol className="text-blue-700 text-sm mt-1 space-y-1">
-          <li>1. Click "Test Microphone" to check permissions</li>
-          <li>2. Click "Start Voice Test" to test speech recognition</li>
-          <li>3. Speak clearly in German when listening starts</li>
-          <li>4. Check if transcript auto-sends to chat below</li>
-          <li>5. Use "Send to Chat" button for manual sending</li>
-        </ol>
-      </div>
-    </div>
+
+        {/* Test Instructions */}
+        <div className="text-xs text-gray-600 bg-gray-50 p-3 rounded">
+          <strong>Test Instructions:</strong>
+          <ol className="list-decimal list-inside mt-1 space-y-1">
+            <li>Ensure "Auto-send transcript to chat" is checked ✓</li>
+            <li>Click "Start Voice Test" to begin</li>
+            <li>Speak clearly in German</li>
+            <li>Transcript should automatically be sent to chat</li>
+            <li>Check debug logs for detailed information</li>
+          </ol>
+        </div>
+      </CardContent>
+    </Card>
   );
 };
 

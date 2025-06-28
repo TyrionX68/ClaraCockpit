@@ -6,6 +6,7 @@ import { Textarea } from './ui/textarea';
 import { Input } from './ui/input';
 import { Bot, ArrowLeft, Send, MessageSquare, Brain, Zap } from 'lucide-react';
 import Sidebar from './Sidebar';
+import SimpleMicButton from './molecules/SimpleMicButton';
 
 const ClaraKIPanel = () => {
   const navigate = useNavigate();
@@ -19,6 +20,19 @@ const ClaraKIPanel = () => {
   ]);
   const [inputMessage, setInputMessage] = useState('');
   const [isLoading, setIsLoading] = useState(false);
+
+  // Voice-to-Chat Handler
+  const handleVoiceTranscript = (transcript) => {
+    console.log('[ClaraKIPanel] Voice transcript received:', transcript);
+    setInputMessage(transcript);
+    
+    // Auto-send voice messages
+    setTimeout(() => {
+      if (transcript.trim()) {
+        handleSendMessage();
+      }
+    }, 500);
+  };
 
   const handleSendMessage = async () => {
     if (!inputMessage.trim()) return;
@@ -154,6 +168,13 @@ const ClaraKIPanel = () => {
                     onChange={(e) => setInputMessage(e.target.value)}
                     onKeyPress={(e) => e.key === 'Enter' && handleSendMessage()}
                     className="flex-1"
+                  />
+                  <SimpleMicButton
+                    onTranscript={handleVoiceTranscript}
+                    autoSend={true}
+                    size="default"
+                    variant="outline"
+                    debugMode={false}
                   />
                   <Button onClick={handleSendMessage} disabled={isLoading}>
                     <Send className="w-4 h-4" />
