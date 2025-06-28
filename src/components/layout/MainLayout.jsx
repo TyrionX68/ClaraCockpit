@@ -34,7 +34,7 @@ const MainLayout = () => {
 
   return (
     <div className={`min-h-screen ${theme === 'dark' ? 'dark' : ''}`}>
-      <div className="bg-gray-50 dark:bg-gray-900 min-h-screen transition-colors duration-300">
+      <div className="bg-white dark:bg-gray-900 min-h-screen transition-colors duration-300">
         {/* Sidebar */}
         <Sidebar
           isCollapsed={sidebarCollapsed}
