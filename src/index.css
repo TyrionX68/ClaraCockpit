@@ -60,22 +60,42 @@ body {
   transition: background-color 0.3s ease, color 0.3s ease;
 }
 
-/* Voice Control Animations */
+/* Voice Control Animations - Optimized for Performance */
 @keyframes pulse {
   0%, 100% {
     opacity: 1;
   }
   50% {
-    opacity: 0.5;
+    opacity: 0.7;
   }
 }
 
 .voice-active {
-  animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+  animation: pulse 3s ease-in-out infinite; /* Slower animation */
 }
 
-/* Smooth transitions */
+/* Smooth transitions - Reduced for performance */
 * {
-  transition: background-color 0.2s ease, color 0.2s ease, border-color 0.2s ease;
+  transition: background-color 0.15s ease, color 0.15s ease, border-color 0.15s ease;
+}
+
+/* Performance optimizations */
+.performance-mode {
+  transform: translateZ(0); /* Force GPU acceleration only when needed */
+  will-change: auto; /* Let browser decide */
+}
+
+/* Reduce backdrop-blur for better performance */
+.backdrop-blur-sm {
+  backdrop-filter: blur(2px); /* Reduced from default */
+}
+
+/* Optimize box-shadows */
+.shadow-lg {
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1); /* Simplified shadow */
+}
+
+.shadow-xl {
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1); /* Simplified shadow */
 }
 

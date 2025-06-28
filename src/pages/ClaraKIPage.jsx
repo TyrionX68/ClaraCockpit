@@ -39,12 +39,16 @@ const ClaraKIPage = () => {
       timestamp: new Date().toLocaleTimeString('de-DE', { hour: '2-digit', minute: '2-digit' })
     };
 
-    setMessages(prev => [...prev, userMessage]);
+    setMessages(prev => {
+      const newMessages = [...prev, userMessage];
+      // Performance Fix: Limit chat history to 15 messages to prevent memory leaks
+      return newMessages.length > 15 ? newMessages.slice(-15) : newMessages;
+    });
     setInputValue('');
     setIsTyping(true);
 
     try {
-      // Simulate processing delay
+      // Simulate processing delay - reduced for better performance
       setTimeout(async () => {
         const response = await generateIntelligentResponse(message, contextData);
         
@@ -56,14 +60,22 @@ const ClaraKIPage = () => {
           kpis: response.kpis
         };
         
-        setMessages(prev => [...prev, assistantMessage]);
+        setMessages(prev => {
+          const newMessages = [...prev, assistantMessage];
+          // Performance Fix: Limit chat history to 15 messages
+          return newMessages.length > 15 ? newMessages.slice(-15) : newMessages;
+        });
         setIsTyping(false);
         
-        // Speak response if voice is active
+        // Speak response if voice is active - with error handling
         if (voiceActive && response.content) {
-          claraEngine.speak(response.content);
+          try {
+            claraEngine.speak(response.content);
+          } catch (voiceError) {
+            console.warn('Voice synthesis failed:', voiceError);
+          }
         }
-      }, 1000);
+      }, 800); // Reduced from 1000ms to 800ms
     } catch (error) {
       console.error('Error processing message:', error);
       setIsTyping(false);
