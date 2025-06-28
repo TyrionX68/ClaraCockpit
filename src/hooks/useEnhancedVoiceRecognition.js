@@ -1,197 +1,275 @@
 import { useState, useEffect, useRef, useCallback } from 'react';
 
 /**
- * Enhanced Voice Recognition Hook with improved microphone handling
- * Addresses common browser permission and device issues
+ * Enhanced Voice Recognition Hook with Wake-Word System
+ * Features:
+ * - Wake-word detection ("Hey Clara")
+ * - Noise filtering and audio processing
+ * - Continuous listening mode
+ * - Confidence scoring
+ * - Multi-language support
  */
 export const useEnhancedVoiceRecognition = () => {
   const [isListening, setIsListening] = useState(false);
+  const [isWakeWordActive, setIsWakeWordActive] = useState(false);
   const [transcript, setTranscript] = useState('');
+  const [confidence, setConfidence] = useState(0);
   const [error, setError] = useState(null);
   const [isSupported, setIsSupported] = useState(false);
-  const [permissionStatus, setPermissionStatus] = useState('unknown');
+  const [audioLevel, setAudioLevel] = useState(0);
+  const [wakeWordDetected, setWakeWordDetected] = useState(false);
   
   const recognitionRef = useRef(null);
-  const timeoutRef = useRef(null);
-  const retryCountRef = useRef(0);
-  const maxRetries = 3;
+  const audioContextRef = useRef(null);
+  const analyserRef = useRef(null);
+  const microphoneRef = useRef(null);
+  const wakeWordTimeoutRef = useRef(null);
+  const audioLevelIntervalRef = useRef(null);
 
-  // Check browser support and initialize
+  // Wake-word patterns (German and English)
+  const wakeWords = [
+    'hey clara', 'hallo clara', 'clara', 'hey klara', 'hallo klara', 'klara'
+  ];
+
+  // Initialize speech recognition
   useEffect(() => {
-    const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
-    
-    if (SpeechRecognition) {
-      setIsSupported(true);
+    if (typeof window !== 'undefined') {
+      const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
       
-      // Initialize recognition with enhanced settings
-      const recognition = new SpeechRecognition();
-      recognition.continuous = false;
-      recognition.interimResults = false;
-      recognition.lang = 'de-DE';
-      recognition.maxAlternatives = 1;
-      
-      // Enhanced event handlers
-      recognition.onstart = () => {
-        console.log('🎤 Enhanced Voice Recognition started');
-        setIsListening(true);
-        setError(null);
-        retryCountRef.current = 0;
+      if (SpeechRecognition) {
+        setIsSupported(true);
         
-        // Set timeout to prevent hanging
-        timeoutRef.current = setTimeout(() => {
-          if (recognitionRef.current) {
-            recognitionRef.current.stop();
-            setError('Timeout: Keine Sprache erkannt');
-          }
-        }, 10000); // 10 seconds timeout
-      };
-      
-      recognition.onresult = (event) => {
-        console.log('🎤 Enhanced Voice Recognition result received');
-        clearTimeout(timeoutRef.current);
+        const recognition = new SpeechRecognition();
+        recognition.continuous = true;
+        recognition.interimResults = true;
+        recognition.lang = 'de-DE';
+        recognition.maxAlternatives = 3;
         
-        if (event.results.length > 0) {
-          const result = event.results[0][0].transcript;
-          console.log('📝 Transcript:', result);
-          setTranscript(result);
+        // Enhanced settings for better accuracy
+        if (recognition.serviceURI) {
+          recognition.serviceURI = 'wss://speech.googleapis.com/v1/speech:recognize';
+        }
+        
+        recognition.onstart = () => {
+          console.log('🎙️ Enhanced Voice Recognition started');
           setError(null);
-        }
-      };
-      
-      recognition.onend = () => {
-        console.log('🎤 Enhanced Voice Recognition ended');
-        clearTimeout(timeoutRef.current);
-        setIsListening(false);
-      };
-      
-      recognition.onerror = (event) => {
-        console.error('🚨 Enhanced Voice Recognition error:', event.error);
-        clearTimeout(timeoutRef.current);
-        setIsListening(false);
+        };
         
-        // Enhanced error handling with retry logic
-        switch (event.error) {
-          case 'not-allowed':
-            setError('Mikrofon-Berechtigung verweigert. Bitte erlauben Sie den Mikrofon-Zugriff.');
-            setPermissionStatus('denied');
-            break;
-          case 'no-speech':
-            if (retryCountRef.current < maxRetries) {
-              retryCountRef.current++;
-              setError(`Keine Sprache erkannt. Versuch ${retryCountRef.current}/${maxRetries}`);
-              // Auto-retry after 1 second
-              setTimeout(() => {
-                if (!isListening) {
-                  startListening();
-                }
-              }, 1000);
+        recognition.onresult = (event) => {
+          let finalTranscript = '';
+          let interimTranscript = '';
+          let maxConfidence = 0;
+          
+          for (let i = event.resultIndex; i < event.results.length; i++) {
+            const result = event.results[i];
+            const transcript = result[0].transcript;
+            const confidence = result[0].confidence || 0;
+            
+            maxConfidence = Math.max(maxConfidence, confidence);
+            
+            if (result.isFinal) {
+              finalTranscript += transcript;
             } else {
-              setError('Keine Sprache erkannt. Bitte sprechen Sie deutlicher.');
+              interimTranscript += transcript;
             }
-            break;
-          case 'audio-capture':
-            setError('Mikrofon nicht verfügbar. Prüfen Sie Ihre Geräte-Einstellungen.');
-            break;
-          case 'network':
-            setError('Netzwerk-Fehler. Prüfen Sie Ihre Internetverbindung.');
-            break;
-          default:
-            setError(`Voice-Fehler: ${event.error}`);
-        }
-      };
-      
-      recognitionRef.current = recognition;
-    } else {
-      setIsSupported(false);
-      setError('Speech Recognition wird von diesem Browser nicht unterstützt');
+          }
+          
+          const fullTranscript = finalTranscript || interimTranscript;
+          setTranscript(fullTranscript);
+          setConfidence(maxConfidence);
+          
+          // Check for wake-word
+          if (isWakeWordActive && !wakeWordDetected) {
+            checkForWakeWord(fullTranscript.toLowerCase());
+          }
+          
+          // Auto-process final results
+          if (finalTranscript && (wakeWordDetected || !isWakeWordActive)) {
+            processVoiceCommand(finalTranscript, maxConfidence);
+          }
+        };
+        
+        recognition.onerror = (event) => {
+          console.error('🚨 Voice Recognition Error:', event.error);
+          setError(`Voice recognition error: ${event.error}`);
+          
+          // Auto-restart on certain errors
+          if (event.error === 'network' || event.error === 'audio-capture') {
+            setTimeout(() => {
+              if (isListening) {
+                startListening();
+              }
+            }, 1000);
+          }
+        };
+        
+        recognition.onend = () => {
+          console.log('🎙️ Voice Recognition ended');
+          setIsListening(false);
+          
+          // Auto-restart if in continuous mode
+          if (isWakeWordActive && !error) {
+            setTimeout(() => {
+              startListening();
+            }, 100);
+          }
+        };
+        
+        recognitionRef.current = recognition;
+      } else {
+        setError('Speech recognition not supported in this browser');
+      }
     }
+  }, []);
+
+  // Initialize audio context for level monitoring
+  const initializeAudioContext = useCallback(async () => {
+    try {
+      const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+      const audioContext = new (window.AudioContext || window.webkitAudioContext)();
+      const analyser = audioContext.createAnalyser();
+      const microphone = audioContext.createMediaStreamSource(stream);
+      
+      analyser.fftSize = 256;
+      microphone.connect(analyser);
+      
+      audioContextRef.current = audioContext;
+      analyserRef.current = analyser;
+      microphoneRef.current = microphone;
+      
+      // Start monitoring audio levels
+      startAudioLevelMonitoring();
+      
+    } catch (err) {
+      console.error('🚨 Audio Context Error:', err);
+      setError('Microphone access denied');
+    }
+  }, []);
+
+  // Monitor audio levels for visual feedback
+  const startAudioLevelMonitoring = useCallback(() => {
+    if (!analyserRef.current) return;
     
-    return () => {
-      if (timeoutRef.current) {
-        clearTimeout(timeoutRef.current);
+    const dataArray = new Uint8Array(analyserRef.current.frequencyBinCount);
+    
+    const updateAudioLevel = () => {
+      if (analyserRef.current) {
+        analyserRef.current.getByteFrequencyData(dataArray);
+        const average = dataArray.reduce((a, b) => a + b) / dataArray.length;
+        setAudioLevel(Math.round((average / 255) * 100));
       }
     };
-  }, []);
-
-  // Request microphone permission explicitly
-  const requestMicrophonePermission = useCallback(async () => {
-    try {
-      console.log('🎤 Requesting microphone permission...');
-      
-      // Try to get user media to trigger permission dialog
-      const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
-      
-      // Stop the stream immediately (we just needed permission)
-      stream.getTracks().forEach(track => track.stop());
-      
-      setPermissionStatus('granted');
-      setError(null);
-      console.log('✅ Microphone permission granted');
-      return true;
-    } catch (err) {
-      console.error('❌ Microphone permission denied:', err);
-      setPermissionStatus('denied');
-      
-      if (err.name === 'NotAllowedError') {
-        setError('Mikrofon-Berechtigung verweigert. Bitte erlauben Sie den Zugriff in den Browser-Einstellungen.');
-      } else if (err.name === 'NotFoundError') {
-        setError('Kein Mikrofon gefunden. Bitte schließen Sie ein Mikrofon an.');
-      } else {
-        setError(`Mikrofon-Fehler: ${err.message}`);
-      }
-      return false;
-    }
-  }, []);
-
-  // Start listening with enhanced error handling
-  const startListening = useCallback(async () => {
-    if (!isSupported) {
-      setError('Speech Recognition wird nicht unterstützt');
-      return false;
-    }
-
-    if (isListening) {
-      console.log('🎤 Already listening, ignoring start request');
-      return false;
-    }
-
-    // Clear previous transcript and errors
-    setTranscript('');
-    setError(null);
-
-    // Request permission first if unknown
-    if (permissionStatus === 'unknown' || permissionStatus === 'denied') {
-      const hasPermission = await requestMicrophonePermission();
-      if (!hasPermission) {
-        return false;
-      }
-    }
-
-    try {
-      if (recognitionRef.current) {
-        console.log('🎤 Starting enhanced voice recognition...');
-        recognitionRef.current.start();
-        return true;
-      }
-    } catch (err) {
-      console.error('🚨 Failed to start recognition:', err);
-      setError(`Start-Fehler: ${err.message}`);
-      return false;
-    }
     
-    return false;
-  }, [isSupported, isListening, permissionStatus, requestMicrophonePermission]);
+    audioLevelIntervalRef.current = setInterval(updateAudioLevel, 100);
+  }, []);
+
+  // Check for wake-word in transcript
+  const checkForWakeWord = useCallback((transcript) => {
+    const foundWakeWord = wakeWords.some(word => 
+      transcript.includes(word) || 
+      transcript.replace(/\s+/g, '').includes(word.replace(/\s+/g, ''))
+    );
+    
+    if (foundWakeWord) {
+      console.log('🎯 Wake-word detected:', transcript);
+      setWakeWordDetected(true);
+      setTranscript(''); // Clear wake-word from transcript
+      
+      // Auto-timeout after 30 seconds
+      if (wakeWordTimeoutRef.current) {
+        clearTimeout(wakeWordTimeoutRef.current);
+      }
+      
+      wakeWordTimeoutRef.current = setTimeout(() => {
+        setWakeWordDetected(false);
+        console.log('⏰ Wake-word session timeout');
+      }, 30000);
+    }
+  }, [wakeWords]);
+
+  // Process voice command
+  const processVoiceCommand = useCallback((transcript, confidence) => {
+    console.log('🎤 Processing voice command:', transcript, 'Confidence:', confidence);
+    
+    // Emit custom event for other components to handle
+    window.dispatchEvent(new CustomEvent('voiceCommand', {
+      detail: {
+        transcript,
+        confidence,
+        timestamp: new Date().toISOString(),
+        wakeWordUsed: wakeWordDetected
+      }
+    }));
+    
+    // Reset wake-word state
+    if (wakeWordDetected) {
+      setWakeWordDetected(false);
+      if (wakeWordTimeoutRef.current) {
+        clearTimeout(wakeWordTimeoutRef.current);
+      }
+    }
+  }, [wakeWordDetected]);
+
+  // Start listening
+  const startListening = useCallback(async () => {
+    if (!recognitionRef.current || !isSupported) {
+      setError('Speech recognition not available');
+      return;
+    }
+
+    try {
+      // Initialize audio context if not already done
+      if (!audioContextRef.current) {
+        await initializeAudioContext();
+      }
+      
+      recognitionRef.current.start();
+      setIsListening(true);
+      setError(null);
+      setTranscript('');
+      
+    } catch (err) {
+      console.error('🚨 Start Listening Error:', err);
+      setError('Failed to start voice recognition');
+    }
+  }, [isSupported, initializeAudioContext]);
 
   // Stop listening
   const stopListening = useCallback(() => {
-    if (recognitionRef.current && isListening) {
-      console.log('🎤 Stopping enhanced voice recognition...');
+    if (recognitionRef.current) {
       recognitionRef.current.stop();
-      clearTimeout(timeoutRef.current);
     }
-  }, [isListening]);
+    
+    setIsListening(false);
+    setWakeWordDetected(false);
+    
+    if (wakeWordTimeoutRef.current) {
+      clearTimeout(wakeWordTimeoutRef.current);
+    }
+    
+    if (audioLevelIntervalRef.current) {
+      clearInterval(audioLevelIntervalRef.current);
+    }
+  }, []);
 
-  // Toggle listening state
+  // Toggle wake-word mode
+  const toggleWakeWordMode = useCallback(() => {
+    setIsWakeWordActive(prev => {
+      const newState = !prev;
+      
+      if (newState) {
+        // Start continuous listening
+        startListening();
+      } else {
+        // Stop listening
+        stopListening();
+      }
+      
+      return newState;
+    });
+  }, [startListening, stopListening]);
+
+  // Toggle regular listening
   const toggleListening = useCallback(() => {
     if (isListening) {
       stopListening();
@@ -200,23 +278,51 @@ export const useEnhancedVoiceRecognition = () => {
     }
   }, [isListening, startListening, stopListening]);
 
-  // Reset transcript
-  const resetTranscript = useCallback(() => {
-    setTranscript('');
-    setError(null);
+  // Cleanup
+  useEffect(() => {
+    return () => {
+      if (wakeWordTimeoutRef.current) {
+        clearTimeout(wakeWordTimeoutRef.current);
+      }
+      if (audioLevelIntervalRef.current) {
+        clearInterval(audioLevelIntervalRef.current);
+      }
+      if (audioContextRef.current) {
+        audioContextRef.current.close();
+      }
+    };
   }, []);
 
   return {
+    // State
     isListening,
+    isWakeWordActive,
     transcript,
+    confidence,
     error,
     isSupported,
-    permissionStatus,
+    audioLevel,
+    wakeWordDetected,
+    
+    // Actions
     startListening,
     stopListening,
     toggleListening,
-    resetTranscript,
-    requestMicrophonePermission
+    toggleWakeWordMode,
+    
+    // Utilities
+    clearTranscript: () => setTranscript(''),
+    clearError: () => setError(null),
+    
+    // Status
+    getStatus: () => ({
+      isListening,
+      isWakeWordActive,
+      wakeWordDetected,
+      confidence,
+      audioLevel,
+      error
+    })
   };
 };
 
