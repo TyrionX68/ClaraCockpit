@@ -109,7 +109,7 @@ const ClaraKIPanel = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-gray-50 dark:bg-slate-900">
+    <div className="min-h-screen bg-white dark:bg-slate-900">
       <main className="flex-1 p-4 md:p-6 md:ml-16 lg:ml-64">
         {/* Header */}
         <div className="mb-6">

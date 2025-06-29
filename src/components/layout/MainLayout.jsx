@@ -40,7 +40,7 @@ const MainLayout = () => {
   };
 
   return (
-    <div className="min-h-screen bg-background text-foreground">
+    <div className="min-h-screen bg-white dark:bg-slate-900 text-black dark:text-white">
       {/* Mobile Menu Button */}
       <MobileMenuButton 
         isOpen={mobileMenuOpen}
