@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Card, CardContent, CardHeader, CardTitle } from './ui/card';
 import { Button } from './ui/button';
@@ -9,6 +9,7 @@ import SimpleMicButton from './molecules/SimpleMicButton';
 
 const ClaraKIPanel = () => {
   const navigate = useNavigate();
+  const messagesEndRef = useRef(null);
   const [messages, setMessages] = useState([
     {
       id: 1,
@@ -19,6 +20,11 @@ const ClaraKIPanel = () => {
   ]);
   const [inputMessage, setInputMessage] = useState('');
   const [isLoading, setIsLoading] = useState(false);
+
+  // Auto-scroll to bottom when new messages are added
+  useEffect(() => {
+    messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
+  }, [messages]);
 
   // Voice-to-Chat Handler
   const handleVoiceTranscript = (transcript) => {
@@ -137,16 +143,24 @@ const ClaraKIPanel = () => {
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
           {/* Chat-Bereich */}
           <div className="lg:col-span-2">
-            <Card className="h-[500px] md:h-[600px] flex flex-col">
-              <CardHeader>
+            <Card className="h-[60vh] md:h-[600px] flex flex-col">
+              <CardHeader className="flex-shrink-0">
                 <CardTitle className="flex items-center gap-2">
                   <Brain className="w-5 h-5 text-purple-600" />
                   Clara KI Chat
                 </CardTitle>
               </CardHeader>
-              <CardContent className="flex-1 flex flex-col">
+              <CardContent className="flex-1 flex flex-col min-h-0 p-4">
                 {/* Nachrichten */}
-                <div className="flex-1 overflow-y-auto space-y-4 mb-4">
+                <div 
+                  className="flex-1 space-y-4 mb-4 min-h-0"
+                  style={{
+                    overflowY: 'auto',
+                    scrollBehavior: 'smooth',
+                    WebkitOverflowScrolling: 'touch',
+                    maxHeight: 'calc(100% - 60px)' // Reserve space for input
+                  }}
+                >
                   {messages.map((message) => (
                     <div
                       key={message.id}
@@ -177,10 +191,12 @@ const ClaraKIPanel = () => {
                       </div>
                     </div>
                   )}
+                  {/* Auto-scroll reference */}
+                  <div ref={messagesEndRef} />
                 </div>
 
                 {/* Eingabe */}
-                <div className="flex gap-2">
+                <div className="flex gap-2 flex-shrink-0">
                   <Input
                     placeholder="Fragen Sie Clara KI..."
                     value={inputMessage}
