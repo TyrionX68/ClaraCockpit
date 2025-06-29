@@ -87,7 +87,8 @@ const ClaraKIPanel = () => {
   ];
 
   return (
-    <div className="p-6">
+    <div className="min-h-screen bg-gray-50">
+      <main className="flex-1 p-6">
         {/* Header */}
         <div className="mb-6">
           <div className="flex items-center gap-4 mb-4">
@@ -258,7 +259,9 @@ const ClaraKIPanel = () => {
                 </div>
               </CardContent>
             </Card>
+          </div>
         </div>
+      </main>
     </div>
   );
 };
