@@ -43,15 +43,13 @@ export const ThemeProvider = ({ children }) => {
     const root = document.documentElement;
     
     try {
-      // Force reset all theme classes
-      root.classList.remove('dark', 'light');
-      
-      // Apply theme class with fallback
+      // Korrekte Theme-Anwendung auf HTML-Element
       if (theme === 'dark') {
         root.classList.add('dark');
+        root.classList.remove('light');
       } else {
-        // Explicitly add light class for mobile compatibility
         root.classList.add('light');
+        root.classList.remove('dark');
       }
       
       // Safe localStorage save
@@ -61,18 +59,8 @@ export const ThemeProvider = ({ children }) => {
         console.warn('Failed to save theme to localStorage:', error);
       }
       
-      // Mobile-specific body style reset for rendering stability
-      const body = document.body;
-      body.style.backgroundColor = '';
-      body.style.color = '';
-      body.className = '';
-      
-      // Apply theme-specific body classes for immediate feedback
-      if (theme === 'light') {
-        body.classList.add('bg-background', 'text-foreground');
-      } else {
-        body.classList.add('dark:bg-background', 'dark:text-foreground');
-      }
+      // Debug-Logging für Theme-Anwendung
+      console.log(`[ThemeContext] Applied theme: ${theme}, HTML classes:`, root.className);
       
     } catch (error) {
       console.error('Theme application failed:', error);
