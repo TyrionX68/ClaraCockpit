@@ -2,37 +2,66 @@ import React, { useState, useEffect } from 'react';
 import { Outlet } from 'react-router-dom';
 import { useTheme } from '../../contexts/ThemeContext';
 import Sidebar from './Sidebar';
+import MobileMenuButton from '../MobileMenuButton';
 
 const MainLayout = () => {
   const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const { theme, toggleTheme } = useTheme();
 
-  // Load sidebar state from localStorage
+  // Load sidebar state from localStorage with fallback
   useEffect(() => {
-    const savedCollapsed = localStorage.getItem('clara-sidebar-collapsed') === 'true';
-    setSidebarCollapsed(savedCollapsed);
+    try {
+      const savedCollapsed = localStorage.getItem('clara-sidebar-collapsed') === 'true';
+      setSidebarCollapsed(savedCollapsed);
+    } catch (error) {
+      console.warn('Failed to load sidebar state from localStorage:', error);
+      setSidebarCollapsed(false);
+    }
   }, []);
 
   const handleSidebarToggle = () => {
     const newCollapsed = !sidebarCollapsed;
     setSidebarCollapsed(newCollapsed);
-    localStorage.setItem('clara-sidebar-collapsed', newCollapsed.toString());
+    
+    try {
+      localStorage.setItem('clara-sidebar-collapsed', newCollapsed.toString());
+    } catch (error) {
+      console.warn('Failed to save sidebar state to localStorage:', error);
+    }
+  };
+
+  const handleMobileMenuToggle = (isOpen) => {
+    if (typeof isOpen === 'boolean') {
+      setMobileMenuOpen(isOpen);
+    } else {
+      setMobileMenuOpen(prev => !prev);
+    }
   };
 
   return (
     <div className="min-h-screen bg-background text-foreground">
+      {/* Mobile Menu Button */}
+      <MobileMenuButton 
+        isOpen={mobileMenuOpen}
+        onToggle={handleMobileMenuToggle}
+      />
+
       {/* Sidebar */}
       <Sidebar
         isCollapsed={sidebarCollapsed}
         onToggle={handleSidebarToggle}
         theme={theme}
         onThemeToggle={toggleTheme}
+        isMobileOpen={mobileMenuOpen}
+        onMobileToggle={handleMobileMenuToggle}
       />
 
       {/* Main Content */}
       <div className={`
         transition-all duration-300 ease-in-out
-        ${sidebarCollapsed ? 'ml-16' : 'ml-64'}
+        ml-0 md:ml-16 lg:ml-64
+        ${sidebarCollapsed ? 'md:ml-16' : 'md:ml-16 lg:ml-64'}
       `}>
         {/* Content Area */}
         <main className="min-h-screen bg-background">
@@ -41,10 +70,10 @@ const MainLayout = () => {
       </div>
 
       {/* Mobile Overlay */}
-      {!sidebarCollapsed && (
+      {mobileMenuOpen && (
         <div 
-          className="fixed inset-0 bg-black bg-opacity-50 z-40 lg:hidden"
-          onClick={handleSidebarToggle}
+          className="fixed inset-0 bg-black bg-opacity-50 z-[90] md:hidden"
+          onClick={() => handleMobileMenuToggle(false)}
         />
       )}
     </div>
