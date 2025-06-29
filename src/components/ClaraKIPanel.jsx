@@ -5,7 +5,6 @@ import { Button } from './ui/button';
 import { Textarea } from './ui/textarea';
 import { Input } from './ui/input';
 import { Bot, ArrowLeft, Send, MessageSquare, Brain, Zap } from 'lucide-react';
-import Sidebar from './Sidebar';
 import SimpleMicButton from './molecules/SimpleMicButton';
 
 const ClaraKIPanel = () => {
@@ -88,9 +87,7 @@ const ClaraKIPanel = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-gray-50 flex">
-      <Sidebar currentPage="clara-ki" onNavigate={(path) => navigate(path)} />
-      
+    <div className="min-h-screen bg-gray-50">
       <main className="flex-1 p-6">
         {/* Header */}
         <div className="mb-6">
