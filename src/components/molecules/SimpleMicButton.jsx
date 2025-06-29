@@ -1,238 +1,169 @@
-import React, { useState, useEffect } from 'react';
-import { Mic, MicOff, AlertCircle, Loader2, CheckCircle } from 'lucide-react';
-import { Button } from '@/components/ui/button';
-import { useVoiceRecognition } from '@/hooks/useVoiceRecognition';
-
 /**
- * SimpleMicButton - KONSOLIDIERTE VERSION v6.2.1
- * Einziger Voice-Button für Clara360 - Master-Hook Integration
- * MetaGovernor: Struktur vor Aktion - Auto-Send & Debug Support
+ * SimpleMicButton.jsx - Voice-Button für Chat-Integration v6.2
+ * Vereinfachte Mikrofon-Button-Komponente mit Master-Hook Integration
  */
+import React, { useState, useEffect } from 'react';
+import { Mic, MicOff, Volume2, VolumeX } from 'lucide-react';
+import { Button } from '../ui/button';
+import { useVoiceRecognition } from '../../hooks/useVoiceRecognition';
+
 const SimpleMicButton = ({ 
-  onTranscript,
-  autoSend = false,
+  onTranscript = null,
+  autoSend = true,
+  size = 'default',
+  variant = 'outline',
+  showStatus = false,
   debugMode = false,
-  className = "",
-  size = "default",
-  variant = "outline",
-  showStatus = true,
-  showTranscript = true
+  className = ''
 }) => {
-  const [localTranscript, setLocalTranscript] = useState('');
-  const [showTranscriptPopup, setShowTranscriptPopup] = useState(false);
-  
+  const [lastTranscript, setLastTranscript] = useState('');
+
+  // Voice Recognition Hook
   const {
     isListening,
     transcript,
     error,
     isSupported,
-    isEnabled,
+    hasPermission,
+    status,
     startListening,
     stopListening,
-    clearTranscript,
-    clearError,
-    requestMicrophonePermission
+    toggleListening,
+    requestMicrophonePermission,
+    debugLog
   } = useVoiceRecognition({
     onTranscript: (text) => {
-      console.log('[SimpleMicButton] Transcript received:', text);
-      setLocalTranscript(text);
-      
-      if (showTranscript) {
-        setShowTranscriptPopup(true);
-        setTimeout(() => {
-          setShowTranscriptPopup(false);
-          clearTranscript();
-        }, 3000);
+      debugLog('[SimpleMicButton] Transcript received', text);
+      setLastTranscript(text);
+      if (onTranscript && text.trim()) {
+        onTranscript(text.trim());
       }
-      
-      // Auto-send to chat if enabled
-      if (autoSend && onTranscript) {
-        console.log('[SimpleMicButton] Auto-sending to chat:', text);
-        onTranscript(text);
-      } else if (onTranscript) {
-        console.log('[SimpleMicButton] Manual transcript callback:', text);
-        onTranscript(text);
-      }
-    },
-    onError: (err) => {
-      console.error('[SimpleMicButton] Voice error:', err);
-      // Auto-clear error after 5 seconds
-      setTimeout(() => {
-        clearError();
-      }, 5000);
     },
     onStart: () => {
-      console.log('[SimpleMicButton] Voice recognition started');
+      debugLog('[SimpleMicButton] Voice recognition started');
     },
     onEnd: () => {
-      console.log('[SimpleMicButton] Voice recognition ended');
+      debugLog('[SimpleMicButton] Voice recognition ended');
     },
+    onError: (errorMsg) => {
+      debugLog('[SimpleMicButton] Voice error', errorMsg);
+    },
+    autoSend,
     debugMode
   });
 
-  // Handle button click
+  // Button-Klick Handler
   const handleClick = async () => {
-    console.log('[SimpleMicButton] Button clicked, isListening:', isListening);
+    debugLog('[SimpleMicButton] Button clicked', { isListening, hasPermission });
     
-    if (isListening) {
-      stopListening();
-    } else {
-      clearError();
-      const success = await startListening();
-      if (!success && !isEnabled) {
-        // Try to request permission explicitly
-        await requestMicrophonePermission();
+    if (!isSupported) {
+      alert('Spracherkennung wird von diesem Browser nicht unterstützt');
+      return;
+    }
+
+    if (!hasPermission) {
+      const granted = await requestMicrophonePermission();
+      if (!granted) {
+        alert('Mikrofon-Berechtigung erforderlich für Spracherkennung');
+        return;
       }
     }
+
+    toggleListening();
   };
 
-  // Get button styling based on state
-  const getButtonStyling = () => {
-    if (!isSupported) {
-      return 'bg-gray-50 text-gray-400 border-gray-300 cursor-not-allowed';
-    }
-    
-    if (error) {
-      return 'bg-red-50 hover:bg-red-100 text-red-700 border-red-300';
-    }
-    
-    if (isListening) {
-      return 'bg-red-500 hover:bg-red-600 text-white border-red-500 animate-pulse';
-    }
-    
-    if (isEnabled) {
-      return 'bg-green-50 hover:bg-green-100 text-green-700 border-green-300';
-    }
-    
-    return 'bg-blue-50 hover:bg-blue-100 text-blue-700 border-blue-300';
+  // Button-Styling basierend auf Status
+  const getButtonVariant = () => {
+    if (error) return 'destructive';
+    if (isListening) return 'default';
+    return variant;
   };
 
-  // Get appropriate icon
-  const getIcon = () => {
-    if (!isSupported) {
-      return <MicOff className="w-4 h-4" />;
-    }
-    
-    if (isListening) {
-      return <Loader2 className="w-4 h-4 animate-spin" />;
-    }
-    
-    if (error) {
-      return <AlertCircle className="w-4 h-4" />;
-    }
-    
-    if (isEnabled) {
-      return <Mic className="w-4 h-4" />;
-    }
-    
-    return <Mic className="w-4 h-4" />;
+  const getButtonIcon = () => {
+    if (error) return <VolumeX className="w-4 h-4" />;
+    if (isListening) return <Mic className="w-4 h-4 text-red-500" />;
+    return <MicOff className="w-4 h-4" />;
   };
 
-  // Get tooltip text
-  const getTooltip = () => {
+  const getButtonTitle = () => {
     if (!isSupported) return 'Spracherkennung nicht unterstützt';
     if (error) return `Fehler: ${error}`;
-    if (isListening) return 'Aufnahme läuft... (Klicken zum Stoppen)';
-    if (!isEnabled) return 'Mikrofon-Berechtigung erforderlich';
-    return 'Sprachaufnahme starten';
+    if (!hasPermission) return 'Mikrofon-Berechtigung erforderlich';
+    if (isListening) return 'Aufnahme stoppen';
+    return 'Spracherkennung starten';
   };
 
+  // Status-Anzeige
+  const StatusIndicator = () => {
+    if (!showStatus) return null;
+
+    const getStatusColor = () => {
+      switch (status) {
+        case 'active': return 'text-green-500';
+        case 'requesting': return 'text-yellow-500';
+        case 'error': return 'text-red-500';
+        default: return 'text-gray-500';
+      }
+    };
+
+    const getStatusText = () => {
+      switch (status) {
+        case 'active': return 'Hört zu...';
+        case 'requesting': return 'Berechtigung...';
+        case 'error': return 'Fehler';
+        default: return 'Bereit';
+      }
+    };
+
+    return (
+      <div className={`text-xs ${getStatusColor()} mt-1`}>
+        {getStatusText()}
+      </div>
+    );
+  };
+
+  // Debug-Info
+  useEffect(() => {
+    if (debugMode) {
+      console.log('[SimpleMicButton] State update:', {
+        isListening,
+        transcript,
+        error,
+        isSupported,
+        hasPermission,
+        status
+      });
+    }
+  }, [isListening, transcript, error, isSupported, hasPermission, status, debugMode]);
+
   return (
-    <div className="relative">
-      {/* Main Button */}
+    <div className={`flex flex-col items-center ${className}`}>
       <Button
-        variant={variant}
+        variant={getButtonVariant()}
         size={size}
         onClick={handleClick}
         disabled={!isSupported}
-        className={`${className} ${getButtonStyling()}`}
-        title={getTooltip()}
+        title={getButtonTitle()}
+        className={`
+          ${isListening ? 'animate-pulse' : ''}
+          ${error ? 'border-red-500' : ''}
+          transition-all duration-200
+        `}
       >
-        {getIcon()}
-        {size !== "sm" && (
-          <span className="ml-2">
-            {isListening ? 'Stoppen' : 'Sprechen'}
-          </span>
-        )}
+        {getButtonIcon()}
       </Button>
-
-      {/* Status Indicator */}
-      {showStatus && (
-        <div className="absolute -top-1 -right-1">
-          {isListening && (
-            <div className="w-3 h-3 bg-red-500 rounded-full border-2 border-white animate-pulse"></div>
-          )}
-          {error && (
-            <div className="w-3 h-3 bg-red-500 rounded-full border-2 border-white"></div>
-          )}
-          {!isListening && !error && isEnabled && (
-            <div className="w-3 h-3 bg-green-500 rounded-full border-2 border-white"></div>
-          )}
-          {!isListening && !error && !isEnabled && isSupported && (
-            <div className="w-3 h-3 bg-orange-500 rounded-full border-2 border-white"></div>
-          )}
-        </div>
-      )}
-
-      {/* Transcript Popup */}
-      {showTranscriptPopup && (localTranscript || transcript) && (
-        <div className="absolute top-full left-0 mt-2 p-3 bg-green-50 border border-green-200 rounded-md shadow-lg z-50 min-w-48 max-w-64">
-          <div className="flex items-center gap-2 mb-1">
-            <CheckCircle className="w-4 h-4 text-green-600" />
-            <span className="text-xs text-green-700 font-medium">
-              {autoSend ? 'Gesendet:' : 'Erkannt:'}
-            </span>
-          </div>
-          <div className="text-sm text-green-800">
-            {localTranscript || transcript}
-          </div>
-          {autoSend && (
-            <div className="text-xs text-green-600 mt-1">
-              ✓ Automatisch an Chat gesendet
-            </div>
-          )}
-        </div>
-      )}
-
-      {/* Error Popup */}
-      {error && (
-        <div className="absolute top-full left-0 mt-2 p-3 bg-red-50 border border-red-200 rounded-md shadow-lg z-50 w-64">
-          <div className="flex items-center gap-2 mb-1">
-            <AlertCircle className="w-4 h-4 text-red-600" />
-            <span className="text-xs text-red-700 font-medium">Fehler</span>
-          </div>
-          <div className="text-xs text-red-700 mb-2">{error}</div>
-          <div className="flex gap-2">
-            <Button 
-              size="sm" 
-              variant="outline"
-              onClick={clearError}
-              className="text-xs h-6"
-            >
-              Schließen
-            </Button>
-            {!isEnabled && (
-              <Button 
-                size="sm" 
-                variant="outline"
-                onClick={requestMicrophonePermission}
-                className="text-xs h-6"
-              >
-                Berechtigung
-              </Button>
-            )}
-          </div>
-        </div>
-      )}
-
-      {/* Debug Info */}
+      
+      <StatusIndicator />
+      
+      {/* Debug-Anzeige */}
       {debugMode && (
-        <div className="absolute top-full right-0 mt-2 p-2 bg-gray-900 text-green-400 rounded text-xs font-mono z-50 w-48">
-          <div>Supported: {isSupported ? '✓' : '✗'}</div>
-          <div>Enabled: {isEnabled ? '✓' : '✗'}</div>
-          <div>Listening: {isListening ? '✓' : '✗'}</div>
-          <div>Auto-Send: {autoSend ? '✓' : '✗'}</div>
-          {transcript && <div>Text: {transcript.substring(0, 20)}...</div>}
+        <div className="mt-2 p-2 bg-gray-100 rounded text-xs max-w-xs">
+          <div><strong>Status:</strong> {status}</div>
+          <div><strong>Supported:</strong> {isSupported ? 'Ja' : 'Nein'}</div>
+          <div><strong>Permission:</strong> {hasPermission ? 'Ja' : 'Nein'}</div>
+          <div><strong>Listening:</strong> {isListening ? 'Ja' : 'Nein'}</div>
+          {transcript && <div><strong>Transcript:</strong> {transcript}</div>}
+          {error && <div className="text-red-500"><strong>Error:</strong> {error}</div>}
         </div>
       )}
     </div>

@@ -1,215 +1,143 @@
 /**
- * useVoiceRecognition Hook - KONSOLIDIERTE VERSION v6.2.1
- * Einziger Voice-Hook für Clara360 - Mikrofon-Fix & Callback-Support
- * MetaGovernor: Struktur vor Aktion - Stabilität garantiert
+ * useVoiceRecognition Hook - Vereinheitlichte Voice-Logik v6.2
+ * Konsolidierte Implementation mit Mikrofon-Berechtigung und Callback-Support
  */
+import { useState, useEffect, useCallback, useRef } from 'react';
 
-import { useState, useEffect, useRef, useCallback } from 'react';
-
-export const useVoiceRecognition = (options = {}) => {
-  const {
-    onTranscript = null,
-    onError = null,
-    onStart = null,
-    onEnd = null,
-    autoSend = false,
-    debugMode = false
-  } = options;
-
-  // Core States
+export const useVoiceRecognition = ({
+  onTranscript = null,
+  onStart = null,
+  onEnd = null,
+  onError = null,
+  autoSend = false,
+  debugMode = false
+} = {}) => {
   const [isListening, setIsListening] = useState(false);
   const [transcript, setTranscript] = useState('');
   const [error, setError] = useState(null);
   const [isSupported, setIsSupported] = useState(false);
-  const [isEnabled, setIsEnabled] = useState(false);
-  
-  // Refs
+  const [hasPermission, setHasPermission] = useState(false);
+  const [status, setStatus] = useState('inactive'); // inactive, requesting, active, error
+
   const recognitionRef = useRef(null);
   const timeoutRef = useRef(null);
-  const streamRef = useRef(null);
 
-  // Debug Logger
+  // Debug-Logging
   const debugLog = useCallback((message, data = null) => {
     if (debugMode) {
       console.log(`[VoiceRecognition] ${message}`, data || '');
     }
   }, [debugMode]);
 
-  // Check browser support and initialize
+  // Browser-Support prüfen
   useEffect(() => {
     const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
-    const isSupported = !!SpeechRecognition && !!navigator.mediaDevices?.getUserMedia;
-    
-    setIsSupported(isSupported);
-    debugLog('Browser support check', { isSupported, SpeechRecognition: !!SpeechRecognition, getUserMedia: !!navigator.mediaDevices?.getUserMedia });
-    
-    if (isSupported) {
-      setupSpeechRecognition();
+    const supported = !!SpeechRecognition;
+    setIsSupported(supported);
+    debugLog('Browser support check', { supported });
+
+    if (supported) {
+      recognitionRef.current = new SpeechRecognition();
+      setupRecognition();
     }
-    
-    // Cleanup on unmount
-    return () => {
-      cleanup();
-    };
   }, [debugLog]);
 
-  // Setup Speech Recognition
-  const setupSpeechRecognition = useCallback(() => {
-    const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
-    const recognition = new SpeechRecognition();
+  // Recognition Setup
+  const setupRecognition = useCallback(() => {
+    if (!recognitionRef.current) return;
+
+    const recognition = recognitionRef.current;
     
-    // Configuration
-    recognition.continuous = false;
+    recognition.continuous = true;
     recognition.interimResults = true;
     recognition.lang = 'de-DE';
     recognition.maxAlternatives = 1;
-    
-    // Event Handlers
+
     recognition.onstart = () => {
       debugLog('Recognition started');
       setIsListening(true);
+      setStatus('active');
       setError(null);
-      
-      if (onStart) onStart();
-      
-      // Safety timeout - prevent hanging
-      timeoutRef.current = setTimeout(() => {
-        debugLog('Recognition timeout triggered');
-        if (recognitionRef.current) {
-          recognitionRef.current.stop();
-          setError('Spracherkennung-Timeout (10s)');
-        }
-      }, 10000);
+      onStart?.();
     };
-    
+
     recognition.onresult = (event) => {
-      debugLog('Recognition result received', event);
-      
       let finalTranscript = '';
       let interimTranscript = '';
-      
+
       for (let i = event.resultIndex; i < event.results.length; i++) {
         const result = event.results[i];
-        const transcript = result[0].transcript;
-        
         if (result.isFinal) {
-          finalTranscript += transcript;
+          finalTranscript += result[0].transcript;
         } else {
-          interimTranscript += transcript;
+          interimTranscript += result[0].transcript;
         }
       }
-      
-      const fullTranscript = finalTranscript || interimTranscript;
-      setTranscript(fullTranscript);
-      
-      // Callback for final transcript
-      if (finalTranscript && onTranscript) {
-        debugLog('Final transcript callback', finalTranscript);
+
+      const currentTranscript = finalTranscript || interimTranscript;
+      setTranscript(currentTranscript);
+      debugLog('Transcript received', { finalTranscript, interimTranscript });
+
+      // Auto-Send bei finalem Transcript
+      if (finalTranscript && autoSend && onTranscript) {
+        debugLog('Auto-sending transcript', finalTranscript);
         onTranscript(finalTranscript.trim());
-      }
-      
-      // Clear timeout on successful result
-      if (finalTranscript && timeoutRef.current) {
-        clearTimeout(timeoutRef.current);
-        timeoutRef.current = null;
+        setTranscript(''); // Reset nach Auto-Send
+      } else if (onTranscript) {
+        onTranscript(currentTranscript);
       }
     };
-    
+
     recognition.onerror = (event) => {
       debugLog('Recognition error', event.error);
-      
-      let errorMessage = 'Spracherkennungsfehler';
-      
-      switch (event.error) {
-        case 'not-allowed':
-          errorMessage = 'Mikrofon-Zugriff verweigert. Bitte erlauben Sie den Zugriff.';
-          break;
-        case 'no-speech':
-          errorMessage = 'Keine Sprache erkannt. Bitte sprechen Sie deutlicher.';
-          break;
-        case 'audio-capture':
-          errorMessage = 'Kein Mikrofon gefunden. Bitte schließen Sie ein Mikrofon an.';
-          break;
-        case 'network':
-          errorMessage = 'Netzwerkfehler. Bitte prüfen Sie Ihre Internetverbindung.';
-          break;
-        default:
-          errorMessage = `Spracherkennungsfehler: ${event.error}`;
-      }
-      
-      setError(errorMessage);
+      setError(`Spracherkennungsfehler: ${event.error}`);
+      setStatus('error');
       setIsListening(false);
-      
-      if (onError) onError(errorMessage);
-      
-      cleanup();
+      onError?.(event.error);
     };
-    
+
     recognition.onend = () => {
       debugLog('Recognition ended');
       setIsListening(false);
-      
-      if (onEnd) onEnd();
-      
-      cleanup();
+      setStatus('inactive');
+      onEnd?.();
     };
-    
-    recognitionRef.current = recognition;
-    debugLog('Speech recognition setup complete');
-  }, [debugLog, onTranscript, onError, onStart, onEnd]);
+  }, [autoSend, onTranscript, onStart, onEnd, onError, debugLog]);
 
-  // Request microphone permission
+  // Mikrofon-Berechtigung anfordern
   const requestMicrophonePermission = useCallback(async () => {
     try {
-      debugLog('Requesting microphone permission...');
+      debugLog('Requesting microphone permission');
+      setStatus('requesting');
       
-      if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
-        throw new Error('getUserMedia not supported in this browser');
-      }
-
-      const stream = await navigator.mediaDevices.getUserMedia({
-        audio: {
-          echoCancellation: true,
-          noiseSuppression: true,
-          autoGainControl: true
-        }
-      });
-
-      streamRef.current = stream;
-      setIsEnabled(true);
-      setError(null);
+      const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
       
+      // Stream sofort wieder stoppen (nur für Berechtigung)
+      stream.getTracks().forEach(track => track.stop());
+      
+      setHasPermission(true);
+      setStatus('inactive');
       debugLog('Microphone permission granted');
       return true;
-
     } catch (err) {
-      debugLog('Microphone permission denied', err);
-      
-      let errorMessage = 'Mikrofon-Zugriff verweigert';
-      
-      if (err.name === 'NotAllowedError') {
-        errorMessage = 'Mikrofon-Berechtigung verweigert. Bitte erlauben Sie den Zugriff.';
-      } else if (err.name === 'NotFoundError') {
-        errorMessage = 'Kein Mikrofon gefunden. Bitte schließen Sie ein Mikrofon an.';
-      } else if (err.name === 'NotSupportedError') {
-        errorMessage = 'Mikrofon wird von diesem Browser nicht unterstützt.';
-      }
-
-      setError(errorMessage);
-      if (onError) onError(errorMessage);
+      debugLog('Microphone permission denied', err.message);
+      setError('Mikrofon-Zugriff verweigert. Bitte erlauben Sie den Zugriff in den Browser-Einstellungen.');
+      setHasPermission(false);
+      setStatus('error');
       return false;
     }
-  }, [debugLog, onError]);
+  }, [debugLog]);
 
-  // Start listening
+  // Voice Recognition starten
   const startListening = useCallback(async () => {
-    debugLog('Start listening requested');
-    
     if (!isSupported) {
-      const error = 'Spracherkennung wird von diesem Browser nicht unterstützt';
-      setError(error);
-      if (onError) onError(error);
+      setError('Spracherkennung wird von diesem Browser nicht unterstützt');
       return false;
+    }
+
+    if (!hasPermission) {
+      const granted = await requestMicrophonePermission();
+      if (!granted) return false;
     }
 
     if (isListening) {
@@ -217,103 +145,78 @@ export const useVoiceRecognition = (options = {}) => {
       return true;
     }
 
-    // Request microphone permission if not enabled
-    if (!isEnabled) {
-      const hasPermission = await requestMicrophonePermission();
-      if (!hasPermission) {
-        return false;
-      }
-    }
-
-    if (!recognitionRef.current) {
-      const error = 'Spracherkennung nicht initialisiert';
-      setError(error);
-      if (onError) onError(error);
-      return false;
-    }
-
     try {
-      setTranscript('');
+      debugLog('Starting voice recognition');
       setError(null);
+      setTranscript('');
+      recognitionRef.current?.start();
       
-      debugLog('Starting speech recognition...');
-      recognitionRef.current.start();
+      // Timeout nach 30 Sekunden
+      timeoutRef.current = setTimeout(() => {
+        stopListening();
+        debugLog('Recognition timeout after 30s');
+      }, 30000);
+      
       return true;
-      
     } catch (err) {
-      debugLog('Error starting recognition', err);
-      const errorMessage = `Fehler beim Starten: ${err.message}`;
-      setError(errorMessage);
-      if (onError) onError(errorMessage);
+      debugLog('Failed to start recognition', err.message);
+      setError('Spracherkennung konnte nicht gestartet werden');
+      setStatus('error');
       return false;
     }
-  }, [isSupported, isListening, isEnabled, requestMicrophonePermission, debugLog, onError]);
+  }, [isSupported, hasPermission, isListening, requestMicrophonePermission, debugLog]);
 
-  // Stop listening
+  // Voice Recognition stoppen
   const stopListening = useCallback(() => {
-    debugLog('Stop listening requested');
+    if (!isListening) return;
+
+    debugLog('Stopping voice recognition');
+    recognitionRef.current?.stop();
     
-    if (recognitionRef.current && isListening) {
-      try {
-        recognitionRef.current.stop();
-        debugLog('Speech recognition stopped');
-      } catch (err) {
-        debugLog('Error stopping recognition', err);
-      }
-    }
-    
-    cleanup();
-  }, [isListening, debugLog]);
-
-  // Toggle listening
-  const toggleListening = useCallback(async () => {
-    if (isListening) {
-      stopListening();
-    } else {
-      await startListening();
-    }
-  }, [isListening, startListening, stopListening]);
-
-  // Clear transcript
-  const clearTranscript = useCallback(() => {
-    setTranscript('');
-    debugLog('Transcript cleared');
-  }, [debugLog]);
-
-  // Clear error
-  const clearError = useCallback(() => {
-    setError(null);
-    debugLog('Error cleared');
-  }, [debugLog]);
-
-  // Cleanup function
-  const cleanup = useCallback(() => {
     if (timeoutRef.current) {
       clearTimeout(timeoutRef.current);
       timeoutRef.current = null;
     }
-    
-    if (streamRef.current) {
-      streamRef.current.getTracks().forEach(track => track.stop());
-      streamRef.current = null;
+  }, [isListening, debugLog]);
+
+  // Toggle Voice Recognition
+  const toggleListening = useCallback(() => {
+    if (isListening) {
+      stopListening();
+    } else {
+      startListening();
     }
+  }, [isListening, startListening, stopListening]);
+
+  // Cleanup
+  useEffect(() => {
+    return () => {
+      if (timeoutRef.current) {
+        clearTimeout(timeoutRef.current);
+      }
+      recognitionRef.current?.stop();
+    };
   }, []);
 
   return {
-    // States
+    // State
     isListening,
     transcript,
     error,
     isSupported,
-    isEnabled,
+    hasPermission,
+    status,
     
     // Actions
     startListening,
     stopListening,
     toggleListening,
-    clearTranscript,
-    clearError,
-    requestMicrophonePermission
+    requestMicrophonePermission,
+    
+    // Utils
+    debugLog
   };
 };
+
+export default useVoiceRecognition;
 

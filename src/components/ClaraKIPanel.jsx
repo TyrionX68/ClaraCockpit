@@ -33,6 +33,21 @@ const ClaraKIPanel = () => {
     }, 500);
   };
 
+  // SSML-Ausgabe via speechSynthesis
+  const speak = (text) => {
+    // Stoppe vorherige Sprachausgabe
+    speechSynthesis.cancel();
+    
+    const utterance = new SpeechSynthesisUtterance(text);
+    utterance.lang = "de-DE";
+    utterance.pitch = 1.0;
+    utterance.rate = 0.9;
+    utterance.volume = 0.8;
+    
+    console.log('[ClaraKIPanel] Starting speech synthesis:', text);
+    speechSynthesis.speak(utterance);
+  };
+
   const handleSendMessage = async () => {
     if (!inputMessage.trim()) return;
 
@@ -44,19 +59,26 @@ const ClaraKIPanel = () => {
     };
 
     setMessages(prev => [...prev, userMessage]);
+    const currentInput = inputMessage;
     setInputMessage('');
     setIsLoading(true);
 
     // Simuliere KI-Antwort
     setTimeout(() => {
+      const aiResponseText = generateAIResponse(currentInput);
       const aiResponse = {
         id: Date.now() + 1,
         type: 'assistant',
-        content: generateAIResponse(inputMessage),
+        content: aiResponseText,
         timestamp: new Date()
       };
       setMessages(prev => [...prev, aiResponse]);
       setIsLoading(false);
+      
+      // Automatische Sprachausgabe nach Clara-Antwort
+      setTimeout(() => {
+        speak(aiResponseText);
+      }, 500);
     }, 1500);
   };
 
@@ -88,7 +110,7 @@ const ClaraKIPanel = () => {
 
   return (
     <div className="min-h-screen bg-gray-50">
-      <main className="flex-1 p-6">
+      <main className="flex-1 p-4 md:p-6 md:ml-16 lg:ml-64">
         {/* Header */}
         <div className="mb-6">
           <div className="flex items-center gap-4 mb-4">
@@ -105,8 +127,8 @@ const ClaraKIPanel = () => {
                 <Bot className="w-6 h-6 text-white" />
               </div>
               <div>
-                <h1 className="text-2xl font-bold text-gray-900">Clara KI</h1>
-                <p className="text-gray-600">Intelligente Assistentin für Hausverwaltung</p>
+                <h1 className="text-xl md:text-2xl font-bold text-gray-900">Clara KI</h1>
+                <p className="text-sm md:text-base text-gray-600">Intelligente Assistentin für Hausverwaltung</p>
               </div>
             </div>
           </div>
@@ -115,7 +137,7 @@ const ClaraKIPanel = () => {
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
           {/* Chat-Bereich */}
           <div className="lg:col-span-2">
-            <Card className="h-[600px] flex flex-col">
+            <Card className="h-[500px] md:h-[600px] flex flex-col">
               <CardHeader>
                 <CardTitle className="flex items-center gap-2">
                   <Brain className="w-5 h-5 text-purple-600" />
@@ -131,7 +153,7 @@ const ClaraKIPanel = () => {
                       className={`flex ${message.type === 'user' ? 'justify-end' : 'justify-start'}`}
                     >
                       <div
-                        className={`max-w-[80%] p-3 rounded-lg ${
+                        className={`max-w-[85%] md:max-w-[80%] p-3 rounded-lg ${
                           message.type === 'user'
                             ? 'bg-blue-600 text-white'
                             : 'bg-gray-100 text-gray-900'
@@ -164,7 +186,7 @@ const ClaraKIPanel = () => {
                     value={inputMessage}
                     onChange={(e) => setInputMessage(e.target.value)}
                     onKeyPress={(e) => e.key === 'Enter' && handleSendMessage()}
-                    className="flex-1"
+                    className="flex-1 text-sm md:text-base"
                   />
                   <SimpleMicButton
                     onTranscript={handleVoiceTranscript}
@@ -172,8 +194,9 @@ const ClaraKIPanel = () => {
                     size="default"
                     variant="outline"
                     debugMode={false}
+                    showStatus={false}
                   />
-                  <Button onClick={handleSendMessage} disabled={isLoading}>
+                  <Button onClick={handleSendMessage} disabled={isLoading} size="default">
                     <Send className="w-4 h-4" />
                   </Button>
                 </div>
