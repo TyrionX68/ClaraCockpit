@@ -193,8 +193,8 @@ const ClaraKIPanel = () => {
                     autoSend={true}
                     size="default"
                     variant="outline"
-                    debugMode={false}
-                    showStatus={false}
+                    debugMode={true}
+                    showStatus={true}
                   />
                   <Button onClick={handleSendMessage} disabled={isLoading} size="default">
                     <Send className="w-4 h-4" />
