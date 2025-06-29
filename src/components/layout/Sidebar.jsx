@@ -112,7 +112,11 @@ const Sidebar = ({ isCollapsed, onToggle, theme, onThemeToggle, isMobileOpen, on
         ${isCollapsed ? 'w-16' : 'w-64'}
         hidden md:block
         z-[100]
-      `}>
+      `} style={{
+        backgroundColor: 'var(--sidebar-bg, white)',
+        color: 'var(--sidebar-text, black)',
+        borderColor: 'var(--sidebar-border, #e5e7eb)'
+      }}>
       {/* Header */}
       <div className="flex items-center justify-between p-4 border-b border-gray-200 dark:border-gray-700">
         {!isCollapsed && (
@@ -223,24 +227,42 @@ const Sidebar = ({ isCollapsed, onToggle, theme, onThemeToggle, isMobileOpen, on
     </div>
 
       {/* Mobile Sidebar */}
-      <div className={`
-        fixed left-0 top-0 h-full 
-        bg-white dark:bg-slate-900 text-black dark:text-white
-        border-r border-gray-200 dark:border-gray-700
-        transition-transform duration-300 ease-in-out shadow-lg backdrop-blur-md
-        w-72 z-50
-        md:hidden
-        ${isMobileOpen ? 'translate-x-0' : '-translate-x-full'}
-      `}>
+      <div 
+        className={`
+          fixed left-0 top-0 h-full w-72 z-50 md:hidden
+          transition-transform duration-300 ease-in-out shadow-lg backdrop-blur-md
+          ${isMobileOpen ? 'translate-x-0' : '-translate-x-full'}
+        `}
+        style={{
+          backgroundColor: theme === 'light' ? '#ffffff' : '#0f172a',
+          color: theme === 'light' ? '#000000' : '#ffffff',
+          borderRight: theme === 'light' ? '1px solid #e5e7eb' : '1px solid #374151'
+        }}
+      >
         {/* Mobile Header */}
-        <div className="flex items-center justify-between p-4 border-b border-gray-200 dark:border-gray-700">
+        <div 
+          className="flex items-center justify-between p-4 border-b"
+          style={{
+            borderBottomColor: theme === 'light' ? '#e5e7eb' : '#374151'
+          }}
+        >
           <div className="flex items-center gap-3">
             <div className="w-8 h-8 bg-gradient-to-br from-blue-500 to-purple-600 rounded-lg flex items-center justify-center">
               <span className="text-white font-bold text-sm">C</span>
             </div>
             <div>
-              <h1 className="font-bold text-black dark:text-white">Clara360</h1>
-              <p className="text-xs text-gray-600 dark:text-gray-400">Fusion Dashboard</p>
+              <h1 
+                className="font-bold"
+                style={{ color: theme === 'light' ? '#000000' : '#ffffff' }}
+              >
+                Clara360
+              </h1>
+              <p 
+                className="text-xs"
+                style={{ color: theme === 'light' ? '#6b7280' : '#9ca3af' }}
+              >
+                Fusion Dashboard
+              </p>
             </div>
           </div>
         </div>
@@ -256,23 +278,47 @@ const Sidebar = ({ isCollapsed, onToggle, theme, onThemeToggle, isMobileOpen, on
                 <button
                   key={item.id}
                   onClick={() => handleNavigation(item.path)}
-                  className={`
-                    w-full flex items-center gap-3 px-3 py-2.5 rounded-lg
-                    transition-all duration-200 text-left group
-                    ${active 
-                      ? 'bg-blue-600 text-white' 
-                      : 'text-black dark:text-white hover:bg-gray-100 dark:hover:bg-gray-800'
+                  className="w-full flex items-center gap-3 px-3 py-2.5 rounded-lg transition-all duration-200 text-left group"
+                  style={{
+                    backgroundColor: active 
+                      ? '#2563eb' 
+                      : 'transparent',
+                    color: active 
+                      ? '#ffffff' 
+                      : (theme === 'light' ? '#000000' : '#ffffff')
+                  }}
+                  onMouseEnter={(e) => {
+                    if (!active) {
+                      e.target.style.backgroundColor = theme === 'light' ? '#f3f4f6' : '#374151';
                     }
-                  `}
+                  }}
+                  onMouseLeave={(e) => {
+                    if (!active) {
+                      e.target.style.backgroundColor = 'transparent';
+                    }
+                  }}
                 >
-                  <Icon className={`
-                    w-5 h-5 flex-shrink-0
-                    ${active ? 'text-white' : 'text-gray-600 dark:text-gray-400 group-hover:text-black dark:group-hover:text-white'}
-                  `} />
+                  <Icon 
+                    className="w-5 h-5 flex-shrink-0"
+                    style={{
+                      color: active 
+                        ? '#ffffff' 
+                        : (theme === 'light' ? '#6b7280' : '#9ca3af')
+                    }}
+                  />
                   
                   <div className="flex-1 min-w-0">
                     <div className="font-medium text-sm">{item.label}</div>
-                    <div className="text-xs text-gray-500 dark:text-gray-400 truncate">{item.description}</div>
+                    <div 
+                      className="text-xs truncate"
+                      style={{
+                        color: active 
+                          ? 'rgba(255, 255, 255, 0.8)' 
+                          : (theme === 'light' ? '#6b7280' : '#9ca3af')
+                      }}
+                    >
+                      {item.description}
+                    </div>
                   </div>
                   
                   {active && (
@@ -285,29 +331,55 @@ const Sidebar = ({ isCollapsed, onToggle, theme, onThemeToggle, isMobileOpen, on
         </nav>
 
         {/* Mobile Theme Toggle */}
-        <div className="p-4 border-t border-gray-200 dark:border-gray-700">
+        <div 
+          className="p-4 border-t"
+          style={{
+            borderTopColor: theme === 'light' ? '#e5e7eb' : '#374151'
+          }}
+        >
           <button
             onClick={onThemeToggle}
-            className="w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-black dark:text-white hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
+            className="w-full flex items-center gap-3 px-3 py-2.5 rounded-lg transition-colors"
+            style={{
+              color: theme === 'light' ? '#000000' : '#ffffff'
+            }}
+            onMouseEnter={(e) => {
+              e.target.style.backgroundColor = theme === 'light' ? '#f3f4f6' : '#374151';
+            }}
+            onMouseLeave={(e) => {
+              e.target.style.backgroundColor = 'transparent';
+            }}
           >
             {theme === 'light' ? (
-              <Moon className="w-5 h-5 text-gray-600 dark:text-gray-400" />
+              <Moon 
+                className="w-5 h-5"
+                style={{ color: theme === 'light' ? '#6b7280' : '#9ca3af' }}
+              />
             ) : (
               <Sun className="w-5 h-5 text-yellow-500" />
             )}
             
             <div className="flex-1 text-left">
-              <div className="font-medium text-sm">
+              <div 
+                className="font-medium text-sm"
+                style={{ color: theme === 'light' ? '#000000' : '#ffffff' }}
+              >
                 {theme === 'light' ? 'Dark Mode' : 'Light Mode'}
               </div>
-              <div className="text-xs text-muted-foreground">
+              <div 
+                className="text-xs"
+                style={{ color: theme === 'light' ? '#6b7280' : '#9ca3af' }}
+              >
                 {theme === 'light' ? 'Dunkles Design' : 'Helles Design'}
               </div>
             </div>
           </button>
           
           <div className="mt-4">
-            <div className="text-xs text-gray-500 dark:text-gray-400 text-center">
+            <div 
+              className="text-xs text-center"
+              style={{ color: theme === 'light' ? '#6b7280' : '#9ca3af' }}
+            >
               Immobilien-Management
             </div>
           </div>

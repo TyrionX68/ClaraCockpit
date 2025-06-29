@@ -42,35 +42,64 @@ export const ThemeProvider = ({ children }) => {
   useEffect(() => {
     const root = document.documentElement;
     
-    try {
-      // Explizite Klassen-Bereinigung vor Anwendung
-      root.classList.remove('dark', 'light');
-      
-      // Korrekte Theme-Anwendung auf HTML-Element
-      if (theme === 'dark') {
-        root.classList.add('dark');
-      } else {
+    // Hydration-sichere Theme-Anwendung
+    const applyTheme = () => {
+      try {
+        // Explizite Klassen-Bereinigung vor Anwendung
+        root.classList.remove('dark', 'light');
+        
+        // Korrekte Theme-Anwendung auf HTML-Element
+        if (theme === 'dark') {
+          root.classList.add('dark');
+        } else {
+          root.classList.add('light');
+        }
+        
+        // Safe localStorage save
+        try {
+          localStorage.setItem('clara-theme', theme);
+        } catch (error) {
+          console.warn('Failed to save theme to localStorage:', error);
+        }
+        
+        // Debug-Logging für Theme-Anwendung
+        console.log(`[ThemeContext] Theme applied: ${theme}`);
+        console.log(`[ThemeContext] HTML classes:`, root.className);
+        console.log(`[ThemeContext] Dark mode active:`, root.classList.contains('dark'));
+        
+      } catch (error) {
+        console.error('Theme application failed:', error);
+        // Fallback to light theme on error
+        root.classList.remove('dark', 'light');
         root.classList.add('light');
       }
-      
-      // Safe localStorage save
-      try {
-        localStorage.setItem('clara-theme', theme);
-      } catch (error) {
-        console.warn('Failed to save theme to localStorage:', error);
-      }
-      
-      // Debug-Logging für Theme-Anwendung
-      console.log(`[ThemeContext] Theme switched to: ${theme}`);
-      console.log(`[ThemeContext] HTML classes:`, root.className);
-      console.log(`[ThemeContext] Dark mode active:`, root.classList.contains('dark'));
-      
-    } catch (error) {
-      console.error('Theme application failed:', error);
-      // Fallback to light theme on error
-      root.classList.remove('dark', 'light');
-      root.classList.add('light');
-    }
+    };
+
+    // Sofortige Anwendung
+    applyTheme();
+    
+    // Zusätzliche Anwendung nach Hydration (für React/Next.js)
+    const timeoutId = setTimeout(applyTheme, 100);
+    
+    // MutationObserver für DOM-Änderungen
+    const observer = new MutationObserver((mutations) => {
+      mutations.forEach((mutation) => {
+        if (mutation.type === 'attributes' && mutation.attributeName === 'class') {
+          const hasCorrectClass = theme === 'dark' ? root.classList.contains('dark') : root.classList.contains('light');
+          if (!hasCorrectClass) {
+            console.log('[ThemeContext] DOM mutation detected, reapplying theme');
+            applyTheme();
+          }
+        }
+      });
+    });
+    
+    observer.observe(root, { attributes: true, attributeFilter: ['class'] });
+    
+    return () => {
+      clearTimeout(timeoutId);
+      observer.disconnect();
+    };
   }, [theme]);
 
   const toggleTheme = () => {
