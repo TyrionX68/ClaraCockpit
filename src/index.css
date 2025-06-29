@@ -23,6 +23,11 @@
   --input: 214.3 31.8% 91.4%;
   --ring: 221.2 83.2% 53.3%;
   --radius: 0.5rem;
+  
+  /* Sidebar-spezifische Variablen für Light Mode */
+  --sidebar-bg: white;
+  --sidebar-text: black;
+  --sidebar-border: #e5e7eb;
 }
 
 .dark {
