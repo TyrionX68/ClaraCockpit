@@ -102,6 +102,7 @@ const Sidebar = ({ isCollapsed, onToggle, theme, onThemeToggle }) => {
       fixed left-0 top-0 h-full bg-card border-r border-border
       transition-all duration-300 ease-in-out z-50 shadow-lg
       ${isCollapsed ? 'w-16' : 'w-64'}
+      hidden md:block
     `}>
       {/* Header */}
       <div className="flex items-center justify-between p-4 border-b border-border">
