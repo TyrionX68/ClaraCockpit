@@ -6,6 +6,7 @@ import { Textarea } from './ui/textarea';
 import { Input } from './ui/input';
 import { Bot, ArrowLeft, Send, MessageSquare, Brain, Zap } from 'lucide-react';
 import SimpleMicButton from './molecules/SimpleMicButton';
+import TypingIndicator from './molecules/TypingIndicator';
 
 const ClaraKIPanel = () => {
   const navigate = useNavigate();
@@ -69,7 +70,18 @@ const ClaraKIPanel = () => {
     setInputMessage('');
     setIsLoading(true);
 
-    // Simuliere KI-Antwort
+    // Calculate realistic response time based on message complexity
+    const calculateResponseTime = (input) => {
+      const baseTime = 800; // Minimum response time
+      const wordsCount = input.split(' ').length;
+      const complexityFactor = Math.min(wordsCount * 100, 2000); // Max 2 seconds for complexity
+      const randomVariation = Math.random() * 500; // 0-500ms random variation
+      return baseTime + complexityFactor + randomVariation;
+    };
+
+    const responseTime = calculateResponseTime(currentInput);
+
+    // Simuliere KI-Antwort mit realistischer Verzögerung
     setTimeout(() => {
       const aiResponseText = generateAIResponse(currentInput);
       const aiResponse = {
@@ -84,8 +96,8 @@ const ClaraKIPanel = () => {
       // Automatische Sprachausgabe nach Clara-Antwort
       setTimeout(() => {
         speak(aiResponseText);
-      }, 500);
-    }, 1500);
+      }, 300);
+    }, responseTime);
   };
 
   const generateAIResponse = (userInput) => {
@@ -108,10 +120,10 @@ const ClaraKIPanel = () => {
   };
 
   const quickActions = [
-    { label: 'Mieter-Übersicht', action: () => navigate('/eigentuemer') },
-    { label: 'Rückstände prüfen', action: () => navigate('/rueckstaende') },
-    { label: 'Zahlungen anzeigen', action: () => navigate('/zahlungen') },
-    { label: 'Objekt-Details', action: () => navigate('/objekte') }
+    { label: 'Mieter-Übersicht', action: () => navigate('/tenants') },
+    { label: 'Rückstände prüfen', action: () => navigate('/analytics') }, // Analytics page for financial data
+    { label: 'Zahlungen anzeigen', action: () => navigate('/banking') },
+    { label: 'Objekt-Details', action: () => navigate('/objects') }
   ];
 
   return (
@@ -143,7 +155,7 @@ const ClaraKIPanel = () => {
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
           {/* Chat-Bereich */}
           <div className="lg:col-span-2">
-            <Card className="h-[60vh] md:h-[600px] flex flex-col">
+            <Card className="h-[60vh] md:h-[600px] landscape:h-[50vh] flex flex-col">
               <CardHeader className="flex-shrink-0">
                 <CardTitle className="flex items-center gap-2">
                   <Brain className="w-5 h-5 text-purple-600" />
@@ -167,42 +179,37 @@ const ClaraKIPanel = () => {
                       className={`flex ${message.type === 'user' ? 'justify-end' : 'justify-start'}`}
                     >
                       <div
-                        className={`max-w-[85%] md:max-w-[80%] p-3 rounded-lg ${
+                        className={`max-w-[85%] md:max-w-[80%] landscape:max-w-[90%] p-3 rounded-lg break-words ${
                           message.type === 'user'
                             ? 'bg-blue-600 text-white'
                             : 'bg-gray-100 text-gray-900'
                         }`}
                       >
-                        <p className="text-sm">{message.content}</p>
+                        <p className="text-sm break-words whitespace-pre-wrap">{message.content}</p>
                         <p className="text-xs opacity-70 mt-1">
                           {message.timestamp.toLocaleTimeString()}
                         </p>
                       </div>
                     </div>
                   ))}
-                  {isLoading && (
-                    <div className="flex justify-start">
-                      <div className="bg-gray-100 p-3 rounded-lg">
-                        <div className="flex items-center gap-2">
-                          <div className="w-2 h-2 bg-gray-400 rounded-full animate-bounce"></div>
-                          <div className="w-2 h-2 bg-gray-400 rounded-full animate-bounce" style={{animationDelay: '0.1s'}}></div>
-                          <div className="w-2 h-2 bg-gray-400 rounded-full animate-bounce" style={{animationDelay: '0.2s'}}></div>
-                        </div>
-                      </div>
-                    </div>
-                  )}
+                  {/* Typing Indicator */}
+                  <TypingIndicator 
+                    isVisible={isLoading}
+                    message="Clara denkt"
+                    duration={1500}
+                  />
                   {/* Auto-scroll reference */}
                   <div ref={messagesEndRef} />
                 </div>
 
                 {/* Eingabe */}
-                <div className="flex gap-2 flex-shrink-0">
+                <div className="flex gap-2 flex-shrink-0 landscape:gap-1">
                   <Input
                     placeholder="Fragen Sie Clara KI..."
                     value={inputMessage}
                     onChange={(e) => setInputMessage(e.target.value)}
                     onKeyPress={(e) => e.key === 'Enter' && handleSendMessage()}
-                    className="flex-1 text-sm md:text-base"
+                    className="flex-1 text-sm md:text-base landscape:text-sm"
                   />
                   <SimpleMicButton
                     onTranscript={handleVoiceTranscript}
@@ -212,7 +219,7 @@ const ClaraKIPanel = () => {
                     debugMode={true}
                     showStatus={true}
                   />
-                  <Button onClick={handleSendMessage} disabled={isLoading} size="default">
+                  <Button onClick={handleSendMessage} disabled={isLoading} size="default" className="landscape:px-3">
                     <Send className="w-4 h-4" />
                   </Button>
                 </div>
@@ -221,7 +228,7 @@ const ClaraKIPanel = () => {
           </div>
 
           {/* Seitenleiste */}
-          <div className="space-y-6">
+          <div className="space-y-6 landscape:space-y-4">
             {/* Schnellaktionen */}
             <Card>
               <CardHeader>

@@ -1,11 +1,12 @@
 /**
- * SimpleMicButton.jsx - Voice-Button für Chat-Integration v6.2
- * Vereinfachte Mikrofon-Button-Komponente mit Master-Hook Integration
+ * SimpleMicButton.jsx - Voice-Button für Chat-Integration v6.3.0
+ * Enhanced mit VoiceWaveform Visualisierung für Voice UI 2.0
  */
 import React, { useState, useEffect } from 'react';
 import { Mic, MicOff, Volume2, VolumeX } from 'lucide-react';
 import { Button } from '../ui/button';
 import { useVoiceRecognition } from '../../hooks/useVoiceRecognition';
+import VoiceWaveform from './VoiceWaveform';
 
 const SimpleMicButton = ({ 
   onTranscript = null,
@@ -13,10 +14,12 @@ const SimpleMicButton = ({
   size = 'default',
   variant = 'outline',
   showStatus = false,
+  showWaveform = true,
   debugMode = false,
   className = ''
 }) => {
   const [lastTranscript, setLastTranscript] = useState('');
+  const [audioLevel, setAudioLevel] = useState(0);
 
   // Voice Recognition Hook
   const {
@@ -44,13 +47,32 @@ const SimpleMicButton = ({
     },
     onEnd: () => {
       debugLog('[SimpleMicButton] Voice recognition ended');
+      setAudioLevel(0);
     },
     onError: (errorMsg) => {
       debugLog('[SimpleMicButton] Voice error', errorMsg);
+      setAudioLevel(0);
     },
     autoSend,
     debugMode
   });
+
+  // Simulate audio level for waveform (in real implementation, this would come from actual audio analysis)
+  useEffect(() => {
+    if (!isListening) {
+      setAudioLevel(0);
+      return;
+    }
+
+    const interval = setInterval(() => {
+      // Simulate varying audio levels
+      const baseLevel = 0.3;
+      const variation = Math.random() * 0.7;
+      setAudioLevel(baseLevel + variation);
+    }, 100);
+
+    return () => clearInterval(interval);
+  }, [isListening]);
 
   // Button-Klick Handler
   const handleClick = async () => {
@@ -138,6 +160,20 @@ const SimpleMicButton = ({
 
   return (
     <div className={`flex flex-col items-center ${className}`}>
+      {/* Voice Waveform Visualization */}
+      {showWaveform && isListening && (
+        <div className="mb-2">
+          <VoiceWaveform 
+            isRecording={isListening}
+            amplitude={audioLevel}
+            color="purple"
+            width={100}
+            height={30}
+            bars={6}
+          />
+        </div>
+      )}
+      
       <Button
         variant={getButtonVariant()}
         size={size}
@@ -162,6 +198,7 @@ const SimpleMicButton = ({
           <div><strong>Supported:</strong> {isSupported ? 'Ja' : 'Nein'}</div>
           <div><strong>Permission:</strong> {hasPermission ? 'Ja' : 'Nein'}</div>
           <div><strong>Listening:</strong> {isListening ? 'Ja' : 'Nein'}</div>
+          <div><strong>Audio Level:</strong> {audioLevel.toFixed(2)}</div>
           {transcript && <div><strong>Transcript:</strong> {transcript}</div>}
           {error && <div className="text-red-500"><strong>Error:</strong> {error}</div>}
         </div>
