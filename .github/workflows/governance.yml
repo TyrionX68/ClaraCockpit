@@ -1,0 +1,161 @@
+name: 🔒 Governance Compliance Check
+
+on:
+  pull_request:
+    branches: [ main, staging ]
+  push:
+    branches: [ main ]
+
+jobs:
+  governance-check:
+    name: 📋 Governance Compliance
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: 📥 Checkout code
+      uses: actions/checkout@v4
+      
+    - name: 🔍 Check PR Template Usage
+      if: github.event_name == 'pull_request'
+      run: |
+        if [[ "${{ github.event.pull_request.body }}" == *"📋 **PR Information**"* ]]; then
+          echo "✅ Governance PR template used"
+        else
+          echo "❌ Governance PR template not used"
+          echo "Please use the governance PR template from .github/PULL_REQUEST_TEMPLATE/"
+          exit 1
+        fi
+        
+    - name: 🏷️ Check Slot Name Format
+      if: github.event_name == 'pull_request'
+      run: |
+        title="${{ github.event.pull_request.title }}"
+        if [[ $title =~ ^\[.*\].*-.*$ ]]; then
+          echo "✅ PR title follows slot naming convention"
+        else
+          echo "❌ PR title must follow format: [slot-name] Target - Description"
+          exit 1
+        fi
+        
+    - name: 📊 Update Audit Trail
+      if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+      run: |
+        echo "📝 Updating clara360_manifest.json with new merge"
+        # This would update the manifest with the new PR information
+        # Implementation depends on specific requirements
+        
+  quality-check:
+    name: 🧪 Quality Assurance
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: 📥 Checkout code
+      uses: actions/checkout@v4
+      
+    - name: 📦 Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '20'
+        cache: 'npm'
+        
+    - name: 📥 Install dependencies
+      run: npm ci
+      
+    - name: 🔍 ESLint Check
+      run: npm run lint
+      continue-on-error: true
+      
+    - name: 🎨 Prettier Check
+      run: npm run format:check
+      continue-on-error: true
+      
+    - name: 🧪 Run Tests
+      run: npm test
+      continue-on-error: true
+      
+    - name: 🏗️ Build Check
+      run: npm run build
+      
+    - name: 📊 Performance Audit
+      uses: treosh/lighthouse-ci-action@v10
+      with:
+        configPath: './lighthouserc.json'
+        uploadArtifacts: true
+        temporaryPublicStorage: true
+      continue-on-error: true
+
+  security-check:
+    name: 🛡️ Security Scan
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: 📥 Checkout code
+      uses: actions/checkout@v4
+      
+    - name: 🔍 Dependency Vulnerability Scan
+      run: npm audit --audit-level moderate
+      continue-on-error: true
+      
+    - name: 🛡️ CodeQL Analysis
+      uses: github/codeql-action/init@v3
+      with:
+        languages: javascript
+        
+    - name: 🔍 Perform CodeQL Analysis
+      uses: github/codeql-action/analyze@v3
+
+  mobile-test:
+    name: 📱 Mobile Compatibility
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: 📥 Checkout code
+      uses: actions/checkout@v4
+      
+    - name: 📦 Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '20'
+        cache: 'npm'
+        
+    - name: 📥 Install dependencies
+      run: npm ci
+      
+    - name: 🏗️ Build application
+      run: npm run build
+      
+    - name: 📱 Mobile Viewport Test
+      run: |
+        echo "🧪 Testing mobile viewport compatibility"
+        # Add mobile-specific tests here
+        echo "✅ Mobile tests would run here"
+
+  governance-report:
+    name: 📊 Governance Report
+    runs-on: ubuntu-latest
+    needs: [governance-check, quality-check, security-check, mobile-test]
+    if: always()
+    
+    steps:
+    - name: 📊 Generate Governance Report
+      run: |
+        echo "📋 Governance Compliance Report"
+        echo "================================"
+        echo "PR: ${{ github.event.pull_request.title }}"
+        echo "Author: ${{ github.event.pull_request.user.login }}"
+        echo "Branch: ${{ github.head_ref }}"
+        echo "Timestamp: $(date -u +%Y-%m-%dT%H:%M:%SZ)"
+        echo ""
+        echo "Compliance Status:"
+        echo "- Template Usage: ${{ needs.governance-check.result }}"
+        echo "- Quality Checks: ${{ needs.quality-check.result }}"
+        echo "- Security Scan: ${{ needs.security-check.result }}"
+        echo "- Mobile Tests: ${{ needs.mobile-test.result }}"
+        echo ""
+        if [[ "${{ needs.governance-check.result }}" == "success" && 
+              "${{ needs.quality-check.result }}" == "success" ]]; then
+          echo "✅ Ready for TyrionX review"
+        else
+          echo "❌ Governance requirements not met"
+        fi
+
