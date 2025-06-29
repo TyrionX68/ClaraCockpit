@@ -112,11 +112,7 @@ const Sidebar = ({ isCollapsed, onToggle, theme, onThemeToggle, isMobileOpen, on
         ${isCollapsed ? 'w-16' : 'w-64'}
         hidden md:block
         z-[100]
-      `} style={{
-        backgroundColor: 'var(--sidebar-bg, white)',
-        color: 'var(--sidebar-text, black)',
-        borderColor: 'var(--sidebar-border, #e5e7eb)'
-      }}>
+      `}>
       {/* Header */}
       <div className="flex items-center justify-between p-4 border-b border-gray-200 dark:border-gray-700">
         {!isCollapsed && (
@@ -230,14 +226,11 @@ const Sidebar = ({ isCollapsed, onToggle, theme, onThemeToggle, isMobileOpen, on
       <div 
         className={`
           fixed left-0 top-0 h-full w-72 z-50 md:hidden
+          bg-white dark:bg-slate-900 text-black dark:text-white
+          border-r border-gray-200 dark:border-gray-700
           transition-transform duration-300 ease-in-out shadow-lg backdrop-blur-md
           ${isMobileOpen ? 'translate-x-0' : '-translate-x-full'}
         `}
-        style={{
-          backgroundColor: theme === 'light' ? '#ffffff' : '#0f172a',
-          color: theme === 'light' ? '#000000' : '#ffffff',
-          borderRight: theme === 'light' ? '1px solid #e5e7eb' : '1px solid #374151'
-        }}
       >
         {/* Mobile Header */}
         <div 

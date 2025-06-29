@@ -152,9 +152,9 @@ const ClaraKIPanel = () => {
           </div>
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 landscape:gap-4">
-          {/* Chat-Bereich */}
-          <div className="lg:col-span-2">
+        <div className="grid grid-cols-1 xl:grid-cols-4 gap-6 landscape:gap-4">
+          {/* Chat-Bereich - Erweitert für bessere Nutzung des verfügbaren Platzes */}
+          <div className="xl:col-span-3">
             <Card className="h-[60vh] md:h-[600px] landscape:h-[70vh] landscape:min-h-[400px] flex flex-col">
               <CardHeader className="flex-shrink-0">
                 <CardTitle className="flex items-center gap-2">
