@@ -182,7 +182,7 @@ const ClaraKIPanel = () => {
                         className={`max-w-[85%] md:max-w-[80%] landscape:max-w-[90%] p-3 rounded-lg break-words ${
                           message.type === 'user'
                             ? 'bg-blue-600 text-white'
-                            : 'bg-gray-100 text-gray-900'
+                            : 'bg-gray-100 dark:bg-gray-700 text-gray-900 dark:text-gray-100'
                         }`}
                       >
                         <p className="text-sm break-words whitespace-pre-wrap">{message.content}</p>

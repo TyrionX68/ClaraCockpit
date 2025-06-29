@@ -13,10 +13,8 @@ const EinstellungenPage = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50 flex">
-      <Sidebar currentPage="einstellungen" onNavigate={(path) => navigate(path)} />
-      
-      <main className="flex-1 p-6">
+    <div className="min-h-screen bg-white dark:bg-slate-900">
+      <main className="flex-1 p-4 md:p-6 md:ml-16 lg:ml-64">
         <div className="mb-6">
           <div className="flex items-center gap-4 mb-4">
             <Button variant="outline" size="sm" onClick={() => navigate('/dashboard')}>
@@ -28,8 +26,8 @@ const EinstellungenPage = () => {
                 <Settings className="w-6 h-6 text-white" />
               </div>
               <div>
-                <h1 className="text-2xl font-bold text-gray-900">Einstellungen</h1>
-                <p className="text-gray-600">System-Konfiguration und Einstellungen</p>
+                <h1 className="text-2xl font-bold text-gray-900 dark:text-white">Einstellungen</h1>
+                <p className="text-gray-600 dark:text-gray-400">System-Konfiguration und Einstellungen</p>
               </div>
             </div>
           </div>
