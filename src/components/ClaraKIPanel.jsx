@@ -128,9 +128,9 @@ const ClaraKIPanel = () => {
 
   return (
     <div className="min-h-screen bg-white dark:bg-slate-900">
-      <main className="flex-1 p-4 md:p-6 md:ml-16 lg:ml-64">
+      <main className="flex-1 p-4 md:p-6 md:ml-16 lg:ml-64 landscape:p-2 landscape:md:p-4">
         {/* Header */}
-        <div className="mb-6">
+        <div className="mb-6 landscape:mb-4">
           <div className="flex items-center gap-4 mb-4">
             <Button 
               variant="outline" 
@@ -152,10 +152,10 @@ const ClaraKIPanel = () => {
           </div>
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 landscape:gap-4">
           {/* Chat-Bereich */}
           <div className="lg:col-span-2">
-            <Card className="h-[60vh] md:h-[600px] landscape:h-[50vh] flex flex-col">
+            <Card className="h-[60vh] md:h-[600px] landscape:h-[70vh] landscape:min-h-[400px] flex flex-col">
               <CardHeader className="flex-shrink-0">
                 <CardTitle className="flex items-center gap-2">
                   <Brain className="w-5 h-5 text-purple-600" />
