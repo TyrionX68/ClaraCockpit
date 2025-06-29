@@ -12,43 +12,73 @@ export const useTheme = () => {
 
 export const ThemeProvider = ({ children }) => {
   const [theme, setTheme] = useState(() => {
-    // Check localStorage first, then system preference
-    const savedTheme = localStorage.getItem('clara-theme');
-    if (savedTheme) {
-      return savedTheme;
+    try {
+      // Safe localStorage access with fallback
+      const savedTheme = localStorage.getItem('clara-theme');
+      
+      // Validate saved theme value
+      if (savedTheme && (savedTheme === 'light' || savedTheme === 'dark')) {
+        return savedTheme;
+      }
+      
+      // Clear invalid localStorage values
+      if (savedTheme && savedTheme !== 'light' && savedTheme !== 'dark') {
+        localStorage.removeItem('clara-theme');
+      }
+      
+      // Check system preference as fallback
+      if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        return 'dark';
+      }
+      
+      return 'light';
+    } catch (error) {
+      // localStorage access failed (private browsing, etc.)
+      console.warn('localStorage access failed, using light theme:', error);
+      return 'light';
     }
-    
-    // Check system preference
-    if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
-      return 'dark';
-    }
-    
-    return 'light';
   });
 
   useEffect(() => {
     const root = document.documentElement;
     
-    // Remove dark class first
-    root.classList.remove('dark');
-    
-    // Only add 'dark' class if theme is dark (Tailwind expects this)
-    if (theme === 'dark') {
-      root.classList.add('dark');
-    }
-    
-    // Save to localStorage
-    localStorage.setItem('clara-theme', theme);
-    
-    // Update body styles for immediate visual feedback
-    if (theme === 'light') {
-      document.body.className = 'bg-white text-gray-900';
-      document.body.style.backgroundColor = '';
-      document.body.style.color = '';
-    } else {
-      document.body.className = 'bg-gray-900 text-white';
-      document.body.style.backgroundColor = '';
-      document.body.style.color = '';
+    try {
+      // Force reset all theme classes
+      root.classList.remove('dark', 'light');
+      
+      // Apply theme class with fallback
+      if (theme === 'dark') {
+        root.classList.add('dark');
+      } else {
+        // Explicitly add light class for mobile compatibility
+        root.classList.add('light');
+      }
+      
+      // Safe localStorage save
+      try {
+        localStorage.setItem('clara-theme', theme);
+      } catch (error) {
+        console.warn('Failed to save theme to localStorage:', error);
+      }
+      
+      // Mobile-specific body style reset for rendering stability
+      const body = document.body;
+      body.style.backgroundColor = '';
+      body.style.color = '';
+      body.className = '';
+      
+      // Apply theme-specific body classes for immediate feedback
+      if (theme === 'light') {
+        body.classList.add('bg-background', 'text-foreground');
+      } else {
+        body.classList.add('dark:bg-background', 'dark:text-foreground');
+      }
+      
+    } catch (error) {
+      console.error('Theme application failed:', error);
+      // Fallback to light theme on error
+      root.classList.remove('dark');
+      root.classList.add('light');
     }
   }, [theme]);
 
