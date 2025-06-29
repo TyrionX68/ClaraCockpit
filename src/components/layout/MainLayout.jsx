@@ -64,7 +64,7 @@ const MainLayout = () => {
         ${sidebarCollapsed ? 'md:ml-16' : 'md:ml-16 lg:ml-64'}
       `}>
         {/* Content Area */}
-        <main className="min-h-screen bg-background">
+        <main className="min-h-screen bg-white dark:bg-slate-900">
           <Outlet />
         </main>
       </div>
