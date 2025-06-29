@@ -222,7 +222,8 @@ const Sidebar = ({ isCollapsed, onToggle, theme, onThemeToggle, isMobileOpen, on
 
       {/* Mobile Sidebar */}
       <div className={`
-        fixed left-0 top-0 h-full bg-card border-r border-border
+        fixed left-0 top-0 h-full 
+        bg-background dark:bg-card border-r border-border
         transition-transform duration-300 ease-in-out shadow-xl
         w-64 z-[100]
         md:hidden
@@ -235,7 +236,7 @@ const Sidebar = ({ isCollapsed, onToggle, theme, onThemeToggle, isMobileOpen, on
               <span className="text-white font-bold text-sm">C</span>
             </div>
             <div>
-              <h1 className="font-bold text-card-foreground">Clara360</h1>
+              <h1 className="font-bold text-foreground dark:text-card-foreground">Clara360</h1>
               <p className="text-xs text-muted-foreground">Fusion Dashboard</p>
             </div>
           </div>
@@ -257,7 +258,7 @@ const Sidebar = ({ isCollapsed, onToggle, theme, onThemeToggle, isMobileOpen, on
                     transition-all duration-200 text-left group
                     ${active 
                       ? 'bg-primary text-primary-foreground' 
-                      : 'text-card-foreground hover:bg-accent hover:text-accent-foreground'
+                      : 'text-foreground dark:text-card-foreground hover:bg-accent hover:text-accent-foreground'
                     }
                   `}
                 >
@@ -284,7 +285,7 @@ const Sidebar = ({ isCollapsed, onToggle, theme, onThemeToggle, isMobileOpen, on
         <div className="p-4 border-t border-border">
           <button
             onClick={onThemeToggle}
-            className="w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-card-foreground hover:bg-accent hover:text-accent-foreground transition-colors"
+            className="w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-foreground dark:text-card-foreground hover:bg-accent hover:text-accent-foreground transition-colors"
           >
             {theme === 'light' ? (
               <Moon className="w-5 h-5 text-muted-foreground" />
