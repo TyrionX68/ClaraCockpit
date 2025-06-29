@@ -109,7 +109,7 @@ const ClaraKIPanel = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-gray-50 dark:bg-slate-900">
       <main className="flex-1 p-4 md:p-6 md:ml-16 lg:ml-64">
         {/* Header */}
         <div className="mb-6">
@@ -127,8 +127,8 @@ const ClaraKIPanel = () => {
                 <Bot className="w-6 h-6 text-white" />
               </div>
               <div>
-                <h1 className="text-xl md:text-2xl font-bold text-gray-900">Clara KI</h1>
-                <p className="text-sm md:text-base text-gray-600">Intelligente Assistentin für Hausverwaltung</p>
+                <h1 className="text-xl md:text-2xl font-bold text-gray-900 dark:text-white">Clara KI</h1>
+                <p className="text-sm md:text-base text-gray-600 dark:text-gray-400">Intelligente Assistentin für Hausverwaltung</p>
               </div>
             </div>
           </div>
