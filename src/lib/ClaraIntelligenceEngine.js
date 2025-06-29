@@ -2,12 +2,16 @@
 // Core AI intelligence engine integrating Manus C capabilities
 // Author: 📛 🛠️ Manus A | AI Integration Specialist
 // Date: 2025-06-06
+// 🧠 LEGACY INTEGRATION - CLARA-HYBRID PATCH V6.4.1 - GPT-4 Hybrid Intelligence
 
 import ClaraResilientBrain from '../services/ClaraResilientBrain.js'
 import ClaraTrainerProxy from '../services/ClaraTrainerProxy.js'
+// 🧠 LEGACY INTEGRATION: GPT-4 Proxy for hybrid intelligence
+import { ClaraGPTProxy } from '../services/ClaraGPTProxy.ts'
 
 /**
  * Clara Intelligence Engine with Resilient Brain
+ * 🧠 LEGACY INTEGRATION - Enhanced with GPT-4 Hybrid Intelligence
  * Integrates persistent learning and fallback mechanisms
  */
 class ClaraIntelligenceEngine {
@@ -15,13 +19,32 @@ class ClaraIntelligenceEngine {
     this.config = {
       enableResilientBrain: true,
       enableContinuousLearning: true,
+      // 🧠 LEGACY INTEGRATION: Hybrid intelligence configuration
+      enableGPTFallback: config.enableGPTFallback ?? true,
+      gptConfidenceThreshold: config.gptConfidenceThreshold ?? 0.7,
+      maxGPTTokens: config.maxGPTTokens ?? 256,
       ...config
     }
     
     // Initialisiere resilientes Gehirn
     this.brain = new ClaraResilientBrain()
     this.trainer = new ClaraTrainerProxy()
+    
+    // 🧠 LEGACY INTEGRATION: Initialize GPT proxy for hybrid intelligence
+    this.gptProxy = config.gptProxy || new ClaraGPTProxy({
+      maxTokens: this.config.maxGPTTokens,
+      debugMode: process.env.NODE_ENV === 'development'
+    })
+    
     this.isInitialized = false
+    
+    // Performance metrics for hybrid system
+    this.metrics = {
+      localResponses: 0,
+      gptResponses: 0,
+      fallbacks: 0,
+      totalQueries: 0
+    }
     
     this.initialize()
   }
@@ -44,12 +67,14 @@ class ClaraIntelligenceEngine {
 
   /**
    * Process natural language query with Manus C intelligence
+   * 🧠 LEGACY INTEGRATION - Enhanced with GPT-4 Hybrid Routing
    * @param {string} query - User query
    * @param {Object} context - Current application context
    * @returns {Promise<Object>} AI response with actions
    */
   async processQuery(query, context = {}) {
     console.log("🧠 [INTELLIGENCE] Message received:", query)
+    this.metrics.totalQueries++
     
     try {
       // RESILIENT BRAIN: Versuche zuerst gelerntes Wissen zu verwenden
@@ -57,18 +82,46 @@ class ClaraIntelligenceEngine {
         const brainResponse = await this.brain.queryKnowledge(query, context)
         if (brainResponse && brainResponse.confidence > 0.8) {
           console.log("🧠 [BRAIN] Using learned knowledge:", brainResponse.content)
+          this.metrics.localResponses++
           return brainResponse
         }
       }
       
-      // MASTER INTELLIGENCE: Direkte Fallback-Logik mit erweiterten Fähigkeiten
-      console.log("✅ [INTELLIGENCE] Using MASTER INTELLIGENCE with enhanced capabilities")
-      const result = this.generateEnhancedResponse(query, context)
-      console.log("✅ [INTELLIGENCE] Response generated:", result.content)
-      return result
+      // 🧠 LEGACY INTEGRATION: Enhanced intelligence with hybrid routing
+      console.log("✅ [INTELLIGENCE] Using ENHANCED INTELLIGENCE with hybrid capabilities")
+      const localResult = this.generateEnhancedResponse(query, context)
+      
+      // 🧠 LEGACY INTEGRATION: Check if we should route to GPT based on confidence
+      if (this.config.enableGPTFallback && 
+          localResult.confidence < this.config.gptConfidenceThreshold &&
+          await this.gptProxy.isAvailable()) {
+        
+        console.log(`🤖 [HYBRID] Local confidence ${localResult.confidence} < ${this.config.gptConfidenceThreshold}, routing to GPT`)
+        
+        try {
+          const gptResponse = await this.routeToGPT(query, context, localResult)
+          this.metrics.gptResponses++
+          return gptResponse
+        } catch (gptError) {
+          console.warn("⚠️ [HYBRID] GPT fallback failed, using local response:", gptError.message)
+          this.metrics.fallbacks++
+          // Return enhanced local response with fallback indicator
+          return {
+            ...localResult,
+            content: localResult.content + "\n\n*Hinweis: Erweiterte KI-Analyse temporär nicht verfügbar.*",
+            insights: [...(localResult.insights || []), 'GPT-Fallback verwendet', 'Lokale Intelligenz aktiv']
+          }
+        }
+      }
+      
+      console.log("✅ [INTELLIGENCE] Local response generated:", localResult.content)
+      this.metrics.localResponses++
+      return localResult
       
     } catch (error) {
       console.error("❌ [INTELLIGENCE] Error occurred:", error.message)
+      this.metrics.fallbacks++
+      
       // Sichere Fallback-Antwort
       return {
         id: Date.now(),
@@ -80,6 +133,66 @@ class ClaraIntelligenceEngine {
         actions: [],
         recommendations: []
       }
+    }
+  }
+
+  /**
+   * 🧠 LEGACY INTEGRATION: Route query to GPT-4 with context
+   * @param {string} query - User query
+   * @param {Object} context - Application context
+   * @param {Object} localResult - Local intelligence result for context
+   * @returns {Promise<Object>} GPT-enhanced response
+   */
+  async routeToGPT(query, context, localResult) {
+    try {
+      console.log("🤖 [GPT] Routing to GPT-4 with context")
+      
+      // Build enhanced context for GPT
+      const gptContext = {
+        realEstateContext: {
+          property: "Waldhofstraße 76, Mannheim",
+          portfolioValue: "1.2M€",
+          averageReturn: "7.8%",
+          occupancyRate: "94%"
+        },
+        conversationHistory: context.conversationHistory || [],
+        localAttempt: {
+          content: localResult.content,
+          confidence: localResult.confidence,
+          insights: localResult.insights
+        },
+        maxTokens: this.config.maxGPTTokens
+      }
+      
+      const gptResponse = await this.gptProxy.generateResponse(query, gptContext)
+      
+      // Format GPT response to match local response structure
+      return {
+        id: Date.now(),
+        type: 'ai',
+        content: gptResponse.content,
+        timestamp: new Date(),
+        confidence: gptResponse.confidence,
+        insights: [
+          'GPT-4 Enhanced Response',
+          `Response Time: ${gptResponse.responseTime}ms`,
+          `Tokens Used: ${gptResponse.tokens}`,
+          'Hybrid Intelligence Active'
+        ],
+        actions: localResult.actions || [],
+        recommendations: localResult.recommendations || [],
+        metadata: {
+          source: 'gpt-hybrid',
+          model: gptResponse.model,
+          tokens: gptResponse.tokens,
+          responseTime: gptResponse.responseTime,
+          localFallback: localResult
+        }
+      }
+      
+    } catch (error) {
+      console.error("❌ [GPT] GPT routing failed:", error)
+      throw error // Re-throw to trigger fallback in processQuery
     }
   }
 
@@ -754,6 +867,48 @@ class PropertyKnowledgeBase {
 
   getKnowledge(domain) {
     return this.knowledgeBase[domain] || []
+  }
+
+  /**
+   * 🧠 LEGACY INTEGRATION: Get hybrid intelligence metrics
+   * @returns {Object} Performance metrics for hybrid system
+   */
+  getHybridMetrics() {
+    const total = this.metrics.totalQueries
+    const localRate = total > 0 ? ((this.metrics.localResponses / total) * 100).toFixed(1) : '0'
+    const gptRate = total > 0 ? ((this.metrics.gptResponses / total) * 100).toFixed(1) : '0'
+    const fallbackRate = total > 0 ? ((this.metrics.fallbacks / total) * 100).toFixed(1) : '0'
+
+    return {
+      totalQueries: total,
+      localResponses: this.metrics.localResponses,
+      gptResponses: this.metrics.gptResponses,
+      fallbacks: this.metrics.fallbacks,
+      localRate: `${localRate}%`,
+      gptRate: `${gptRate}%`,
+      fallbackRate: `${fallbackRate}%`,
+      gptProxy: this.gptProxy ? this.gptProxy.getMetrics() : null,
+      hybridEnabled: this.config.enableGPTFallback,
+      confidenceThreshold: this.config.gptConfidenceThreshold
+    }
+  }
+
+  /**
+   * 🧠 LEGACY INTEGRATION: Reset hybrid metrics
+   */
+  resetHybridMetrics() {
+    this.metrics = {
+      localResponses: 0,
+      gptResponses: 0,
+      fallbacks: 0,
+      totalQueries: 0
+    }
+    
+    if (this.gptProxy) {
+      this.gptProxy.resetMetrics()
+    }
+    
+    console.log('🔄 [HYBRID] Metrics reset')
   }
 }
 
