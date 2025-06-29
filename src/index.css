@@ -1,56 +1,61 @@
 @import "tailwindcss";
 
-/* Custom CSS Variables for Light/Dark Mode */
+/* Fixed CSS Variables for Light/Dark Mode - Proper HSL Format */
 :root {
-  /* Light Mode - Helle Farben mit starkem Kontrast */
-  --background: 0 0% 100%;          /* Reines Weiß */
-  --foreground: 0 0% 3.9%;          /* Fast Schwarz */
-  --card: 0 0% 100%;                /* Weiße Karten */
-  --card-foreground: 0 0% 3.9%;     /* Dunkler Text */
-  --popover: 0 0% 100%;
-  --popover-foreground: 0 0% 3.9%;
-  --primary: 221.2 83.2% 53.3%;     /* Blau */
-  --primary-foreground: 210 40% 98%;
-  --secondary: 210 40% 98%;          /* Sehr helles Grau */
-  --secondary-foreground: 0 0% 9%;   /* Dunkler Text */
-  --muted: 210 40% 96%;             /* Helles Grau */
-  --muted-foreground: 215.4 16.3% 46.9%;
-  --accent: 210 40% 96%;
-  --accent-foreground: 0 0% 9%;
-  --destructive: 0 84.2% 60.2%;
-  --destructive-foreground: 210 40% 98%;
-  --border: 214.3 31.8% 91.4%;
-  --input: 214.3 31.8% 91.4%;
-  --ring: 221.2 83.2% 53.3%;
+  /* Light Mode - Vollständige HSL-Werte für korrekte Tailwind-Interpretation */
+  --background: 0, 0%, 100%;          /* Reines Weiß */
+  --foreground: 0, 0%, 3.9%;          /* Fast Schwarz */
+  --card: 0, 0%, 100%;                /* Weiße Karten */
+  --card-foreground: 0, 0%, 3.9%;     /* Dunkler Text */
+  --popover: 0, 0%, 100%;
+  --popover-foreground: 0, 0%, 3.9%;
+  --primary: 221.2, 83.2%, 53.3%;     /* Blau */
+  --primary-foreground: 210, 40%, 98%;
+  --secondary: 210, 40%, 98%;          /* Sehr helles Grau */
+  --secondary-foreground: 0, 0%, 9%;   /* Dunkler Text */
+  --muted: 210, 40%, 96%;             /* Helles Grau */
+  --muted-foreground: 215.4, 16.3%, 46.9%;
+  --accent: 210, 40%, 96%;
+  --accent-foreground: 0, 0%, 9%;
+  --destructive: 0, 84.2%, 60.2%;
+  --destructive-foreground: 210, 40%, 98%;
+  --border: 214.3, 31.8%, 91.4%;
+  --input: 214.3, 31.8%, 91.4%;
+  --ring: 221.2, 83.2%, 53.3%;
   --radius: 0.5rem;
   
   /* Sidebar-spezifische Variablen für Light Mode */
-  --sidebar-bg: white;
-  --sidebar-text: black;
-  --sidebar-border: #e5e7eb;
+  --sidebar-bg: 255, 255, 255;        /* RGB Weiß */
+  --sidebar-text: 0, 0, 0;            /* RGB Schwarz */
+  --sidebar-border: 229, 231, 235;    /* RGB Grau */
 }
 
 .dark {
-  /* Dark Mode - Dunkle Farben mit starkem Kontrast */
-  --background: 222.2 84% 4.9%;      /* Sehr dunkel */
-  --foreground: 210 40% 98%;         /* Fast Weiß */
-  --card: 222.2 84% 4.9%;           /* Dunkle Karten */
-  --card-foreground: 210 40% 98%;    /* Heller Text */
-  --popover: 222.2 84% 4.9%;
-  --popover-foreground: 210 40% 98%;
-  --primary: 217.2 91.2% 59.8%;     /* Helles Blau */
-  --primary-foreground: 222.2 84% 4.9%;
-  --secondary: 217.2 32.6% 17.5%;   /* Dunkles Grau */
-  --secondary-foreground: 210 40% 98%;
-  --muted: 217.2 32.6% 17.5%;
-  --muted-foreground: 215 20.2% 65.1%;
-  --accent: 217.2 32.6% 17.5%;
-  --accent-foreground: 210 40% 98%;
-  --destructive: 0 62.8% 30.6%;
-  --destructive-foreground: 210 40% 98%;
-  --border: 217.2 32.6% 17.5%;
-  --input: 217.2 32.6% 17.5%;
-  --ring: 224.3 76.3% 94.1%;
+  /* Dark Mode - Vollständige HSL-Werte für korrekte Tailwind-Interpretation */
+  --background: 222.2, 84%, 4.9%;      /* Sehr dunkel */
+  --foreground: 210, 40%, 98%;         /* Fast Weiß */
+  --card: 222.2, 84%, 4.9%;           /* Dunkle Karten */
+  --card-foreground: 210, 40%, 98%;    /* Heller Text */
+  --popover: 222.2, 84%, 4.9%;
+  --popover-foreground: 210, 40%, 98%;
+  --primary: 217.2, 91.2%, 59.8%;     /* Helles Blau */
+  --primary-foreground: 222.2, 84%, 4.9%;
+  --secondary: 217.2, 32.6%, 17.5%;   /* Dunkles Grau */
+  --secondary-foreground: 210, 40%, 98%;
+  --muted: 217.2, 32.6%, 17.5%;
+  --muted-foreground: 215, 20.2%, 65.1%;
+  --accent: 217.2, 32.6%, 17.5%;
+  --accent-foreground: 210, 40%, 98%;
+  --destructive: 0, 62.8%, 30.6%;
+  --destructive-foreground: 210, 40%, 98%;
+  --border: 217.2, 32.6%, 17.5%;
+  --input: 217.2, 32.6%, 17.5%;
+  --ring: 224.3, 76.3%, 94.1%;
+  
+  /* Sidebar-spezifische Variablen für Dark Mode */
+  --sidebar-bg: 15, 23, 42;           /* RGB Slate-900 */
+  --sidebar-text: 248, 250, 252;      /* RGB Slate-50 */
+  --sidebar-border: 51, 65, 85;       /* RGB Slate-700 */
 }
 
 * {
