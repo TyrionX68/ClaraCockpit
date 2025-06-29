@@ -152,42 +152,42 @@ const VoiceDebugTest = ({ onTranscriptReceived, onSendToChat }) => {
 
         {/* Status Grid */}
         <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
-          <div className="text-center p-3 bg-gray-50 rounded">
+          <div className="text-center p-3 bg-gray-100 dark:bg-gray-800 text-black dark:text-white rounded">
             <div className="text-lg mb-1">
               {isSupported ? '✅' : '❌'}
             </div>
             <div className="text-xs font-medium">Speech Recognition</div>
-            <div className="text-xs text-gray-500">
+            <div className="text-xs text-gray-500 dark:text-gray-400">
               {isSupported ? 'Supported' : 'Not Supported'}
             </div>
           </div>
           
-          <div className="text-center p-3 bg-gray-50 rounded">
+          <div className="text-center p-3 bg-gray-100 dark:bg-gray-800 text-black dark:text-white rounded">
             <div className="text-lg mb-1">
               {isEnabled ? '✅' : '❌'}
             </div>
             <div className="text-xs font-medium">Microphone</div>
-            <div className="text-xs text-gray-500">
+            <div className="text-xs text-gray-500 dark:text-gray-400">
               {isEnabled ? 'Enabled' : 'Permission Required'}
             </div>
           </div>
           
-          <div className="text-center p-3 bg-gray-50 rounded">
+          <div className="text-center p-3 bg-gray-100 dark:bg-gray-800 text-black dark:text-white rounded">
             <div className="text-lg mb-1">
               {isListening ? '🎤' : '⏸️'}
             </div>
             <div className="text-xs font-medium">Status</div>
-            <div className="text-xs text-gray-500">
+            <div className="text-xs text-gray-500 dark:text-gray-400">
               {isListening ? 'Listening' : 'Idle'}
             </div>
           </div>
           
-          <div className="text-center p-3 bg-gray-50 rounded">
+          <div className="text-center p-3 bg-gray-100 dark:bg-gray-800 text-black dark:text-white rounded">
             <div className="text-lg mb-1">
               {autoSendEnabled ? '✅' : '❌'}
             </div>
             <div className="text-xs font-medium">Auto-Send</div>
-            <div className="text-xs text-gray-500">
+            <div className="text-xs text-gray-500 dark:text-gray-400">
               {autoSendEnabled ? 'Enabled' : 'Disabled'}
             </div>
           </div>
@@ -286,7 +286,7 @@ const VoiceDebugTest = ({ onTranscriptReceived, onSendToChat }) => {
           </Button>
           
           {showAdvanced && (
-            <div className="mt-3 p-3 bg-gray-50 rounded">
+            <div className="mt-3 p-3 bg-gray-100 dark:bg-gray-800 text-black dark:text-white rounded">
               <div className="mb-3">
                 <label className="block text-xs font-medium mb-1">
                   Integrated Voice Button:
@@ -310,7 +310,7 @@ const VoiceDebugTest = ({ onTranscriptReceived, onSendToChat }) => {
         {/* Debug Logs */}
         <div>
           <div className="text-sm font-medium mb-2">Debug Logs:</div>
-          <div className="bg-black text-green-400 p-3 rounded font-mono text-xs h-32 overflow-y-auto">
+          <div className="bg-black dark:bg-gray-900 text-green-400 dark:text-green-300 p-3 rounded font-mono text-xs h-32 overflow-y-auto border border-gray-300 dark:border-gray-600">
             {debugLog.length === 0 ? (
               <div className="text-gray-500">No logs yet...</div>
             ) : (
@@ -322,7 +322,7 @@ const VoiceDebugTest = ({ onTranscriptReceived, onSendToChat }) => {
         </div>
 
         {/* Test Instructions */}
-        <div className="text-xs text-gray-600 bg-gray-50 p-3 rounded">
+        <div className="text-xs text-gray-600 dark:text-gray-400 bg-gray-100 dark:bg-gray-800 p-3 rounded">
           <strong>Test Instructions:</strong>
           <ol className="list-decimal list-inside mt-1 space-y-1">
             <li>Ensure "Auto-send transcript to chat" is checked ✓</li>

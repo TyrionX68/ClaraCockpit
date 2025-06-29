@@ -43,13 +43,14 @@ export const ThemeProvider = ({ children }) => {
     const root = document.documentElement;
     
     try {
+      // Explizite Klassen-Bereinigung vor Anwendung
+      root.classList.remove('dark', 'light');
+      
       // Korrekte Theme-Anwendung auf HTML-Element
       if (theme === 'dark') {
         root.classList.add('dark');
-        root.classList.remove('light');
       } else {
         root.classList.add('light');
-        root.classList.remove('dark');
       }
       
       // Safe localStorage save
@@ -60,17 +61,20 @@ export const ThemeProvider = ({ children }) => {
       }
       
       // Debug-Logging für Theme-Anwendung
-      console.log(`[ThemeContext] Applied theme: ${theme}, HTML classes:`, root.className);
+      console.log(`[ThemeContext] Theme switched to: ${theme}`);
+      console.log(`[ThemeContext] HTML classes:`, root.className);
+      console.log(`[ThemeContext] Dark mode active:`, root.classList.contains('dark'));
       
     } catch (error) {
       console.error('Theme application failed:', error);
       // Fallback to light theme on error
-      root.classList.remove('dark');
+      root.classList.remove('dark', 'light');
       root.classList.add('light');
     }
   }, [theme]);
 
   const toggleTheme = () => {
+    console.log(`[ThemeContext] Toggling theme from ${theme} to ${theme === 'light' ? 'dark' : 'light'}`);
     setTheme(prevTheme => prevTheme === 'light' ? 'dark' : 'light');
   };
 

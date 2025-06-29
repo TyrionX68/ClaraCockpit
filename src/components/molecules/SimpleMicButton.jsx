@@ -157,7 +157,7 @@ const SimpleMicButton = ({
       
       {/* Debug-Anzeige */}
       {debugMode && (
-        <div className="mt-2 p-2 bg-gray-100 rounded text-xs max-w-xs">
+        <div className="mt-2 p-2 bg-gray-100 dark:bg-gray-800 text-black dark:text-white rounded text-xs max-w-xs border border-gray-300 dark:border-gray-600">
           <div><strong>Status:</strong> {status}</div>
           <div><strong>Supported:</strong> {isSupported ? 'Ja' : 'Nein'}</div>
           <div><strong>Permission:</strong> {hasPermission ? 'Ja' : 'Nein'}</div>
