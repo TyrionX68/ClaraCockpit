@@ -27,12 +27,6 @@ const ClaraKIPanel = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
   }, [messages]);
 
-  // TEMPORARY FIX: Force light mode for debugging
-  useEffect(() => {
-    document.documentElement.classList.remove('dark');
-    console.log('🌞 Light mode forced - Theme classes:', document.documentElement.classList.toString());
-  }, []);
-
   // Voice-to-Chat Handler
   const handleVoiceTranscript = (transcript) => {
     console.log('[ClaraKIPanel] Voice transcript received:', transcript);

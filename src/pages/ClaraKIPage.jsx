@@ -431,7 +431,7 @@ const ClaraKIPageContent = () => {
     <div className="min-h-screen bg-background text-foreground">
       {/* Header */}
       <div className="bg-card border-b border-border">
-        <div className="max-w-4xl mx-auto px-2 sm:px-4 py-4 sm:py-6">
+        <div className="max-w-5xl mx-auto px-2 sm:px-4 py-4 sm:py-6">
           <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
             <div>
               <h1 className="text-xl sm:text-2xl font-bold text-foreground">Clara KI</h1>
@@ -509,7 +509,7 @@ const ClaraKIPageContent = () => {
       </div>
 
       {/* Chat Container - Fixed Layout */}
-      <div className="max-w-3xl mx-auto px-4 pt-0 pb-6">
+      <div className="max-w-4xl mx-auto px-4 pt-0 pb-6">
         <div className="bg-card rounded-2xl shadow-xl border border-border overflow-hidden">
           {/* Chat Messages - WRAPPED WITH ERROR BOUNDARY */}
           <ErrorBoundary 

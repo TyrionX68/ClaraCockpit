@@ -109,7 +109,7 @@ const Sidebar = ({ isCollapsed, onToggle, theme, onThemeToggle, isMobileOpen, on
         bg-white dark:bg-slate-900 text-black dark:text-white
         border-r border-gray-200 dark:border-gray-700
         transition-all duration-300 ease-in-out shadow-lg
-        ${isCollapsed ? 'w-16' : 'w-64'}
+        ${isCollapsed ? 'w-16' : 'w-52'}
         hidden md:block
         z-[100]
       `}>
@@ -225,7 +225,7 @@ const Sidebar = ({ isCollapsed, onToggle, theme, onThemeToggle, isMobileOpen, on
       {/* Mobile Sidebar */}
       <div 
         className={`
-          fixed left-0 top-0 h-full w-72 z-50 md:hidden
+          fixed left-0 top-0 h-full w-64 z-50 md:hidden
           bg-white dark:bg-slate-900 text-black dark:text-white
           border-r border-gray-200 dark:border-gray-700
           transition-transform duration-300 ease-in-out shadow-lg backdrop-blur-md

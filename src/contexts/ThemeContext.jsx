@@ -26,9 +26,9 @@ export const ThemeProvider = ({ children }) => {
         localStorage.removeItem('clara-theme');
       }
       
-      // Check system preference as fallback
+      // Check system preference as fallback - but prefer light mode
       if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
-        return 'dark';
+        return 'light'; // Changed: Always default to light mode for consistency
       }
       
       return 'light';

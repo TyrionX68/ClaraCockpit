@@ -60,8 +60,8 @@ const MainLayout = () => {
       {/* Main Content */}
       <div className={`
         transition-all duration-300 ease-in-out
-        ml-0 md:ml-16 lg:ml-64
-        ${sidebarCollapsed ? 'md:ml-16' : 'md:ml-16 lg:ml-64'}
+        ml-0 md:ml-16 lg:ml-52
+        ${sidebarCollapsed ? 'md:ml-16' : 'md:ml-16 lg:ml-52'}
       `}>
         {/* Content Area */}
         <main className="min-h-screen bg-white dark:bg-slate-900">
