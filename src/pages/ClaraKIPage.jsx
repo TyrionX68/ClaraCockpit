@@ -505,8 +505,12 @@ const ClaraKIPageContent = () => {
         </div>
       </div>
 
-      {/* Chat Container - Fixed Layout */}
-      <div className="max-w-3xl mx-auto px-4 pt-0 pb-6">
+      {/* Chat Container - AGGRESSIVE LAYOUT FIX */}
+      <div className="w-full px-2 sm:px-4 pt-0 pb-6" style={{
+        marginLeft: '0 !important',
+        paddingLeft: '0.5rem',
+        maxWidth: 'none'
+      }}>
         <div className="bg-card rounded-2xl shadow-xl border border-border overflow-hidden">
           {/* Chat Messages */}
           <div 
