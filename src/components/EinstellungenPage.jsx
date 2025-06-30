@@ -43,9 +43,9 @@ const EinstellungenPage = () => {
             </CardHeader>
             <CardContent>
               <div className="space-y-4">
-                <div className="p-4 bg-red-50 border border-red-200 rounded-lg">
-                  <p className="text-red-800 font-medium">⚠️ Verbindungsfehler</p>
-                  <p className="text-red-600 text-sm">Invalid API key</p>
+                <div className="p-4 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-lg">
+                  <p className="text-red-800 dark:text-red-200 font-medium">⚠️ Verbindungsfehler</p>
+                  <p className="text-red-600 dark:text-red-300 text-sm">Invalid API key</p>
                 </div>
                 <Button onClick={testSupabaseConnection} className="w-full">
                   Verbindung testen
@@ -64,18 +64,18 @@ const EinstellungenPage = () => {
             <CardContent>
               <div className="space-y-4">
                 <div>
-                  <label className="block text-sm font-medium mb-2">Supabase URL</label>
+                  <label className="block text-sm font-medium mb-2 text-gray-700 dark:text-gray-300">Supabase URL</label>
                   <input 
                     type="text" 
-                    className="w-full p-2 border rounded-md" 
+                    className="w-full p-2 border rounded-md bg-white dark:bg-slate-800 text-gray-900 dark:text-white border-gray-300 dark:border-gray-600 placeholder-gray-500 dark:placeholder-gray-400 focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-400" 
                     placeholder="https://your-project.supabase.co"
                   />
                 </div>
                 <div>
-                  <label className="block text-sm font-medium mb-2">Anon Key</label>
+                  <label className="block text-sm font-medium mb-2 text-gray-700 dark:text-gray-300">Anon Key</label>
                   <input 
                     type="password" 
-                    className="w-full p-2 border rounded-md" 
+                    className="w-full p-2 border rounded-md bg-white dark:bg-slate-800 text-gray-900 dark:text-white border-gray-300 dark:border-gray-600 placeholder-gray-500 dark:placeholder-gray-400 focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-400" 
                     placeholder="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
                   />
                 </div>
@@ -94,16 +94,16 @@ const EinstellungenPage = () => {
             <CardContent>
               <div className="space-y-4">
                 <div className="flex items-center justify-between">
-                  <span>E-Mail-Benachrichtigungen</span>
-                  <input type="checkbox" defaultChecked />
+                  <span className="text-gray-700 dark:text-gray-300">E-Mail-Benachrichtigungen</span>
+                  <input type="checkbox" defaultChecked className="w-4 h-4 text-blue-600 bg-white dark:bg-slate-800 border-gray-300 dark:border-gray-600 rounded focus:ring-blue-500 dark:focus:ring-blue-400" />
                 </div>
                 <div className="flex items-center justify-between">
-                  <span>Rückstände-Alerts</span>
-                  <input type="checkbox" defaultChecked />
+                  <span className="text-gray-700 dark:text-gray-300">Rückstände-Alerts</span>
+                  <input type="checkbox" defaultChecked className="w-4 h-4 text-blue-600 bg-white dark:bg-slate-800 border-gray-300 dark:border-gray-600 rounded focus:ring-blue-500 dark:focus:ring-blue-400" />
                 </div>
                 <div className="flex items-center justify-between">
-                  <span>Zahlungseingang-Meldungen</span>
-                  <input type="checkbox" defaultChecked />
+                  <span className="text-gray-700 dark:text-gray-300">Zahlungseingang-Meldungen</span>
+                  <input type="checkbox" defaultChecked className="w-4 h-4 text-blue-600 bg-white dark:bg-slate-800 border-gray-300 dark:border-gray-600 rounded focus:ring-blue-500 dark:focus:ring-blue-400" />
                 </div>
               </div>
             </CardContent>
