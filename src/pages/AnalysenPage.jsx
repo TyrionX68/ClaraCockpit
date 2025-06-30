@@ -24,6 +24,7 @@ import {
   Area,
   AreaChart
 } from 'recharts';
+import { useChartTheme } from '../components/ChartThemeHandler';
 
 /**
  * Analysen-Seite - Umfassende KPI-Dashboards und Datenvisualisierung mit Clara KI Integration
@@ -32,6 +33,9 @@ const AnalysenPage = () => {
   const [selectedTimeframe, setSelectedTimeframe] = useState('12m');
   const [selectedMetric, setSelectedMetric] = useState('revenue');
   const [isLoading, setIsLoading] = useState(false);
+  
+  // Chart theme integration
+  const { theme: chartTheme, recharts, isDark } = useChartTheme();
 
   // Mock-Daten für Analysen
   const kpiData = {
@@ -77,11 +81,11 @@ const AnalysenPage = () => {
     { month: 'Dez', revenue: 172000, expenses: 71000, profit: 101000 }
   ];
 
-  // Objektverteilung
+  // Objektverteilung - Theme-aware colors
   const propertyDistribution = [
-    { name: 'Wohnungen', value: 65, count: 26, color: '#3B82F6' },
-    { name: 'Büros', value: 25, count: 10, color: '#10B981' },
-    { name: 'Gewerbe', value: 10, count: 4, color: '#F59E0B' }
+    { name: 'Wohnungen', value: 65, count: 26, color: recharts.chartColors[0] },
+    { name: 'Büros', value: 25, count: 10, color: recharts.chartColors[1] },
+    { name: 'Gewerbe', value: 10, count: 4, color: recharts.chartColors[2] }
   ];
 
   // Wartungskosten nach Kategorie
@@ -309,25 +313,38 @@ const AnalysenPage = () => {
             </CardHeader>
             <CardContent>
               <ResponsiveContainer width="100%" height={300}>
-                <RechartsLineChart data={monthlyRevenueData}>
-                  <CartesianGrid strokeDasharray="3 3" />
-                  <XAxis dataKey="month" />
-                  <YAxis tickFormatter={(value) => `€${(value / 1000).toFixed(0)}k`} />
-                  <Tooltip formatter={(value) => formatCurrency(value)} />
-                  <Legend />
+                <RechartsLineChart 
+                  data={monthlyRevenueData}
+                  style={{ backgroundColor: recharts.theme?.background || 'transparent' }}
+                >
+                  <CartesianGrid {...recharts.cartesianGrid} />
+                  <XAxis dataKey="month" {...recharts.xAxis} />
+                  <YAxis 
+                    tickFormatter={(value) => `€${(value / 1000).toFixed(0)}k`} 
+                    {...recharts.yAxis}
+                  />
+                  <Tooltip 
+                    formatter={(value) => formatCurrency(value)} 
+                    {...recharts.tooltip}
+                  />
+                  <Legend {...recharts.legend} />
                   <Line 
                     type="monotone" 
                     dataKey="revenue" 
-                    stroke="#3B82F6" 
+                    stroke={recharts.colors.primary} 
                     strokeWidth={3}
                     name="Umsatz"
+                    animationDuration={recharts.animationDuration}
+                    animationEasing={recharts.animationEasing}
                   />
                   <Line 
                     type="monotone" 
                     dataKey="profit" 
-                    stroke="#10B981" 
+                    stroke={recharts.colors.secondary} 
                     strokeWidth={3}
                     name="Gewinn"
+                    animationDuration={recharts.animationDuration}
+                    animationEasing={recharts.animationEasing}
                   />
                 </RechartsLineChart>
               </ResponsiveContainer>
@@ -347,7 +364,7 @@ const AnalysenPage = () => {
             </CardHeader>
             <CardContent>
               <ResponsiveContainer width="100%" height={300}>
-                <RechartsPieChart>
+                <RechartsPieChart style={{ backgroundColor: recharts.theme?.background || 'transparent' }}>
                   <Pie
                     data={propertyDistribution}
                     cx="50%"
@@ -357,12 +374,14 @@ const AnalysenPage = () => {
                     outerRadius={80}
                     fill="#8884d8"
                     dataKey="value"
+                    animationDuration={recharts.animationDuration}
+                    animationEasing={recharts.animationEasing}
                   >
                     {propertyDistribution.map((entry, index) => (
                       <Cell key={`cell-${index}`} fill={entry.color} />
                     ))}
                   </Pie>
-                  <Tooltip />
+                  <Tooltip {...recharts.tooltip} />
                 </RechartsPieChart>
               </ResponsiveContainer>
               <div className="mt-4 space-y-2">
@@ -373,9 +392,13 @@ const AnalysenPage = () => {
                         className="w-3 h-3 rounded-full" 
                         style={{ backgroundColor: item.color }}
                       />
-                      <span className="text-sm text-gray-700">{item.name}</span>
+                      <span className={`text-sm ${isDark ? 'text-gray-300' : 'text-gray-700'}`}>
+                        {item.name}
+                      </span>
                     </div>
-                    <span className="text-sm font-medium">{item.count} Objekte</span>
+                    <span className={`text-sm font-medium ${isDark ? 'text-gray-200' : 'text-gray-900'}`}>
+                      {item.count} Objekte
+                    </span>
                   </div>
                 ))}
               </div>
@@ -395,12 +418,26 @@ const AnalysenPage = () => {
             </CardHeader>
             <CardContent>
               <ResponsiveContainer width="100%" height={300}>
-                <RechartsBarChart data={maintenanceCosts}>
-                  <CartesianGrid strokeDasharray="3 3" />
-                  <XAxis dataKey="category" />
-                  <YAxis tickFormatter={(value) => `€${(value / 1000).toFixed(1)}k`} />
-                  <Tooltip formatter={(value) => formatCurrency(value)} />
-                  <Bar dataKey="cost" fill="#F59E0B" />
+                <RechartsBarChart 
+                  data={maintenanceCosts}
+                  style={{ backgroundColor: recharts.theme?.background || 'transparent' }}
+                >
+                  <CartesianGrid {...recharts.cartesianGrid} />
+                  <XAxis dataKey="category" {...recharts.xAxis} />
+                  <YAxis 
+                    tickFormatter={(value) => `€${(value / 1000).toFixed(1)}k`} 
+                    {...recharts.yAxis}
+                  />
+                  <Tooltip 
+                    formatter={(value) => formatCurrency(value)} 
+                    {...recharts.tooltip}
+                  />
+                  <Bar 
+                    dataKey="cost" 
+                    fill={recharts.colors.warning}
+                    animationDuration={recharts.animationDuration}
+                    animationEasing={recharts.animationEasing}
+                  />
                 </RechartsBarChart>
               </ResponsiveContainer>
             </CardContent>
@@ -419,27 +456,34 @@ const AnalysenPage = () => {
             </CardHeader>
             <CardContent>
               <ResponsiveContainer width="100%" height={300}>
-                <AreaChart data={tenantAnalysis}>
-                  <CartesianGrid strokeDasharray="3 3" />
-                  <XAxis dataKey="month" />
-                  <YAxis />
-                  <Tooltip />
-                  <Legend />
+                <AreaChart 
+                  data={tenantAnalysis}
+                  style={{ backgroundColor: recharts.theme?.background || 'transparent' }}
+                >
+                  <CartesianGrid {...recharts.cartesianGrid} />
+                  <XAxis dataKey="month" {...recharts.xAxis} />
+                  <YAxis {...recharts.yAxis} />
+                  <Tooltip {...recharts.tooltip} />
+                  <Legend {...recharts.legend} />
                   <Area 
                     type="monotone" 
                     dataKey="newTenants" 
                     stackId="1" 
-                    stroke="#10B981" 
-                    fill="#10B981"
+                    stroke={recharts.colors.success} 
+                    fill={recharts.colors.success}
                     name="Neue Mieter"
+                    animationDuration={recharts.animationDuration}
+                    animationEasing={recharts.animationEasing}
                   />
                   <Area 
                     type="monotone" 
                     dataKey="leavingTenants" 
                     stackId="2" 
-                    stroke="#EF4444" 
-                    fill="#EF4444"
+                    stroke={recharts.colors.danger} 
+                    fill={recharts.colors.danger}
                     name="Auszüge"
+                    animationDuration={recharts.animationDuration}
+                    animationEasing={recharts.animationEasing}
                   />
                 </AreaChart>
               </ResponsiveContainer>
