@@ -2,6 +2,7 @@ import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Card, CardContent, CardHeader, CardTitle } from './ui/card';
 import { Button } from './ui/button';
+import { ThemedSelect, ThemedOption } from './ui/ThemedSelect';
 import { MessageSquare, ArrowLeft, Send } from 'lucide-react';
 import { Textarea } from './ui/textarea';
 import Sidebar from './Sidebar';
@@ -39,14 +40,16 @@ const MieterKommunikationPage = () => {
             </CardHeader>
             <CardContent>
               <div className="space-y-4">
-                <div>
-                  <label className="block text-sm font-medium mb-2 text-gray-700 dark:text-gray-300">An</label>
-                  <select className="w-full p-2 border rounded-md bg-white dark:bg-slate-800 text-gray-900 dark:text-white border-gray-300 dark:border-gray-600 focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-400">
-                    <option>Alle Mieter</option>
-                    <option>Familie Schmidt</option>
-                    <option>Herr Müller</option>
-                  </select>
-                </div>
+                {/* [MERGE: ThemedSelect beibehalten - überschreibt Main's improved dark mode select styling] */}
+                <ThemedSelect
+                  label="An"
+                  placeholder="Empfänger auswählen..."
+                  required
+                >
+                  <ThemedOption value="alle">Alle Mieter</ThemedOption>
+                  <ThemedOption value="schmidt">Familie Schmidt</ThemedOption>
+                  <ThemedOption value="mueller">Herr Müller</ThemedOption>
+                </ThemedSelect>
                 <div>
                   <label className="block text-sm font-medium mb-2 text-gray-700 dark:text-gray-300">Nachricht</label>
                   <Textarea placeholder="Ihre Nachricht..." rows={4} />

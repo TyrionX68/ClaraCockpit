@@ -2,6 +2,8 @@ import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Card, CardContent, CardHeader, CardTitle } from './ui/card';
 import { Button } from './ui/button';
+import { ThemedInput } from './ui/ThemedInput';
+import { ThemedErrorAlert } from './ui/ThemedErrorAlert';
 import { Settings, ArrowLeft, Database, Key, Bell } from 'lucide-react';
 import Sidebar from './Sidebar';
 
@@ -43,10 +45,12 @@ const EinstellungenPage = () => {
             </CardHeader>
             <CardContent>
               <div className="space-y-4">
-                <div className="p-4 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-lg">
-                  <p className="text-red-800 dark:text-red-200 font-medium">⚠️ Verbindungsfehler</p>
-                  <p className="text-red-600 dark:text-red-300 text-sm">Invalid API key</p>
-                </div>
+                {/* [MERGE: ThemedErrorAlert beibehalten - überschreibt Main's hardcoded error styling] */}
+                <ThemedErrorAlert
+                  type="error"
+                  title="Verbindungsfehler"
+                  message="Invalid API key"
+                />
                 <Button onClick={testSupabaseConnection} className="w-full">
                   Verbindung testen
                 </Button>
@@ -63,22 +67,19 @@ const EinstellungenPage = () => {
             </CardHeader>
             <CardContent>
               <div className="space-y-4">
-                <div>
-                  <label className="block text-sm font-medium mb-2 text-gray-700 dark:text-gray-300">Supabase URL</label>
-                  <input 
-                    type="text" 
-                    className="w-full p-2 border rounded-md bg-white dark:bg-slate-800 text-gray-900 dark:text-white border-gray-300 dark:border-gray-600 placeholder-gray-500 dark:placeholder-gray-400 focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-400" 
-                    placeholder="https://your-project.supabase.co"
-                  />
-                </div>
-                <div>
-                  <label className="block text-sm font-medium mb-2 text-gray-700 dark:text-gray-300">Anon Key</label>
-                  <input 
-                    type="password" 
-                    className="w-full p-2 border rounded-md bg-white dark:bg-slate-800 text-gray-900 dark:text-white border-gray-300 dark:border-gray-600 placeholder-gray-500 dark:placeholder-gray-400 focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-400" 
-                    placeholder="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
-                  />
-                </div>
+                {/* [MERGE: ThemedInput beibehalten - überschreibt Main's improved dark mode input styling] */}
+                <ThemedInput
+                  label="Supabase URL"
+                  type="text"
+                  placeholder="https://your-project.supabase.co"
+                  required
+                />
+                <ThemedInput
+                  label="Anon Key"
+                  type="password"
+                  placeholder="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
+                  required
+                />
                 <Button className="w-full">Speichern</Button>
               </div>
             </CardContent>
