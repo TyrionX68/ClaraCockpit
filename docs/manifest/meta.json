@@ -1,0 +1,35 @@
+{
+  "sections": [
+    {
+      "id": "vision",
+      "title": "Vision & Governance",
+      "file": "/docs/manifest/vision.md"
+    },
+    {
+      "id": "theme",
+      "title": "Theme System",
+      "file": "/docs/manifest/theme-system.md"
+    },
+    {
+      "id": "layout",
+      "title": "Layout & Grid",
+      "file": "/docs/manifest/layout-system.md"
+    },
+    {
+      "id": "forms",
+      "title": "Form Components",
+      "file": "/docs/manifest/form-components.md"
+    },
+    {
+      "id": "voice",
+      "title": "Voice Integration",
+      "file": "/docs/manifest/voice-integration.md"
+    },
+    {
+      "id": "failures",
+      "title": "Lessons Learned",
+      "file": "/docs/manifest/lessons-learned.json"
+    }
+  ]
+}
+
