@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { Bot, Users, Mic, MicOff, Send } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
+import '../styles/chat-fixes.css';
 import VoiceFeedback from '../components/molecules/VoiceFeedback';
 import MicButton from '../components/molecules/MicButton';
 import SimpleMicButton from '../components/molecules/SimpleMicButton';
@@ -478,8 +479,8 @@ const ClaraKIPageContent = () => {
         </div>
       </div>
 
-      {/* Chat Container */}
-      <div className="max-w-4xl mx-auto px-2 sm:px-4 py-6">
+      {/* Chat Container - Fixed Layout */}
+      <div className="max-w-3xl mx-auto px-4 pt-0 pb-6">
         <div className="bg-card rounded-2xl shadow-xl border border-border overflow-hidden">
           {/* Chat Messages */}
           <div 
@@ -507,10 +508,10 @@ const ClaraKIPageContent = () => {
                 )}
                 
                 <div className={`
-                  max-w-[280px] sm:max-w-xs lg:max-w-md px-3 sm:px-4 py-2 sm:py-3 rounded-2xl
+                  max-w-[280px] sm:max-w-xs lg:max-w-md px-3 sm:px-4 py-2 sm:py-3 rounded-2xl ring-1 ring-offset-1
                   ${message.type === 'user' 
-                    ? 'bg-blue-500 text-white' 
-                    : 'bg-muted text-muted-foreground'
+                    ? 'bg-blue-100 text-blue-900 ring-blue-200' 
+                    : 'bg-green-100 text-green-900 ring-green-200'
                   }
                 `}>
                   <p className="text-xs sm:text-sm leading-relaxed">{message.content}</p>
@@ -577,31 +578,31 @@ const ClaraKIPageContent = () => {
             </div>
           )}
 
-          {/* Input Area - Mobile optimiert */}
-          <div className="p-3 sm:p-6 border-t border-border bg-card">
-            <div className="flex gap-2 sm:gap-3">
+           {/* Input Area - Fixed Layout & Button Styling */}
+          <div className="p-4 border-t border-border bg-card">
+            <div className="flex items-center gap-3">
               <div className="flex-1 relative">
                 <Input
                   value={inputValue}
                   onChange={(e) => setInputValue(e.target.value)}
                   onKeyPress={(e) => e.key === 'Enter' && handleSendMessage(inputValue)}
-                  placeholder="Fragen Sie Clara nach Immobilien-Kennzahlen, Berechnungen oder Verwaltungsaufgaben..."
-                  className="pr-10 sm:pr-12 text-sm sm:text-base bg-background border-input text-foreground"
+                  placeholder="Fragen Sie Clara KI..."
+                  className="w-full pr-12 text-sm bg-background border-input text-foreground input-placeholder-cursor"
                 />
                 <Button
                   onClick={() => handleSendMessage(inputValue)}
                   size="sm"
-                  className="absolute right-1 top-1 h-6 w-6 sm:h-8 sm:w-8 p-0"
+                  className="absolute right-2 top-1/2 -translate-y-1/2 h-8 w-8 p-0 border border-gray-300 rounded-md hover:bg-gray-100"
                   disabled={!inputValue.trim()}
                 >
-                  <Send className="w-3 h-3 sm:w-4 sm:h-4" />
+                  <Send className="w-4 h-4" />
                 </Button>
               </div>
               
-              {/* FIXED V6.2.1 - Voice System without Problematic APIs */}
+              {/* FIXED V6.2.1 VOICE SYSTEM - No Problematic APIs */}
               <FixedWorkingMicButton
                 onTranscriptReceived={handleSendMessage}
-                className="w-10 h-10 sm:w-12 sm:h-12"
+                className="h-10 w-10 border border-gray-300 rounded-md hover:bg-gray-100 p-2"
                 size="sm"
                 showStatus={false}
                 showPermissionHelper={true}
