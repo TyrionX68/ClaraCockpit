@@ -1,0 +1,38 @@
+/* Overflow Fix - Phase 2.2A
+ * Eliminates horizontal scrollbar issues
+ * Maintains vertical scrolling for chat history
+ */
+
+/* Global overflow-x prevention */
+html, body {
+  overflow-x: hidden !important;
+  max-width: 100vw !important;
+}
+
+/* Chat wrapper overflow protection */
+.chat-wrapper,
+.chat-container,
+.main-panel {
+  overflow-x: hidden !important;
+  max-width: 100% !important;
+  box-sizing: border-box !important;
+}
+
+/* Ensure all containers respect viewport width */
+* {
+  box-sizing: border-box;
+}
+
+/* Prevent any element from exceeding viewport width */
+.container,
+.max-w-full,
+.w-full {
+  max-width: 100vw !important;
+}
+
+/* Specific fix for chat input area */
+.chat-input-container {
+  max-width: 100% !important;
+  overflow-x: hidden !important;
+}
+

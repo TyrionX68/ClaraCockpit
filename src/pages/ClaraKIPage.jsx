@@ -17,6 +17,10 @@ import { useClaraSuggestions } from '../hooks/useClaraSuggestions';
 import { generateSSML } from '../logic/SSMLResponseGenerator';
 import VoiceDebugTest from '../components/debug/VoiceDebugTest';
 
+// PHASE 2.2A IMPORTS - OVERFLOW FIX & ERROR BOUNDARIES
+import ErrorBoundary, { ChatInputFallback, MessageDisplayFallback } from '../components/ErrorBoundary';
+import '../styles/overflow-fix.css';
+
 // NEW CLARA KI OPTIMIZATION IMPORTS
 import EnhancedVoiceControl from '../components/molecules/EnhancedVoiceControl';
 import ClaraTTSControl from '../components/molecules/ClaraTTSControl';
@@ -508,17 +512,21 @@ const ClaraKIPageContent = () => {
       {/* Chat Container - Fixed Layout */}
       <div className="max-w-3xl mx-auto px-4 pt-0 pb-6">
         <div className="bg-card rounded-2xl shadow-xl border border-border overflow-hidden">
-          {/* Chat Messages */}
-          <div 
-            ref={chatContainerRef}
-            className="h-96 overflow-y-auto p-3 sm:p-6 space-y-4 scroll-smooth"
-            style={{
-              scrollBehavior: 'smooth',
-              overscrollBehavior: 'contain',
-              WebkitOverflowScrolling: 'touch'
-            }}
-            onWheel={(e) => {
-              // Ensure mouse wheel scrolling works
+          {/* Chat Messages - WRAPPED WITH ERROR BOUNDARY */}
+          <ErrorBoundary 
+            componentName="Message Display" 
+            fallbackComponent={MessageDisplayFallback}
+          >
+            <div 
+              ref={chatContainerRef}
+              className="h-96 overflow-y-auto p-3 sm:p-6 space-y-4 scroll-smooth"
+              style={{
+                scrollBehavior: 'smooth',
+                overscrollBehavior: 'contain',
+                WebkitOverflowScrolling: 'touch'
+              }}
+              onWheel={(e) => {
+                // Ensure mouse wheel scrolling works
               e.currentTarget.scrollTop += e.deltaY;
             }}
           >
@@ -600,12 +608,15 @@ const ClaraKIPageContent = () => {
                   </Button>
                 ))}
               </div>
-            </div>
-          )}
+            </di          </div>
+          </ErrorBoundary>
 
-           {/* Input Area - Fixed Layout & Button Styling */}
-          <div className="p-4 border-t border-border bg-card">
-            <div className="flex items-center gap-3">
+           {/* Input Area - WRAPPED WITH ERROR BOUNDARY */}
+          <ErrorBoundary 
+            componentName="Chat Input" 
+            fallbackComponent={ChatInputFallback}
+          >
+            <div className="p-4 border-t border-border bg-card">            <div className="flex items-center gap-3">
               <div className="flex-1 relative">
                 <Input
                   value={inputValue}
