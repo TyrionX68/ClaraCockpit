@@ -3,7 +3,6 @@ import { useNavigate } from 'react-router-dom';
 import { Bot, Users, Mic, MicOff, Send } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
-import '../styles/chat-fixes.css';
 import VoiceFeedback from '../components/molecules/VoiceFeedback';
 import MicButton from '../components/molecules/MicButton';
 import SimpleMicButton from '../components/molecules/SimpleMicButton';
@@ -175,6 +174,33 @@ const ClaraKIPageContent = () => {
   
   const [inputValue, setInputValue] = useState('');
   const [isTyping, setIsTyping] = useState(false);
+
+  // Inline styles for guaranteed CSS functionality
+  const chatStyles = {
+    inputPlaceholder: {
+      caretColor: 'transparent'
+    },
+    chatButton: {
+      border: '1px solid #d1d5db',
+      borderRadius: '0.375rem',
+      transition: 'background-color 0.15s ease-in-out'
+    },
+    chatButtonHover: {
+      backgroundColor: '#f3f4f6'
+    },
+    userBubble: {
+      backgroundColor: '#dbeafe',
+      color: '#1e3a8a',
+      border: '1px solid #bfdbfe',
+      boxShadow: '0 0 0 1px rgba(59, 130, 246, 0.1)'
+    },
+    assistantBubble: {
+      backgroundColor: '#dcfce7',
+      color: '#166534',
+      border: '1px solid #bbf7d0',
+      boxShadow: '0 0 0 1px rgba(34, 197, 94, 0.1)'
+    }
+  };
 
   // Initialize Clara KI Engine
   const claraEngine = ClaraKIEngine({
@@ -507,13 +533,12 @@ const ClaraKIPageContent = () => {
                   </div>
                 )}
                 
-                <div className={`
-                  max-w-[280px] sm:max-w-xs lg:max-w-md px-3 sm:px-4 py-2 sm:py-3 rounded-2xl ring-1 ring-offset-1
-                  ${message.type === 'user' 
-                    ? 'bg-blue-100 text-blue-900 ring-blue-200' 
-                    : 'bg-green-100 text-green-900 ring-green-200'
-                  }
-                `}>
+                <div 
+                  className={`
+                    max-w-[280px] sm:max-w-xs lg:max-w-md px-3 sm:px-4 py-2 sm:py-3 rounded-2xl
+                  `}
+                  style={message.type === 'user' ? chatStyles.userBubble : chatStyles.assistantBubble}
+                >
                   <p className="text-xs sm:text-sm leading-relaxed">{message.content}</p>
                   <div className="text-xs opacity-70 mt-1">
                     {message.timestamp}
@@ -587,12 +612,14 @@ const ClaraKIPageContent = () => {
                   onChange={(e) => setInputValue(e.target.value)}
                   onKeyPress={(e) => e.key === 'Enter' && handleSendMessage(inputValue)}
                   placeholder="Fragen Sie Clara KI..."
-                  className="w-full pr-12 text-sm bg-background border-input text-foreground input-placeholder-cursor"
+                  className="w-full pr-12 text-sm bg-background border-input text-foreground"
+                  style={chatStyles.inputPlaceholder}
                 />
                 <Button
                   onClick={() => handleSendMessage(inputValue)}
                   size="sm"
-                  className="absolute right-2 top-1/2 -translate-y-1/2 h-8 w-8 p-0 border border-gray-300 rounded-md hover:bg-gray-100"
+                  className="absolute right-2 top-1/2 -translate-y-1/2 h-8 w-8 p-0"
+                  style={chatStyles.chatButton}
                   disabled={!inputValue.trim()}
                 >
                   <Send className="w-4 h-4" />
@@ -602,7 +629,8 @@ const ClaraKIPageContent = () => {
               {/* FIXED V6.2.1 VOICE SYSTEM - No Problematic APIs */}
               <FixedWorkingMicButton
                 onTranscriptReceived={handleSendMessage}
-                className="h-10 w-10 border border-gray-300 rounded-md hover:bg-gray-100 p-2"
+                className="h-10 w-10 p-2"
+                style={chatStyles.chatButton}
                 size="sm"
                 showStatus={false}
                 showPermissionHelper={true}
