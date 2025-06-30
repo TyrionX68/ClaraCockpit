@@ -13,7 +13,7 @@ export const useTheme = () => {
 export const ThemeProvider = ({ children }) => {
   const [theme, setTheme] = useState(() => {
     try {
-      // Safe localStorage access with fallback
+      // PHASE 2.2B.2: Sync with initial theme loading from main.jsx
       const savedTheme = localStorage.getItem('clara-theme');
       
       // Validate saved theme value
@@ -34,7 +34,7 @@ export const ThemeProvider = ({ children }) => {
       return 'light';
     } catch (error) {
       // localStorage access failed (private browsing, etc.)
-      console.warn('localStorage access failed, using light theme:', error);
+      console.warn('[ClaraTheme] localStorage access failed, using light theme:', error);
       return 'light';
     }
   });
@@ -42,7 +42,7 @@ export const ThemeProvider = ({ children }) => {
   useEffect(() => {
     const root = document.documentElement;
     
-    // Hydration-sichere Theme-Anwendung
+    // PHASE 2.2B.2: Enhanced theme application with perfect synchronization
     const applyTheme = () => {
       try {
         // Explizite Klassen-Bereinigung vor Anwendung
@@ -55,20 +55,21 @@ export const ThemeProvider = ({ children }) => {
           root.classList.add('light');
         }
         
-        // Safe localStorage save
+        // Safe localStorage save with consistent key
         try {
           localStorage.setItem('clara-theme', theme);
         } catch (error) {
-          console.warn('Failed to save theme to localStorage:', error);
+          console.warn('[ClaraTheme] Failed to save theme to localStorage:', error);
         }
         
-        // Debug-Logging für Theme-Anwendung
-        console.log(`[ThemeContext] Theme applied: ${theme}`);
-        console.log(`[ThemeContext] HTML classes:`, root.className);
-        console.log(`[ThemeContext] Dark mode active:`, root.classList.contains('dark'));
+        // Enhanced debug logging for theme verification
+        console.log(`[ClaraTheme] Theme applied: ${theme}`);
+        console.log(`[ClaraTheme] Current DOM Class:`, root.classList.toString());
+        console.log(`[ClaraTheme] Dark mode active:`, root.classList.contains('dark'));
+        console.log(`[ClaraTheme] Button should show:`, theme === 'dark' ? 'Light Mode' : 'Dark Mode');
         
       } catch (error) {
-        console.error('Theme application failed:', error);
+        console.error('[ClaraTheme] Theme application failed:', error);
         // Fallback to light theme on error
         root.classList.remove('dark', 'light');
         root.classList.add('light');
@@ -87,7 +88,7 @@ export const ThemeProvider = ({ children }) => {
         if (mutation.type === 'attributes' && mutation.attributeName === 'class') {
           const hasCorrectClass = theme === 'dark' ? root.classList.contains('dark') : root.classList.contains('light');
           if (!hasCorrectClass) {
-            console.log('[ThemeContext] DOM mutation detected, reapplying theme');
+            console.log('[ClaraTheme] DOM mutation detected, reapplying theme');
             applyTheme();
           }
         }
@@ -103,8 +104,9 @@ export const ThemeProvider = ({ children }) => {
   }, [theme]);
 
   const toggleTheme = () => {
-    console.log(`[ThemeContext] Toggling theme from ${theme} to ${theme === 'light' ? 'dark' : 'light'}`);
-    setTheme(prevTheme => prevTheme === 'light' ? 'dark' : 'light');
+    const newTheme = theme === 'light' ? 'dark' : 'light';
+    console.log(`[ClaraTheme] Toggling theme from ${theme} to ${newTheme}`);
+    setTheme(newTheme);
   };
 
   return (
