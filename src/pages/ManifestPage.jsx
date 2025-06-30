@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import BottomNavigation from '../components/molecules/BottomNavigation';
+import MarkdownReader from '../components/MarkdownReader';
 
 const ManifestPage = () => {
   const [manifest, setManifest] = useState(null);
@@ -24,14 +25,21 @@ const ManifestPage = () => {
   }
 
   const sections = [
-    { id: 'overview', name: 'Übersicht', icon: '📋' },
-    { id: 'vision', name: 'Vision', icon: '🎯' },
-    { id: 'architecture', name: 'Architektur', icon: '🏗️' },
-    { id: 'slots', name: 'Slots', icon: '🧩' },
-    { id: 'components', name: 'Komponenten', icon: '⚙️' },
-    { id: 'deployment', name: 'Deployment', icon: '🚀' },
-    { id: 'compliance', name: 'DSGVO', icon: '🔒' },
-    { id: 'roadmap', name: 'Roadmap', icon: '🗺️' }
+    { id: 'overview', name: 'Übersicht', icon: '📋', type: 'json' },
+    { id: 'vision', name: 'Vision', icon: '🎯', type: 'json' },
+    { id: 'architecture', name: 'Architektur', icon: '🏗️', type: 'json' },
+    { id: 'slots', name: 'Slots', icon: '🧩', type: 'json' },
+    { id: 'components', name: 'Komponenten', icon: '⚙️', type: 'json' },
+    { id: 'deployment', name: 'Deployment', icon: '🚀', type: 'json' },
+    { id: 'compliance', name: 'DSGVO', icon: '🔒', type: 'json' },
+    { id: 'roadmap', name: 'Roadmap', icon: '🗺️', type: 'json' },
+    // New markdown sections
+    { id: 'vision-md', name: 'Vision & Governance', icon: '🎯', type: 'markdown', file: 'vision.md' },
+    { id: 'theme-system', name: 'Theme System', icon: '🎨', type: 'markdown', file: 'theme-system.md' },
+    { id: 'layout-system', name: 'Layout System', icon: '📐', type: 'markdown', file: 'layout-system.md' },
+    { id: 'form-components', name: 'Form Components', icon: '📝', type: 'markdown', file: 'form-components.md' },
+    { id: 'voice-integration', name: 'Voice Integration', icon: '🎤', type: 'markdown', file: 'voice-integration.md' },
+    { id: 'lessons-learned', name: 'Lessons Learned', icon: '📚', type: 'markdown', file: '_dev_lessons.md' }
   ];
 
   const renderOverview = () => (
@@ -271,6 +279,21 @@ const ManifestPage = () => {
   );
 
   const renderSection = () => {
+    const currentSection = sections.find(s => s.id === activeSection);
+    
+    // Handle markdown sections
+    if (currentSection && currentSection.type === 'markdown') {
+      return (
+        <div className="bg-slate-800 rounded-lg border border-slate-700 p-6">
+          <MarkdownReader 
+            filePath={currentSection.file} 
+            className="min-h-[400px]"
+          />
+        </div>
+      );
+    }
+    
+    // Handle JSON sections (existing functionality)
     switch (activeSection) {
       case 'overview': return renderOverview();
       case 'vision': return renderVision();
