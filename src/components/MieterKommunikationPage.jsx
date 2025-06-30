@@ -2,6 +2,7 @@ import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Card, CardContent, CardHeader, CardTitle } from './ui/card';
 import { Button } from './ui/button';
+import { ThemedSelect, ThemedOption } from './ui/ThemedSelect';
 import { MessageSquare, ArrowLeft, Send } from 'lucide-react';
 import { Textarea } from './ui/textarea';
 import Sidebar from './Sidebar';
@@ -39,16 +40,17 @@ const MieterKommunikationPage = () => {
             </CardHeader>
             <CardContent>
               <div className="space-y-4">
+                <ThemedSelect
+                  label="An"
+                  placeholder="Empfänger auswählen..."
+                  required
+                >
+                  <ThemedOption value="alle">Alle Mieter</ThemedOption>
+                  <ThemedOption value="schmidt">Familie Schmidt</ThemedOption>
+                  <ThemedOption value="mueller">Herr Müller</ThemedOption>
+                </ThemedSelect>
                 <div>
-                  <label className="block text-sm font-medium mb-2">An</label>
-                  <select className="w-full p-2 border rounded-md">
-                    <option>Alle Mieter</option>
-                    <option>Familie Schmidt</option>
-                    <option>Herr Müller</option>
-                  </select>
-                </div>
-                <div>
-                  <label className="block text-sm font-medium mb-2">Nachricht</label>
+                  <label className="block text-sm font-medium mb-2 text-gray-700 dark:text-gray-300">Nachricht</label>
                   <Textarea placeholder="Ihre Nachricht..." rows={4} />
                 </div>
                 <Button className="w-full gap-2">

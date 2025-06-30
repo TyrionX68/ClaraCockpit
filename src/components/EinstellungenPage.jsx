@@ -2,6 +2,8 @@ import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Card, CardContent, CardHeader, CardTitle } from './ui/card';
 import { Button } from './ui/button';
+import { ThemedInput } from './ui/ThemedInput';
+import { ThemedErrorAlert } from './ui/ThemedErrorAlert';
 import { Settings, ArrowLeft, Database, Key, Bell } from 'lucide-react';
 import Sidebar from './Sidebar';
 
@@ -43,10 +45,11 @@ const EinstellungenPage = () => {
             </CardHeader>
             <CardContent>
               <div className="space-y-4">
-                <div className="p-4 bg-red-50 border border-red-200 rounded-lg">
-                  <p className="text-red-800 font-medium">⚠️ Verbindungsfehler</p>
-                  <p className="text-red-600 text-sm">Invalid API key</p>
-                </div>
+                <ThemedErrorAlert
+                  type="error"
+                  title="Verbindungsfehler"
+                  message="Invalid API key"
+                />
                 <Button onClick={testSupabaseConnection} className="w-full">
                   Verbindung testen
                 </Button>
@@ -63,22 +66,18 @@ const EinstellungenPage = () => {
             </CardHeader>
             <CardContent>
               <div className="space-y-4">
-                <div>
-                  <label className="block text-sm font-medium mb-2">Supabase URL</label>
-                  <input 
-                    type="text" 
-                    className="w-full p-2 border rounded-md" 
-                    placeholder="https://your-project.supabase.co"
-                  />
-                </div>
-                <div>
-                  <label className="block text-sm font-medium mb-2">Anon Key</label>
-                  <input 
-                    type="password" 
-                    className="w-full p-2 border rounded-md" 
-                    placeholder="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
-                  />
-                </div>
+                <ThemedInput
+                  label="Supabase URL"
+                  type="text"
+                  placeholder="https://your-project.supabase.co"
+                  required
+                />
+                <ThemedInput
+                  label="Anon Key"
+                  type="password"
+                  placeholder="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
+                  required
+                />
                 <Button className="w-full">Speichern</Button>
               </div>
             </CardContent>
