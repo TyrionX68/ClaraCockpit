@@ -14,7 +14,7 @@ export default defineConfig({
     host: '0.0.0.0',
     port: 5177,
     strictPort: false,
-    allowedHosts: ['all']
+    allowedHosts: 'all'
   },
   build: {
     rollupOptions: {

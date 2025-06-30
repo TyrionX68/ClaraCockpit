@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { ThemeProvider } from './contexts/ThemeContext';
 import MainLayout from './components/layout/MainLayout';
 import DashboardLayout from './components/DashboardLayout';
+import DashboardPageUnified from './pages/DashboardPageUnified';
 import ClaraKIPanel from './components/ClaraKIPanel';
 import BankingPage from './pages/BankingPage';
 import MieterPage from './pages/MieterPage';
@@ -19,6 +20,7 @@ function App() {
         <Routes>
           <Route path="/" element={<MainLayout />}>
             <Route index element={<DashboardLayout />} />
+            <Route path="dashboard-unified" element={<DashboardPageUnified />} />
             <Route path="clara-ki" element={<ClaraKIPanel />} />
             <Route path="objects" element={<ObjectsPage />} />
             <Route path="maintenance" element={<MaintenancePage />} />
