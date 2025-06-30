@@ -152,17 +152,17 @@ const ClaraKIPanel = () => {
           </div>
         </div>
 
-        <div className="grid grid-cols-1 xl:grid-cols-4 gap-6 landscape:gap-4">
-          {/* Chat-Bereich - Erweitert für bessere Nutzung des verfügbaren Platzes */}
-          <div className="xl:col-span-3">
-            <Card className="h-[60vh] md:h-[600px] landscape:h-[70vh] landscape:min-h-[400px] flex flex-col">
-              <CardHeader className="flex-shrink-0">
+        <div className="grid grid-cols-1 lg:grid-cols-5 xl:grid-cols-6 gap-4 lg:gap-6">
+          {/* Chat-Bereich - Optimiert für maximale Platznutzung auf Laptops */}
+          <div className="lg:col-span-4 xl:col-span-5">
+            <Card className="h-[70vh] md:h-[75vh] lg:h-[80vh] xl:h-[85vh] landscape:h-[75vh] landscape:min-h-[500px] flex flex-col">
+              <CardHeader className="flex-shrink-0 pb-3">
                 <CardTitle className="flex items-center gap-2">
                   <Brain className="w-5 h-5 text-purple-600" />
                   Clara KI Chat
                 </CardTitle>
               </CardHeader>
-              <CardContent className="flex-1 flex flex-col min-h-0 p-4">
+              <CardContent className="flex-1 flex flex-col min-h-0 p-4 pt-2">
                 {/* Nachrichten */}
                 <div 
                   className="flex-1 space-y-4 mb-4 min-h-0"
@@ -227,23 +227,24 @@ const ClaraKIPanel = () => {
             </Card>
           </div>
 
-          {/* Seitenleiste */}
-          <div className="space-y-6 landscape:space-y-4">
+          {/* Seitenleiste - Kompakt für maximale Chat-Breite */}
+          <div className="lg:col-span-1 xl:col-span-1 space-y-4 lg:space-y-3">
             {/* Schnellaktionen */}
-            <Card>
-              <CardHeader>
-                <CardTitle className="flex items-center gap-2">
-                  <Zap className="w-5 h-5" />
+            <Card className="lg:text-sm">
+              <CardHeader className="pb-3">
+                <CardTitle className="flex items-center gap-2 text-sm lg:text-base">
+                  <Zap className="w-4 h-4 lg:w-5 lg:h-5" />
                   Schnellaktionen
                 </CardTitle>
               </CardHeader>
-              <CardContent>
-                <div className="space-y-2">
+              <CardContent className="pt-0">
+                <div className="space-y-1.5">
                   {quickActions.map((action, index) => (
                     <Button
                       key={index}
                       variant="outline"
-                      className="w-full justify-start"
+                      size="sm"
+                      className="w-full justify-start text-xs lg:text-sm h-8 lg:h-9"
                       onClick={action.action}
                     >
                       {action.label}
@@ -254,39 +255,39 @@ const ClaraKIPanel = () => {
             </Card>
 
             {/* KI-Status */}
-            <Card>
-              <CardHeader>
-                <CardTitle>KI-Status</CardTitle>
+            <Card className="lg:text-sm">
+              <CardHeader className="pb-3">
+                <CardTitle className="text-sm lg:text-base">KI-Status</CardTitle>
               </CardHeader>
-              <CardContent>
-                <div className="space-y-3">
+              <CardContent className="pt-0">
+                <div className="space-y-2">
                   <div className="flex items-center justify-between">
-                    <span className="text-sm text-gray-600">Engine</span>
-                    <span className="text-sm font-medium text-green-600">Online</span>
+                    <span className="text-xs lg:text-sm text-gray-600 dark:text-gray-400">Engine</span>
+                    <span className="text-xs lg:text-sm font-medium text-green-600">Online</span>
                   </div>
                   <div className="flex items-center justify-between">
-                    <span className="text-sm text-gray-600">Modell</span>
-                    <span className="text-sm font-medium">Clara-GPT-4</span>
+                    <span className="text-xs lg:text-sm text-gray-600 dark:text-gray-400">Modell</span>
+                    <span className="text-xs lg:text-sm font-medium">Clara-GPT-4</span>
                   </div>
                   <div className="flex items-center justify-between">
-                    <span className="text-sm text-gray-600">Antwortzeit</span>
-                    <span className="text-sm font-medium">~1.5s</span>
+                    <span className="text-xs lg:text-sm text-gray-600 dark:text-gray-400">Antwortzeit</span>
+                    <span className="text-xs lg:text-sm font-medium">~1.5s</span>
                   </div>
                   <div className="flex items-center justify-between">
-                    <span className="text-sm text-gray-600">Kontext</span>
-                    <span className="text-sm font-medium">Waldhofstraße 76</span>
+                    <span className="text-xs lg:text-sm text-gray-600 dark:text-gray-400">Kontext</span>
+                    <span className="text-xs lg:text-sm font-medium">Waldhofstraße 76</span>
                   </div>
                 </div>
               </CardContent>
             </Card>
 
             {/* Häufige Fragen */}
-            <Card>
-              <CardHeader>
-                <CardTitle>Häufige Fragen</CardTitle>
+            <Card className="lg:text-sm">
+              <CardHeader className="pb-3">
+                <CardTitle className="text-sm lg:text-base">Häufige Fragen</CardTitle>
               </CardHeader>
-              <CardContent>
-                <div className="space-y-2">
+              <CardContent className="pt-0">
+                <div className="space-y-1">
                   {[
                     'Wie hoch sind die aktuellen Rückstände?',
                     'Welche Wartungen stehen an?',
@@ -296,7 +297,7 @@ const ClaraKIPanel = () => {
                     <Button
                       key={index}
                       variant="ghost"
-                      className="w-full justify-start text-left h-auto p-2 text-sm"
+                      className="w-full justify-start text-left h-auto p-1.5 text-xs lg:text-sm leading-tight"
                       onClick={() => setInputMessage(question)}
                     >
                       {question}
