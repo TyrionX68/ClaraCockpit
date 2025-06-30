@@ -57,11 +57,11 @@ const MainLayout = () => {
         onMobileToggle={handleMobileMenuToggle}
       />
 
-      {/* Main Content */}
+      {/* Main Content - AGGRESSIVE GAP FIX */}
       <div className={`
         transition-all duration-300 ease-in-out
-        ml-0 md:ml-16 lg:ml-64
-        ${sidebarCollapsed ? 'md:ml-16' : 'md:ml-16 lg:ml-64'}
+        ml-0 md:ml-4 lg:ml-16
+        ${sidebarCollapsed ? 'md:ml-4' : 'md:ml-4 lg:ml-16'}
       `}>
         {/* Content Area */}
         <main className="min-h-screen bg-white dark:bg-slate-900">

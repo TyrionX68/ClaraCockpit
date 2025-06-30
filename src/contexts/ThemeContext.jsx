@@ -45,14 +45,18 @@ export const ThemeProvider = ({ children }) => {
     // Hydration-sichere Theme-Anwendung
     const applyTheme = () => {
       try {
-        // Explizite Klassen-Bereinigung vor Anwendung
+        // AGGRESSIVE THEME FIX - Force proper dark mode application
         root.classList.remove('dark', 'light');
         
-        // Korrekte Theme-Anwendung auf HTML-Element
         if (theme === 'dark') {
           root.classList.add('dark');
+          // Force body background for immediate visual feedback
+          document.body.style.backgroundColor = '#0f172a'; // slate-900
+          document.body.style.color = '#f8fafc'; // slate-50
         } else {
-          root.classList.add('light');
+          // Ensure light mode is properly applied
+          document.body.style.backgroundColor = '#ffffff';
+          document.body.style.color = '#0f172a';
         }
         
         // Safe localStorage save
