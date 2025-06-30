@@ -27,6 +27,12 @@ const ClaraKIPanel = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
   }, [messages]);
 
+  // TEMPORARY FIX: Force light mode for debugging
+  useEffect(() => {
+    document.documentElement.classList.remove('dark');
+    console.log('🌞 Light mode forced - Theme classes:', document.documentElement.classList.toString());
+  }, []);
+
   // Voice-to-Chat Handler
   const handleVoiceTranscript = (transcript) => {
     console.log('[ClaraKIPanel] Voice transcript received:', transcript);
@@ -150,9 +156,25 @@ const ClaraKIPanel = () => {
               </div>
             </div>
           </div>
+          
+          {/* 🔧 LIVE DEBUG PANEL - TEMPORARY FOR LAYOUT VALIDATION */}
+          <div className="mb-4 p-3 bg-yellow-50 dark:bg-yellow-900/20 border border-yellow-200 dark:border-yellow-800 rounded-lg">
+            <h3 className="text-sm font-semibold text-yellow-800 dark:text-yellow-200 mb-2">🔍 Live Debug Info:</h3>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-2 text-xs text-yellow-700 dark:text-yellow-300">
+              <div>
+                <strong>Grid Gap:</strong> gap-2 lg:gap-3 (8px/12px)
+              </div>
+              <div>
+                <strong>Theme:</strong> {document.documentElement.classList.contains('dark') ? 'Dark Mode' : 'Light Mode'}
+              </div>
+              <div>
+                <strong>Grid Cols:</strong> lg:5 xl:6 (Chat: 4/5 spans)
+              </div>
+            </div>
+          </div>
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-5 xl:grid-cols-6 gap-4 lg:gap-6">
+        <div className="grid grid-cols-1 lg:grid-cols-5 xl:grid-cols-6 gap-2 lg:gap-3">
           {/* Chat-Bereich - Optimiert für maximale Platznutzung auf Laptops */}
           <div className="lg:col-span-4 xl:col-span-5">
             <Card className="h-[70vh] md:h-[75vh] lg:h-[80vh] xl:h-[85vh] landscape:h-[75vh] landscape:min-h-[500px] flex flex-col">
