@@ -17,9 +17,8 @@ import { useClaraSuggestions } from '../hooks/useClaraSuggestions';
 import { generateSSML } from '../logic/SSMLResponseGenerator';
 import VoiceDebugTest from '../components/debug/VoiceDebugTest';
 
-// PHASE 2.2A IMPORTS - OVERFLOW FIX & ERROR BOUNDARIES
+// PHASE 2.2A IMPORTS - ERROR BOUNDARIES (Overflow fix now in main CSS)
 import ErrorBoundary, { ChatInputFallback, MessageDisplayFallback } from '../components/ErrorBoundary';
-import '../styles/overflow-fix.css';
 
 // NEW CLARA KI OPTIMIZATION IMPORTS
 import EnhancedVoiceControl from '../components/molecules/EnhancedVoiceControl';

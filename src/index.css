@@ -154,3 +154,88 @@ body {
   box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
 }
 
+
+/* OVERFLOW FIX - Phase 2.2A Integration
+ * Eliminates horizontal scrollbar issues
+ * Maintains vertical scrolling for chat history
+ * CRITICAL: These rules must be at the end to override other styles
+ */
+
+/* Global overflow-x prevention - HIGHEST PRIORITY */
+html, body {
+  overflow-x: hidden !important;
+  max-width: 100vw !important;
+  box-sizing: border-box !important;
+}
+
+/* Chat wrapper overflow protection */
+.chat-wrapper,
+.chat-container,
+.main-panel {
+  overflow-x: hidden !important;
+  max-width: 100% !important;
+  box-sizing: border-box !important;
+}
+
+/* Ensure all containers respect viewport width */
+* {
+  box-sizing: border-box !important;
+}
+
+/* Prevent any element from exceeding viewport width */
+.container,
+.max-w-full,
+.w-full {
+  max-width: 100vw !important;
+}
+
+/* Specific fix for chat input area */
+.chat-input-container {
+  max-width: 100% !important;
+  overflow-x: hidden !important;
+}
+
+/* Layout container fixes */
+.layout-container,
+.main-layout,
+.dashboard-layout {
+  overflow-x: hidden !important;
+  max-width: 100vw !important;
+}
+
+/* Grid system overflow protection */
+.grid,
+.grid-cols-1,
+.grid-cols-2,
+.grid-cols-3,
+.grid-cols-4,
+.grid-cols-5,
+.grid-cols-6,
+.grid-cols-12 {
+  overflow-x: hidden !important;
+  max-width: 100% !important;
+}
+
+/* Responsive grid fixes */
+@media (min-width: 1024px) {
+  .lg\\:grid-cols-5,
+  .lg\\:grid-cols-6 {
+    overflow-x: hidden !important;
+    max-width: 100% !important;
+  }
+}
+
+@media (min-width: 1280px) {
+  .xl\\:grid-cols-6 {
+    overflow-x: hidden !important;
+    max-width: 100% !important;
+  }
+}
+
+/* CRITICAL: Force all elements to respect viewport boundaries */
+body * {
+  max-width: 100vw !important;
+}
+
+/* END OVERFLOW FIX */
+
