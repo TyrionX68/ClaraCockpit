@@ -239,3 +239,95 @@ body * {
 
 /* END OVERFLOW FIX */
 
+
+/* PHASE 2.2B.2: Enhanced Dark Mode Stability */
+/* Ensures consistent theme application across all components */
+
+/* Base body styles with explicit theme support */
+body {
+  @apply bg-white text-gray-900;
+}
+
+.dark body {
+  @apply bg-gray-900 text-gray-100;
+}
+
+/* Central container theme support */
+.main, .panel-wrapper, .dashboard {
+  @apply bg-white text-gray-900;
+}
+
+.dark .main, 
+.dark .panel-wrapper, 
+.dark .dashboard {
+  @apply bg-gray-900 text-gray-100;
+}
+
+/* Sidebar theme consistency */
+.sidebar {
+  @apply bg-gray-50 text-gray-900;
+}
+
+.dark .sidebar {
+  @apply bg-gray-800 text-gray-100;
+}
+
+/* Chat components theme support */
+.chat-container, .chat-message, .chat-input {
+  @apply bg-white text-gray-900;
+}
+
+.dark .chat-container, 
+.dark .chat-message, 
+.dark .chat-input {
+  @apply bg-gray-900 text-gray-100;
+}
+
+/* Card components theme support */
+.card, .panel {
+  @apply bg-white text-gray-900 border-gray-200;
+}
+
+.dark .card, 
+.dark .panel {
+  @apply bg-gray-800 text-gray-100 border-gray-700;
+}
+
+/* Button theme consistency */
+.btn-primary {
+  @apply bg-blue-600 text-white;
+}
+
+.dark .btn-primary {
+  @apply bg-blue-500 text-white;
+}
+
+/* Input field theme support */
+.input-field {
+  @apply bg-white text-gray-900 border-gray-300;
+}
+
+.dark .input-field {
+  @apply bg-gray-800 text-gray-100 border-gray-600;
+}
+
+/* Theme transition smoothing */
+html.dark {
+  color-scheme: dark;
+}
+
+html:not(.dark) {
+  color-scheme: light;
+}
+
+/* Force theme application with high specificity */
+html.dark * {
+  border-color: hsl(var(--border)) !important;
+}
+
+html:not(.dark) * {
+  border-color: hsl(var(--border)) !important;
+}
+
+/* END PHASE 2.2B.2 THEME STABILITY */
+
