@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useEffect, useState } from 'react';
+import React, { createContext, useContext, useLayoutEffect, useState } from 'react';
 
 const ThemeContext = createContext();
 
@@ -11,62 +11,59 @@ export const useTheme = () => {
 };
 
 export const ThemeProvider = ({ children }) => {
+  // SSR-safe theme initialization
   const [theme, setTheme] = useState(() => {
+    // SSR-safe check
+    if (typeof window === 'undefined') {
+      return 'light'; // Default for SSR
+    }
+    
     try {
-      // PHASE 2.2B.2: Sync with initial theme loading from main.jsx
       const savedTheme = localStorage.getItem('clara-theme');
       
       // Validate saved theme value
-      if (savedTheme && (savedTheme === 'light' || savedTheme === 'dark')) {
+      if (savedTheme === 'light' || savedTheme === 'dark') {
         return savedTheme;
       }
       
-      // Clear invalid localStorage values
-      if (savedTheme && savedTheme !== 'light' && savedTheme !== 'dark') {
-        localStorage.removeItem('clara-theme');
-      }
-      
       // Check system preference as fallback
-      if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+      if (window.matchMedia?.('(prefers-color-scheme: dark)').matches) {
         return 'dark';
       }
       
       return 'light';
     } catch (error) {
-      // localStorage access failed (private browsing, etc.)
       console.warn('[ClaraTheme] localStorage access failed, using light theme:', error);
       return 'light';
     }
   });
 
-  useEffect(() => {
+  // Track if component is mounted (SSR-safe)
+  const [mounted, setMounted] = useState(false);
+
+  // Use useLayoutEffect to prevent hydration mismatches
+  useLayoutEffect(() => {
+    setMounted(true);
+    
     const root = document.documentElement;
     
-    // PHASE 2.2B.2: Enhanced theme application with perfect synchronization
+    // Simple theme application - no complex observers
     const applyTheme = () => {
       try {
-        // Explizite Klassen-Bereinigung vor Anwendung
+        // Clean slate approach
         root.classList.remove('dark', 'light');
         
-        // Korrekte Theme-Anwendung auf HTML-Element
-        if (theme === 'dark') {
-          root.classList.add('dark');
-        } else {
-          root.classList.add('light');
-        }
+        // Apply theme class directly to documentElement
+        root.classList.add(theme);
         
-        // Safe localStorage save with consistent key
+        // Safe localStorage save
         try {
           localStorage.setItem('clara-theme', theme);
         } catch (error) {
           console.warn('[ClaraTheme] Failed to save theme to localStorage:', error);
         }
         
-        // Enhanced debug logging for theme verification
         console.log(`[ClaraTheme] Theme applied: ${theme}`);
-        console.log(`[ClaraTheme] Current DOM Class:`, root.classList.toString());
-        console.log(`[ClaraTheme] Dark mode active:`, root.classList.contains('dark'));
-        console.log(`[ClaraTheme] Button should show:`, theme === 'dark' ? 'Light Mode' : 'Dark Mode');
         
       } catch (error) {
         console.error('[ClaraTheme] Theme application failed:', error);
@@ -76,31 +73,9 @@ export const ThemeProvider = ({ children }) => {
       }
     };
 
-    // Sofortige Anwendung
+    // Apply theme immediately
     applyTheme();
     
-    // Zusätzliche Anwendung nach Hydration (für React/Next.js)
-    const timeoutId = setTimeout(applyTheme, 100);
-    
-    // MutationObserver für DOM-Änderungen
-    const observer = new MutationObserver((mutations) => {
-      mutations.forEach((mutation) => {
-        if (mutation.type === 'attributes' && mutation.attributeName === 'class') {
-          const hasCorrectClass = theme === 'dark' ? root.classList.contains('dark') : root.classList.contains('light');
-          if (!hasCorrectClass) {
-            console.log('[ClaraTheme] DOM mutation detected, reapplying theme');
-            applyTheme();
-          }
-        }
-      });
-    });
-    
-    observer.observe(root, { attributes: true, attributeFilter: ['class'] });
-    
-    return () => {
-      clearTimeout(timeoutId);
-      observer.disconnect();
-    };
   }, [theme]);
 
   const toggleTheme = () => {
@@ -108,6 +83,15 @@ export const ThemeProvider = ({ children }) => {
     console.log(`[ClaraTheme] Toggling theme from ${theme} to ${newTheme}`);
     setTheme(newTheme);
   };
+
+  // Prevent hydration mismatch by not rendering until mounted
+  if (!mounted) {
+    return (
+      <ThemeContext.Provider value={{ theme: 'light', toggleTheme: () => {} }}>
+        {children}
+      </ThemeContext.Provider>
+    );
+  }
 
   return (
     <ThemeContext.Provider value={{ theme, toggleTheme }}>
