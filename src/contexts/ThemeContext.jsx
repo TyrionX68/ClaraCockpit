@@ -13,11 +13,12 @@ export const useTheme = () => {
 export const ThemeProvider = ({ children }) => {
   const [theme, setTheme] = useState(() => {
     try {
-      // Safe localStorage access with fallback
+      // PHASE 2.2B: Improved Fallback Strategy
       const savedTheme = localStorage.getItem('clara-theme');
+      const prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
       
       // Validate saved theme value
-      if (savedTheme && (savedTheme === 'light' || savedTheme === 'dark')) {
+      if (savedTheme === 'dark' || savedTheme === 'light') {
         return savedTheme;
       }
       
@@ -26,8 +27,8 @@ export const ThemeProvider = ({ children }) => {
         localStorage.removeItem('clara-theme');
       }
       
-      // Check system preference as fallback
-      if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+      // Fallback Strategy: System preference or light default
+      if (prefersDark) {
         return 'dark';
       }
       
@@ -42,40 +43,40 @@ export const ThemeProvider = ({ children }) => {
   useEffect(() => {
     const root = document.documentElement;
     
-    // Hydration-sichere Theme-Anwendung
+    // PHASE 2.2B: Improved Theme Application & Persistence
     const applyTheme = () => {
       try {
-        // Explizite Klassen-Bereinigung vor Anwendung
+        // Clean slate: Remove all theme classes
         root.classList.remove('dark', 'light');
         
-        // Korrekte Theme-Anwendung auf HTML-Element
+        // Apply current theme
         if (theme === 'dark') {
           root.classList.add('dark');
         } else {
           root.classList.add('light');
         }
         
-        // Safe localStorage save
+        // Persist theme choice
         try {
           localStorage.setItem('clara-theme', theme);
         } catch (error) {
           console.warn('Failed to save theme to localStorage:', error);
         }
         
-        // Debug-Logging für Theme-Anwendung
+        // Debug logging for theme verification
         console.log(`[ThemeContext] Theme applied: ${theme}`);
         console.log(`[ThemeContext] HTML classes:`, root.className);
         console.log(`[ThemeContext] Dark mode active:`, root.classList.contains('dark'));
         
       } catch (error) {
         console.error('Theme application failed:', error);
-        // Fallback to light theme on error
+        // Emergency fallback
         root.classList.remove('dark', 'light');
         root.classList.add('light');
       }
     };
 
-    // Sofortige Anwendung
+    // Immediate application
     applyTheme();
     
     // Zusätzliche Anwendung nach Hydration (für React/Next.js)
