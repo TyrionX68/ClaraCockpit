@@ -45,6 +45,7 @@ const EinstellungenPage = () => {
             </CardHeader>
             <CardContent>
               <div className="space-y-4">
+                {/* [MERGE: ThemedErrorAlert beibehalten - überschreibt Main's hardcoded error styling] */}
                 <ThemedErrorAlert
                   type="error"
                   title="Verbindungsfehler"
@@ -66,6 +67,7 @@ const EinstellungenPage = () => {
             </CardHeader>
             <CardContent>
               <div className="space-y-4">
+                {/* [MERGE: ThemedInput beibehalten - überschreibt Main's improved dark mode input styling] */}
                 <ThemedInput
                   label="Supabase URL"
                   type="text"
@@ -93,16 +95,16 @@ const EinstellungenPage = () => {
             <CardContent>
               <div className="space-y-4">
                 <div className="flex items-center justify-between">
-                  <span>E-Mail-Benachrichtigungen</span>
-                  <input type="checkbox" defaultChecked />
+                  <span className="text-gray-700 dark:text-gray-300">E-Mail-Benachrichtigungen</span>
+                  <input type="checkbox" defaultChecked className="w-4 h-4 text-blue-600 bg-white dark:bg-slate-800 border-gray-300 dark:border-gray-600 rounded focus:ring-blue-500 dark:focus:ring-blue-400" />
                 </div>
                 <div className="flex items-center justify-between">
-                  <span>Rückstände-Alerts</span>
-                  <input type="checkbox" defaultChecked />
+                  <span className="text-gray-700 dark:text-gray-300">Rückstände-Alerts</span>
+                  <input type="checkbox" defaultChecked className="w-4 h-4 text-blue-600 bg-white dark:bg-slate-800 border-gray-300 dark:border-gray-600 rounded focus:ring-blue-500 dark:focus:ring-blue-400" />
                 </div>
                 <div className="flex items-center justify-between">
-                  <span>Zahlungseingang-Meldungen</span>
-                  <input type="checkbox" defaultChecked />
+                  <span className="text-gray-700 dark:text-gray-300">Zahlungseingang-Meldungen</span>
+                  <input type="checkbox" defaultChecked className="w-4 h-4 text-blue-600 bg-white dark:bg-slate-800 border-gray-300 dark:border-gray-600 rounded focus:ring-blue-500 dark:focus:ring-blue-400" />
                 </div>
               </div>
             </CardContent>

@@ -11,7 +11,7 @@ const MieterKommunikationPage = () => {
   const navigate = useNavigate();
 
   return (
-    <div className="min-h-screen bg-gray-50 flex">
+    <div className="min-h-screen bg-white dark:bg-slate-900 flex">
       <Sidebar currentPage="mieter-kommunikation" onNavigate={(path) => navigate(path)} />
       
       <main className="flex-1 p-6">
@@ -26,8 +26,8 @@ const MieterKommunikationPage = () => {
                 <MessageSquare className="w-6 h-6 text-white" />
               </div>
               <div>
-                <h1 className="text-2xl font-bold text-gray-900">Mieter-Kommunikation</h1>
-                <p className="text-gray-600">Nachrichten und Kommunikation mit Mietern</p>
+                <h1 className="text-2xl font-bold text-gray-900 dark:text-white">Mieter-Kommunikation</h1>
+                <p className="text-gray-600 dark:text-gray-400">Nachrichten und Kommunikation mit Mietern</p>
               </div>
             </div>
           </div>
@@ -40,6 +40,7 @@ const MieterKommunikationPage = () => {
             </CardHeader>
             <CardContent>
               <div className="space-y-4">
+                {/* [MERGE: ThemedSelect beibehalten - überschreibt Main's improved dark mode select styling] */}
                 <ThemedSelect
                   label="An"
                   placeholder="Empfänger auswählen..."
@@ -67,10 +68,10 @@ const MieterKommunikationPage = () => {
             </CardHeader>
             <CardContent>
               <div className="space-y-4">
-                <div className="p-3 bg-gray-50 rounded-lg">
-                  <p className="font-medium">Familie Schmidt</p>
-                  <p className="text-sm text-gray-600">Heizung funktioniert nicht...</p>
-                  <p className="text-xs text-gray-400">vor 2 Stunden</p>
+                <div className="p-3 bg-gray-50 dark:bg-slate-800 rounded-lg">
+                  <p className="font-medium text-gray-900 dark:text-white">Familie Schmidt</p>
+                  <p className="text-sm text-gray-600 dark:text-gray-400">Heizung funktioniert nicht...</p>
+                  <p className="text-xs text-gray-400 dark:text-gray-500">vor 2 Stunden</p>
                 </div>
               </div>
             </CardContent>
