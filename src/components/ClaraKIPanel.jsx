@@ -162,7 +162,7 @@ const ClaraKIPanel = () => {
                 <strong>Theme:</strong> {document.documentElement.classList.contains('dark') ? 'Dark Mode' : 'Light Mode'}
               </div>
               <div>
-                <strong>Grid Cols:</strong> lg:5 xl:6 (Chat: 4/5 spans)
+                <strong>Grid Cols:</strong> lg:5 xl:6 (Chat: 3/4 spans)
               </div>
             </div>
           </div>
@@ -170,7 +170,7 @@ const ClaraKIPanel = () => {
 
         <div className="grid grid-cols-1 lg:grid-cols-5 xl:grid-cols-6 gap-2 lg:gap-3">
           {/* Chat-Bereich - Optimiert für maximale Platznutzung auf Laptops */}
-          <div className="lg:col-span-4 xl:col-span-5">
+          <div className="lg:col-span-3 xl:col-span-4">
             <Card className="h-[70vh] md:h-[75vh] lg:h-[80vh] xl:h-[85vh] landscape:h-[75vh] landscape:min-h-[500px] flex flex-col">
               <CardHeader className="flex-shrink-0 pb-3">
                 <CardTitle className="flex items-center gap-2">
@@ -244,7 +244,7 @@ const ClaraKIPanel = () => {
           </div>
 
           {/* Seitenleiste - Kompakt für maximale Chat-Breite */}
-          <div className="lg:col-span-1 xl:col-span-1 space-y-4 lg:space-y-3">
+          <div className="lg:col-span-2 xl:col-span-2 space-y-4 lg:space-y-3">
             {/* Schnellaktionen */}
             <Card className="lg:text-sm">
               <CardHeader className="pb-3">
